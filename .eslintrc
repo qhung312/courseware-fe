@@ -16,8 +16,13 @@
 	"parserOptions": {
 		"project": "./tsconfig.json"
 	},
-	"plugins": ["import", "prettier", "eslint-comments", "react", "jsx-a11y", "react-hooks"],
+	"plugins": ["import", "prettier", "eslint-comments", "react", "jsx-a11y", "react-hooks", "unused-imports"],
 	"rules": {
+    "unused-imports/no-unused-imports": "error",
+		"unused-imports/no-unused-vars": [
+			"warn",
+			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+		],
 		"prettier/prettier": ["warn"],
 		"no-use-before-define": "off",
 		"no-case-declarations": "off",
@@ -53,11 +58,31 @@
 				"allowArrowFunction": false,
 				"allowAnonymousClass": false,
 				"allowAnonymousFunction": false,
-				"allowCallExpression": true, // The true value here is for backward compatibility
+				"allowCallExpression": true,
 				"allowLiteral": false,
 				"allowObject": true
 			}
-		]
+		],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
 	},
 	"parser": "@typescript-eslint/parser",
 	"settings": {

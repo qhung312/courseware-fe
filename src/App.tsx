@@ -1,7 +1,27 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+import routes from './routes';
+import PrivateRoute from './routes/PrivateRoute';
 
 const App = () => {
-	return <div className='App'></div>;
+	return (
+		<>
+			<Routes>
+				{routes.map((route, index) => {
+					const Component: React.FC = route.component;
+					if (!route.isProtected) {
+						return <Route path={route.path} element={<Component />} key={index} />;
+					}
+					return (
+						<PrivateRoute key={index}>
+							<Route path={route.path} element={<Component />} key={index} />;
+						</PrivateRoute>
+					);
+				})}
+			</Routes>
+		</>
+	);
 };
 
 export default App;
