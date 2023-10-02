@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
 
 const App = () => {
+	useEffect(() => {}, []);
 	return (
 		<>
 			<Routes>
