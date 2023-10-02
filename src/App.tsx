@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import routes from './routes';
@@ -15,9 +15,15 @@ const App = () => {
 						return <Route path={route.path} element={<Component />} key={index} />;
 					}
 					return (
-						<PrivateRoute key={index}>
-							<Route path={route.path} element={<Component />} key={index} />;
-						</PrivateRoute>
+						<Route
+							path={route.path}
+							element={
+								<PrivateRoute key={index}>
+									<Component />
+								</PrivateRoute>
+							}
+							key={index}
+						/>
 					);
 				})}
 			</Routes>
