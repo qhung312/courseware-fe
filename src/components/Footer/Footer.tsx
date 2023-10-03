@@ -8,67 +8,91 @@ import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg
 
 const Footer = () => {
   return (
-    <div className='w-[120rem] h-[31.5rem]'>
-      <div className='flex flex-row font-["Roboto"]'>
-        <div className='flex pl-[4.5rem] pt-[7.5rem] pb-[]'>
-          <div className='mt-[1.625rem]'>
-            <LogoCTCT />
+    <div className='max-w-[1920px] mx-auto pb-[2.5rem]'>
+      <div className='flex sm:flex-col sm:pb-[1rem] lg:flex-row lg:justify-between lg:pt-[1.5rem] xl:pt-[6.25rem] xl:pb-0'>
+        <div className='flex sm:justify-evenly sm:mb-[1rem] sm:pb-[2rem] sm:pt-[1rem] lg:items-center lg:px-[1rem] xl:px-[2rem] 2xl:gap-x-[3rem]'>
+          <div className='sm:mt-[1.625rem]'>
+            <LogoCTCT className='sm:w-[9.375rem] sm:h-[5rem] md:w-[11rem] md:h-[7.5rem] lg:w-[8rem] lg:h-[3.5rem] xl:w-[9rem] xl:h-[4.75rem] 2xl:w-[10rem] 2xl:h-[5.5rem]' />
           </div>
 
-          <div className='flex flex-col ml-[3.75rem]'>
-            <div className='mx-auto mb-4'>
-              <p className='text-[#000] text-2xl font-[600]'>Đơn vị hợp tác</p>
+          <div className='flex flex-col gap-y-[1rem]'>
+            <div className='mx-auto'>
+              <p className='text-[#000] font-[600] sm:text-2xl lg:text-xl'>Đơn vị hợp tác</p>
             </div>
-            <LogoGDSC />
+            <div className=''>
+              <LogoGDSC className='sm:w-[15rem] sm:h-[5rem] md:h-[7rem] md:w-[17rem] lg:w-[13rem] lg:h-[4rem] xl:w-[14.5rem] xl:h-[4.5rem] 2xl:w-[15rem] 2xl:h-[5rem]' />
+            </div>
           </div>
         </div>
 
-        <div className='flex flex-col ml-[15rem] pt-[6.25rem]'>
-          <div className='flex flex-col justify-between mb-[5.125rem] ml-[2.5rem] h-[9.25rem] gap-y-[2rem]'>
-            <p className='text-2xl text-[#5b5b5b]'>Home</p>
-            <p className='text-2xl text-[#5b5b5b]'>Giới thiệu</p>
-            <p className='text-2xl text-[#5b5b5b]'>Cộng đồng Chúng Ta Cùng Tiến</p>
-          </div>
-
-          <div>
-            <p className='text-[2.5rem] font-bold'>WE LEARN - WE SHARE</p>
-          </div>
-        </div>
-
-        <div className='flex flex-col justify-between box-content pt-[6.5rem] ml-[9.5rem] h-[14rem] w-[27.5rem]'>
-          <div className='flex justify-center'>
-            <p className='text-2xl font-semibold'>Liên Hệ</p>
-          </div>
-
-          <div className='flex items-center gap-x-[0.75rem]'>
-            <div className='h-[2.75rem] w-[2.75rem]'>
-              <LocationIcon />
-            </div>
-            <p>
-              Phòng 102, Nhà học Thể dục thể thao, Đại học Bách Khoa - Đại học Quốc gia Hồ Chí Minh,
-              Cơ sở 2
+        <div className='flex flex-col lg:gap-y-[3.25rem] 2xl:gap-y-[5.125rem]'>
+          <div className='flex flex-col justify-between sm:pl-[1.5rem] sm:gap-y-[0.75rem] lg:pl-0 xl:px-[2rem]'>
+            <p className='text-[#5b5b5b] sm:text-[14px] md:text-[16px] lg:text-[17px] xl:text-[20px] 2xl:text-2xl'>
+              Home
+            </p>
+            <p className='text-[#5b5b5b] sm:text-[14px] md:text-[16px] lg:text-[17px] xl:text-[20px] 2xl:text-2xl'>
+              Giới thiệu
+            </p>
+            <p className='text-[#5b5b5b] sm:text-[14px] md:text-[16px] lg:text-[17px] xl:text-[20px] 2xl:text-2xl'>
+              Cộng đồng Chúng Ta Cùng Tiến
             </p>
           </div>
 
-          <div className='flex items-center gap-x-[0.75rem]'>
-            <div className='h-[2.75rem] w-[2.75rem]'>
-              <PhoneIcon />
-            </div>
-            <p>036 329 4701 - 086 835 3556</p>
+          <div className='mx-auto'>
+            <p className='font-bold sm:hidden lg:inline lg:text-[22px] xl:text-[32px] 2xl:text-[38px]'>
+              WE LEARN - WE SHARE
+            </p>
           </div>
+        </div>
 
-          <div className='flex items-center gap-x-[0.75rem]'>
-            <div className='h-[2.75rem] w-[2.75rem]'>
-              <MailIcon />
+        <div className='flex flex-col sm:justify-between box-content sm:pl-[1.5rem] sm:pt-[1rem] sm:pr-[1.5rem] sm:gap-y-[1.5rem] lg:w-[35%] lg:pt-0 lg:justify-start'>
+          <div className=''>
+            <p className='font-semibold sm:text-left sm:text-xl lg:text-center lg:text-2xl xl:text-3xl'>
+              Liên Hệ
+            </p>
+          </div>
+          <div className='flex flex-col sm:gap-y-[0.5rem]'>
+            <div className='flex items-center sm:gap-x-[0.75rem]'>
+              <div>
+                <LocationIcon className='sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+              </div>
+              <p className='sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+                Phòng 102, Nhà học Thể dục thể thao, Đại học Bách Khoa - Đại học Quốc gia Hồ Chí
+                Minh, Cơ sở 2
+              </p>
             </div>
-            <p>chungtacungtienbk@gmail.com</p>
+
+            <div className='flex items-center sm:gap-x-[0.75rem]'>
+              <div>
+                <PhoneIcon className='sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+              </div>
+              <p className='sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+                036 329 4701 - 086 835 3556
+              </p>
+            </div>
+
+            <div className='flex items-center sm:gap-x-[0.75rem]'>
+              <div>
+                <MailIcon className='sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+              </div>
+              <p className='sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+                chungtacungtienbk@gmail.com
+              </p>
+            </div>
           </div>
         </div>
       </div>
       <hr className='border-solid border-black border-[1px]' />
-      <div className='flex flex-row justify-end pr-[2.25rem] pt-[2.5rem] gap-x-[1.875rem]'>
-        <FacebookIcon />
-        <YoutubeIcon />
+      <div className='flex sm:flex-col sm:items-center sm:gap-y-[1.5rem] lg:items-end lg:pr-[2rem]'>
+        <div>
+          <p className='font-bold sm:flex sm:text-[1.5rem] md:text-[2rem] lg:hidden'>
+            WE LEARN - WE SHARE
+          </p>
+        </div>
+        <div className='flex sm:gap-x-[2rem]'>
+          <FacebookIcon />
+          <YoutubeIcon />
+        </div>
       </div>
     </div>
   );
