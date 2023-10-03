@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { Header } from './components';
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -8,6 +9,7 @@ const App = () => {
   useEffect(() => {}, []);
   return (
     <>
+      <Header />
       <Routes>
         {routes.map((route, index) => {
           const Component: React.FC = route.component;
