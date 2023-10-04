@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <div className='max-w-[1920px] mx-auto pb-[2.5rem]'>
       <div className='flex sml:flex-col sml:pb-[0.25rem] sm:flex-col sm:pb-[1rem] lg:flex-row lg:justify-between lg:pt-[1.5rem] xl:pt-[2rem] xl:pb-[1rem] 2xl:pb-0'>
-        <div className='flex sml:justify-evenly sml:pb-[1rem] sml:pt-[1.25rem] sm:justify-evenly sm:mb-[1rem] sm:pb-[2rem] sm:pt-[2.5rem] lg:items-center lg:px-[1rem] xl:px-[2rem] 2xl:gap-x-[3rem]'>
+        <div className='flex sml:justify-evenly sml:pb-[1rem] sml:pt-[0.75rem] sm:justify-evenly sm:mb-[1rem] sm:pb-[2rem] sm:pt-[2.5rem] lg:items-center lg:px-[1rem] xl:px-[2rem] 2xl:gap-x-[3rem]'>
           <div className='sml:mt-[1.25rem] sm:mt-[1.625rem]'>
             <LogoCTCT className='sml:w-[7.5rem] sml:h-[3.5rem] sm:w-[9.375rem] sm:h-[5rem] md:w-[11rem] md:h-[7.5rem] lg:w-[8rem] lg:h-[3.5rem] xl:w-[9rem] xl:h-[4.75rem] 2xl:w-[10rem] 2xl:h-[5.5rem]' />
           </div>
