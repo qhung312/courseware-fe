@@ -1,3 +1,4 @@
 import Header from './Header';
+import Icon from './Icon';
 
-export { Header };
+export { Header, Icon };
