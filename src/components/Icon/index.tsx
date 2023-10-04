@@ -4,6 +4,7 @@ import { ReactComponent as ChevronDown } from '../../assets/svgs/ChevronDownIcon
 import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
 import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
+import { ReactComponent as Help } from '../../assets/svgs/HelpIcon.svg';
 import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
 import { ReactComponent as Introduction } from '../../assets/svgs/IntroductionIcon.svg';
 import { ReactComponent as Library } from '../../assets/svgs/LibraryIcon.svg';
@@ -23,6 +24,7 @@ export default {
   ChevronUp,
   Document,
   Exercise,
+  Help,
   Home,
   Introduction,
   Library,

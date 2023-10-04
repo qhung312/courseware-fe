@@ -10,7 +10,6 @@ const App = () => {
   return (
     <>
       <Header />
-      <div className='relative top-'></div>
       <Routes>
         {routes.map((route, index) => {
           const Component: React.FC = route.component;
