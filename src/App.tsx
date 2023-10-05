@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Header } from './components';
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
+import TitleWrapper from './routes/TitleWrapper';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -13,15 +14,29 @@ const App = () => {
       <Routes>
         {routes.map((route, index) => {
           const Component: React.FC = route.component;
+
           if (!route.isProtected) {
-            return <Route path={route.path} element={<Component />} key={index} />;
+            return (
+              <Route
+                path={route.path}
+                element={
+                  <TitleWrapper title={route.title}>
+                    <Component />
+                  </TitleWrapper>
+                }
+                key={index}
+              />
+            );
           }
+
           return (
             <Route
               path={route.path}
               element={
-                <PrivateRoute key={index}>
-                  <Component />
+                <PrivateRoute>
+                  <TitleWrapper title={route.title}>
+                    <Component />
+                  </TitleWrapper>
                 </PrivateRoute>
               }
               key={index}
