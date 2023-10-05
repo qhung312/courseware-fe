@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx lint-staged
-npx tsc --noEmit && npx eslint --fix . && npx prettier --write .
+npm run pre-commit

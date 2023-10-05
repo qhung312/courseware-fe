@@ -9,9 +9,8 @@
     "plugin:eslint-comments/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:prettier/recommended",
-    "prettier",
-    "react-app"
+    "react-app",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,12 +18,12 @@
   },
   "plugins": [
     "import",
-    "prettier",
     "eslint-comments",
     "react",
     "jsx-a11y",
     "react-hooks",
-    "unused-imports"
+    "unused-imports",
+    "prettier"
   ],
   "rules": {
     "import/no-anonymous-default-export": [
