@@ -59,7 +59,7 @@ const LargeHeader = () => {
     <header className='hidden md:flex flex-column fixed flex-wrap w-[100vw] bg-white z-[3] top-0'>
       <div
         className='flex flex-row justify-between items-center w-[100%]
-      px-[16px] py-[12px] xl:px-[32px] xl:py-[24px] z-[2]'
+      px-[16px] py-[12px] xl:px-[32px] xl:py-[16px] z-[2]'
       >
         <LargeLogoCTCT className='h-[40px] w-auto aspect-[107/60] xl:h-[48px]' />
         <div className='flex flex-row gap-x-[52px]'>
@@ -99,8 +99,8 @@ const LargeHeader = () => {
           <p
             className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
             style={{
-              color: pathname === '/' ? '#000000' : '#5B5B5B',
-              fontWeight: pathname === '/' ? '900' : 'normal',
+              color: pathname === '/' ? '#3b3b3b' : '#5B5B5B',
+              fontWeight: pathname === '/' ? '700' : 'normal',
             }}
           >
             Trang chủ
@@ -118,11 +118,11 @@ const LargeHeader = () => {
               style={{
                 color:
                   pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B',
                 fontWeight:
                   pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '900'
+                    ? '700'
                     : 'normal',
               }}
             >
@@ -132,7 +132,7 @@ const LargeHeader = () => {
               <Icon.ChevronUp
                 fill={
                   pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B'
                 }
                 fillOpacity={0.87}
@@ -142,7 +142,7 @@ const LargeHeader = () => {
               <Icon.ChevronDown
                 fill={
                   pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B'
                 }
                 fillOpacity={0.87}
@@ -171,8 +171,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/library/documents' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/library/documents' ? '900' : 'normal',
+                  color: pathname === '/library/documents' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/library/documents' ? '700' : 'normal',
                 }}
               >
                 Tài liệu
@@ -186,8 +186,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/library/quizzes' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/library/quizzes' ? '900' : 'normal',
+                  color: pathname === '/library/quizzes' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/library/quizzes' ? '700' : 'normal',
                 }}
               >
                 Đề thi
@@ -207,19 +207,19 @@ const LargeHeader = () => {
               style={{
                 color:
                   pathname === '/room/exercises' || pathname === '/room/tests'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B',
                 fontWeight:
-                  pathname === '/room/exercises' || pathname === '/room/tests' ? '900' : 'normal',
+                  pathname === '/room/exercises' || pathname === '/room/tests' ? '700' : 'normal',
               }}
             >
               Phòng thi
             </p>
-            {isLibraryOpen ? (
+            {isRoomOpen ? (
               <Icon.ChevronUp
                 fill={
                   pathname === '/room/exercises' || pathname === '/room/tests'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B'
                 }
                 fillOpacity={0.87}
@@ -229,7 +229,7 @@ const LargeHeader = () => {
               <Icon.ChevronDown
                 fill={
                   pathname === '/room/exercises' || pathname === '/room/tests'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B'
                 }
                 fillOpacity={0.87}
@@ -258,8 +258,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/room/exercises' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/room/exercises' ? '900' : 'normal',
+                  color: pathname === '/room/exercises' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/room/exercises' ? '700' : 'normal',
                 }}
               >
                 Bài tập rèn luyện
@@ -273,8 +273,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/room/tests' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/room/tests' ? '900' : 'normal',
+                  color: pathname === '/room/tests' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/room/tests' ? '700' : 'normal',
                 }}
               >
                 Đề thi
@@ -296,25 +296,25 @@ const LargeHeader = () => {
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
                   pathname === '/about-us/partners'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B',
                 fontWeight:
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
                   pathname === '/about-us/partners'
-                    ? '900'
+                    ? '700'
                     : 'normal',
               }}
             >
               Về chúng tôi
             </p>
-            {isLibraryOpen ? (
+            {isAboutUsOpen ? (
               <Icon.ChevronUp
                 fill={
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
                   pathname === '/about-us/partners'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B'
                 }
                 fillOpacity={0.87}
@@ -326,7 +326,7 @@ const LargeHeader = () => {
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
                   pathname === '/about-us/partners'
-                    ? '#000000'
+                    ? '#3b3b3b'
                     : '#5B5B5B'
                 }
                 fillOpacity={0.87}
@@ -355,8 +355,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/about-us' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/about-us' ? '900' : 'normal',
+                  color: pathname === '/about-us' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/about-us' ? '700' : 'normal',
                 }}
               >
                 Giới thiệu
@@ -370,8 +370,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/about-us/activities' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/about-us/activities' ? '900' : 'normal',
+                  color: pathname === '/about-us/activities' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/about-us/activities' ? '700' : 'normal',
                 }}
               >
                 Hoạt động
@@ -385,8 +385,8 @@ const LargeHeader = () => {
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/about-us/partners' ? '#000000' : '#5B5B5B',
-                  fontWeight: pathname === '/about-us/partners' ? '900' : 'normal',
+                  color: pathname === '/about-us/partners' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/about-us/partners' ? '700' : 'normal',
                 }}
               >
                 Đơn vị hợp tác
@@ -403,8 +403,8 @@ const LargeHeader = () => {
           <p
             className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
             style={{
-              color: pathname === '/help' ? '#000000' : '#5B5B5B',
-              fontWeight: pathname === '/help' ? '900' : 'normal',
+              color: pathname === '/help' ? '#3b3b3b' : '#5B5B5B',
+              fontWeight: pathname === '/help' ? '700' : 'normal',
             }}
           >
             Hỗ trợ
