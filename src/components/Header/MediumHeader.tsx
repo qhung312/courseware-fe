@@ -23,7 +23,7 @@ const MediumHeader = () => {
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/quizzes'
+    pathname === '/library/documents' || pathname === '/library/tests'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -134,7 +134,7 @@ const MediumHeader = () => {
                 <div className='flex flex-row justify-start items-center gap-x-[16px]'>
                   <Icon.Library
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -142,7 +142,7 @@ const MediumHeader = () => {
                   <p
                     style={{
                       color:
-                        pathname === '/library/documents' || pathname === '/library/quizzes'
+                        pathname === '/library/documents' || pathname === '/library/tests'
                           ? '#4285F4'
                           : '#696969',
                     }}
@@ -153,7 +153,7 @@ const MediumHeader = () => {
                 {isLibraryOpen ? (
                   <Icon.ChevronUp
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -163,7 +163,7 @@ const MediumHeader = () => {
                 ) : (
                   <Icon.ChevronDown
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -200,7 +200,7 @@ const MediumHeader = () => {
                   )}
                 </NavLink>
                 <NavLink
-                  to='/library/quizzes'
+                  to='/library/tests'
                   end
                   className='flex flex-row justify-start items-center gap-x-[16px]
                 px-[20px] py-[16px] rounded-[12px] w-[100%]'

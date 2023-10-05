@@ -12,7 +12,7 @@ const LargeHeader = () => {
   const aboutUsRef = useRef<HTMLDivElement>(null);
 
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/quizzes'
+    pathname === '/library/documents' || pathname === '/library/tests'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -117,11 +117,11 @@ const LargeHeader = () => {
               className='bg-inherit mr-[8px] text-[14px] xl:text-[18px]'
               style={{
                 color:
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
+                  pathname === '/library/documents' || pathname === '/library/tests'
                     ? '#3b3b3b'
                     : '#5B5B5B',
                 fontWeight:
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
+                  pathname === '/library/documents' || pathname === '/library/tests'
                     ? '700'
                     : 'normal',
               }}
@@ -131,7 +131,7 @@ const LargeHeader = () => {
             {isLibraryOpen ? (
               <Icon.ChevronUp
                 fill={
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
+                  pathname === '/library/documents' || pathname === '/library/tests'
                     ? '#3b3b3b'
                     : '#5B5B5B'
                 }
@@ -141,7 +141,7 @@ const LargeHeader = () => {
             ) : (
               <Icon.ChevronDown
                 fill={
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
+                  pathname === '/library/documents' || pathname === '/library/tests'
                     ? '#3b3b3b'
                     : '#5B5B5B'
                 }
@@ -179,15 +179,15 @@ const LargeHeader = () => {
               </p>
             </NavLink>
             <NavLink
-              to='/library/quizzes'
+              to='/library/tests'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
             >
               <p
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
                 style={{
-                  color: pathname === '/library/quizzes' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/library/quizzes' ? '700' : 'normal',
+                  color: pathname === '/library/tests' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/library/tests' ? '700' : 'normal',
                 }}
               >
                 Đề thi
