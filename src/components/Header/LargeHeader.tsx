@@ -121,12 +121,13 @@ const LargeHeader = () => {
               style={{
                 color:
                   pathname === '/library/documents' || pathname === '/library/tests'
-                    ? '#3b3b3b'
+                    ? '#FFFFFF'
                     : '#5B5B5B',
-                fontWeight:
+                backgroundColor:
                   pathname === '/library/documents' || pathname === '/library/tests'
-                    ? '700'
-                    : 'normal',
+                    ? '#4285f4'
+                    : 'transparent',
+                borderRadius: '8px',
               }}
             >
               Thư viện

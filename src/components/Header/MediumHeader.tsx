@@ -78,7 +78,7 @@ const MediumHeader = () => {
     <>
       <header className='fixed top-0 w-[100%] z-30'>
         <div
-          className='md:hidden flex flex-row justify-between items-center bg-[#f5f7fc] absolute
+          className='md:hidden flex flex-row justify-between items-center bg-[#f5f7fc] relative
           w-[100%] h-[72px]
           px-[20px] py-[16px] z-[25]'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
