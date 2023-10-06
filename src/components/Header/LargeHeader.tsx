@@ -56,7 +56,7 @@ const LargeHeader = () => {
   const throttledAboutUsClick = useThrottle(onAboutUsClick);
 
   return (
-    <header className='hidden md:flex flex-column fixed flex-wrap w-[100vw] bg-white z-[3] top-0'>
+    <header className='hidden md:flex flex-column fixed flex-wrap w-[100vw] bg-white z-30 top-0'>
       <div
         className='flex flex-row justify-between items-center w-[100%]
       px-[16px] py-[12px] xl:px-[32px] xl:py-[16px] z-[2]'
