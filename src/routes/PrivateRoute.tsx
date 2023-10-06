@@ -9,7 +9,7 @@ type TPrivateRouteProps = {
   key: number;
 };
 
-const PrivateRoute: React.FC<TPrivateRouteProps> = ({ children, key }) => {
+const PrivateRoute: React.FC<TPrivateRouteProps> = ({ children }) => {
   let location = useLocation();
 
   const isAuthenticated = useSelector((state: RootState) => state.auth);
@@ -18,7 +18,7 @@ const PrivateRoute: React.FC<TPrivateRouteProps> = ({ children, key }) => {
     return <Navigate to='/login' state={{ from: location }} />;
   }
 
-  return <React.Fragment key={key}>{children}</React.Fragment>;
+  return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default PrivateRoute;

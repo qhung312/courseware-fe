@@ -56,7 +56,7 @@ const LargeHeader = () => {
   const throttledAboutUsClick = useThrottle(onAboutUsClick);
 
   return (
-    <header className='hidden md:flex flex-column fixed flex-wrap w-[100vw] bg-white z-[3] top-0'>
+    <header className='hidden md:flex flex-column absolute flex-wrap w-[100vw] bg-white z-[3] top-0'>
       <div
         className='flex flex-row justify-between items-center w-[100%]
       px-[16px] py-[12px] xl:px-[32px] xl:py-[16px] z-[2]'
@@ -88,7 +88,7 @@ const LargeHeader = () => {
       </div>
       <nav
         className='flex flex-row justify-start items-center bg-[#E3F2FD] w-[100%]
-        z-[2] h-[fit-content]'
+        z-[2]'
       >
         <NavLink
           to='/'
@@ -97,10 +97,12 @@ const LargeHeader = () => {
           px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
         >
           <p
-            className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+            className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap
+            px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
             style={{
-              color: pathname === '/' ? '#3b3b3b' : '#5B5B5B',
-              fontWeight: pathname === '/' ? '700' : 'normal',
+              color: pathname === '/' ? '#FFFFFF' : '#5B5B5B',
+              backgroundColor: pathname === '/' ? '#4285f4' : 'transparent',
+              borderRadius: '8px',
             }}
           >
             Trang chủ
@@ -114,16 +116,18 @@ const LargeHeader = () => {
             onClick={throttledLibraryClick}
           >
             <p
-              className='bg-inherit mr-[8px] text-[14px] xl:text-[18px]'
+              className='bg-inherit mr-[8px] text-[14px] xl:text-[18px] whitespace-nowrap 
+              px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
               style={{
                 color:
                   pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '#3b3b3b'
+                    ? '#FFFFFF'
                     : '#5B5B5B',
-                fontWeight:
+                backgroundColor:
                   pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '700'
-                    : 'normal',
+                    ? '#4285f4'
+                    : 'transparent',
+                borderRadius: '8px',
               }}
             >
               Thư viện
@@ -152,7 +156,7 @@ const LargeHeader = () => {
           </button>
           <nav
             className='flex flex-col absolute justify-center items-center z-[1] 
-            bg-[#FBFCFF] mt-1 rounded-lg w-[100%]
+            bg-[#FBFCFF] mt-1 rounded-lg w-[120%]
             transition-all ease-in-out'
             style={{
               transform: isLibraryOpen ? 'translateY(0%)' : 'translateY(10%)',
@@ -167,9 +171,11 @@ const LargeHeader = () => {
               to='/library/documents'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledLibraryClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap 
+                px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/library/documents' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/library/documents' ? '700' : 'normal',
@@ -182,9 +188,11 @@ const LargeHeader = () => {
               to='/library/quizzes'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledLibraryClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap 
+                px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/library/quizzes' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/library/quizzes' ? '700' : 'normal',
@@ -203,14 +211,18 @@ const LargeHeader = () => {
             onClick={throttledRoomClick}
           >
             <p
-              className='bg-inherit mr-[8px] text-[14px] xl:text-[18px]'
+              className='bg-inherit mr-[8px] text-[14px] xl:text-[18px]
+              px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
               style={{
                 color:
                   pathname === '/room/exercises' || pathname === '/room/tests'
-                    ? '#3b3b3b'
+                    ? '#FFFFFF'
                     : '#5B5B5B',
-                fontWeight:
-                  pathname === '/room/exercises' || pathname === '/room/tests' ? '700' : 'normal',
+                backgroundColor:
+                  pathname === '/room/exercises' || pathname === '/room/tests'
+                    ? '#4285f4'
+                    : 'transparent',
+                borderRadius: '8px',
               }}
             >
               Phòng thi
@@ -239,7 +251,7 @@ const LargeHeader = () => {
           </button>
           <nav
             className='flex flex-col justify-center items-center absolute z-[1] 
-            bg-[#FBFCFF] mt-1 rounded-lg w-fit
+            bg-[#FBFCFF] mt-1 rounded-lg w-[120%]
             transition-all ease-in-out'
             style={{
               transform: isRoomOpen ? 'translateY(0%)' : 'translateY(10%)',
@@ -254,9 +266,11 @@ const LargeHeader = () => {
               to='/room/exercises'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledRoomClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap 
+                px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/room/exercises' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/room/exercises' ? '700' : 'normal',
@@ -269,15 +283,17 @@ const LargeHeader = () => {
               to='/room/tests'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledRoomClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap 
+                px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/room/tests' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/room/tests' ? '700' : 'normal',
                 }}
               >
-                Đề thi
+                Thi thử
               </p>
             </NavLink>
           </nav>
@@ -290,20 +306,22 @@ const LargeHeader = () => {
             onClick={throttledAboutUsClick}
           >
             <p
-              className='bg-inherit mr-[8px] text-[14px] xl:text-[18px]'
+              className='bg-inherit mr-[8px] text-[14px] xl:text-[18px] whitespace-nowrap 
+              px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
               style={{
                 color:
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
                   pathname === '/about-us/partners'
-                    ? '#3b3b3b'
+                    ? '#FFFFFF'
                     : '#5B5B5B',
-                fontWeight:
+                backgroundColor:
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
                   pathname === '/about-us/partners'
-                    ? '700'
-                    : 'normal',
+                    ? '#4285f4'
+                    : 'transparent',
+                borderRadius: '8px',
               }}
             >
               Về chúng tôi
@@ -336,7 +354,7 @@ const LargeHeader = () => {
           </button>
           <nav
             className='flex flex-col justify-center items-center absolute z-[1] 
-            bg-[#FBFCFF] mt-1 rounded-lg w-fit
+            bg-[#FBFCFF] mt-1 rounded-lg w-[120%]
             transition-all ease-in-out'
             style={{
               transform: isAboutUsOpen ? 'translateY(0%)' : 'translateY(10%)',
@@ -351,9 +369,10 @@ const LargeHeader = () => {
               to='/about-us'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledAboutUsClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/about-us' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us' ? '700' : 'normal',
@@ -366,9 +385,10 @@ const LargeHeader = () => {
               to='/about-us/activities'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledAboutUsClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/about-us/activities' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us/activities' ? '700' : 'normal',
@@ -381,9 +401,10 @@ const LargeHeader = () => {
               to='/about-us/partners'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              onClick={throttledAboutUsClick}
             >
               <p
-                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+                className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
                   color: pathname === '/about-us/partners' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us/partners' ? '700' : 'normal',
@@ -397,14 +418,16 @@ const LargeHeader = () => {
         <NavLink
           to='/help'
           end
-          className='flex justify-start items-center h-[100%] 
+          className='flex justify-start items-center h-[100%]
           px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
         >
           <p
-            className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap'
+            className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap 
+            px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
             style={{
-              color: pathname === '/help' ? '#3b3b3b' : '#5B5B5B',
-              fontWeight: pathname === '/help' ? '700' : 'normal',
+              color: pathname === '/help' ? '#FFFFFF' : '#5B5B5B',
+              backgroundColor: pathname === '/help' ? '#4285f4' : 'transparent',
+              borderRadius: '8px',
             }}
           >
             Hỗ trợ

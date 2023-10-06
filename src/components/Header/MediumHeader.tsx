@@ -39,6 +39,7 @@ const MediumHeader = () => {
     setIsOverlayOpen(!isOverlayOpen);
     setIsLibraryOpen(false);
     setIsRoomOpen(false);
+    setIsAboutUsOpen(false);
   };
 
   const onLibraryClick = () => {
@@ -54,8 +55,6 @@ const MediumHeader = () => {
   };
 
   const onAboutUsClick = () => {
-    setIsLibraryOpen(false);
-    setIsRoomOpen(false);
     setIsAboutUsOpen(!isAboutUsOpen);
   };
 
@@ -77,9 +76,9 @@ const MediumHeader = () => {
 
   return (
     <>
-      <header className='fixed top-0 w-[100%]'>
+      <header className='absolute top-0 w-[100%]'>
         <div
-          className='md:hidden flex flex-row justify-between items-center bg-[#f5f7fc] fixed
+          className='md:hidden flex flex-row justify-between items-center bg-[#f5f7fc] absolute
           w-[100%] h-[72px]
           px-[20px] py-[16px] z-[3]'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
@@ -90,7 +89,7 @@ const MediumHeader = () => {
           </button>
         </div>
         <div
-          className='bg-white flex flex-col justify-start items-center gap-y-[24px] fixed
+          className='bg-white flex flex-col justify-start items-center gap-y-[24px] absolute
           transition-all ease-in-out duration-[900ms] whitespace-nowrap overflow-scroll overscroll-none
           w-[100%] px-[20px] py-[16px] z-[2]
           md:hidden'
@@ -117,6 +116,7 @@ const MediumHeader = () => {
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
               })}
+              onClick={() => setTimeout(throttledOnClick, 1000)}
             >
               {({ isActive, isPending }) => (
                 <>
@@ -189,6 +189,11 @@ const MediumHeader = () => {
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
                   })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsLibraryOpen(!isLibraryOpen);
+                    playSegments([60, 30], true);
+                  })}
                 >
                   {({ isActive, isPending }) => (
                     <>
@@ -207,6 +212,11 @@ const MediumHeader = () => {
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsLibraryOpen(!isLibraryOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -282,6 +292,11 @@ const MediumHeader = () => {
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
                   })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsRoomOpen(!isRoomOpen);
+                    playSegments([60, 30], true);
+                  })}
                 >
                   {({ isActive, isPending }) => (
                     <>
@@ -300,6 +315,11 @@ const MediumHeader = () => {
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsRoomOpen(!isRoomOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -385,6 +405,11 @@ const MediumHeader = () => {
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
                   })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsAboutUsOpen(!isAboutUsOpen);
+                    playSegments([60, 30], true);
+                  })}
                 >
                   {({ isActive, isPending }) => (
                     <>
@@ -404,6 +429,11 @@ const MediumHeader = () => {
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
                   })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsAboutUsOpen(!isAboutUsOpen);
+                    playSegments([60, 30], true);
+                  })}
                 >
                   {({ isActive, isPending }) => (
                     <>
@@ -422,6 +452,11 @@ const MediumHeader = () => {
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsAboutUsOpen(!isAboutUsOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -443,6 +478,7 @@ const MediumHeader = () => {
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
               })}
+              onClick={() => setTimeout(throttledOnClick, 1000)}
             >
               {({ isActive, isPending }) => (
                 <>
@@ -459,6 +495,7 @@ const MediumHeader = () => {
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
               })}
+              onClick={() => setTimeout(throttledOnClick, 1000)}
             >
               {({ isActive, isPending }) => (
                 <>

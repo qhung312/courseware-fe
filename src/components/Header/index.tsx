@@ -6,7 +6,7 @@ const Header = () => {
     <>
       <LargeHeader />
       <MediumHeader />
-      <div className='mb-[72px] md:mb-[102.6px] xl:mb-[103px]'></div>
+      <div className='mb-[72px] md:mb-[110.6px] xl:mb-[149px]'></div>
     </>
   );
 };
