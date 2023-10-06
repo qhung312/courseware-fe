@@ -2,9 +2,12 @@ import { ReactComponent as AboutUs } from '../../assets/svgs/AboutUsIcon.svg';
 import { ReactComponent as Activity } from '../../assets/svgs/ActivityIcon.svg';
 import { ReactComponent as Book } from '../../assets/svgs/Book.svg';
 import { ReactComponent as ChevronDown } from '../../assets/svgs/ChevronDownIcon.svg';
+import { ReactComponent as ChevronLeft } from '../../assets/svgs/ChevronLeftIcon.svg';
 import { ReactComponent as ChevronRight } from '../../assets/svgs/ChevronRightIcon.svg';
 import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg';
+import { ReactComponent as DocumentCopy } from '../../assets/svgs/DocumentCopy.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
+import { ReactComponent as DocumentShare } from '../../assets/svgs/DocumentShare.svg';
 import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as Help } from '../../assets/svgs/HelpIcon.svg';
 import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
@@ -25,8 +28,11 @@ export default {
   Book,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   ChevronUp,
   Document,
+  DocumentCopy,
+  DocumentShare,
   Exercise,
   Help,
   Home,
