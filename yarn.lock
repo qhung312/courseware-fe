@@ -2139,6 +2139,13 @@
   dependencies:
     "@types/jest" "*"
 
+"@types/tiny-slider-react@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@types/tiny-slider-react/-/tiny-slider-react-0.3.4.tgz#2a0833f7381272749e8872b72539445ddd5e6d8c"
+  integrity sha512-wcB597Kjh6dndITmPhb3G2S3jqmQHtpTF89utjaBkmzIrj9mDMKfMQ78NVatLFaPE2BqAPgwztfgqooH+titIw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/trusted-types@^2.0.2":
   version "2.0.3"
   resolved "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.3.tgz"
@@ -8699,6 +8706,18 @@ thunky@^1.0.2:
   version "1.1.0"
   resolved "https://registry.npmjs.org/thunky/-/thunky-1.1.0.tgz"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
+
+tiny-slider-react@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/tiny-slider-react/-/tiny-slider-react-0.5.7.tgz#6d8c7dd9e48413ec7457091f5ea821e83bebc2ca"
+  integrity sha512-YTzPlyY9yI/v+c3h8BQ7dTHmCDtK8ghbaGD20FNqEPAySk1AR0aTaW6Iqhup5U7gJiWiUsfCHO31q8xEeuGsRQ==
+  dependencies:
+    tiny-slider "^2.9.3"
+
+tiny-slider@^2.9.3:
+  version "2.9.4"
+  resolved "https://registry.yarnpkg.com/tiny-slider/-/tiny-slider-2.9.4.tgz#dd5cbf3065f1688ade8383ea6342aefcba22ccc4"
+  integrity sha512-LAs2kldWcY+BqCKw4kxd4CMx2RhWrHyEePEsymlOIISTlOVkjfK40sSD7ay73eKXBLg/UkluAZpcfCstimHXew==
 
 tmpl@1.0.5:
   version "1.0.5"

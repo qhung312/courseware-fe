@@ -1,51 +1,63 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Header } from './components';
+import { Footer, Header, Loading } from './components';
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
 import TitleWrapper from './routes/TitleWrapper';
 
 const App = () => {
-  useEffect(() => {}, []);
-  return (
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+
+    return () => clearTimeout(id);
+  }, []);
+
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Header />
-      <Suspense fallback={<></>}>
-        <Routes>
-          {routes.map((route, index) => {
-            const Component: React.FC = route.component;
-
-            if (!route.isProtected) {
-              return (
-                <Route
-                  path={route.path}
-                  element={
-                    <TitleWrapper title={route.title}>
-                      <Component />
-                    </TitleWrapper>
-                  }
-                  key={index}
-                />
-              );
-            }
-
+      <Routes>
+        {routes.map((route, index) => {
+          const Component: React.FC = route.component;
+          if (!route.isProtected) {
             return (
               <Route
                 path={route.path}
                 element={
-                  <PrivateRoute>
+                  <Suspense fallback={<Loading />}>
                     <TitleWrapper title={route.title}>
                       <Component />
                     </TitleWrapper>
-                  </PrivateRoute>
+                  </Suspense>
                 }
                 key={index}
               />
             );
-          })}
-        </Routes>
-      </Suspense>
+          }
+          return (
+            <Route
+              path={route.path}
+              element={
+                <Suspense fallback={<Loading />}>
+                  <TitleWrapper title={route.title}>
+                    <PrivateRoute key={index}>
+                      <Component />
+                    </PrivateRoute>
+                  </TitleWrapper>
+                </Suspense>
+              }
+              key={index}
+            />
+          );
+        })}
+      </Routes>
+      <Footer />
     </>
   );
 };
