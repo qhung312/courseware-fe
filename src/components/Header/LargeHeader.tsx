@@ -12,7 +12,7 @@ const LargeHeader = () => {
   const aboutUsRef = useRef<HTMLDivElement>(null);
 
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/quizzes'
+    pathname === '/library/documents' || pathname === '/library/tests'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -56,7 +56,7 @@ const LargeHeader = () => {
   const throttledAboutUsClick = useThrottle(onAboutUsClick);
 
   return (
-    <header className='hidden md:flex flex-column absolute flex-wrap w-[100vw] bg-white z-[3] top-0'>
+    <header className='hidden md:flex flex-column fixed flex-wrap w-[100vw] bg-white z-30 top-0'>
       <div
         className='flex flex-row justify-between items-center w-[100%]
       px-[16px] py-[12px] xl:px-[32px] xl:py-[16px] z-[2]'
@@ -120,14 +120,13 @@ const LargeHeader = () => {
               px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
               style={{
                 color:
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '#FFFFFF'
+                  pathname === '/library/documents' || pathname === '/library/tests'
+                    ? '#3b3b3b'
                     : '#5B5B5B',
-                backgroundColor:
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
-                    ? '#4285f4'
-                    : 'transparent',
-                borderRadius: '8px',
+                fontWeight:
+                  pathname === '/library/documents' || pathname === '/library/tests'
+                    ? '700'
+                    : 'normal',
               }}
             >
               Thư viện
@@ -135,7 +134,7 @@ const LargeHeader = () => {
             {isLibraryOpen ? (
               <Icon.ChevronUp
                 fill={
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
+                  pathname === '/library/documents' || pathname === '/library/tests'
                     ? '#3b3b3b'
                     : '#5B5B5B'
                 }
@@ -145,7 +144,7 @@ const LargeHeader = () => {
             ) : (
               <Icon.ChevronDown
                 fill={
-                  pathname === '/library/documents' || pathname === '/library/quizzes'
+                  pathname === '/library/documents' || pathname === '/library/tests'
                     ? '#3b3b3b'
                     : '#5B5B5B'
                 }
@@ -185,7 +184,7 @@ const LargeHeader = () => {
               </p>
             </NavLink>
             <NavLink
-              to='/library/quizzes'
+              to='/library/tests'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
               onClick={throttledLibraryClick}
@@ -194,8 +193,8 @@ const LargeHeader = () => {
                 className='bg-inherit text-[14px] xl:text-[18px] whitespace-nowrap 
                 px-2 py-1 xl:px-3 xl:py-2 transition-colors ease-linear duration-300'
                 style={{
-                  color: pathname === '/library/quizzes' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/library/quizzes' ? '700' : 'normal',
+                  color: pathname === '/library/tests' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/library/tests' ? '700' : 'normal',
                 }}
               >
                 Đề thi

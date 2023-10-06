@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Footer, Header, Loading } from './components';
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
+import TitleWrapper from './routes/TitleWrapper';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -30,7 +31,9 @@ const App = () => {
                 path={route.path}
                 element={
                   <Suspense fallback={<Loading />}>
-                    <Component />
+                    <TitleWrapper title={route.title}>
+                      <Component />
+                    </TitleWrapper>
                   </Suspense>
                 }
                 key={index}
@@ -42,9 +45,11 @@ const App = () => {
               path={route.path}
               element={
                 <Suspense fallback={<Loading />}>
-                  <PrivateRoute key={index}>
-                    <Component />
-                  </PrivateRoute>
+                  <TitleWrapper title={route.title}>
+                    <PrivateRoute key={index}>
+                      <Component />
+                    </PrivateRoute>
+                  </TitleWrapper>
                 </Suspense>
               }
               key={index}

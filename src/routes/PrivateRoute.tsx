@@ -6,7 +6,6 @@ import { RootState } from '../store';
 
 type TPrivateRouteProps = {
   children: ReactNode;
-  key: number;
 };
 
 const PrivateRoute: React.FC<TPrivateRouteProps> = ({ children }) => {

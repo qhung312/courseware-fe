@@ -23,7 +23,7 @@ const MediumHeader = () => {
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/quizzes'
+    pathname === '/library/documents' || pathname === '/library/tests'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -76,11 +76,11 @@ const MediumHeader = () => {
 
   return (
     <>
-      <header className='absolute top-0 w-[100%]'>
+      <header className='fixed top-0 w-[100%] z-30'>
         <div
           className='md:hidden flex flex-row justify-between items-center bg-[#f5f7fc] absolute
           w-[100%] h-[72px]
-          px-[20px] py-[16px] z-[3]'
+          px-[20px] py-[16px] z-[25]'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
         >
           <MediumLogoCTCT />
@@ -91,7 +91,7 @@ const MediumHeader = () => {
         <div
           className='bg-white flex flex-col justify-start items-center gap-y-[24px] absolute
           transition-all ease-in-out duration-[900ms] whitespace-nowrap overflow-scroll overscroll-none
-          w-[100%] px-[20px] py-[16px] z-[2]
+          w-[100%] px-[20px] py-[16px] z-20
           md:hidden'
           style={{
             transform: isOverlayOpen ? 'translateY(0%)' : 'translateY(calc(-100vh - 72px))',
@@ -134,7 +134,7 @@ const MediumHeader = () => {
                 <div className='flex flex-row justify-start items-center gap-x-[16px]'>
                   <Icon.Library
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -142,7 +142,7 @@ const MediumHeader = () => {
                   <p
                     style={{
                       color:
-                        pathname === '/library/documents' || pathname === '/library/quizzes'
+                        pathname === '/library/documents' || pathname === '/library/tests'
                           ? '#4285F4'
                           : '#696969',
                     }}
@@ -153,7 +153,7 @@ const MediumHeader = () => {
                 {isLibraryOpen ? (
                   <Icon.ChevronUp
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -163,7 +163,7 @@ const MediumHeader = () => {
                 ) : (
                   <Icon.ChevronDown
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -205,7 +205,7 @@ const MediumHeader = () => {
                   )}
                 </NavLink>
                 <NavLink
-                  to='/library/quizzes'
+                  to='/library/tests'
                   end
                   className='flex flex-row justify-start items-center gap-x-[16px]
                 px-[20px] py-[16px] rounded-[12px] w-[100%]'
