@@ -48,8 +48,10 @@ const LargeHeader = () => {
         const currentYOffset = getOffset(navRef);
         if (currentYOffset > prevYOffset) {
           navRef.current.style.maxHeight = '0';
+          navRef.current.style.opacity = '0';
         } else {
           navRef.current.style.maxHeight = '1000px';
+          navRef.current.style.opacity = '1';
         }
         setPrevYOffset(currentYOffset);
       }
@@ -109,7 +111,7 @@ const LargeHeader = () => {
       </div>
       <nav
         ref={navRef}
-        className='z-[2] flex w-[100%] flex-row items-center justify-start overflow-hidden bg-[#E3F2FD]
+        className='z-[2] flex w-[100%] flex-row items-center justify-start bg-[#E3F2FD]
         transition-all duration-700 ease-out'
       >
         <NavLink
