@@ -36,8 +36,8 @@ const DocumentPage: React.FC = () => {
               className='flex items-center space-x-2 hover:underline md:hidden'
               onClick={() => setSearchParams({})}
             >
-              <Icon.ChevronLeft className='fill-black' />
-              <span>Quay lại</span>
+              <Icon.ChevronLeft className='max-w-2 min-w-2 min-h-3 max-h-3 fill-black' />
+              <p className='w-[100px]'>Quay lại</p>
             </button>
 
             {/* Introduction */}

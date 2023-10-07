@@ -26,11 +26,11 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
   return (
     <>
       <div
-        className={`fixed top-0 z-20 max-h-screen pt-[72px] md:pt-[110.6px] xl:pt-[149px] ${
+        className={`fixed top-0 z-20 max-h-screen pt-[72px] md:pt-[66px] xl:pt-[82px] ${
           params?.subject ? 'translate-x-[-100%]' : ''
         } h-screen min-h-screen w-full transition-all duration-300 md:w-[264px]  md:translate-x-0 lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex h-full max-h-full items-center overflow-y-scroll bg-white px-5 pt-5  md:pt-[42px] lg:pt-14 xl:px-7'>
+        <div className='flex h-full max-h-full items-center overflow-y-scroll bg-white px-5 pt-5  md:pt-[87px] lg:pt-[101px] xl:pt-[143px] xl:px-7'>
           <div className='h-full w-full space-y-6'>
             <h2 className='md:text-md hidden font-semibold transition duration-300 md:block lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl'>
               {subTitle}
@@ -76,7 +76,7 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
                       </p>
                     </div>
                     <Icon.ChevronRight
-                      className={`hidden h-auto md:block ${
+                      className={`hidden max-w-2 min-w-2 max-h-3 min-h-3 h-auto md:block ${
                         isActive ? 'md:fill-white' : 'fill-[#252641] group-hover:fill-white'
                       } `}
                     />
