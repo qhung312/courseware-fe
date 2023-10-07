@@ -21,19 +21,20 @@ const Home = () => {
           autoPlay
           emulateTouch
           infiniteLoop
-          interval={4000}
+          interval={3000}
           transitionTime={1000}
           renderIndicator={CarouselIndicator}
           renderArrowPrev={CarouselArrow.Prev}
           renderArrowNext={CarouselArrow.Next}
+          stopOnHover={false}
         >
           {data.map((item) => (
             <div className='relative' key={item.id}>
               <img src={item.imgSrc} alt='bg' className='aspect-[16/9] h-auto w-[80vw]' />
               <div
-                className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 py-1 
-                md:bottom-[32px]
-                xl:bottom-[48px]'
+                className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 
+                py-1
+                md:bottom-[48px] xl:bottom-[56px]'
               >
                 <p
                   className='relative ml-[16px] mr-[8px] text-[12px] font-bold text-[#4D4D4D] 
@@ -124,7 +125,7 @@ const Home = () => {
       </section>
       <section
         className='flex aspect-[1920/1048] h-auto w-full flex-row items-center justify-center 
-        gap-x-[40px] px-6 py-4 md:px-[90px] md:py-[80px] xl:px-[120px] xl:py-[100px] 2xl:px-[180px]'
+        gap-x-[40px] bg-no-repeat px-6 py-4 md:gap-x-[80px] md:px-[90px] md:py-[80px] xl:px-[120px] xl:py-[100px] 2xl:px-[180px]'
         style={{ backgroundImage: `url(${EventBackground})`, backgroundSize: 'contain' }}
       >
         <p
@@ -150,11 +151,12 @@ const Home = () => {
             autoPlay
             emulateTouch
             infiniteLoop
-            interval={4000}
+            interval={3000}
             transitionTime={1000}
             renderIndicator={CarouselIndicator}
             renderArrowPrev={CarouselArrow.Prev}
             renderArrowNext={CarouselArrow.Next}
+            stopOnHover={false}
             className='w-[200px] md:w-[400px] xl:w-[800px]'
           >
             <div>
@@ -165,7 +167,7 @@ const Home = () => {
               />
               <div
                 className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 py-1 
-                md:bottom-[32px]
+                md:bottom-[40px]
                 xl:bottom-[48px]'
               >
                 <p
@@ -191,7 +193,7 @@ const Home = () => {
               />
               <div
                 className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 py-1 
-                md:bottom-[32px]
+                md:bottom-[40px]
                 xl:bottom-[48px]'
               >
                 <p
@@ -226,11 +228,12 @@ const Home = () => {
           autoPlay
           emulateTouch
           infiniteLoop
-          interval={4000}
+          interval={3000}
           transitionTime={1000}
           renderIndicator={CarouselIndicator}
           showArrows={false}
-          className='h-[280px] w-full md:h-[400px] lg:h-[480px] xl:h-[540px]'
+          stopOnHover={false}
+          className='h-[280px] w-full md:h-[400px] lg:h-[440px] xl:h-[540px]'
         >
           <div
             className='flex h-[200px] flex-row items-center justify-between gap-x-[12px] 
