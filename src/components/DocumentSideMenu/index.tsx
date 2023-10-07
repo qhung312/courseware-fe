@@ -1,7 +1,7 @@
 const DocumentSideMenu: React.FC = () => {
   return (
-    <div className='z-20 flex items-center fixed md:block w-full md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px] px-5 xl:px-7 pt-5 md:pt-[42px] lg:pt-14 h-[2000px] bg-red-500 transition-all duration-300'>
-      <div className='w-full h-full bg-blue-600'></div>
+    <div className='fixed z-20 flex h-[2000px] w-full items-center bg-red-500 px-5 pt-5 transition-all duration-300 md:block md:w-[264px] md:pt-[42px] lg:w-[332px] lg:pt-14 xl:w-[400px] xl:px-7 3xl:w-[500px]'>
+      <div className='h-full w-full bg-blue-600'></div>
     </div>
   );
 };

@@ -8,27 +8,27 @@ import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg
 
 const Footer = () => {
   return (
-    <div className='max-w-[1920px] mx-auto pb-[2.5rem]'>
-      <div className='flex sml:flex-col sml:pb-[0.25rem] sm:flex-col sm:pb-[1rem] lg:flex-row lg:justify-between lg:pt-[1.5rem] xl:pt-[2rem] xl:pb-[1rem] 2xl:pb-0'>
-        <div className='flex sml:justify-evenly sml:pb-[1rem] sml:pt-[0.75rem] sm:justify-evenly sm:mb-[1rem] sm:pb-[2rem] sm:pt-[2.5rem] lg:items-center lg:px-[1rem] xl:px-[2rem] 2xl:gap-x-[3rem]'>
-          <div className='sml:mt-[1.25rem] sm:mt-[1.625rem]'>
-            <LogoCTCT className='sml:w-[7.5rem] sml:h-[3.5rem] sm:w-[9.375rem] sm:h-[5rem] md:w-[11rem] md:h-[7.5rem] lg:w-[8rem] lg:h-[3.5rem] xl:w-[9rem] xl:h-[4.75rem] 2xl:w-[10rem] 2xl:h-[5.5rem]' />
+    <div className='mx-auto max-w-[1920px] pb-[2.5rem]'>
+      <div className='flex sm:flex-col sm:pb-[1rem] lg:flex-row lg:justify-between lg:pt-[1.5rem] xl:pt-[2rem] xl:pb-[1rem] 2xl:pb-0 sml:flex-col sml:pb-[0.25rem]'>
+        <div className='flex sm:mb-[1rem] sm:justify-evenly sm:pb-[2rem] sm:pt-[2.5rem] lg:items-center lg:px-[1rem] xl:px-[2rem] 2xl:gap-x-[3rem] sml:justify-evenly sml:pb-[1rem] sml:pt-[0.75rem]'>
+          <div className='sm:mt-[1.625rem] sml:mt-[1.25rem]'>
+            <LogoCTCT className='sm:h-[5rem] sm:w-[9.375rem] md:h-[7.5rem] md:w-[11rem] lg:h-[3.5rem] lg:w-[8rem] xl:h-[4.75rem] xl:w-[9rem] 2xl:h-[5.5rem] 2xl:w-[10rem] sml:h-[3.5rem] sml:w-[7.5rem]' />
           </div>
 
           <div className='flex flex-col gap-y-[1rem]'>
             <div className='mx-auto'>
-              <p className='text-[#000] font-[600] sm:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl'>
+              <p className='font-[600] text-[#000] sm:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl'>
                 Đơn vị hợp tác
               </p>
             </div>
             <div className=''>
-              <LogoGDSC className='sml:w-[11rem] sml:h-[3rem] sm:w-[15rem] sm:h-[5rem] md:h-[7rem] md:w-[17rem] lg:w-[13rem] lg:h-[4rem] xl:w-[14.5rem] xl:h-[4.5rem] 2xl:w-[15rem] 2xl:h-[5rem]' />
+              <LogoGDSC className='sm:h-[5rem] sm:w-[15rem] md:h-[7rem] md:w-[17rem] lg:h-[4rem] lg:w-[13rem] xl:h-[4.5rem] xl:w-[14.5rem] 2xl:h-[5rem] 2xl:w-[15rem] sml:h-[3rem] sml:w-[11rem]' />
             </div>
           </div>
         </div>
 
         <div className='flex flex-col lg:justify-between 2xl:gap-y-[5.125rem] '>
-          <div className='flex flex-col justify-between sml:pl-[1.5rem] sm:pl-[1.5rem] sm:gap-y-[0.75rem] lg:pl-0 xl:px-[2rem]'>
+          <div className='flex flex-col justify-between sm:gap-y-[0.75rem] sm:pl-[1.5rem] lg:pl-0 xl:px-[2rem] sml:pl-[1.5rem]'>
             <p className='text-[#5b5b5b] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[22px]'>
               Home
             </p>
@@ -41,57 +41,57 @@ const Footer = () => {
           </div>
 
           <div className='mx-auto'>
-            <p className='font-bold sml:hidden sm:hidden lg:inline lg:text-[23px] xl:text-[30px] 2xl:text-[38px]'>
+            <p className='font-bold sm:hidden lg:inline lg:text-[23px] xl:text-[30px] 2xl:text-[38px] sml:hidden'>
               WE LEARN - WE SHARE
             </p>
           </div>
         </div>
 
-        <div className='flex flex-col sm:justify-between box-content sml:px-[1.5rem] sml:pt-[1rem] sml:gap-y-[1rem] sm:px-[1.5rem] sm:pt-[1rem] sm:gap-y-[1.5rem] lg:w-[35%] lg:pt-0 lg:justify-start'>
+        <div className='box-content flex flex-col sm:justify-between sm:gap-y-[1.5rem] sm:px-[1.5rem] sm:pt-[1rem] lg:w-[35%] lg:justify-start lg:pt-0 sml:gap-y-[1rem] sml:px-[1.5rem] sml:pt-[1rem]'>
           <div className=''>
-            <p className='font-semibold sm:text-left sml:text-lg sm:text-xl lg:text-center lg:text-2xl xl:text-3xl'>
+            <p className='font-semibold sm:text-left sm:text-xl lg:text-center lg:text-2xl xl:text-3xl sml:text-lg'>
               Liên Hệ
             </p>
           </div>
-          <div className='flex flex-col sml:gap-y-[0.75rem] sm:gap-y-[0.5rem]'>
-            <div className='flex items-center sml:gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
+          <div className='flex flex-col sm:gap-y-[0.5rem] sml:gap-y-[0.75rem]'>
+            <div className='flex items-center sm:gap-x-[0.75rem] sml:gap-x-[0.5rem]'>
               <div>
-                <LocationIcon className='sml:h-[2.25rem] sml:w-[2.25rem] sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+                <LocationIcon className='sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem] sml:h-[2.25rem] sml:w-[2.25rem]' />
               </div>
-              <p className='sml:text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+              <p className='sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px] sml:text-[11.5px]'>
                 Phòng 102, Nhà học Thể dục thể thao, Đại học Bách Khoa - Đại học Quốc gia Hồ Chí
                 Minh, Cơ sở 2
               </p>
             </div>
 
-            <div className='flex items-center sml:gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
+            <div className='flex items-center sm:gap-x-[0.75rem] sml:gap-x-[0.5rem]'>
               <div>
-                <PhoneIcon className='sml:h-[2.25rem] sml:w-[2.25rem] sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+                <PhoneIcon className='sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem] sml:h-[2.25rem] sml:w-[2.25rem]' />
               </div>
-              <p className='sml:text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+              <p className='sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px] sml:text-[11.5px]'>
                 036 329 4701 - 086 835 3556
               </p>
             </div>
 
-            <div className='flex items-center sml:gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
+            <div className='flex items-center sm:gap-x-[0.75rem] sml:gap-x-[0.5rem]'>
               <div>
-                <MailIcon className='sml:h-[2.25rem] sml:w-[2.25rem] sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+                <MailIcon className='sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem] sml:h-[2.25rem] sml:w-[2.25rem]' />
               </div>
-              <p className='sml:text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+              <p className='sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px] sml:text-[11.5px]'>
                 chungtacungtienbk@gmail.com
               </p>
             </div>
           </div>
         </div>
       </div>
-      <hr className='border-solid border-black border-[1px]' />
-      <div className='flex sml:flex-col sml:items-center sml:gap-y-[0.2rem] sml:pt-[0.25rem] sm:flex-col sm:items-center sm:pt-[0.25rem] sm:gap-y-[1.5rem] lg:items-end lg:pr-[2rem]'>
+      <hr className='border-[1px] border-solid border-black' />
+      <div className='flex sm:flex-col sm:items-center sm:gap-y-[1.5rem] sm:pt-[0.25rem] lg:items-end lg:pr-[2rem] sml:flex-col sml:items-center sml:gap-y-[0.2rem] sml:pt-[0.25rem]'>
         <div>
-          <p className='font-bold sml:text-[1.5rem] sm:flex sm:text-[2rem] md:text-[2rem] lg:hidden'>
+          <p className='font-bold sm:flex sm:text-[2rem] md:text-[2rem] lg:hidden sml:text-[1.5rem]'>
             WE LEARN - WE SHARE
           </p>
         </div>
-        <div className='flex sml:gap-x-[1.25rem] sm:gap-x-[2rem]'>
+        <div className='flex sm:gap-x-[2rem] sml:gap-x-[1.25rem]'>
           <FacebookIcon className='sml:h-[2.25rem] sml:w-[2.25rem]' />
           <YoutubeIcon className='sml:h-[2.25rem] sml:w-[2.25rem]' />
         </div>

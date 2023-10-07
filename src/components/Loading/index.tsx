@@ -17,8 +17,8 @@ const Loading = () => {
 
   return (
     <div
-      className='flex justify-center items-center fixed z-[10000000] bg-white
-      w-[100vw] h-[100vh]'
+      className='fixed z-[10000000] flex h-[100vh] w-[100vw] items-center
+      justify-center bg-white'
     >
       {View}
     </div>
