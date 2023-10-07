@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 
+const HomePage = lazy(() => import('../pages/Home'));
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const DocumentPage = lazy(() => import('../pages/Library/DocumentPage'));
 const ExamArchivePage = lazy(() => import('../pages/Library/ExamArchivePage'));
@@ -13,7 +14,7 @@ export interface Route {
 }
 
 const routes = [
-  { title: 'Trang Chủ', path: '/', component: LoginPage, isProtected: false },
+  { title: 'Trang Chủ', path: '/', component: HomePage, isProtected: false },
   { title: 'Tài liệu', path: '/library/documents', component: DocumentPage, isProtected: true },
   { title: 'Đề thi', path: '/library/tests', component: ExamArchivePage, isProtected: true },
   {
