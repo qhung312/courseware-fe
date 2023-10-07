@@ -7,4 +7,13 @@ import Header from './Header';
 import Icon from './Icon';
 import Loading from './Loading';
 
-export { Footer, Header, Icon, DocumentSideMenu, DocumentCard, Loading, CarouselIndicator, CarouselArrow };
+export {
+  Footer,
+  Header,
+  Icon,
+  DocumentSideMenu,
+  DocumentCard,
+  Loading,
+  CarouselIndicator,
+  CarouselArrow,
+};
