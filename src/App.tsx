@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Footer, Header, Loading } from './components';
+import { Header, Loading } from './components';
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
 import TitleWrapper from './routes/TitleWrapper';
@@ -55,7 +55,6 @@ const App = () => {
           })}
         </Routes>
       </Suspense>
-      <Footer />
     </>
   );
 };

@@ -26,7 +26,7 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
   return (
     <>
       <div
-        className={`fixed top-0 z-20 max-h-screen pt-[72px] md:pt-[66px] xl:pt-[82px] ${
+        className={`fixed top-0 z-20 max-h-screen pt-[72px] md:pt-[46px] xl:pt-[62px] ${
           params?.subject ? 'translate-x-[-100%]' : ''
         } h-screen min-h-screen w-full transition-all duration-300 md:w-[264px]  md:translate-x-0 lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
