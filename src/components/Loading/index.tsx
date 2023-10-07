@@ -1,5 +1,5 @@
 import { LottieOptions, useLottie } from 'lottie-react';
-import { CSSProperties, useEffect, useState } from 'react';
+import { CSSProperties } from 'react';
 
 const Loading = () => {
   const style: CSSProperties = {
@@ -15,22 +15,14 @@ const Loading = () => {
 
   const { View } = useLottie(options, style);
 
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const timeout = setTimeout(() => setShow(true), 100);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  return show ? (
+  return (
     <div
-      className='flex justify-center items-center fixed z-[10000000] bg-white
-      w-[100vw] h-[100vh]'
+      className='fixed z-[10000000] flex h-[100vh] w-[100vw] items-center
+      justify-center bg-white'
     >
       {View}
     </div>
-  ) : null;
+  );
 };
 
 export default Loading;

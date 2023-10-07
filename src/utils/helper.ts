@@ -2,6 +2,15 @@ export function test() {
   return null;
 }
 
+export function getOffset(ref: React.RefObject<HTMLElement>) {
+  const rect =
+      ref.current === null || ref.current === undefined
+        ? { top: 0 }
+        : ref.current?.getBoundingClientRect(),
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  return rect.top + scrollTop;
+}
+
 export function getOS() {
   const { userAgent } = window.navigator;
   const { platform } = window.navigator;

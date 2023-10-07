@@ -12,7 +12,7 @@ const App = () => {
   useEffect(() => {
     const id = setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 1000);
 
     return () => clearTimeout(id);
   }, []);
@@ -22,41 +22,39 @@ const App = () => {
   ) : (
     <>
       <Header />
-      <Routes>
-        {routes.map((route, index) => {
-          const Component: React.FC = route.component;
-          if (!route.isProtected) {
+      <Suspense fallback={null}>
+        <Routes>
+          {routes.map((route, index) => {
+            const Component: React.FC = route.component;
+            if (!route.isProtected) {
+              return (
+                <Route
+                  path={route.path}
+                  element={
+                    <TitleWrapper title={route.title}>
+                      <Component />
+                    </TitleWrapper>
+                  }
+                  key={index}
+                />
+              );
+            }
             return (
               <Route
                 path={route.path}
                 element={
-                  <Suspense fallback={<Loading />}>
-                    <TitleWrapper title={route.title}>
-                      <Component />
-                    </TitleWrapper>
-                  </Suspense>
-                }
-                key={index}
-              />
-            );
-          }
-          return (
-            <Route
-              path={route.path}
-              element={
-                <Suspense fallback={<Loading />}>
                   <TitleWrapper title={route.title}>
                     <PrivateRoute key={index}>
                       <Component />
                     </PrivateRoute>
                   </TitleWrapper>
-                </Suspense>
-              }
-              key={index}
-            />
-          );
-        })}
-      </Routes>
+                }
+                key={index}
+              />
+            );
+          })}
+        </Routes>
+      </Suspense>
       <Footer />
     </>
   );
