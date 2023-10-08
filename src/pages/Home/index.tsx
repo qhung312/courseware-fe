@@ -108,30 +108,34 @@ const Home = () => {
                 Cộng đồng không ngừng&nbsp;
               </p>
               <p className='text-center text-[24px] font-bold lg:text-[32px] 2xl:text-[48px]'>
-                <span className='text-[#00A3FF]'>phát triển</span> và{' '}
-                <span className='text-[#00A3FF]'>mở rộng</span>
+                <span className='whitespace-nowrap text-[#00A3FF]'>phát triển</span> và{' '}
+                <span className='whitespace-nowrap text-[#00A3FF]'>mở rộng</span>
               </p>
             </div>
             <div className='mt-[16px] flex flex-row items-center justify-center gap-x-[24px] md:mt-[24px]'>
               <div className='flex flex-col items-center justify-center'>
-                <p className='text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
+                <p className='whitespace-nowrap text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
                   30 000+
                 </p>
-                <p className='text-[12px] md:text-[16px] xl:text-[24px]'>sinh viên</p>
+                <p className='whitespace-nowrap text-[12px] md:text-[16px] xl:text-[24px]'>
+                  sinh viên
+                </p>
               </div>
               <div className='flex flex-col items-center justify-center'>
-                <p className='text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
+                <p className='whitespace-nowrap text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
                   7
                 </p>
-                <p className='text-[12px] md:text-[16px] xl:text-[24px]'>môn học</p>
+                <p className='whitespace-nowrap text-[12px] md:text-[16px] xl:text-[24px]'>
+                  môn học
+                </p>
               </div>
             </div>
           </div>
         </section>
         <section
-          className='flex aspect-[1920/1048] h-auto w-full flex-row items-center justify-center 
+          className='flex h-fit w-full flex-row items-center justify-center 
         gap-x-[40px] bg-no-repeat px-6 py-4 md:gap-x-[80px] md:px-[90px] md:py-[80px] xl:px-[120px] xl:py-[100px] 2xl:px-[180px]'
-          style={{ backgroundImage: `url(${EventBackground})`, backgroundSize: 'contain' }}
+          style={{ backgroundImage: `url(${EventBackground})`, backgroundSize: 'cover' }}
         >
           <p
             className='whitespace-normal text-center text-white 
@@ -159,8 +163,7 @@ const Home = () => {
               interval={3000}
               transitionTime={1000}
               renderIndicator={CarouselIndicator}
-              renderArrowPrev={CarouselArrow.Prev}
-              renderArrowNext={CarouselArrow.Next}
+              showArrows={false}
               stopOnHover={false}
               className='w-[150px] md:w-[400px] xl:w-[800px]'
             >
