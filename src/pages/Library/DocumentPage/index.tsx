@@ -22,7 +22,7 @@ const DocumentPage: React.FC = () => {
 
         <div className='flex flex-1 flex-col'>
           {/* Banner */}
-          <div className='hidden w-full bg-[#4285F4] px-6 py-5 text-white md:flex md:h-[88px] md:flex-col md:justify-between lg:h-[108px] lg:px-7 lg:py-6 xl:h-[132px] xl:px-8 xl:py-7 2xl:h-[164px] 2xl:px-9 2xl:py-8'>
+          <div className='hidden w-full bg-[#4285F4] px-5 py-5 text-white md:flex md:h-[88px] md:flex-col md:justify-between lg:h-[108px] lg:px-9 lg:py-6 xl:h-[132px] xl:px-10 xl:py-7 2xl:h-[164px] 2xl:px-11 2xl:py-8'>
             <h1 className='text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl 3xl:text-[44px]'>
               Thư viện tài liệu
             </h1>
@@ -31,7 +31,7 @@ const DocumentPage: React.FC = () => {
             </p>
           </div>
 
-          <div className='lg:px- flex-1 space-y-5 px-6 md:space-y-6 md:pt-0 xl:space-y-7 xl:px-8 2xl:space-y-8 2xl:px-9'>
+          <div className='flex-1 space-y-5 px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
             <button
               className='flex items-center space-x-2 hover:underline md:hidden'
               onClick={() => setSearchParams({})}
