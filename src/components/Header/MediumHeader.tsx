@@ -23,7 +23,7 @@ const MediumHeader = () => {
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/quizzes'
+    pathname === '/library/documents' || pathname === '/library/tests'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -39,6 +39,7 @@ const MediumHeader = () => {
     setIsOverlayOpen(!isOverlayOpen);
     setIsLibraryOpen(false);
     setIsRoomOpen(false);
+    setIsAboutUsOpen(false);
   };
 
   const onLibraryClick = () => {
@@ -54,8 +55,6 @@ const MediumHeader = () => {
   };
 
   const onAboutUsClick = () => {
-    setIsLibraryOpen(false);
-    setIsRoomOpen(false);
     setIsAboutUsOpen(!isAboutUsOpen);
   };
 
@@ -77,11 +76,11 @@ const MediumHeader = () => {
 
   return (
     <>
-      <header className='fixed top-0 w-[100%]'>
+      <header className='fixed top-0 z-30 w-[100%]'>
         <div
-          className='md:hidden flex flex-row justify-between items-center bg-[#f5f7fc] fixed
-          w-[100%] h-[72px]
-          px-[20px] py-[16px] z-[3]'
+          className='relative z-[25] flex h-[72px] w-[100%] flex-row items-center
+          justify-between bg-[#f5f7fc]
+          px-[20px] py-[16px] md:hidden'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
         >
           <MediumLogoCTCT />
@@ -90,33 +89,34 @@ const MediumHeader = () => {
           </button>
         </div>
         <div
-          className='bg-white flex flex-col justify-start items-center gap-y-[24px] fixed
-          transition-all ease-in-out duration-[900ms] whitespace-nowrap overflow-scroll overscroll-none
-          w-[100%] px-[20px] py-[16px] z-[2]
+          className='absolute z-20 flex w-[100%] flex-col items-center justify-start
+          gap-y-[24px] overflow-scroll overscroll-none whitespace-nowrap bg-white px-[20px]
+          py-[16px] transition-all duration-[900ms] ease-in-out
           md:hidden'
           style={{
             transform: isOverlayOpen ? 'translateY(0%)' : 'translateY(calc(-100vh - 72px))',
             height: 'calc(100vh)',
           }}
         >
-          <div className='flex flex-row justify-center items-center relative w-[100%]'>
+          <div className='relative flex w-[100%] flex-row items-center justify-center'>
             <input
-              className='bg-inherit rounded-[40px] border border-[#49BBBD] 
-            px-[20px] py-[8px] w-[100%]'
+              className='w-[100%] rounded-[40px] border border-[#49BBBD] 
+            bg-inherit px-[20px] py-[8px]'
             />
-            <button type='button' className='w-[20px] absolute right-[20px]'>
+            <button type='button' className='absolute right-[20px] w-[20px]'>
               <Icon.Search className='w-[20px]' />
             </button>
           </div>
-          <nav className='flex flex-col items-center w-[100%] gap-y-[12px]'>
+          <nav className='flex w-[100%] flex-col items-center gap-y-[12px]'>
             <NavLink
               to='/'
               end
-              className='flex flex-row justify-start items-center gap-x-[16px] z-[2]
-            px-[20px] py-[16px] rounded-[12px] w-[100%]'
+              className='z-[2] flex w-[100%] flex-row items-center justify-start
+            gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
               })}
+              onClick={() => setTimeout(throttledOnClick, 1000)}
             >
               {({ isActive, isPending }) => (
                 <>
@@ -125,16 +125,16 @@ const MediumHeader = () => {
                 </>
               )}
             </NavLink>
-            <div className='flex flex-col h-[fit-content] w-[100%] bg-white'>
+            <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
               <button
-                className='flex flex-row justify-between items-center
-              px-[20px] py-[16px] rounded-[12px] w-[100%] z-[2] bg-white'
+                className='z-[2] flex w-[100%] flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                 onClick={throttledLibraryClick}
               >
-                <div className='flex flex-row justify-start items-center gap-x-[16px]'>
+                <div className='flex flex-row items-center justify-start gap-x-[16px]'>
                   <Icon.Library
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -142,7 +142,7 @@ const MediumHeader = () => {
                   <p
                     style={{
                       color:
-                        pathname === '/library/documents' || pathname === '/library/quizzes'
+                        pathname === '/library/documents' || pathname === '/library/tests'
                           ? '#4285F4'
                           : '#696969',
                     }}
@@ -153,7 +153,7 @@ const MediumHeader = () => {
                 {isLibraryOpen ? (
                   <Icon.ChevronUp
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -163,7 +163,7 @@ const MediumHeader = () => {
                 ) : (
                   <Icon.ChevronDown
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/quizzes'
+                      pathname === '/library/documents' || pathname === '/library/tests'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -183,11 +183,16 @@ const MediumHeader = () => {
                 <NavLink
                   to='/library/documents'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsLibraryOpen(!isLibraryOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -200,13 +205,18 @@ const MediumHeader = () => {
                   )}
                 </NavLink>
                 <NavLink
-                  to='/library/quizzes'
+                  to='/library/tests'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsLibraryOpen(!isLibraryOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -218,13 +228,13 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            <div className='flex flex-col h-[fit-content] w-[100%] bg-white'>
+            <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
               <button
-                className='flex flex-row justify-between items-center
-              px-[20px] py-[16px] rounded-[12px] w-[100%] z-[2] bg-white'
+                className='z-[2] flex w-[100%] flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                 onClick={throttledRoomClick}
               >
-                <div className='flex flex-row justify-start items-center gap-x-[16px]'>
+                <div className='flex flex-row items-center justify-start gap-x-[16px]'>
                   <Icon.Room
                     fill={
                       pathname === '/room/exercises' || pathname === '/room/tests'
@@ -276,11 +286,16 @@ const MediumHeader = () => {
                 <NavLink
                   to='/room/exercises'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsRoomOpen(!isRoomOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -295,11 +310,16 @@ const MediumHeader = () => {
                 <NavLink
                   to='/room/tests'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsRoomOpen(!isRoomOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -313,13 +333,13 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            <div className='flex flex-col h-[fit-content] w-[100%] bg-white'>
+            <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
               <button
-                className='flex flex-row justify-between items-center
-              px-[20px] py-[16px] rounded-[12px] w-[100%] z-[2] bg-white'
+                className='z-[2] flex w-[100%] flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                 onClick={throttledAboutUsClick}
               >
-                <div className='flex flex-row justify-start items-center gap-x-[16px]'>
+                <div className='flex flex-row items-center justify-start gap-x-[16px]'>
                   <Icon.AboutUs
                     fill={
                       pathname === '/about-us' ||
@@ -379,11 +399,16 @@ const MediumHeader = () => {
                 <NavLink
                   to='/about-us'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsAboutUsOpen(!isAboutUsOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -398,11 +423,16 @@ const MediumHeader = () => {
                 <NavLink
                   to='/about-us/activities'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsAboutUsOpen(!isAboutUsOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -417,11 +447,16 @@ const MediumHeader = () => {
                 <NavLink
                   to='/about-us/partners'
                   end
-                  className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
                       isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={useDebounce(() => {
+                    setIsOverlayOpen(false);
+                    setIsAboutUsOpen(!isAboutUsOpen);
+                    playSegments([60, 30], true);
                   })}
                 >
                   {({ isActive, isPending }) => (
@@ -438,11 +473,12 @@ const MediumHeader = () => {
             <NavLink
               to='/help'
               end
-              className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+              className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
               })}
+              onClick={() => setTimeout(throttledOnClick, 1000)}
             >
               {({ isActive, isPending }) => (
                 <>
@@ -454,11 +490,12 @@ const MediumHeader = () => {
             <NavLink
               to='/profile'
               end
-              className='flex flex-row justify-start items-center gap-x-[16px]
-                px-[20px] py-[16px] rounded-[12px] w-[100%]'
+              className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
               })}
+              onClick={() => setTimeout(throttledOnClick, 1000)}
             >
               {({ isActive, isPending }) => (
                 <>
@@ -470,13 +507,13 @@ const MediumHeader = () => {
               )}
             </NavLink>
             <button
-              className='flex flex-row justify-between items-center
-              px-[20px] py-[16px] rounded-[12px] w-[100%] z-[2] bg-white'
+              className='z-[2] flex w-[100%] flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
               onClick={debouncedLogout}
             >
               <div
-                className='flex flex-row justify-start items-center gap-x-[16px]
-              transition-opacity ease-in-out duration-[800ms]'
+                className='flex flex-row items-center justify-start gap-x-[16px]
+              transition-opacity duration-[800ms] ease-in-out'
               >
                 <Icon.Logout fill={'#696969'} />
                 <p style={{ color: '#696969' }}>Đăng xuất</p>
