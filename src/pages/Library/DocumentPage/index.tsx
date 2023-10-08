@@ -31,7 +31,7 @@ const DocumentPage: React.FC = () => {
             </p>
           </div>
 
-          <div className='flex-1 space-y-5 p-5 md:space-y-6 md:pt-0 xl:space-y-7 2xl:space-y-8'>
+          <div className='lg:px- flex-1 space-y-5 px-6 md:space-y-6 md:pt-0 xl:space-y-7 xl:px-8 2xl:space-y-8 2xl:px-9'>
             <button
               className='flex items-center space-x-2 hover:underline md:hidden'
               onClick={() => setSearchParams({})}

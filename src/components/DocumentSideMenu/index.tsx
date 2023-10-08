@@ -50,7 +50,7 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
                 return (
                   <button
                     onClick={() => handleSubjectChange(subj.title)}
-                    className={`group mb-4 flex flex-1 items-center justify-between px-6 py-5 ${
+                    className={`group mb-4 flex flex-1 items-center justify-between px-6 py-5 md:py-3 xl:py-4 2xl:py-5  ${
                       isActive
                         ? 'bg-[#9DCCFF] bg-opacity-30 md:bg-[#4285F4] md:bg-opacity-90'
                         : 'bg-[#9DCCFF] bg-opacity-30'
