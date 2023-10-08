@@ -106,7 +106,8 @@
         "vars": "all",
         "varsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "react/prop-types": 0
   },
   "settings": {
     "import/ignore": ["node_modules"]
