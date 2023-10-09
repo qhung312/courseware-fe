@@ -18,4 +18,5 @@ export type ExamArchive = {
   createdBy: string;
   createdAt: number;
   lastUpdatedAt: number;
+  subject: string;
 };

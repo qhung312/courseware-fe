@@ -31,7 +31,7 @@ const MaterialPage: React.FC = () => {
             </p>
           </div>
 
-          <div className='mb-6 flex-1 space-y-5 px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
+          <div className='mb-6 min-h-full flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
             <button
               className='flex items-center space-x-2 hover:underline md:hidden'
               onClick={() => setSearchParams({})}
@@ -41,7 +41,7 @@ const MaterialPage: React.FC = () => {
             </button>
 
             {/* Introduction */}
-            <div className='space-y-2  md:mt-0'>
+            <div className='mt-0 space-y-2'>
               <h3 className='text-2xl font-semibold'>{subject?.title}</h3>
               <p className='text-[#696984]'>{subject?.description}</p>
             </div>

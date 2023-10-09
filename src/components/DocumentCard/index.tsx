@@ -22,7 +22,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ title, subTitle, descriptio
       </div>
       <div className='space-y-2'>
         <NavLink to={to}>
-          <h2 className='text-base font-semibold md:text-xl lg:text-2xl'>{title}</h2>
+          <h2 className='mr-16 text-base font-semibold md:text-xl lg:text-2xl'>{title}</h2>
         </NavLink>
         <p className='truncate text-sm text-[#696984] md:text-base'>{subTitle}</p>
       </div>

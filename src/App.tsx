@@ -34,6 +34,10 @@ const App = () => {
     }
   }, [dispatch, queryToken, navigate]);
 
+  useLayoutEffect(() => {
+    document?.body?.classList?.add('bg-[#F2F2F2]', 'md:bg-[#E3F2FD]');
+  }, []);
+
   return loading ? (
     <Loading />
   ) : (

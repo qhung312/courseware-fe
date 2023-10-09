@@ -5,11 +5,11 @@ import { Subject } from '../types/library';
 import { getAllSubjects } from './actions/library.action';
 
 export type TLibraryState = {
-  subjects: Array<Subject>;
+  subjects: Array<Subject> | null;
 };
 
 const initialState: TLibraryState = {
-  subjects: [],
+  subjects: null,
 };
 
 const librarySlice = createSlice({

@@ -1,4 +1,5 @@
 import { useLayoutEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { NavLink, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector, usePath } from '../../hooks';
@@ -55,45 +56,55 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
               </p>
             </span>
 
-            <div className='flex flex-col '>
-              {subjects.map((subj: Subject) => {
-                const isActive = subj._id === params?.subjectId;
-                return (
-                  <NavLink
-                    to={`${baseRoute}/${subj._id}`}
-                    className={`group mb-4 flex flex-1 items-center justify-between px-6 py-5 md:py-3 xl:py-4 2xl:py-5  ${
-                      isActive
-                        ? 'bg-[#9DCCFF] bg-opacity-30 md:bg-[#4285F4] md:bg-opacity-90'
-                        : 'bg-[#9DCCFF] bg-opacity-30'
-                    } rounded-xl transition-all duration-300  hover:bg-[#4285F4] hover:bg-opacity-90`}
-                    key={subj._id}
-                  >
-                    <div className='flex items-center space-x-4'>
-                      <Icon.Book
-                        className={
-                          isActive
-                            ? 'fill-[#252641] group-hover:fill-white md:fill-white'
-                            : 'fill-[#252641] group-hover:fill-white'
-                        }
+            <div className='flex flex-col space-y-4'>
+              {subjects ? (
+                subjects?.map((subj: Subject) => {
+                  const isActive = subj._id === params?.subjectId;
+                  return (
+                    <NavLink
+                      to={`${baseRoute}/${subj._id}`}
+                      className={`group flex flex-1 items-center justify-between px-6 py-5 md:py-3 xl:py-4 2xl:py-5  ${
+                        isActive
+                          ? 'bg-[#9DCCFF] bg-opacity-30 md:bg-[#4285F4] md:bg-opacity-90'
+                          : 'bg-[#9DCCFF] bg-opacity-30'
+                      } rounded-xl transition-all duration-300  hover:bg-[#4285F4] hover:bg-opacity-90`}
+                      key={subj._id}
+                    >
+                      <div className='flex items-center space-x-4'>
+                        <Icon.Book
+                          className={
+                            isActive
+                              ? 'fill-[#252641] group-hover:fill-white md:fill-white'
+                              : 'fill-[#252641] group-hover:fill-white'
+                          }
+                        />
+                        <p
+                          className={`max-w-[200px] truncate md:max-w-[96px] lg:max-w-[175px] xl:max-w-[200px] ${
+                            isActive
+                              ? 'text-[#252641] group-hover:text-white md:text-white'
+                              : 'text-[#252641] group-hover:text-white'
+                          }  `}
+                        >
+                          {subj.name}
+                        </p>
+                      </div>
+                      <Icon.ChevronRight
+                        className={`max-w-2 min-w-2 min-h-3 hidden h-auto max-h-3 md:block ${
+                          isActive ? 'md:fill-white' : 'fill-[#252641] group-hover:fill-white'
+                        } `}
                       />
-                      <p
-                        className={`max-w-[200px] truncate md:max-w-[96px] lg:max-w-[175px] xl:max-w-[200px] ${
-                          isActive
-                            ? 'text-[#252641] group-hover:text-white md:text-white'
-                            : 'text-[#252641] group-hover:text-white'
-                        }  `}
-                      >
-                        {subj.name}
-                      </p>
-                    </div>
-                    <Icon.ChevronRight
-                      className={`max-w-2 min-w-2 min-h-3 hidden h-auto max-h-3 md:block ${
-                        isActive ? 'md:fill-white' : 'fill-[#252641] group-hover:fill-white'
-                      } `}
-                    />
-                  </NavLink>
-                );
-              })}
+                    </NavLink>
+                  );
+                })
+              ) : (
+                <Skeleton
+                  count={8}
+                  borderRadius={12}
+                  className='h-12'
+                  containerClassName='space-y-4'
+                  baseColor='#DBEBFF'
+                />
+              )}
             </div>
           </div>
         </div>
