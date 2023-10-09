@@ -108,3 +108,8 @@ code {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.pdf > canvas {
+  width: 100% !important;
+  height: auto !important;
+}

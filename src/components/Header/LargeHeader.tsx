@@ -18,7 +18,7 @@ const LargeHeader = () => {
   const profileRef = useRef<HTMLDivElement>(null);
 
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/tests'
+    pathname === '/library/documents' || pathname === '/library/exam-archive'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -227,11 +227,11 @@ const LargeHeader = () => {
               text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
               style={{
                 color:
-                  pathname === '/library/documents' || pathname === '/library/tests'
+                  pathname === '/library/documents' || pathname === '/library/exam-archive'
                     ? '#FFFFFF'
                     : '#5B5B5B',
                 backgroundColor:
-                  pathname === '/library/documents' || pathname === '/library/tests'
+                  pathname === '/library/documents' || pathname === '/library/exam-archive'
                     ? '#4285f4'
                     : 'transparent',
                 borderRadius: '8px',
@@ -241,7 +241,7 @@ const LargeHeader = () => {
             </p>
             <Icon.ChevronUp
               fill={
-                pathname === '/library/documents' || pathname === '/library/tests'
+                pathname === '/library/documents' || pathname === '/library/exam-archive'
                   ? '#3b3b3b'
                   : '#5B5B5B'
               }
@@ -281,7 +281,7 @@ const LargeHeader = () => {
               </p>
             </NavLink>
             <NavLink
-              to='/library/tests'
+              to='/library/exam-archive'
               end
               className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
               onClick={throttledLibraryClick}
@@ -290,8 +290,8 @@ const LargeHeader = () => {
                 className='whitespace-nowrap bg-inherit px-2 py-1 
                 text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
                 style={{
-                  color: pathname === '/library/tests' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/library/tests' ? '700' : 'normal',
+                  color: pathname === '/library/exam-archive' ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname === '/library/exam-archive' ? '700' : 'normal',
                 }}
               >
                 Đề thi

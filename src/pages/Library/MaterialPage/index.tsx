@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { DocumentCard, DocumentSideMenu, Icon } from '../../../components';
 import subjects from '../../../data/document';
 
-const DocumentPage: React.FC = () => {
+const MaterialPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({ subject: subjects[0].title });
   const { subject: querySubject } = Object.fromEntries(searchParams);
   let subject = subjects.find((subj) => subj.title === querySubject);
@@ -14,7 +14,7 @@ const DocumentPage: React.FC = () => {
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'
         description='Lorem ipsum dolor sit amet, consectetur adi'
-        subjects={subjects}
+        baseRoute='/library/material'
       />
       <div className='flex flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'>
         {/* Add space */}
@@ -51,6 +51,7 @@ const DocumentPage: React.FC = () => {
               <h1 className='text-2xl font-semibold'>Nội dung môn học</h1>
               {subject?.chapters.map((chapter) => (
                 <DocumentCard
+                  to={''}
                   key={chapter.title}
                   title={chapter.title}
                   subTitle={chapter.subTitle}
@@ -65,4 +66,4 @@ const DocumentPage: React.FC = () => {
   );
 };
 
-export default DocumentPage;
+export default MaterialPage;

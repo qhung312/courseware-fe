@@ -1,8 +1,9 @@
 import { lazy } from 'react';
 
 const HomePage = lazy(() => import('../pages/Home'));
-const DocumentPage = lazy(() => import('../pages/Library/DocumentPage'));
+const MaterialPage = lazy(() => import('../pages/Library/MaterialPage'));
 const ExamArchivePage = lazy(() => import('../pages/Library/ExamArchivePage'));
+const ExamArchiveDetail = lazy(() => import('../pages/Library/ExamArchiveDetail'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
 export interface Route {
@@ -14,8 +15,19 @@ export interface Route {
 
 const routes = [
   { title: 'Chúng ta cùng tiến', path: '/', component: HomePage, isProtected: false },
-  { title: 'Tài liệu', path: '/library/documents', component: DocumentPage, isProtected: true },
-  { title: 'Đề thi', path: '/library/tests', component: ExamArchivePage, isProtected: true },
+  { title: 'Tài liệu', path: '/library/documents', component: MaterialPage, isProtected: true },
+  {
+    title: 'Đề thi các năm',
+    path: '/library/exam-archive/:subjectId?',
+    component: ExamArchivePage,
+    isProtected: true,
+  },
+  {
+    title: 'Chi tiết đề thi',
+    path: '/library/exam-archive/:subjectId/pdf/:pdfId?',
+    component: ExamArchiveDetail,
+    isProtected: true,
+  },
   {
     title: 'Bài luyện rèn luyện',
     path: '/room/exercises',

@@ -7,11 +7,10 @@ import { RootState } from '../../store';
 const options = {
   cMapUrl: 'cmaps/',
   cMapPacked: true,
-  standardFontDataUrl: 'standard_fonts/',
 };
 
 interface PDFProps {
-  url?: string | URL;
+  url: string | URL;
   renderMode?: 'canvas' | 'svg' | 'none';
   className?: string;
 }
@@ -39,6 +38,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className }) => {
     >
       {Array.from(new Array(numPages), (_el, index) => (
         <Page
+          className='pdf'
           key={`page_${index + 1}`}
           pageNumber={index + 1}
           renderTextLayer={false}

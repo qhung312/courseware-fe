@@ -25,7 +25,7 @@ const MediumHeader = () => {
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/documents' || pathname === '/library/tests'
+    pathname === '/library/documents' || pathname === '/library/exam-archive'
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
     pathname === '/room/exercises' || pathname === '/room/tests'
@@ -142,7 +142,7 @@ const MediumHeader = () => {
                 <div className='flex flex-row items-center justify-start gap-x-[16px]'>
                   <Icon.Library
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/tests'
+                      pathname === '/library/documents' || pathname === '/library/exam-archive'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -150,7 +150,7 @@ const MediumHeader = () => {
                   <p
                     style={{
                       color:
-                        pathname === '/library/documents' || pathname === '/library/tests'
+                        pathname === '/library/documents' || pathname === '/library/exam-archive'
                           ? '#4285F4'
                           : '#696969',
                     }}
@@ -161,7 +161,7 @@ const MediumHeader = () => {
                 {isLibraryOpen ? (
                   <Icon.ChevronUp
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/tests'
+                      pathname === '/library/documents' || pathname === '/library/exam-archive'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -171,7 +171,7 @@ const MediumHeader = () => {
                 ) : (
                   <Icon.ChevronDown
                     fill={
-                      pathname === '/library/documents' || pathname === '/library/tests'
+                      pathname === '/library/documents' || pathname === '/library/exam-archive'
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -213,7 +213,7 @@ const MediumHeader = () => {
                   )}
                 </NavLink>
                 <NavLink
-                  to='/library/tests'
+                  to='/library/exam-archive'
                   end
                   className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
