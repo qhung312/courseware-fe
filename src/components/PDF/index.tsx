@@ -32,44 +32,54 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   const pdfWrapperRef = useRef<HTMLDivElement>(null);
 
   const setWrapperSize = () => {
-    setWidth(document.getElementById('pdfWrapper')?.clientWidth);
+    setWidth(pdfWrapperRef.current?.offsetWidth);
   };
 
   useLayoutEffect(() => {
     window.addEventListener('resize', throttle(setWrapperSize, 300));
 
-    return window.removeEventListener('resize', throttle(setWrapperSize, 300));
+    return () => {
+      window.removeEventListener('resize', throttle(setWrapperSize, 300));
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (pdfWrapperRef.current) {
+      setWidth(pdfWrapperRef?.current.offsetWidth);
+    }
   }, []);
 
   return (
-    <div className='w-full' id='pdfWrapper' ref={pdfWrapperRef}>
-      <Document
-        className={`${className || ''}`}
-        options={options}
-        renderMode={renderMode || 'svg'}
-        error={<Skeleton borderRadius={0} height='100vh' />}
-        loading={<Skeleton borderRadius={0} height='100vh' />}
-        file={{
-          url: typeof url === 'string' ? new URL(url) : url,
-          httpHeaders: {
-            authorization: `Bearer ${JSON.parse(token || '""')}`,
-          },
-        }}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        {Array.from(new Array(numPages), (_el, index) => (
-          <Page
-            width={width}
-            className={`${pageClassName}`}
-            loading={<Skeleton borderRadius={0} height='100vh' />}
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            renderTextLayer={true}
-            renderInteractiveForms={false}
-            renderAnnotationLayer={false}
-          />
-        ))}
-      </Document>
+    <div className='w-full' ref={pdfWrapperRef}>
+      {width && (
+        <Document
+          className={`${className || ''}`}
+          options={options}
+          renderMode={renderMode || 'svg'}
+          error={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
+          loading={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
+          file={{
+            url: typeof url === 'string' ? new URL(url) : url,
+            httpHeaders: {
+              authorization: `Bearer ${JSON.parse(token || '""')}`,
+            },
+          }}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          {Array.from(new Array(numPages), (_el, index) => (
+            <Page
+              width={width}
+              className={`${pageClassName}`}
+              loading={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
+              key={`page_${index + 1}`}
+              pageNumber={index + 1}
+              renderTextLayer={true}
+              renderInteractiveForms={false}
+              renderAnnotationLayer={false}
+            />
+          ))}
+        </Document>
+      )}
     </div>
   );
 };

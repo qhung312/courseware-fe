@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import { useLayoutEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
+import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
 import { DocumentCard, DocumentSideMenu, Icon } from '../../../components';
 import { useAppSelector } from '../../../hooks';
 import LibraryService from '../../../service/library.service';
@@ -34,6 +35,33 @@ const ExamArchivePage: React.FC = () => {
     }
   }, [params]);
 
+  if (!params?.subjectId) {
+    return (
+      <>
+        <DocumentSideMenu
+          title='Thư viện đề thi'
+          subTitle='Đề thi các môn học'
+          description='Lorem ipsum dolor sit amet, consectetur adi'
+          baseRoute='/library/exam-archive'
+        />
+        <div className='flex flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'>
+          {/* Add space */}
+          <div className='mr-0 md:mr-[264px] lg:mr-[332px] xl:mr-[400px] 3xl:mr-[500px] ' />
+          <div className='flex flex-1 flex-col'>
+            <div className='mb-6 min-h-full flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
+              <div className='pt-2 md:pt-4 lg:pt-5 xl:pt-6 2xl:pt-7'>
+                <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                  <Tab className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                  <p className='w-full text-center'>Chọn một môn học</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <DocumentSideMenu
@@ -58,15 +86,13 @@ const ExamArchivePage: React.FC = () => {
           </div>
 
           <div className='mb-6 min-h-full flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
-            <button
+            <Link
+              to='/library/exam-archive'
               className='flex items-center space-x-2 hover:underline md:hidden'
-              onClick={() => {
-                /* TODO */
-              }}
             >
               <Icon.ChevronLeft className='max-w-2 min-w-2 min-h-3 max-h-3 fill-black' />
               <p className='w-[100px]'>Quay lại</p>
-            </button>
+            </Link>
 
             {/* Introduction */}
             <div className='mt-0 space-y-2'>
@@ -105,9 +131,9 @@ const ExamArchivePage: React.FC = () => {
               )}
               {/* If exam archives is empty */}
               {examArchives?.length === 0 && (
-                <div className='z-10 max-h-[266px] rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
-                  <NoData width={200} className='mx-auto p-7' />
-                  <p className='w-full text-center'>Empty Archived</p>
+                <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                  <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                  <p className='w-full text-center'>Không tìm thấy tài liệu</p>
                 </div>
               )}
               {examArchives?.map((exam) => (

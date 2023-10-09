@@ -18,13 +18,11 @@ const ExamArchiveDetailPage: React.FC = () => {
   const { subjects } = useAppSelector((state: RootState) => state.library);
 
   useLayoutEffect(() => {
-    console.log(params);
     if (params?.pdfId && params?.pdfId !== '') {
       LibraryService.getPreviousExamById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;
         setExam(payload);
-        console.log('here');
         document.title = payload?.name + ' | CTCT';
       });
     }
