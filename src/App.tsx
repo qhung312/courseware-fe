@@ -1,15 +1,23 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useLayoutEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Header, Loading } from './components';
+import { ENVIRONMENT } from './config';
 import routes from './routes';
 import PrivateRoute from './routes/PrivateRoute';
 import TitleWrapper from './routes/TitleWrapper';
+import { set401Callback } from './utils/custom-axios';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    console.log('Environment:', ENVIRONMENT);
+
+    set401Callback(() => {
+      console.log('Unauthorized request');
+    });
+
     const id = setTimeout(() => {
       setLoading(false);
     }, 1000);

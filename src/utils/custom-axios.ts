@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import _ from 'lodash';
 
-let callback401: any = null;
+let callback401: (error: any) => void = () => {};
 
 export function set401Callback(cb: any) {
   callback401 = cb;
