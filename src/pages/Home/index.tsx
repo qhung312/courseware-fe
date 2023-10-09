@@ -15,7 +15,10 @@ const Home = () => {
         className='flex w-[100vw] flex-col items-center justify-start gap-y-[120px] bg-inherit 
       md:gap-y-[200px]'
       >
-        <section className='w-[80%]'>
+        <section
+          className='h-[calc(100vh-72px)] w-full md:h-[calc(100vh-110.6px)] 
+        xl:h-[calc(100vh-111px)]'
+        >
           <Carousel
             showThumbs={false}
             showStatus={false}
@@ -30,8 +33,8 @@ const Home = () => {
             stopOnHover={false}
           >
             {data.map((item) => (
-              <div className='relative' key={item.id}>
-                <img src={item.imgSrc} alt='bg' className='aspect-[16/9] h-auto w-[80vw]' />
+              <div className='relative h-full w-full' key={item.id}>
+                <img src={item.imgSrc} alt='bg' className='h-full w-full object-cover' />
                 <div
                   className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 
                 py-1
@@ -55,15 +58,15 @@ const Home = () => {
           </Carousel>
         </section>
         <section
-          className='flex flex-row flex-wrap items-center justify-center 
-        gap-x-[20px] gap-y-8 px-6 md:gap-x-[40px] md:px-8 xl:px-12 2xl:gap-x-[80px]'
+          className='flex w-full flex-row flex-wrap items-center justify-center
+        gap-x-[20px] gap-y-8 px-[48px] md:gap-x-[40px] md:px-[100px] xl:px-[180px] 2xl:gap-x-[80px]'
         >
           <LargeCTCTLogo
-            className='aspect-auto h-auto w-[200px] 
+            className='aspect-auto h-auto w-[200px] flex-1 
           md:w-[300px] xl:w-[400px]'
           />
           <div
-            className='flex w-full flex-col items-start justify-start 
+            className='flex flex-[2] flex-col items-start justify-start 
           md:w-[360px] xl:w-[500px] 2xl:w-[600px]'
           >
             <p
@@ -90,49 +93,53 @@ const Home = () => {
           </div>
         </section>
         <section
-          className='flex flex-row flex-wrap items-center justify-center 
-        gap-x-[20px] gap-y-8 px-6 md:gap-x-[40px] md:px-8 xl:px-12 2xl:gap-x-[80px]'
+          className='flex w-full flex-row flex-wrap items-center justify-center
+          gap-x-[20px] gap-y-8 px-[48px] md:gap-x-[40px] md:px-[100px] xl:px-[180px] 2xl:gap-x-[80px]'
         >
           <img
             src={require('../../assets/images/stubVideo.png')}
             alt='video'
-            className='2xl-rounded-2xl aspect-video h-auto w-[80%] rounded-md 
-          md:w-[400px] md:rounded-lg lg:w-[500px] xl:w-[600px] xl:rounded-xl 2xl:w-[720px]'
+            className='aspect-video h-auto flex-1 rounded-md md:w-[400px] 
+            md:rounded-lg lg:w-[500px] xl:w-[600px] xl:rounded-xl 2xl:w-[720px] 2xl:rounded-2xl'
           />
-          <div className='flex w-[80%] flex-col md:w-[260px] lg:w-[400px] xl:w-[420px] 2xl:w-[500px]'>
+          <div className='flex flex-1 flex-col md:w-[260px] lg:w-[400px] xl:w-[420px] 2xl:w-[500px]'>
             <div className='flex flex-row flex-wrap items-center justify-center'>
               <p className='text-center text-[24px] font-bold lg:text-[32px] 2xl:text-[48px]'>
                 Cộng đồng không ngừng&nbsp;
               </p>
               <p className='text-center text-[24px] font-bold lg:text-[32px] 2xl:text-[48px]'>
-                <span className='text-[#00A3FF]'>phát triển</span> và{' '}
-                <span className='text-[#00A3FF]'>mở rộng</span>
+                <span className='whitespace-nowrap text-[#00A3FF]'>phát triển</span> và{' '}
+                <span className='whitespace-nowrap text-[#00A3FF]'>mở rộng</span>
               </p>
             </div>
             <div className='mt-[16px] flex flex-row items-center justify-center gap-x-[24px] md:mt-[24px]'>
               <div className='flex flex-col items-center justify-center'>
-                <p className='text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
+                <p className='whitespace-nowrap text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
                   30 000+
                 </p>
-                <p className='text-[12px] md:text-[16px] xl:text-[24px]'>sinh viên</p>
+                <p className='whitespace-nowrap text-[12px] md:text-[16px] xl:text-[24px]'>
+                  sinh viên
+                </p>
               </div>
               <div className='flex flex-col items-center justify-center'>
-                <p className='text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
+                <p className='whitespace-nowrap text-[16px] font-bold text-[#00A3FF] md:text-[24px] xl:text-[32px]'>
                   7
                 </p>
-                <p className='text-[12px] md:text-[16px] xl:text-[24px]'>môn học</p>
+                <p className='whitespace-nowrap text-[12px] md:text-[16px] xl:text-[24px]'>
+                  môn học
+                </p>
               </div>
             </div>
           </div>
         </section>
         <section
-          className='flex aspect-[1920/1048] h-auto w-full flex-row items-center justify-center 
+          className='flex h-fit w-full flex-row items-center justify-center 
         gap-x-[40px] bg-no-repeat px-6 py-4 md:gap-x-[80px] md:px-[90px] md:py-[80px] xl:px-[120px] xl:py-[100px] 2xl:px-[180px]'
-          style={{ backgroundImage: `url(${EventBackground})`, backgroundSize: 'contain' }}
+          style={{ backgroundImage: `url(${EventBackground})`, backgroundSize: 'cover' }}
         >
           <p
             className='whitespace-normal text-center text-white 
-          md:w-[300px] md:text-[24px] md:font-bold xl:text-[48px]'
+          md:w-[400px] md:text-[32px] md:font-bold xl:text-[48px]'
           >
             Những sự kiện đã tổ chức
           </p>
@@ -156,10 +163,9 @@ const Home = () => {
               interval={3000}
               transitionTime={1000}
               renderIndicator={CarouselIndicator}
-              renderArrowPrev={CarouselArrow.Prev}
-              renderArrowNext={CarouselArrow.Next}
+              showArrows={false}
               stopOnHover={false}
-              className='w-[200px] md:w-[400px] xl:w-[800px]'
+              className='w-[150px] md:w-[400px] xl:w-[800px]'
             >
               <div>
                 <img
@@ -217,9 +223,9 @@ const Home = () => {
           </div>
         </section>
         <section
-          className='mb-[120px] flex w-full flex-col items-center 
-        justify-center gap-x-[40px] px-6 md:mb-[200px] md:px-[50px] xl:px-[120px]
-        2xl:px-[180px]'
+          className='mb-[120px] flex h-[280px] w-full
+          flex-col items-center justify-center gap-x-[40px] px-6 md:mb-[200px]
+          md:h-[440px] md:px-[50px] lg:h-[480px] xl:h-[540px] xl:px-[120px] 2xl:px-[180px]'
         >
           <p className='self-start font-bold text-[#252641] md:text-[24px] xl:text-[32px]'>
             Lắng nghe và chia sẻ
@@ -235,14 +241,14 @@ const Home = () => {
             renderIndicator={CarouselIndicator}
             showArrows={false}
             stopOnHover={false}
-            className='h-[280px] w-full md:h-[400px] lg:h-[440px] xl:h-[540px]'
+            width={'100vw'}
           >
             <div
-              className='flex h-[200px] flex-row items-center justify-between gap-x-[12px] 
-            md:h-fit md:gap-x-[24px]'
+              className='flex h-[200px] w-full flex-row items-center justify-center gap-x-[8px] 
+              md:h-fit md:gap-x-[24px]'
             >
               <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
             rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
               >
                 <img
@@ -259,7 +265,7 @@ const Home = () => {
                 >
                   <Icon.OpenQuote className='h-full w-full' />
                 </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
                   Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                 </p>
@@ -271,7 +277,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
             rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
               >
                 <img
@@ -288,7 +294,7 @@ const Home = () => {
                 >
                   <Icon.OpenQuote className='h-full w-full' />
                 </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
                   Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                 </p>
@@ -300,7 +306,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
             rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
               >
                 <img
@@ -317,96 +323,7 @@ const Home = () => {
                 >
                   <Icon.OpenQuote className='h-full w-full' />
                 </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
-                  Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
-                </p>
-                <div
-                  className='mt-[8px] aspect-[46/28] h-auto w-4 self-end
-              md:mt-[12px] md:w-6 xl:mt-[16px] xl:w-10'
-                >
-                  <Icon.CloseQuote className='h-full w-full' />
-                </div>
-              </div>
-            </div>
-            <div className='flex h-[200px] flex-row items-center justify-between gap-x-[12px] md:h-fit md:gap-x-[24px]'>
-              <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
-            rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
-              >
-                <img
-                  src={require('../../assets/images/AvatarPic.png')}
-                  alt='avatar'
-                  className='mb-[8px] h-auto max-w-[32px] rounded-full md:mb-[12px] md:max-w-[48px] xl:mb-[16px]'
-                />
-                <p className='mb-[12px] text-[12px] text-[#252641] md:mb-[16px] xl:mb-[20px]'>
-                  Trần Thị B
-                </p>
-                <div
-                  className='mb-[8px] aspect-[46/28] h-auto w-4 self-start 
-              md:mb-[12px] md:w-6 xl:mb-[16px] xl:w-10'
-                >
-                  <Icon.OpenQuote className='h-full w-full' />
-                </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
-                  Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
-                </p>
-                <div
-                  className='mt-[8px] aspect-[46/28] h-auto w-4 self-end
-              md:mt-[12px] md:w-6 xl:mt-[16px] xl:w-10'
-                >
-                  <Icon.CloseQuote className='h-full w-full' />
-                </div>
-              </div>
-              <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
-            rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
-              >
-                <img
-                  src={require('../../assets/images/AvatarPic.png')}
-                  alt='avatar'
-                  className='mb-[8px] h-auto max-w-[32px] rounded-full md:mb-[12px] md:max-w-[48px] xl:mb-[16px]'
-                />
-                <p className='mb-[12px] text-[12px] text-[#252641] md:mb-[16px] xl:mb-[20px]'>
-                  Trần Thị B
-                </p>
-                <div
-                  className='mb-[8px] aspect-[46/28] h-auto w-4 self-start 
-              md:mb-[12px] md:w-6 xl:mb-[16px] xl:w-10'
-                >
-                  <Icon.OpenQuote className='h-full w-full' />
-                </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
-                  Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
-                </p>
-                <div
-                  className='mt-[8px] aspect-[46/28] h-auto w-4 self-end
-              md:mt-[12px] md:w-6 xl:mt-[16px] xl:w-10'
-                >
-                  <Icon.CloseQuote className='h-full w-full' />
-                </div>
-              </div>
-              <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
-            rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
-              >
-                <img
-                  src={require('../../assets/images/AvatarPic.png')}
-                  alt='avatar'
-                  className='mb-[8px] h-auto max-w-[32px] rounded-full md:mb-[12px] md:max-w-[48px] xl:mb-[16px]'
-                />
-                <p className='mb-[12px] text-[12px] text-[#252641] md:mb-[16px] xl:mb-[20px]'>
-                  Trần Thị B
-                </p>
-                <div
-                  className='mb-[8px] aspect-[46/28] h-auto w-4 self-start 
-              md:mb-[12px] md:w-6 xl:mb-[16px] xl:w-10'
-                >
-                  <Icon.OpenQuote className='h-full w-full' />
-                </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
                   Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                 </p>
@@ -418,9 +335,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className='flex h-[200px] flex-row items-center justify-between gap-x-[12px] md:h-fit md:gap-x-[24px]'>
+            <div
+              className='flex h-[200px] w-full flex-row items-center justify-center gap-x-[8px] 
+              md:h-fit md:gap-x-[24px]'
+            >
               <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
             rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
               >
                 <img
@@ -437,7 +357,7 @@ const Home = () => {
                 >
                   <Icon.OpenQuote className='h-full w-full' />
                 </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
                   Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                 </p>
@@ -449,7 +369,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
             rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
               >
                 <img
@@ -466,7 +386,7 @@ const Home = () => {
                 >
                   <Icon.OpenQuote className='h-full w-full' />
                 </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
                   Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                 </p>
@@ -478,7 +398,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className='flex h-full w-[30%] flex-col items-center justify-center 
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
             rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
               >
                 <img
@@ -495,7 +415,99 @@ const Home = () => {
                 >
                   <Icon.OpenQuote className='h-full w-full' />
                 </div>
-                <p className='line-clamp h-full text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
+                  Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
+                </p>
+                <div
+                  className='mt-[8px] aspect-[46/28] h-auto w-4 self-end
+              md:mt-[12px] md:w-6 xl:mt-[16px] xl:w-10'
+                >
+                  <Icon.CloseQuote className='h-full w-full' />
+                </div>
+              </div>
+            </div>
+            <div
+              className='flex h-[200px] w-full flex-row items-center justify-center gap-x-[8px] 
+              md:h-fit md:gap-x-[24px]'
+            >
+              <div
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
+            rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
+              >
+                <img
+                  src={require('../../assets/images/AvatarPic.png')}
+                  alt='avatar'
+                  className='mb-[8px] h-auto max-w-[32px] rounded-full md:mb-[12px] md:max-w-[48px] xl:mb-[16px]'
+                />
+                <p className='mb-[12px] text-[12px] text-[#252641] md:mb-[16px] xl:mb-[20px]'>
+                  Trần Thị B
+                </p>
+                <div
+                  className='mb-[8px] aspect-[46/28] h-auto w-4 self-start 
+              md:mb-[12px] md:w-6 xl:mb-[16px] xl:w-10'
+                >
+                  <Icon.OpenQuote className='h-full w-full' />
+                </div>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
+                  Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
+                </p>
+                <div
+                  className='mt-[8px] aspect-[46/28] h-auto w-4 self-end
+              md:mt-[12px] md:w-6 xl:mt-[16px] xl:w-10'
+                >
+                  <Icon.CloseQuote className='h-full w-full' />
+                </div>
+              </div>
+              <div
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
+            rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
+              >
+                <img
+                  src={require('../../assets/images/AvatarPic.png')}
+                  alt='avatar'
+                  className='mb-[8px] h-auto max-w-[32px] rounded-full md:mb-[12px] md:max-w-[48px] xl:mb-[16px]'
+                />
+                <p className='mb-[12px] text-[12px] text-[#252641] md:mb-[16px] xl:mb-[20px]'>
+                  Trần Thị B
+                </p>
+                <div
+                  className='mb-[8px] aspect-[46/28] h-auto w-4 self-start 
+              md:mb-[12px] md:w-6 xl:mb-[16px] xl:w-10'
+                >
+                  <Icon.OpenQuote className='h-full w-full' />
+                </div>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
+                  Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
+                </p>
+                <div
+                  className='mt-[8px] aspect-[46/28] h-auto w-4 self-end
+              md:mt-[12px] md:w-6 xl:mt-[16px] xl:w-10'
+                >
+                  <Icon.CloseQuote className='h-full w-full' />
+                </div>
+              </div>
+              <div
+                className='flex h-fit w-[30%] flex-col items-center justify-center 
+            rounded-lg bg-white px-4 py-3 md:w-[200px] md:py-5 md:px-6 lg:w-[300px] xl:w-[360px] xl:px-8 xl:py-7'
+              >
+                <img
+                  src={require('../../assets/images/AvatarPic.png')}
+                  alt='avatar'
+                  className='mb-[8px] h-auto max-w-[32px] rounded-full md:mb-[12px] md:max-w-[48px] xl:mb-[16px]'
+                />
+                <p className='mb-[12px] text-[12px] text-[#252641] md:mb-[16px] xl:mb-[20px]'>
+                  Trần Thị B
+                </p>
+                <div
+                  className='mb-[8px] aspect-[46/28] h-auto w-4 self-start 
+              md:mb-[12px] md:w-6 xl:mb-[16px] xl:w-10'
+                >
+                  <Icon.OpenQuote className='h-full w-full' />
+                </div>
+                <p className='line-clamp h-fit text-left text-[12px] font-medium text-[#252641] md:text-[16px]'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempos
                   Lorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusmod tempor
                 </p>
