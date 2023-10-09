@@ -14,7 +14,7 @@ export interface Route {
 }
 
 const routes = [
-  { title: 'Trang Chủ', path: '/', component: HomePage, isProtected: false },
+  { title: 'Chúng ta cùng tiến', path: '/', component: HomePage, isProtected: false },
   { title: 'Tài liệu', path: '/library/documents', component: DocumentPage, isProtected: true },
   { title: 'Đề thi', path: '/library/tests', component: ExamArchivePage, isProtected: true },
   {
