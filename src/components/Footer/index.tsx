@@ -5,9 +5,9 @@ import Icon from '../Icon';
 const Footer = () => {
   return (
     <footer className='bg-white'>
-      <div className='xl:py-18 mx-auto w-full max-w-[1920px] flex-1 px-6 py-10 md:px-[50px] md:py-14 lg:px-0 lg:py-16 2xl:py-20'>
-        <div className='3xl:space-x-50 mx-auto flex flex-col space-y-8 space-x-0 sm:flex-col sm:space-y-10 md:space-y-12 lg:max-w-[976px] lg:flex-row lg:justify-between  lg:space-y-0 lg:space-x-12 xl:max-w-[1232px] xl:space-x-24 2xl:max-w-[1488px] 2xl:space-x-36 3xl:max-w-[1824px] '>
-          <div className='flex flex-1 justify-evenly lg:items-start  lg:justify-between lg:pt-5 2xl:gap-x-[3rem]'>
+      <div className='xl:py-18 mx-auto w-full max-w-[1920px] flex-1 px-6 py-10 md:px-[50px] md:py-4 lg:px-0 lg:py-16 2xl:py-20'>
+        <div className='3xl:space-x-50 mx-auto flex flex-col space-y-8 space-x-0 sm:flex-col sm:space-y-10 md:space-y-12 lg:max-w-[900px] lg:flex-row lg:justify-between  lg:space-y-0 lg:space-x-12 xl:max-w-[1160px] xl:space-x-24 2xl:max-w-[1416px] 2xl:space-x-36 3xl:max-w-[1600px] '>
+          <div className='flex flex-1 justify-evenly lg:items-start lg:justify-between lg:pt-5 2xl:gap-x-[3rem]'>
             <div className='mt-[1.25rem] sm:mt-[1.625rem]'>
               <Icon.LogoCTCT className='h-[3.5rem] w-[7.5rem] sm:h-[5rem] sm:w-[9.375rem] md:h-[7.5rem] md:w-[11rem] lg:h-[3.5rem] lg:w-[8rem] xl:h-[4.75rem] xl:w-[9rem] 2xl:h-[5.5rem] 2xl:w-[10rem]' />
             </div>
@@ -27,19 +27,19 @@ const Footer = () => {
           <div className='flex h-fit flex-[2] flex-col justify-between space-y-4 lg:space-y-6 xl:space-y-7 2xl:space-y-8 3xl:ml-10'>
             <Link
               to='/'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl'
+              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl'
             >
               Home
             </Link>
             <Link
               to='/about-us'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl'
+              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl '
             >
               Giới thiệu
             </Link>
             <Link
               to='/about-us/activities'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl'
+              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl '
             >
               Cộng đồng Chúng Ta Cùng Tiến
             </Link>
@@ -84,7 +84,7 @@ const Footer = () => {
         </div>
       </div>
       <hr className='border-t-[1px] border-solid border-black' />
-      <div className='relative mx-auto flex flex-col items-center gap-y-6  py-4 px-6 md:flex-row md:justify-between md:py-5 md:px-[50px] lg:max-w-[976px] lg:py-8 lg:px-0 xl:max-w-[1232px] xl:py-9 2xl:max-w-[1488px] 2xl:py-10 3xl:max-w-[1824px]'>
+      <div className='relative mx-auto flex flex-col items-center gap-y-6  py-4 px-6 md:flex-row md:justify-between md:py-5 md:px-[50px] lg:max-w-[900px] lg:py-8 lg:px-0 xl:max-w-[1160px] xl:py-9 2xl:max-w-[1416px] 2xl:py-10 3xl:max-w-[1600px]'>
         <p className='flex  min-h-[50px] text-2xl font-bold md:text-xl xl:text-2xl 2xl:text-3xl'>
           WE LEARN - WE SHARE
         </p>
