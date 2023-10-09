@@ -2,35 +2,45 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import AuthService from '../service/auth.service';
 
+import { logout } from './actions/auth.action';
 import { getUserProfile } from './actions/user.action';
 
 export type TAuthState = {
   isAuthenticated: boolean;
-  loading: boolean;
+  token: string;
 };
 
 const initialState: TAuthState = {
   isAuthenticated: false,
-  loading: false,
+  token: localStorage.getItem('token') || '',
 };
 
-// Slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state) => {
-      state.loading = true;
-      AuthService.login();
+    loginWithGoogle: () => {
+      AuthService.loginWithGoogle();
+    },
+    setToken: (state, { payload }) => {
+      localStorage.setItem('token', JSON.stringify(payload));
+      state.token = payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserProfile.fulfilled, (state) => {
       state.isAuthenticated = true;
-      state.loading = false;
     });
 
-    builder.addCase(getUserProfile.rejected, () => initialState);
+    builder.addCase(getUserProfile.rejected, (state) => {
+      localStorage.clear();
+      Object.assign(state, initialState);
+    });
+
+    builder.addCase(logout, (state) => {
+      localStorage.clear();
+      Object.assign(state, initialState);
+    });
   },
 });
 

@@ -1,5 +1,5 @@
 import { Suspense, useLayoutEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Header, Loading } from './components';
 import { ENVIRONMENT } from './config';
@@ -8,22 +8,31 @@ import routes from './routes';
 import ProtectedRoute from './routes/ProtectedRoute';
 import TitleWrapper from './routes/TitleWrapper';
 import { getUserProfile } from './slices/actions/user.action';
-import { set401Callback } from './utils/custom-axios';
+import { AuthAction } from './slices/auth';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState(true);
 
-  const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams({ token: '' });
+
+  const { token: queryToken } = Object.fromEntries(searchParams);
+
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     console.log('Environment:', ENVIRONMENT);
 
-    set401Callback((error: any) => {
-      console.log('Unauthorized request', error);
-    });
-
-    dispatch(getUserProfile()).finally(() => setTimeout(() => setLoading(false), 400));
-  }, [dispatch]);
+    if (queryToken && queryToken !== '') {
+      dispatch(AuthAction.setToken(queryToken));
+      navigate('/');
+    } else {
+      dispatch(getUserProfile()).then(() => {
+        setTimeout(() => setLoading(false), 400);
+      });
+    }
+  }, [dispatch, queryToken, navigate]);
 
   return loading ? (
     <Loading />

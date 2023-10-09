@@ -1,9 +1,10 @@
 import { LottieOptions, useLottie } from 'lottie-react';
 import { CSSProperties, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as MediumLogoCTCT } from '../../assets/svgs/MediumLogoCTCT.svg';
 import { useAppDispatch, useAppSelector, useDebounce, useThrottle } from '../../hooks';
+import { logout } from '../../slices/actions/auth.action';
 import { AuthAction } from '../../slices/auth';
 import { RootState } from '../../store';
 import Icon from '../Icon';
@@ -20,7 +21,6 @@ const MediumHeader = () => {
   };
 
   const { View, playSegments } = useLottie(options, style);
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -36,7 +36,7 @@ const MediumHeader = () => {
       pathname === '/about-us/partners'
   );
 
-  const { isAuthenticated, loading } = useAppSelector((state: RootState) => state.auth);
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
 
   const dispatch = useAppDispatch();
 
@@ -66,7 +66,7 @@ const MediumHeader = () => {
 
   const onLogout = () => {
     // TODO
-    navigate('/');
+    dispatch(logout());
     setIsOverlayOpen(false);
     setIsLibraryOpen(false);
     setIsRoomOpen(false);
@@ -498,10 +498,9 @@ const MediumHeader = () => {
             {!isAuthenticated && (
               <button
                 type='submit'
-                className={`inset-y-5 right-5 w-[144px] cursor-pointer gap-x-[16px] rounded-[12px] bg-[#4285F4] px-[20px] py-[16px] text-base text-white duration-300 ease-out hover:bg-[#2374FA] ${
-                  !loading && 'cursor-not-allowed'
-                } `}
-                onClick={() => dispatch(AuthAction.login())}
+                className='inset-y-5 right-5 w-[144px] cursor-pointer gap-x-[16px] rounded-[12px] bg-[#4285F4] px-[20px] py-[16px] text-base text-white duration-300 ease-out hover:bg-[#2374FA]
+                '
+                onClick={() => dispatch(AuthAction.loginWithGoogle())}
               >
                 Đăng nhập
               </button>
@@ -521,7 +520,10 @@ const MediumHeader = () => {
                 >
                   {({ isActive, isPending }) => (
                     <>
-                      <Icon.Profile fill={isActive || isPending ? '#4285F4' : '#696969'} />
+                      <Icon.Profile
+                        fill={isActive || isPending ? '#4285F4' : '#696969'}
+                        className='aspect-square w-6'
+                      />
                       <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>
                         Thông tin của tôi
                       </p>

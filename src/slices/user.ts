@@ -28,12 +28,7 @@ const initialState: TUserState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    logout: () => {
-      localStorage.clear();
-      return initialState;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
       state.id = payload?._id;

@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as LargeLogoCTCT } from '../../assets/svgs/LargeLogoCTCT.svg';
 import { useAppDispatch, useAppSelector, useThrottle } from '../../hooks';
+import { logout } from '../../slices/actions/auth.action';
 import { AuthAction } from '../../slices/auth';
 import { RootState } from '../../store';
 import { getOffset } from '../../utils/helper';
@@ -30,7 +31,9 @@ const LargeHeader = () => {
   const [prevYOffset, setPrevYOffset] = useState(0);
   const [isProfileDrop, setIsProfileDrop] = useState(false);
 
-  const { isAuthenticated, loading } = useAppSelector((state: RootState) => state.auth);
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
+
+  const user = useAppSelector((state: RootState) => state.user);
 
   const dispatch = useAppDispatch();
 
@@ -117,10 +120,9 @@ const LargeHeader = () => {
           {!isAuthenticated && (
             <button
               type='submit'
-              className={`inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] bg-[#4285F4] text-base text-white duration-300 ease-out hover:bg-[#2374FA] ${
-                !loading && 'cursor-not-allowed'
-              } `}
-              onClick={() => dispatch(AuthAction.login())}
+              className='inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] bg-[#4285F4] text-base text-white duration-300 ease-out hover:bg-[#2374FA] 
+              '
+              onClick={() => dispatch(AuthAction.loginWithGoogle())}
             >
               Đăng nhập
             </button>
@@ -132,10 +134,11 @@ const LargeHeader = () => {
                   className='flex flex-row items-center justify-center'
                   onClick={onProfileClick}
                 >
-                  {/* TODO */}
-                  <div
-                    className='mr-[16px] h-[42px] w-[42px] rounded-[999px] bg-[#979797]
-              xl:mr-[24px] xl:h-[50px] xl:w-[50px]'
+                  <img
+                    alt='profile_pic'
+                    src={user?.picture || require('../../assets/images/AvatarPic.png')}
+                    className='mr-[16px] h-[42px] w-[42px] rounded-[999px] border-2
+                  border-[#49BBBD] bg-[#979797] xl:mr-[24px] xl:h-[50px] xl:w-[50px]'
                   />
                   <Icon.ChevronUp
                     fill={'#3b3b3b'}
@@ -175,7 +178,7 @@ const LargeHeader = () => {
                 </NavLink>
                 <button
                   className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
-                  onClick={throttledLibraryClick}
+                  onClick={() => dispatch(logout())}
                 >
                   <p
                     className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear xl:px-3
