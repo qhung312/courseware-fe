@@ -3,27 +3,27 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Header, Loading } from './components';
 import { ENVIRONMENT } from './config';
+import { useAppDispatch } from './hooks';
 import routes from './routes';
-import PrivateRoute from './routes/PrivateRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 import TitleWrapper from './routes/TitleWrapper';
+import { getUserProfile } from './slices/actions/user.action';
 import { set401Callback } from './utils/custom-axios';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useAppDispatch();
+
   useLayoutEffect(() => {
     console.log('Environment:', ENVIRONMENT);
 
-    set401Callback(() => {
-      console.log('Unauthorized request');
+    set401Callback((error: any) => {
+      console.log('Unauthorized request', error);
     });
 
-    const id = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(id);
-  }, []);
+    dispatch(getUserProfile()).finally(() => setTimeout(() => setLoading(false), 400));
+  }, [dispatch]);
 
   return loading ? (
     <Loading />
@@ -52,9 +52,9 @@ const App = () => {
                 path={route.path}
                 element={
                   <TitleWrapper title={route.title}>
-                    <PrivateRoute key={index}>
+                    <ProtectedRoute key={index}>
                       <Component />
-                    </PrivateRoute>
+                    </ProtectedRoute>
                   </TitleWrapper>
                 }
                 key={index}

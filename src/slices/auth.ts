@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+
+import AuthService from '../service/auth.service';
+
+import { getUserProfile } from './actions/user.action';
 
 export type TAuthState = {
   isAuthenticated: boolean;
@@ -10,29 +14,23 @@ const initialState: TAuthState = {
   loading: false,
 };
 
-// Async Actions
-const login = createAsyncThunk('auth/login', async () => {
-  setTimeout(() => {
-    console.log('logged in');
-  }, 1000);
-});
-
 // Slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.isAuthenticated = false;
-    });
-    builder.addCase(login.fulfilled, (state) => {
-      state.isAuthenticated = true;
+  reducers: {
+    login: (state) => {
       state.loading = true;
+      AuthService.login();
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getUserProfile.fulfilled, (state) => {
+      state.isAuthenticated = true;
+      state.loading = false;
     });
-    builder.addCase(login.rejected, (state) => {
-      state.isAuthenticated = false;
-    });
+
+    builder.addCase(getUserProfile.rejected, () => initialState);
   },
 });
 

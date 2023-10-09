@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as LargeLogoCTCT } from '../../assets/svgs/LargeLogoCTCT.svg';
-import { useThrottle } from '../../hooks';
+import { useAppDispatch, useAppSelector, useThrottle } from '../../hooks';
+import { AuthAction } from '../../slices/auth';
+import { RootState } from '../../store';
 import { getOffset } from '../../utils/helper';
 import Icon from '../Icon';
 
@@ -12,6 +14,7 @@ const LargeHeader = () => {
   const roomRef = useRef<HTMLDivElement>(null);
   const aboutUsRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const [isLibraryOpen, setIsLibraryOpen] = useState(
     pathname === '/library/documents' || pathname === '/library/tests'
@@ -25,6 +28,11 @@ const LargeHeader = () => {
       pathname === '/about-us/partners'
   );
   const [prevYOffset, setPrevYOffset] = useState(0);
+  const [isProfileDrop, setIsProfileDrop] = useState(false);
+
+  const { isAuthenticated, loading } = useAppSelector((state: RootState) => state.auth);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     document.addEventListener('click', (event) => {
@@ -38,9 +46,12 @@ const LargeHeader = () => {
         if (aboutUsRef.current && !aboutUsRef.current.contains(event.target)) {
           setIsAboutUsOpen(false);
         }
+        if (profileRef.current && !profileRef.current.contains(event.target)) {
+          setIsProfileDrop(false);
+        }
       }
     });
-  }, [libraryRef, roomRef, aboutUsRef]);
+  }, [libraryRef, roomRef, aboutUsRef, profileRef]);
 
   useEffect(() => {
     const listenToScroll = () => {
@@ -74,6 +85,8 @@ const LargeHeader = () => {
     setIsAboutUsOpen(!isAboutUsOpen);
   };
 
+  const onProfileClick = () => setIsProfileDrop(!isProfileDrop);
+
   const throttledLibraryClick = useThrottle(onLibraryClick);
   const throttledRoomClick = useThrottle(onRoomClick);
   const throttledAboutUsClick = useThrottle(onAboutUsClick);
@@ -84,8 +97,10 @@ const LargeHeader = () => {
         className='z-[3] flex w-[100%] flex-row items-center justify-between
         bg-white px-[16px] py-[12px] xl:px-[32px] xl:py-[16px]'
       >
-        <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]' />
-        <div className='flex flex-row gap-x-[52px]'>
+        <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]'>
+          <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]' />
+        </NavLink>
+        <div className='relative flex flex-row gap-x-[52px]'>
           <div className='relative flex flex-row items-center'>
             <input
               className='w-[400px] rounded-[40px] border border-[#49BBBD] bg-inherit
@@ -99,14 +114,79 @@ const LargeHeader = () => {
               <Icon.Search className='aspect-square h-auto w-[16px] xl:w-[24px]' />
             </button>
           </div>
-          <button className='flex flex-row items-center justify-center'>
-            <div
-              className='mr-[16px] h-[32px] w-[32px] rounded-[999px] bg-[#979797]
-              xl:mr-[24px] xl:h-[42px] xl:w-[42px]'
-            />
-            <p className='mr-[12px] bg-inherit text-[#5B5B5B] xl:text-[20px]'>User</p>
-            <Icon.ChevronDown fill='#5B5B5B' />
-          </button>
+          {!isAuthenticated && (
+            <button
+              type='submit'
+              className={`inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] bg-[#4285F4] text-base text-white duration-300 ease-out hover:bg-[#2374FA] ${
+                !loading && 'cursor-not-allowed'
+              } `}
+              onClick={() => dispatch(AuthAction.login())}
+            >
+              Đăng nhập
+            </button>
+          )}
+          {isAuthenticated && (
+            <>
+              <div ref={profileRef}>
+                <button
+                  className='flex flex-row items-center justify-center'
+                  onClick={onProfileClick}
+                >
+                  {/* TODO */}
+                  <div
+                    className='mr-[16px] h-[42px] w-[42px] rounded-[999px] bg-[#979797]
+              xl:mr-[24px] xl:h-[50px] xl:w-[50px]'
+                  />
+                  <Icon.ChevronUp
+                    fill={'#3b3b3b'}
+                    fillOpacity={0.87}
+                    className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                      isProfileDrop ? 'rotate-180' : 'rotate-0'
+                    }`}
+                  />
+                </button>
+              </div>
+              <nav
+                className='set-11 absolute right-0 top-[136%] z-[1] mt-1 flex w-[200px] flex-col 
+            items-center justify-center rounded-lg bg-[#FBFCFF]
+            transition-all duration-300'
+                style={{
+                  transform: isProfileDrop ? 'translateY(0%)' : 'translateY(10%)',
+                  maxHeight: isProfileDrop ? '1000px' : '0px',
+                  opacity: isProfileDrop ? 1 : 0,
+                  overflow: 'hidden',
+                  boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <NavLink
+                  to='/profile'
+                  end
+                  className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+                  onClick={throttledLibraryClick}
+                >
+                  <p
+                    className='${ font-norma whitespace-nowrap bg-inherit 
+                px-2 py-1 text-[14px] text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-black xl:px-3
+                xl:py-2 xl:text-[18px]
+                '
+                  >
+                    Thông tin của tôi
+                  </p>
+                </NavLink>
+                <button
+                  className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+                  onClick={throttledLibraryClick}
+                >
+                  <p
+                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear xl:px-3
+                xl:py-2 xl:text-[18px]'
+                  >
+                    Đăng xuất
+                  </p>
+                </button>
+              </nav>
+            </>
+          )}
         </div>
       </div>
       <nav
@@ -156,38 +236,27 @@ const LargeHeader = () => {
             >
               Thư viện
             </p>
-            {isLibraryOpen ? (
-              <Icon.ChevronUp
-                fill={
-                  pathname === '/library/documents' || pathname === '/library/tests'
-                    ? '#3b3b3b'
-                    : '#5B5B5B'
-                }
-                fillOpacity={0.87}
-                className='aspect-[10/7] h-auto w-[8px]'
-              />
-            ) : (
-              <Icon.ChevronDown
-                fill={
-                  pathname === '/library/documents' || pathname === '/library/tests'
-                    ? '#3b3b3b'
-                    : '#5B5B5B'
-                }
-                fillOpacity={0.87}
-                className='aspect-[10/7] h-auto w-[8px]'
-              />
-            )}
+            <Icon.ChevronUp
+              fill={
+                pathname === '/library/documents' || pathname === '/library/tests'
+                  ? '#3b3b3b'
+                  : '#5B5B5B'
+              }
+              fillOpacity={0.87}
+              className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                isLibraryOpen ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
           </button>
           <nav
             className='absolute z-[1] mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all ease-in-out'
+            transition-all duration-300'
             style={{
               transform: isLibraryOpen ? 'translateY(0%)' : 'translateY(10%)',
               maxHeight: isLibraryOpen ? '1000px' : '0px',
               opacity: isLibraryOpen ? 1 : 0,
               overflow: 'hidden',
-              transitionDuration: isLibraryOpen ? '1.2s' : '0.8s',
               boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
             }}
           >
@@ -251,38 +320,26 @@ const LargeHeader = () => {
             >
               Phòng thi
             </p>
-            {isRoomOpen ? (
-              <Icon.ChevronUp
-                fill={
-                  pathname === '/room/exercises' || pathname === '/room/tests'
-                    ? '#3b3b3b'
-                    : '#5B5B5B'
-                }
-                fillOpacity={0.87}
-                className='aspect-[10/7] h-auto w-[8px]'
-              />
-            ) : (
-              <Icon.ChevronDown
-                fill={
-                  pathname === '/room/exercises' || pathname === '/room/tests'
-                    ? '#3b3b3b'
-                    : '#5B5B5B'
-                }
-                fillOpacity={0.87}
-                className='aspect-[10/7] h-auto w-[8px]'
-              />
-            )}
+
+            <Icon.ChevronUp
+              fill={
+                pathname === '/room/exercises' || pathname === '/room/tests' ? '#3b3b3b' : '#5B5B5B'
+              }
+              fillOpacity={0.87}
+              className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                isRoomOpen ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
           </button>
           <nav
             className='absolute z-[1] mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all ease-in-out'
+            transition-all duration-300'
             style={{
               transform: isRoomOpen ? 'translateY(0%)' : 'translateY(10%)',
               maxHeight: isRoomOpen ? '1000px' : '0px',
               opacity: isRoomOpen ? 1 : 0,
               overflow: 'hidden',
-              transitionDuration: isRoomOpen ? '1.2s' : '0.8s',
               boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
             }}
           >
@@ -350,42 +407,30 @@ const LargeHeader = () => {
             >
               Về chúng tôi
             </p>
-            {isAboutUsOpen ? (
-              <Icon.ChevronUp
-                fill={
-                  pathname === '/about-us' ||
-                  pathname === '/about-us/activities' ||
-                  pathname === '/about-us/partners'
-                    ? '#3b3b3b'
-                    : '#5B5B5B'
-                }
-                fillOpacity={0.87}
-                className='aspect-[10/7] h-auto w-[8px]'
-              />
-            ) : (
-              <Icon.ChevronDown
-                fill={
-                  pathname === '/about-us' ||
-                  pathname === '/about-us/activities' ||
-                  pathname === '/about-us/partners'
-                    ? '#3b3b3b'
-                    : '#5B5B5B'
-                }
-                fillOpacity={0.87}
-                className='aspect-[10/7] h-auto w-[8px]'
-              />
-            )}
+
+            <Icon.ChevronUp
+              fill={
+                pathname === '/about-us' ||
+                pathname === '/about-us/activities' ||
+                pathname === '/about-us/partners'
+                  ? '#3b3b3b'
+                  : '#5B5B5B'
+              }
+              fillOpacity={0.87}
+              className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                isAboutUsOpen ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
           </button>
           <nav
             className='absolute z-[1] mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all ease-in-out'
+            transition-all duration-300'
             style={{
               transform: isAboutUsOpen ? 'translateY(0%)' : 'translateY(10%)',
               maxHeight: isAboutUsOpen ? '1000px' : '0px',
               opacity: isAboutUsOpen ? 1 : 0,
               overflow: 'hidden',
-              transitionDuration: isAboutUsOpen ? '1.2s' : '0.8s',
               boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
             }}
           >

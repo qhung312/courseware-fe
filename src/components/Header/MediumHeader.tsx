@@ -3,7 +3,9 @@ import { CSSProperties, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { ReactComponent as MediumLogoCTCT } from '../../assets/svgs/MediumLogoCTCT.svg';
-import { useDebounce, useThrottle } from '../../hooks';
+import { useAppDispatch, useAppSelector, useDebounce, useThrottle } from '../../hooks';
+import { AuthAction } from '../../slices/auth';
+import { RootState } from '../../store';
 import Icon from '../Icon';
 
 const MediumHeader = () => {
@@ -33,6 +35,10 @@ const MediumHeader = () => {
       pathname === '/about-us/activities' ||
       pathname === '/about-us/partners'
   );
+
+  const { isAuthenticated, loading } = useAppSelector((state: RootState) => state.auth);
+
+  const dispatch = useAppDispatch();
 
   const onClick = () => {
     isOverlayOpen ? playSegments([60, 30], true) : playSegments([30, 60], true);
@@ -83,7 +89,9 @@ const MediumHeader = () => {
           px-[20px] py-[16px] md:hidden'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
         >
-          <MediumLogoCTCT />
+          <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]'>
+            <MediumLogoCTCT />
+          </NavLink>
           <button type='button' onClick={throttledOnClick}>
             {View}
           </button>
@@ -487,38 +495,54 @@ const MediumHeader = () => {
                 </>
               )}
             </NavLink>
-            <NavLink
-              to='/profile'
-              end
-              className='flex w-[100%] flex-row items-center justify-start
-                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
-              style={({ isActive, isPending }) => ({
-                backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
-              })}
-              onClick={() => setTimeout(throttledOnClick, 1000)}
-            >
-              {({ isActive, isPending }) => (
-                <>
-                  <Icon.Profile fill={isActive || isPending ? '#4285F4' : '#696969'} />
-                  <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>
-                    Thông tin của tôi
-                  </p>
-                </>
-              )}
-            </NavLink>
-            <button
-              className='z-[2] flex w-[100%] flex-row
-              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
-              onClick={debouncedLogout}
-            >
-              <div
-                className='flex flex-row items-center justify-start gap-x-[16px]
-              transition-opacity duration-[800ms] ease-in-out'
+            {!isAuthenticated && (
+              <button
+                type='submit'
+                className={`inset-y-5 right-5 w-[144px] cursor-pointer gap-x-[16px] rounded-[12px] bg-[#4285F4] px-[20px] py-[16px] text-base text-white duration-300 ease-out hover:bg-[#2374FA] ${
+                  !loading && 'cursor-not-allowed'
+                } `}
+                onClick={() => dispatch(AuthAction.login())}
               >
-                <Icon.Logout fill={'#696969'} />
-                <p style={{ color: '#696969' }}>Đăng xuất</p>
-              </div>
-            </button>
+                Đăng nhập
+              </button>
+            )}
+            {isAuthenticated && (
+              <>
+                <NavLink
+                  to='/profile'
+                  end
+                  className='flex w-[100%] flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
+                  style={({ isActive, isPending }) => ({
+                    backgroundColor:
+                      isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={() => setTimeout(throttledOnClick, 1000)}
+                >
+                  {({ isActive, isPending }) => (
+                    <>
+                      <Icon.Profile fill={isActive || isPending ? '#4285F4' : '#696969'} />
+                      <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>
+                        Thông tin của tôi
+                      </p>
+                    </>
+                  )}
+                </NavLink>
+                <button
+                  className='z-[2] flex w-[100%] flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
+                  onClick={debouncedLogout}
+                >
+                  <div
+                    className='flex flex-row items-center justify-start gap-x-[16px]
+              transition-opacity duration-[800ms] ease-in-out'
+                  >
+                    <Icon.Logout fill={'#696969'} />
+                    <p style={{ color: '#696969' }}>Đăng xuất</p>
+                  </div>
+                </button>
+              </>
+            )}
           </nav>
         </div>
       </header>
