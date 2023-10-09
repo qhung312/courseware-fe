@@ -66,7 +66,7 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
                         }
                       />
                       <p
-                        className={`max-w-[200px] truncate md:max-w-[120px] lg:max-w-[175px] xl:max-w-[200px] ${
+                        className={`max-w-[200px] truncate md:max-w-[96px] lg:max-w-[175px] xl:max-w-[200px] ${
                           isActive
                             ? 'text-[#252641] group-hover:text-white md:text-white'
                             : 'text-[#252641] group-hover:text-white'
