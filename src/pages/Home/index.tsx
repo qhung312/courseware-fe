@@ -1,12 +1,13 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import './index.css';
+
 import { useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 
 import EventBackground from '../../assets/images/EventBackground.png';
 import { ReactComponent as LargeCTCTLogo } from '../../assets/svgs/LargeLogoCTCT.svg';
-import { CarouselArrow, CarouselIndicator, Footer, Icon } from '../../components';
+import { CarouselArrow, CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../components';
 import { CarouselData as data } from '../../data/CarouselData';
 import { useWindowDimensions } from '../../hooks';
 
@@ -40,17 +41,24 @@ const Home = () => {
             renderArrowNext={CarouselArrow.Next}
             stopOnHover={false}
           >
-            {data.map((item) => (
+            {data.map((item, index) => (
               <div className='relative h-full w-full' key={item.id}>
-                <img src={item.imgSrc} alt='bg' className='h-full w-full object-cover' />
+                <LazyLoadImage
+                  src={item.imgSrc}
+                  placeHolderSrc={item.imgPlaceholder}
+                  containerClassName='h-full w-full'
+                  alt={`slider background ${index}`}
+                  className='h-full w-full object-cover'
+                />
+
                 <div
-                  className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 
-                py-1
-                md:bottom-[48px] xl:bottom-[56px]'
+                  className='absolute bottom-[16px] z-[2] flex flex-row items-center bg-white/75 
+                  px-1 py-1
+                  md:bottom-[48px] xl:bottom-[56px]'
                 >
                   <p
                     className='relative ml-[16px] mr-[8px] text-[12px] font-bold text-[#4D4D4D] 
-                  md:ml-[40px] md:mr-[24px] md:text-[24px] xl:ml-[64px] xl:mr-[32px] xl:text-[48px]'
+                  md:ml-[40px] md:mr-[24px] md:text-[20px] xl:ml-[64px] xl:mr-[32px] xl:text-[32px]'
                   >
                     {item.title}
                   </p>
