@@ -7,6 +7,7 @@ import { useAppDispatch } from './hooks';
 import routes from './routes';
 import ProtectedRoute from './routes/ProtectedRoute';
 import TitleWrapper from './routes/TitleWrapper';
+import { getAllSubjects } from './slices/actions/library.action';
 import { getUserProfile } from './slices/actions/user.action';
 import { AuthAction } from './slices/auth';
 
@@ -28,15 +29,13 @@ const App = () => {
       dispatch(AuthAction.setToken(queryToken));
       navigate('/');
     } else {
-      dispatch(getUserProfile()).then(() => {
-        setTimeout(() => setLoading(false), 400);
-      });
+      dispatch(getUserProfile())
+        .then(() => dispatch(getAllSubjects()))
+        .then(() => {
+          setTimeout(() => setLoading(false), 400);
+        });
     }
   }, [dispatch, queryToken, navigate]);
-
-  useLayoutEffect(() => {
-    document?.body?.classList?.add('bg-[#F2F2F2]', 'md:bg-[#E3F2FD]');
-  }, []);
 
   return loading ? (
     <Loading />

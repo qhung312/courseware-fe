@@ -9,6 +9,7 @@ import { store } from './store';
 
 import './index.css';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-tooltip/dist/react-tooltip.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `pdf.worker.min.js`;
 

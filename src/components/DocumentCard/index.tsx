@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 
+import CopyIcon from '../CopyIcon';
 import Icon from '../Icon';
 
 interface DocumentCardProps {
@@ -7,17 +9,28 @@ interface DocumentCardProps {
   subTitle: string;
   description: string;
   to: string;
+  copyContent?: any;
 }
 
-const DocumentCard: React.FC<DocumentCardProps> = ({ title, subTitle, description, to }) => {
+const DocumentCard: React.FC<DocumentCardProps> = ({
+  title,
+  subTitle,
+  description,
+  to,
+  copyContent,
+}) => {
   return (
     <div className='relative z-10 max-h-[266px] rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
       <div className='absolute right-4 top-3 flex space-x-1 md:space-x-2 lg:space-x-3 xl:space-x-4 2xl:space-x-5'>
-        <div className='flex aspect-square w-7 items-center justify-center rounded-full bg-[#4285F4]'>
-          <Icon.DocumentCopy className='h-4 w-4 fill-white' />
-        </div>
-        <div className='flex aspect-square w-7 items-center justify-center rounded-full bg-[#4285F4]'>
-          <Icon.DocumentShare className='h-4 w-4 fill-white' />
+        <CopyIcon copyContent={copyContent} />
+        <div>
+          <button
+            className='share-anchor flex aspect-square w-7 items-center justify-center rounded-full bg-[#4285F4]'
+            data-tooltip-content='Share'
+          >
+            <Icon.DocumentShare className='h-4 w-4 fill-white' />
+          </button>
+          <Tooltip anchorSelect='.share-anchor' />
         </div>
       </div>
       <div className='space-y-2'>

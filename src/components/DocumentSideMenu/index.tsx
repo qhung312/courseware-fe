@@ -1,9 +1,7 @@
-import { useLayoutEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { NavLink, useParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector, usePath } from '../../hooks';
-import { getAllSubjects } from '../../slices/actions/library.action';
+import { useAppSelector } from '../../hooks';
 import { RootState } from '../../store';
 import { Subject } from '../../types/library';
 import Icon from '../Icon';
@@ -24,16 +22,6 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
   const { subjects } = useAppSelector((state: RootState) => state.library);
 
   const params = useParams();
-
-  const path = usePath();
-
-  const dispatch = useAppDispatch();
-
-  useLayoutEffect(() => {
-    if (path[0] === 'library') {
-      dispatch(getAllSubjects());
-    }
-  }, [path, dispatch]);
 
   return (
     <>

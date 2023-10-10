@@ -70,7 +70,7 @@ const ExamArchivePage: React.FC = () => {
         description='Lorem ipsum dolor sit amet, consectetur adi'
         baseRoute='/library/exam-archive'
       />
-      <div className='flex flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'>
+      <div className='flex min-h-screen flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'>
         {/* Add space */}
         <div className='mr-0 md:mr-[264px] lg:mr-[332px] xl:mr-[400px] 3xl:mr-[500px] ' />
 
@@ -85,7 +85,7 @@ const ExamArchivePage: React.FC = () => {
             </p>
           </div>
 
-          <div className='mb-6 min-h-full flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
+          <div className='mb-6 flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
             <Link
               to='/library/exam-archive'
               className='flex items-center space-x-2 hover:underline md:hidden'
@@ -141,6 +141,10 @@ const ExamArchivePage: React.FC = () => {
                   key={exam._id}
                   title={exam.name}
                   to={`/library/exam-archive/${subject?._id}/pdf/${exam._id}`}
+                  copyContent={
+                    window?.location?.origin +
+                    `/library/exam-archive/${subject?._id}/pdf/${exam._id}`
+                  }
                   subTitle={''}
                   description={
                     'Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do eiusmodeiusmodadipiscing elit, sed do eiusmodL'

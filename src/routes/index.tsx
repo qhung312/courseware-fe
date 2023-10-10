@@ -2,6 +2,7 @@ import { lazy } from 'react';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const MaterialPage = lazy(() => import('../pages/Library/MaterialPage'));
+const MaterialDetail = lazy(() => import('../pages/Library/MaterialDetail'));
 const ExamArchivePage = lazy(() => import('../pages/Library/ExamArchivePage'));
 const ExamArchiveDetail = lazy(() => import('../pages/Library/ExamArchiveDetail'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
@@ -15,7 +16,6 @@ export interface Route {
 
 const routes = [
   { title: 'Chúng ta cùng tiến', path: '/', component: HomePage, isProtected: false },
-  { title: 'Tài liệu', path: '/library/documents', component: MaterialPage, isProtected: true },
   {
     title: 'Đề thi các năm',
     path: '/library/exam-archive/:subjectId?',
@@ -26,6 +26,18 @@ const routes = [
     title: 'Chi tiết đề thi',
     path: '/library/exam-archive/:subjectId/pdf/:pdfId?',
     component: ExamArchiveDetail,
+    isProtected: true,
+  },
+  {
+    title: 'Đề thi các năm',
+    path: '/library/material/:subjectId?',
+    component: MaterialPage,
+    isProtected: true,
+  },
+  {
+    title: 'Chi tiết đề thi',
+    path: '/library/material/:subjectId/pdf/:pdfId?',
+    component: MaterialDetail,
     isProtected: true,
   },
   {
