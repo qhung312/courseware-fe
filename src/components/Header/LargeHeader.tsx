@@ -95,7 +95,7 @@ const LargeHeader = () => {
   const throttledAboutUsClick = useThrottle(onAboutUsClick);
 
   return (
-    <header className='flex-column fixed top-0 z-30 hidden w-[100vw] flex-wrap bg-white md:flex'>
+    <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
         className='z-[3] flex w-[100%] flex-row items-center justify-between
         bg-white px-[16px] py-[12px] xl:px-[32px] xl:py-[16px]'
@@ -506,7 +506,7 @@ const LargeHeader = () => {
           </p>
         </NavLink>
       </nav>
-    </header>
+    </div>
   );
 };
 
