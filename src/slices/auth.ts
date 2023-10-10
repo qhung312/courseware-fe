@@ -1,37 +1,45 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+
+import AuthService from '../service/auth.service';
+
+import { logout } from './actions/auth.action';
+import { getUserProfile } from './actions/user.action';
 
 export type TAuthState = {
   isAuthenticated: boolean;
-  loading: boolean;
+  token: string;
 };
 
 const initialState: TAuthState = {
   isAuthenticated: false,
-  loading: false,
+  token: localStorage.getItem('token') || '',
 };
 
-// Async Actions
-const login = createAsyncThunk('auth/login', async () => {
-  setTimeout(() => {
-    console.log('logged in');
-  }, 1000);
-});
-
-// Slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    loginWithGoogle: () => {
+      AuthService.loginWithGoogle();
+    },
+    setToken: (state, { payload }) => {
+      localStorage.setItem('token', JSON.stringify(payload));
+      state.token = payload;
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.isAuthenticated = false;
-    });
-    builder.addCase(login.fulfilled, (state) => {
+    builder.addCase(getUserProfile.fulfilled, (state) => {
       state.isAuthenticated = true;
-      state.loading = true;
     });
-    builder.addCase(login.rejected, (state) => {
-      state.isAuthenticated = false;
+
+    builder.addCase(getUserProfile.rejected, (state) => {
+      localStorage.clear();
+      Object.assign(state, initialState);
+    });
+
+    builder.addCase(logout, (state) => {
+      localStorage.clear();
+      Object.assign(state, initialState);
     });
   },
 });

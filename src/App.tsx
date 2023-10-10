@@ -1,21 +1,41 @@
-import { Suspense, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Suspense, useLayoutEffect, useState } from 'react';
+import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Header, Loading } from './components';
+import { ENVIRONMENT } from './config';
+import { useAppDispatch } from './hooks';
 import routes from './routes';
-import PrivateRoute from './routes/PrivateRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 import TitleWrapper from './routes/TitleWrapper';
+import { getAllSubjects } from './slices/actions/library.action';
+import { getUserProfile } from './slices/actions/user.action';
+import { AuthAction } from './slices/auth';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+  const [searchParams] = useSearchParams({ token: '' });
 
-    return () => clearTimeout(id);
-  }, []);
+  const { token: queryToken } = Object.fromEntries(searchParams);
+
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    console.log('Environment:', ENVIRONMENT);
+
+    if (queryToken && queryToken !== '') {
+      dispatch(AuthAction.setToken(queryToken));
+      navigate('/');
+    } else {
+      dispatch(getUserProfile())
+        .then(() => dispatch(getAllSubjects()))
+        .then(() => {
+          setTimeout(() => setLoading(false), 400);
+        });
+    }
+  }, [dispatch, queryToken, navigate]);
 
   return loading ? (
     <Loading />
@@ -44,9 +64,9 @@ const App = () => {
                 path={route.path}
                 element={
                   <TitleWrapper title={route.title}>
-                    <PrivateRoute key={index}>
+                    <ProtectedRoute key={index}>
                       <Component />
-                    </PrivateRoute>
+                    </ProtectedRoute>
                   </TitleWrapper>
                 }
                 key={index}

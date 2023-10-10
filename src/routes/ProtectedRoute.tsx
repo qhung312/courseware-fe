@@ -8,7 +8,7 @@ type TPrivateRouteProps = {
   children: ReactNode;
 };
 
-const PrivateRoute: React.FC<TPrivateRouteProps> = ({ children }) => {
+const ProtectedRoute: React.FC<TPrivateRouteProps> = ({ children }) => {
   let location = useLocation();
 
   const isAuthenticated = useSelector((state: RootState) => state.auth);
@@ -20,4 +20,4 @@ const PrivateRoute: React.FC<TPrivateRouteProps> = ({ children }) => {
   return <React.Fragment>{children}</React.Fragment>;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;
