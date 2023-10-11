@@ -1,24 +1,33 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import './index.css';
+
+import { useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 
 import EventBackground from '../../assets/images/EventBackground.png';
 import { ReactComponent as LargeCTCTLogo } from '../../assets/svgs/LargeLogoCTCT.svg';
-import { CarouselArrow, CarouselIndicator, Footer, Icon } from '../../components';
+import { CarouselArrow, CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../components';
 import { CarouselData as data } from '../../data/CarouselData';
+import { useWindowDimensions } from '../../hooks';
 
 const Home = () => {
+  const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    const navbar = document.getElementById('navbar') as HTMLElement;
+    const homepage = document.getElementById('homepage') as HTMLElement;
+
+    homepage.style.height = `calc(100vh - ${navbar.clientHeight}px)`;
+  }, [width]);
+
   return (
     <>
       <main
         className='flex w-[100vw] flex-col items-center justify-start gap-y-[120px] bg-inherit 
       md:gap-y-[200px]'
       >
-        <section
-          className='h-[calc(100vh-72px)] w-full md:h-[calc(100vh-110.6px)] 
-        xl:h-[calc(100vh-111px)]'
-        >
+        <section id='homepage' className='w-full'>
           <Carousel
             showThumbs={false}
             showStatus={false}
@@ -32,17 +41,24 @@ const Home = () => {
             renderArrowNext={CarouselArrow.Next}
             stopOnHover={false}
           >
-            {data.map((item) => (
+            {data.map((item, index) => (
               <div className='relative h-full w-full' key={item.id}>
-                <img src={item.imgSrc} alt='bg' className='h-full w-full object-cover' />
+                <LazyLoadImage
+                  src={item.imgSrc}
+                  placeHolderSrc={item.imgPlaceholder}
+                  containerClassName='h-full w-full'
+                  alt={`slider background ${index}`}
+                  className='h-full w-full object-cover'
+                />
+
                 <div
-                  className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 
-                py-1
-                md:bottom-[48px] xl:bottom-[56px]'
+                  className='absolute bottom-[16px] z-[2] flex flex-row items-center bg-white/75 
+                  px-1 py-1
+                  md:bottom-[48px] xl:bottom-[56px]'
                 >
                   <p
                     className='relative ml-[16px] mr-[8px] text-[12px] font-bold text-[#4D4D4D] 
-                  md:ml-[40px] md:mr-[24px] md:text-[24px] xl:ml-[64px] xl:mr-[32px] xl:text-[48px]'
+                  md:ml-[40px] md:mr-[24px] md:text-[20px] xl:ml-[64px] xl:mr-[32px] xl:text-[32px]'
                   >
                     {item.title}
                   </p>
@@ -61,30 +77,27 @@ const Home = () => {
           className='flex w-full flex-row flex-wrap items-center justify-center
         gap-x-[20px] gap-y-8 px-[48px] md:gap-x-[40px] md:px-[100px] xl:px-[180px] 2xl:gap-x-[80px]'
         >
-          <LargeCTCTLogo
-            className='aspect-auto h-auto w-[200px] flex-1 
-          md:w-[300px] xl:w-[400px]'
-          />
+          <LargeCTCTLogo className='aspect-auto h-auto flex-1' />
           <div
-            className='flex flex-[2] flex-col items-start justify-start 
+            className='flex flex-[3] flex-col items-start justify-start 
           md:w-[360px] xl:w-[500px] 2xl:w-[600px]'
           >
             <p
-              className='mb-[16px] self-center text-[16px] font-bold
+              className='mb-[16px] self-center text-center text-[16px] font-bold
             md:mb-[32px] md:text-[24px] xl:mb-[48px] xl:text-[32px]'
             >
               Who We Are
             </p>
-            <p className='text-[12px] leading-relaxed md:text-[16px] xl:text-[24px]'>
+            <p className='text-justify text-[12px] leading-relaxed md:text-[16px] xl:text-[24px]'>
               <strong>Chúng Ta Cùng Tiến</strong> là Câu lạc bộ học thuật được thành lập dưới sự
               quản lý của Trung tâm Hỗ trợ Sinh viên và Việc làm.
             </p>
-            <p className='text-[12px] leading-relaxed md:text-[16px] xl:text-[24px]'>
+            <p className='text-justify text-[12px] leading-relaxed md:text-[16px] xl:text-[24px]'>
               Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một trọng
               trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành cùng sinh
               viên.
             </p>
-            <p className='text-[12px] leading-relaxed md:text-[16px] xl:text-[24px]'>
+            <p className='text-justify text-[12px] leading-relaxed md:text-[16px] xl:text-[24px]'>
               CLB là tập hợp của những cá nhân Vững mạnh kiến thức trong <strong>CHUYÊN MÔN</strong>
               ; Tiên phong sáng tạo trong <strong>TRUYỀN THÔNG</strong>; Năng động thích ứng trong{' '}
               <strong>SỰ KIỆN</strong>; và Thân thiện, hài hòa trong{' '}

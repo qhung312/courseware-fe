@@ -82,7 +82,7 @@ const MediumHeader = () => {
 
   return (
     <>
-      <header className='fixed top-0 z-30 w-[100%]'>
+      <div className='relative top-0 z-30 w-full'>
         <div
           className='relative z-[25] flex h-[72px] w-[100%] flex-row items-center
           justify-between bg-[#f5f7fc]
@@ -547,7 +547,7 @@ const MediumHeader = () => {
             )}
           </nav>
         </div>
-      </header>
+      </div>
     </>
   );
 };
