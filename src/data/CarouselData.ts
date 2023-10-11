@@ -2,7 +2,7 @@ const CarouselData = [
   {
     id: 1,
     title: 'Không Ai Bị Bỏ Lại Phía Sau',
-    imgSrc: require('../assets/images/Introduction.jpg'),
+    imgSrc: require('../assets/images/IntroductionPic.jpg'),
     imgPlaceholder: require('../assets/images/Introduction-placeholder.jpg'),
     to: '/about-us',
   },
