@@ -37,7 +37,7 @@
     "eject": "react-scripts eject",
     "test": "react-scripts test",
     "pre-commit": "npx tsc --noEmit && npm run lint && npm run format",
-    "lint": "eslint . --fix --max-warnings=0 --cache-location './node_modules/.cache/.eslintcache'",
+    "lint": "eslint . --cache --fix --max-warnings=0 --cache-location './node_modules/.cache/.eslintcache'",
     "format": "prettier . --write",
     "prepare": "husky install"
   },
