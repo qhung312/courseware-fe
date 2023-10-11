@@ -144,7 +144,7 @@ const LargeHeader = () => {
                     fill={'#3b3b3b'}
                     fillOpacity={0.87}
                     className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                      isProfileDrop ? 'rotate-180' : 'rotate-0'
+                      isProfileDrop ? 'rotate-0' : 'rotate-180'
                     }`}
                   />
                 </button>
@@ -247,7 +247,7 @@ const LargeHeader = () => {
               }
               fillOpacity={0.87}
               className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                isLibraryOpen ? 'rotate-180' : 'rotate-0'
+                isLibraryOpen ? 'rotate-0' : 'rotate-180'
               }`}
             />
           </button>
@@ -330,7 +330,7 @@ const LargeHeader = () => {
               }
               fillOpacity={0.87}
               className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                isRoomOpen ? 'rotate-180' : 'rotate-0'
+                isRoomOpen ? 'rotate-0' : 'rotate-180'
               }`}
             />
           </button>
@@ -421,7 +421,7 @@ const LargeHeader = () => {
               }
               fillOpacity={0.87}
               className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                isAboutUsOpen ? 'rotate-180' : 'rotate-0'
+                isAboutUsOpen ? 'rotate-0' : 'rotate-180'
               }`}
             />
           </button>

@@ -1,4 +1,4 @@
-import { Suspense, useLayoutEffect, useState } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Header, Loading } from './components';
@@ -27,7 +27,6 @@ const App = () => {
 
     if (queryToken && queryToken !== '') {
       dispatch(AuthAction.setToken(queryToken));
-      navigate('/');
     } else {
       dispatch(getUserProfile())
         .then(() => dispatch(getAllSubjects()))
@@ -35,7 +34,13 @@ const App = () => {
           setTimeout(() => setLoading(false), 400);
         });
     }
-  }, [dispatch, queryToken, navigate]);
+  }, [dispatch, queryToken]);
+
+  useEffect(() => {
+    if (queryToken && queryToken !== '') {
+      navigate('/');
+    }
+  }, [queryToken, navigate]);
 
   return loading ? (
     <Loading />

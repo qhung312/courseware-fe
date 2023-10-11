@@ -11,15 +11,15 @@ import './index.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-tooltip/dist/react-tooltip.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `pdf.worker.min.js`;
+console.log(pdfjs.GlobalWorkerOptions.workerSrc);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      {/* <React.StrictMode> */}
+      <App />
+      {/* </React.StrictMode> */}
     </BrowserRouter>
   </Provider>
 );

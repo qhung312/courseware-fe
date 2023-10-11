@@ -1,13 +1,10 @@
 import { throttle } from 'lodash';
 import { useLayoutEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
-
-import { useAppSelector } from '../../hooks';
-import { RootState } from '../../store';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
 
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const options = {
   cMapUrl: 'cmaps/',
   cMapPacked: true,
@@ -21,8 +18,6 @@ interface PDFProps {
 }
 
 const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) => {
-  const { token } = useAppSelector((state: RootState) => state.auth);
-
   const [numPages, setNumPages] = useState(1);
   const [width, setWidth] = useState<number | undefined>();
 
@@ -60,9 +55,9 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
           loading={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
           file={{
             url: typeof url === 'string' ? new URL(url) : url,
-            httpHeaders: {
-              authorization: `Bearer ${JSON.parse(token || '""')}`,
-            },
+            // httpHeaders: {
+            //   authorization: `Bearer ${JSON.parse(token || '""')}`,
+            // },
           }}
           onLoadSuccess={onDocumentLoadSuccess}
         >
