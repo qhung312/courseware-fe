@@ -32,9 +32,8 @@ module.exports = {
           '@screen 2xl': {
             maxWidth: '1536px',
           },
-        }
-      })
-    }
-  ]
-
+        },
+      });
+    },
+  ],
 };
