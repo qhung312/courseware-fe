@@ -33,6 +33,7 @@ const AboutUs = () => {
             </div>
           </div>
         </Container>
+
         {/* Section 1 */}
         <Container className='flex flex-col space-y-16 md:justify-between lg:flex-row  lg:space-y-0'>
           <div className='space-y-3 md:max-w-md md:space-y-4 xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
@@ -59,7 +60,27 @@ const AboutUs = () => {
             </p>
           </div>
         </Container>
+
+        {/* Section 2 */}
+        <div className='w-full bg-[#4285F4]'>
+          <Container className='flex flex-col items-center justify-center'>
+            <div className='flex flex-1 items-center'>
+              <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
+                <h1 className='text-center text-[28px] font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
+                  We <span className='text-[#F4B301]'>Learn</span> - We
+                  <span className='text-[#F4B301]'>Share</span>
+                </h1>
+                <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] xl:text-[22px]'>
+                  Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một
+                  trọng trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành
+                  cùng sinh viên.
+                </p>
+              </div>
+            </div>
+          </Container>
+        </div>
         {/* Section 3 */}
+
         <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
           <div className='flex flex-1 items-center'>
             <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
@@ -81,6 +102,7 @@ const AboutUs = () => {
             />
           </div>
         </Container>
+
         {/* Section 4 */}
         <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
           <div className='flex flex-1 items-center'>
