@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector, useThrottle } from '../../hooks';
 import { logout } from '../../slices/actions/auth.action';
 import { AuthAction } from '../../slices/auth';
 import { RootState } from '../../store';
-import { getOffset } from '../../utils/helper';
 import Icon from '../Icon';
 
 const LargeHeader = () => {
@@ -14,7 +13,6 @@ const LargeHeader = () => {
   const libraryRef = useRef<HTMLDivElement>(null);
   const roomRef = useRef<HTMLDivElement>(null);
   const aboutUsRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
   const [isLibraryOpen, setIsLibraryOpen] = useState(
@@ -28,7 +26,6 @@ const LargeHeader = () => {
       pathname === '/about-us/activities' ||
       pathname === '/about-us/partners'
   );
-  const [prevYOffset, setPrevYOffset] = useState(0);
   const [isProfileDrop, setIsProfileDrop] = useState(false);
 
   const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
@@ -56,26 +53,6 @@ const LargeHeader = () => {
     });
   }, [libraryRef, roomRef, aboutUsRef, profileRef]);
 
-  useEffect(() => {
-    const listenToScroll = () => {
-      if (navRef.current) {
-        const currentYOffset = getOffset(navRef);
-        if (currentYOffset > prevYOffset) {
-          navRef.current.style.maxHeight = '0';
-          navRef.current.style.opacity = '0';
-        } else {
-          navRef.current.style.maxHeight = '1000px';
-          navRef.current.style.opacity = '1';
-        }
-        setPrevYOffset(currentYOffset);
-      }
-    };
-
-    window.addEventListener('scroll', listenToScroll);
-
-    return () => window.removeEventListener('scroll', listenToScroll);
-  }, [navRef, prevYOffset]);
-
   const onLibraryClick = () => {
     setIsLibraryOpen(!isLibraryOpen);
   };
@@ -97,31 +74,32 @@ const LargeHeader = () => {
   return (
     <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
-        className='z-[3] flex w-[100%] flex-row items-center justify-between
-        bg-white px-[16px] py-[12px] xl:px-[32px] xl:py-[16px]'
+        className='z-30 flex w-[100%] flex-row items-center justify-between
+        bg-white px-[16px] py-[12px] 2xl:px-[32px] 2xl:py-[16px]'
       >
-        <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]'>
-          <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]' />
+        <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 2xl:h-[48px]'>
+          <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 2xl:h-[48px]' />
         </NavLink>
         <div className='relative flex flex-row gap-x-[52px]'>
           <div className='relative flex flex-row items-center'>
             <input
               className='w-[400px] rounded-[40px] border border-[#49BBBD] bg-inherit
-              py-[8px] pl-[20px] pr-[60px] xl:w-[500px] xl:py-[12px]
-              xl:pl-[24px] xl:pr-[72px]'
+              py-[8px] pl-[20px] pr-[60px] 2xl:w-[500px] 2xl:py-[12px]
+              2xl:pl-[24px] 2xl:pr-[72px]'
             />
             <button
               type='button'
-              className='absolute right-[16px] w-[16px] xl:right-[24px] xl:w-[24px]'
+              className='absolute right-[16px] w-[16px] 2xl:right-[24px] 2xl:w-[24px]'
             >
-              <Icon.Search className='aspect-square h-auto w-[16px] xl:w-[24px]' />
+              <Icon.Search className='aspect-square h-auto w-[16px] 2xl:w-[24px]' />
             </button>
           </div>
           {!isAuthenticated && (
             <button
               type='submit'
-              className='inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] bg-[#4285F4] text-base text-white duration-300 ease-out hover:bg-[#2374FA] 
-              '
+              className='inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] 
+              bg-[#4285F4] text-base text-white 
+              duration-300 ease-out hover:bg-[#2374FA]'
               onClick={() => dispatch(AuthAction.loginWithGoogle())}
             >
               Đăng nhập
@@ -138,7 +116,7 @@ const LargeHeader = () => {
                     alt='profile_pic'
                     src={user?.picture || require('../../assets/images/AvatarPic.png')}
                     className='mr-[16px] h-[42px] w-[42px] rounded-[999px] border-2
-                  border-[#49BBBD] bg-[#979797] xl:mr-[24px] xl:h-[50px] xl:w-[50px]'
+                  border-[#49BBBD] bg-[#979797] 2xl:mr-[24px] 2xl:h-[50px] 2xl:w-[50px]'
                   />
                   <Icon.ChevronUp
                     fill={'#3b3b3b'}
@@ -150,7 +128,7 @@ const LargeHeader = () => {
                 </button>
               </div>
               <nav
-                className='set-11 absolute right-0 top-[136%] z-[1] mt-1 flex w-[200px] flex-col 
+                className='set-11 absolute right-0 top-[136%] z-10 mt-1 flex w-[200px] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300'
                 style={{
@@ -164,25 +142,25 @@ const LargeHeader = () => {
                 <NavLink
                   to='/profile'
                   end
-                  className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+                  className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
                   onClick={throttledLibraryClick}
                 >
                   <p
                     className='${ font-norma whitespace-nowrap bg-inherit 
-                px-2 py-1 text-[14px] text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-black xl:px-3
-                xl:py-2 xl:text-[18px]
+                px-2 py-1 text-[14px] text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-black 2xl:px-3
+                2xl:py-2 2xl:text-[18px]
                 '
                   >
                     Thông tin của tôi
                   </p>
                 </NavLink>
                 <button
-                  className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+                  className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
                   onClick={() => dispatch(logout())}
                 >
                   <p
-                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear xl:px-3
-                xl:py-2 xl:text-[18px]'
+                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear 2xl:px-3
+                    2xl:py-2 2xl:text-[18px]'
                   >
                     Đăng xuất
                   </p>
@@ -193,19 +171,18 @@ const LargeHeader = () => {
         </div>
       </div>
       <nav
-        ref={navRef}
-        className='z-[2] flex w-[100%] flex-row items-center justify-start bg-[#E3F2FD]
+        className='z-20 flex w-[100%] flex-row items-center justify-start bg-[#E3F2FD]
         transition-all duration-700 ease-out'
       >
         <NavLink
           to='/'
           end
           className='flex h-[100%] items-center justify-start 
-          px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+          px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
         >
           <p
             className='whitespace-nowrap bg-inherit px-2 py-1
-            text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+            text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
             style={{
               color: pathname === '/' ? '#FFFFFF' : '#5B5B5B',
               backgroundColor: pathname === '/' ? '#4285f4' : 'transparent',
@@ -218,13 +195,13 @@ const LargeHeader = () => {
         <div className='relative' ref={libraryRef}>
           <button
             type='button'
-            className='z-[2] flex flex-row items-center justify-start
-            px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+            className='z-20 flex flex-row items-center justify-start
+            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
             onClick={throttledLibraryClick}
           >
             <p
               className='mr-[8px] whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
               style={{
                 color:
                   pathname === '/library/material' || pathname === '/library/exam-archive'
@@ -252,7 +229,7 @@ const LargeHeader = () => {
             />
           </button>
           <nav
-            className='absolute z-[1] mt-1 flex w-[120%] flex-col 
+            className='absolute z-10 mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300'
             style={{
@@ -266,12 +243,12 @@ const LargeHeader = () => {
             <NavLink
               to='/library/material'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledLibraryClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/library/material' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/library/material' ? '700' : 'normal',
@@ -283,12 +260,12 @@ const LargeHeader = () => {
             <NavLink
               to='/library/exam-archive'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledLibraryClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/library/exam-archive' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/library/exam-archive' ? '700' : 'normal',
@@ -302,13 +279,13 @@ const LargeHeader = () => {
         <div className='relative' ref={roomRef}>
           <button
             type='button'
-            className='z-[2] flex flex-row items-center justify-start
-            px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+            className='z-20 flex flex-row items-center justify-start
+            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
             onClick={throttledRoomClick}
           >
             <p
               className='mr-[8px] bg-inherit px-2 py-1
-              text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
               style={{
                 color:
                   pathname === '/room/exercises' || pathname === '/room/tests'
@@ -335,7 +312,7 @@ const LargeHeader = () => {
             />
           </button>
           <nav
-            className='absolute z-[1] mt-1 flex w-[120%] flex-col 
+            className='absolute z-10 mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300'
             style={{
@@ -349,12 +326,12 @@ const LargeHeader = () => {
             <NavLink
               to='/room/exercises'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledRoomClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/room/exercises' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/room/exercises' ? '700' : 'normal',
@@ -366,12 +343,12 @@ const LargeHeader = () => {
             <NavLink
               to='/room/tests'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledRoomClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/room/tests' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/room/tests' ? '700' : 'normal',
@@ -385,13 +362,13 @@ const LargeHeader = () => {
         <div className='relative' ref={aboutUsRef}>
           <button
             type='button'
-            className='z-[2] flex flex-row items-center justify-start
-            px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+            className='z-20 flex flex-row items-center justify-start
+            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
             onClick={throttledAboutUsClick}
           >
             <p
               className='mr-[8px] whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
               style={{
                 color:
                   pathname === '/about-us' ||
@@ -426,7 +403,7 @@ const LargeHeader = () => {
             />
           </button>
           <nav
-            className='absolute z-[1] mt-1 flex w-[120%] flex-col 
+            className='absolute z-10 mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300'
             style={{
@@ -440,11 +417,11 @@ const LargeHeader = () => {
             <NavLink
               to='/about-us'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/about-us' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us' ? '700' : 'normal',
@@ -456,11 +433,11 @@ const LargeHeader = () => {
             <NavLink
               to='/about-us/activities'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/about-us/activities' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us/activities' ? '700' : 'normal',
@@ -472,11 +449,11 @@ const LargeHeader = () => {
             <NavLink
               to='/about-us/partners'
               end
-              className='bg-inherit px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
                 style={{
                   color: pathname === '/about-us/partners' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us/partners' ? '700' : 'normal',
@@ -491,11 +468,11 @@ const LargeHeader = () => {
           to='/help'
           end
           className='flex h-[100%] items-center justify-start
-            px-[16px] py-[8px] xl:px-[32px] xl:py-[12px]'
+            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
         >
           <p
             className='whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear xl:px-3 xl:py-2 xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
             style={{
               color: pathname === '/help' ? '#FFFFFF' : '#5B5B5B',
               backgroundColor: pathname === '/help' ? '#4285f4' : 'transparent',
