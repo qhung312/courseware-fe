@@ -1,0 +1,81 @@
+.carousel-root {
+  height: 100%;
+}
+
+.carousel .control-dots {
+  margin: 0;
+}
+
+.carousel {
+  height: 100%;
+}
+
+.carousel.carousel-slider {
+  height: 100%;
+}
+
+.carousel .slider-wrapper {
+  height: 100%;
+}
+
+.carousel .slider {
+  height: 100%;
+}
+
+.carousel .slide {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.line-clamp {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+@media (min-width: 768px) {
+  .carousel .control-dots {
+    margin: 12px 0;
+  }
+
+  .line-clamp {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel .control-dots {
+    margin: 20px 0;
+  }
+
+  .line-clamp {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+  }
+}
+
+.lazy-load-image-background.blur {
+  filter: blur(15px);
+}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+  filter: blur(0);
+  transition: filter 0.8s;
+}
+
+.lazy-load-image-background.blur > img {
+  opacity: 0;
+}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded > img {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
