@@ -74,18 +74,19 @@ const Home = () => {
           </Carousel>
         </section>
         <section
-          className='flex w-full flex-row flex-wrap items-center justify-evenly
-          gap-x-[60px] gap-y-8 px-[48px] md:gap-x-[80px] md:px-[80px] xl:gap-x-[100px] 
-          xl:px-[100px] 2xl:gap-x-[120px] 2xl:px-[180px]'
+          className='flex w-full flex-row flex-wrap items-center justify-center
+          gap-x-[20px] gap-y-8 px-[48px] md:gap-x-[40px] md:px-[100px] xl:px-[180px] 2xl:gap-x-[80px]'
         >
-          <LargeCTCTLogo className='aspect-auto h-auto md:flex-1' />
+          <div className='md:flex-[2]'>
+            <LargeCTCTLogo className='mx-auto aspect-auto h-auto md:w-[150px] md:flex-1 lg:w-[175px] xl:w-[200px]' />
+          </div>
           <div
-            className='flex flex-col items-start justify-start md:w-[360px] 
-          md:flex-[4] xl:w-[500px] 2xl:w-[600px]'
+            className='flex flex-col items-start justify-start text-[#4D4D4D] md:w-[360px] 
+          md:flex-[3] xl:w-[500px] 2xl:w-[600px]'
           >
             <p
-              className='mb-[16px] self-center text-center text-[16px] font-bold
-            md:mb-[32px] xl:mb-[48px] xl:text-[24px] 2xl:text-[32px]'
+              className='mb-[16px] self-center text-center text-[16px] font-bold md:mb-[32px] md:text-xl
+            lg:text-2xl xl:mb-[48px] xl:text-4xl 2xl:text-[54px]'
             >
               Who We Are
             </p>
