@@ -32,6 +32,7 @@ const ExamArchivePage: React.FC = () => {
         })
         .catch((err) => {
           console.log('Error in fetching all exams achives by subject id', err);
+          setTimeout(() => setExamArchives([]), 300);
         });
     }
   }, [params]);

@@ -13,7 +13,7 @@ const initialState: TLibraryState = {
 };
 
 const librarySlice = createSlice({
-  name: 'auth',
+  name: 'library',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

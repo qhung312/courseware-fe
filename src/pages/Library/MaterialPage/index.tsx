@@ -17,21 +17,22 @@ const MaterialPage: React.FC = () => {
   const { subjects } = useAppSelector((state: RootState) => state.library);
   const subject = _.find(subjects, (subj) => subj._id === params?.subjectId);
 
-  const [examArchives, setExamArchives] = useState<ExamArchive[] | null>(null);
+  const [materials, setMaterials] = useState<ExamArchive[] | null>(null);
   const isOpen = useAppSelector((state) => state.app.isMenuOpen);
 
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
-      setExamArchives(null);
+      setMaterials(null);
       LibraryService.getAllMaterialBySubjectId(params?.subjectId)
         .then((res) => {
           const { data } = res;
           const { payload } = data;
 
-          setTimeout(() => setExamArchives(payload), 300);
+          setTimeout(() => setMaterials(payload), 300);
         })
         .catch((err) => {
           console.log('Error in fetching all exams achives by subject id', err);
+          setTimeout(() => setMaterials([]), 300);
         });
     }
   }, [params]);
@@ -123,7 +124,7 @@ const MaterialPage: React.FC = () => {
                 {subject ? 'Nội dung môn học' : <Skeleton baseColor='#9DCCFF' />}
               </h1>
               {/* Skeleton Loading */}
-              {!examArchives && (
+              {!materials && (
                 <div className='relative z-10 max-h-[266px] rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
                   <div className='absolute right-4 top-3 flex space-x-1 md:space-x-2 lg:space-x-3 xl:space-x-4 2xl:space-x-5'></div>
                   <div className='space-y-2'>
@@ -139,13 +140,13 @@ const MaterialPage: React.FC = () => {
                 </div>
               )}
               {/* If exam archives is empty */}
-              {examArchives?.length === 0 && (
+              {materials?.length === 0 && (
                 <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
                   <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
                   <p className='w-full text-center'>Không tìm thấy tài liệu</p>
                 </div>
               )}
-              {examArchives?.map((exam) => (
+              {materials?.map((exam) => (
                 <DocumentCard
                   key={exam._id}
                   title={exam.name}
