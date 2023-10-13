@@ -41,22 +41,22 @@ const AboutUs = () => {
 
         {/* Section 1 */}
         <Container className='flex flex-col space-y-16 md:justify-between lg:flex-row  lg:space-y-0'>
-          <div className='space-y-3 md:max-w-md md:space-y-4 xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
+          <div className='space-y-3 md:max-w-md md:space-y-4 xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
             <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
               Giới thiệu
             </h2>
-            <p className='text-justify text-[12px] text-[#696984] lg:text-[16px] xl:text-[22px]'>
+            <p className='text-justify text-[12px] text-[#696984] lg:text-[16px] 2xl:text-[22px]'>
               Chúng Ta Cùng Tiến là Câu lạc bộ học thuật được thành lập dưới sự quản lý của Trung
               tâm Hỗ trợ Sinh viên và Việc làm. CLB là tập hợp của những cá nhân Vững mạnh kiến thức
               trong CHUYÊN MÔN; Tiên phong sáng tạo trong TRUYỀN THÔNG; Năng động thích ứng trong SỰ
               KIỆN; và Thân thiện, hài hòa trong NHÂN SỰ HẬU CẦN.
             </p>
           </div>
-          <div className='space-y-3 md:max-w-md md:space-y-4 md:self-end lg:self-auto xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
+          <div className='space-y-3 md:max-w-md md:space-y-4 md:self-end lg:self-auto xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
             <h2 className='text-center text-[28px] font-bold md:text-end md:uppercase lg:text-start lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
               THÀNH LẬP
             </h2>
-            <p className='text-justify text-[12px] text-[#696984] lg:text-[16px] xl:text-[22px]'>
+            <p className='text-justify text-[12px] text-[#696984] lg:text-[16px] 2xl:text-[22px]'>
               Tiền thân của Chúng Ta Cùng Tiến là Đội nhóm phát triển Matlab hỗ trợ học tập trong bộ
               môn Giải tích 1. Đến năm 2013, Chương trình Chúng Ta Cùng Tiến ra đời nhằm mục đích
               giúp đỡ sinh viên học tập với lực lượng nòng cốt là các sinh viên tài năng. Đến hiện
@@ -70,12 +70,12 @@ const AboutUs = () => {
         <div className='w-full bg-[#4285F4]'>
           <Container className='flex flex-col items-center justify-center'>
             <div className='flex flex-1 items-center'>
-              <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
+              <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
                 <h1 className='text-center text-[28px] font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
                   We <span className='text-[#F4B301]'>Learn</span> - We{' '}
                   <span className='text-[#F4B301]'>Share</span>
                 </h1>
-                <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] xl:text-[22px]'>
+                <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] 2xl:text-[22px]'>
                   Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một
                   trọng trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành
                   cùng sinh viên.
@@ -88,11 +88,11 @@ const AboutUs = () => {
 
         <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
           <div className='flex flex-1 items-center'>
-            <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
+            <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
               <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
                 SỨ MỆNH
               </h2>
-              <p className='text-center text-[12px] text-[#696984] md:text-justify lg:text-[16px] xl:text-[22px]'>
+              <p className='text-center text-[12px] text-[#696984] md:text-justify lg:text-[16px] 2xl:text-[22px]'>
                 Chúng Ta Cùng Tiến luôn giữ vững tinh thần thiện nguyện là một tổ chức phi lợi nhuận
                 hoạt động vì lợi ích của sinh viên; luôn đồng hành, lắng nghe nhằm đưa đến những giá
                 trị tốt nhất cho sinh viên và cộng đồng. 
@@ -113,11 +113,11 @@ const AboutUs = () => {
         {/* Section 4 */}
         <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
           <div className='flex flex-1 items-center'>
-            <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl 3xl:max-w-3xl'>
+            <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
               <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
                 TẦM NHÌN
               </h2>
-              <p className='text-center text-[12px] text-[#696984] md:text-justify lg:text-[16px] xl:text-[22px]'>
+              <p className='text-center text-[12px] text-[#696984] md:text-justify lg:text-[16px] 2xl:text-[22px]'>
                 <span className='font-bold'>
                   Giữ vững, sáng tạo và phát triển tạo nên những giá trị lớn cho sinh viên, xã hội.
                 </span>{' '}
