@@ -1,5 +1,5 @@
-import { throttle } from 'lodash';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { debounce } from 'lodash';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
 
@@ -19,6 +19,7 @@ interface PDFProps {
 
 const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) => {
   const [numPages, setNumPages] = useState(1);
+  const file = useMemo(() => ({ url: typeof url === 'string' ? new URL(url) : url }), [url]);
   const [width, setWidth] = useState<number | undefined>();
 
   const onDocumentLoadSuccess = ({ numPages: nextNumPages }: any) => {
@@ -27,25 +28,25 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   const pdfWrapperRef = useRef<HTMLDivElement>(null);
 
   const setWrapperSize = () => {
-    setWidth(pdfWrapperRef.current?.offsetWidth);
+    setWidth(pdfWrapperRef.current?.clientWidth);
   };
 
-  useLayoutEffect(() => {
-    window.addEventListener('resize', throttle(setWrapperSize, 300));
+  useEffect(() => {
+    window.addEventListener('resize', debounce(setWrapperSize, 700));
 
     return () => {
-      window.removeEventListener('resize', throttle(setWrapperSize, 300));
+      window.removeEventListener('resize', debounce(setWrapperSize, 700));
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (pdfWrapperRef.current) {
-      setWidth(pdfWrapperRef?.current.offsetWidth);
+      setWrapperSize();
     }
-  }, []);
+  }, [pdfWrapperRef.current?.clientWidth]);
 
   return (
-    <div className='w-full' ref={pdfWrapperRef}>
+    <div id='pdfWrapperRef' className='w-full' ref={pdfWrapperRef}>
       {width && (
         <Document
           className={`${className || ''}`}
@@ -53,12 +54,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
           renderMode={renderMode || 'svg'}
           error={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
           loading={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
-          file={{
-            url: typeof url === 'string' ? new URL(url) : url,
-            // httpHeaders: {
-            //   authorization: `Bearer ${JSON.parse(token || '""')}`,
-            // },
-          }}
+          file={file}
           onLoadSuccess={onDocumentLoadSuccess}
         >
           {Array.from(new Array(numPages), (_el, index) => (

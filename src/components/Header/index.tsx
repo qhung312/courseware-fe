@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <>
-      <header id='navbar' className='fixed top-0 z-10 w-full'>
+      <header id='navbar' className='fixed top-0 z-50 w-full'>
         <LargeHeader />
         <MediumHeader />
       </header>

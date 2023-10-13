@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { NavLink, useParams } from 'react-router-dom';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector, useWindowDimensions } from '../../hooks';
+import { AppAction } from '../../slices/app';
 import { RootState } from '../../store';
 import { Subject } from '../../types/library';
 import Icon from '../Icon';
@@ -20,26 +22,45 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
   baseRoute,
 }) => {
   const { subjects } = useAppSelector((state: RootState) => state.library);
-
+  const isOpen = useAppSelector((state) => state.app.isMenuOpen);
+  const dispatch = useAppDispatch();
   const params = useParams();
+  const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    const navbar = document.getElementById('navbar') as HTMLElement;
+    const menu = document.getElementById('menu') as HTMLElement;
+
+    menu.style.height = `calc(100vh - ${navbar.clientHeight}px)`;
+  }, [width]);
 
   return (
     <>
       <div
-        className={`fixed top-0 z-20 max-h-screen pt-[72px] md:pt-[46px] xl:pt-[62px] ${
+        id='menu'
+        className={`fixed z-10 max-h-screen bg-white ${
           params?.subjectId ? 'translate-x-[-100%]' : ''
-        } h-screen min-h-screen w-full transition-all duration-300 md:w-[264px]  md:translate-x-0 lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
+        } ${
+          !isOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
+        } w-full overflow-y-scroll transition-all duration-300 md:w-[264px]
+        lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex h-full max-h-full items-center overflow-y-scroll bg-white px-5 pt-5  md:pt-[87px] lg:pt-[101px] xl:px-7 xl:pt-[143px]'>
+        <div className='flex items-center px-5 py-5'>
           <div className='h-full w-full space-y-6'>
-            <h2 className='md:text-md hidden font-semibold transition duration-300 md:block lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl'>
-              {subTitle}
-            </h2>
+            <div className='hidden flex-row items-center justify-between md:flex'>
+              <h2
+                className='md:text-md hidden font-semibold transition duration-300 
+                md:block lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl'
+              >
+                {subTitle}
+              </h2>
+            </div>
+
             <span>
               <h1 className='block text-2xl font-bold text-[#4285F4] transition duration-300 md:hidden'>
                 {title}
               </h1>
-              <p className='blockA text-[#252641] transition duration-300 md:hidden'>
+              <p className='block text-[#252641] transition duration-300 md:hidden'>
                 {description}
               </p>
             </span>
@@ -97,6 +118,24 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
           </div>
         </div>
       </div>
+      <button
+        id='collapse-button'
+        type='button'
+        onClick={() => {
+          dispatch(AppAction.toggleMenu());
+        }}
+        className={`fixed top-[50%] z-10 hidden rounded-r-xl bg-white md:block ${
+          isOpen
+            ? '3xl:translate-w-[500px] md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] '
+            : 'translate-x-0'
+        } py-10 px-2 opacity-80 transition-all duration-300`}
+      >
+        <Icon.ChevronUp
+          fill={'#5B5B5B'}
+          fillOpacity={0.87}
+          className={`aspect-[10/7] h-full w-auto ${isOpen ? 'rotate-[-90deg]' : 'rotate-90'}`}
+        />
+      </button>
     </>
   );
 };
