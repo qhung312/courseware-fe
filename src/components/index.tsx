@@ -1,5 +1,6 @@
 import CarouselArrow from './CarouselArrow';
 import CarouselIndicator from './CarouselIndicator';
+import Container from './Container';
 import DocumentCard from './DocumentCard';
 import DocumentSideMenu from './DocumentSideMenu';
 import Footer from './Footer';
@@ -18,4 +19,5 @@ export {
   Loading,
   CarouselIndicator,
   CarouselArrow,
+  Container,
 };

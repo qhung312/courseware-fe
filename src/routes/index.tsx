@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 
+const AboutUsPage = lazy(() => import('../pages/AboutUs'));
 const HomePage = lazy(() => import('../pages/Home'));
 const MaterialPage = lazy(() => import('../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../pages/Library/MaterialDetail'));
@@ -47,7 +48,7 @@ const routes = [
     isProtected: true,
   },
   { title: 'Đề thi', path: '/room/tests', component: NotFoundPage, isProtected: true },
-  { title: 'Về chúng tôi', path: '/about-us', component: NotFoundPage, isProtected: false },
+  { title: 'Về chúng tôi', path: '/about-us', component: AboutUsPage, isProtected: false },
   { title: 'Hoạt động', path: '/about-us/activities', component: NotFoundPage, isProtected: false },
   {
     title: 'Đơn vị hợp tác',
