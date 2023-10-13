@@ -6,6 +6,7 @@ interface LazyLoadImageProps {
   containerClassName?: string;
   className?: string;
   placeHolderSrc: string;
+  objectFit?: 'none' | 'contain' | 'cover';
 }
 
 const LazyLoadImage = ({
@@ -14,20 +15,19 @@ const LazyLoadImage = ({
   containerClassName,
   className,
   placeHolderSrc,
+  objectFit = 'none',
 }: LazyLoadImageProps) => {
   const [loading, setLoading] = useState(true);
   return (
-    <div className={containerClassName}>
-      <img
-        src={placeHolderSrc}
-        alt={`${alt} placeholder`}
-        className={`absolute top-0 left-0 z-[1] ${className}`}
-        style={{
-          opacity: loading ? 1 : 0,
-          filter: loading ? 'blur(10px)' : 'blur(0px)',
-          transition: 'all 0.5s ease',
-        }}
-      />
+    <div
+      className={`${containerClassName} ${className} `}
+      style={{
+        backgroundImage: `url(${placeHolderSrc})`,
+        backgroundSize: objectFit,
+        filter: loading ? 'blur(10px)' : 'blur(0px)',
+        transition: 'all 0.5s ease',
+      }}
+    >
       <img
         onLoad={() => {
           setLoading(false);
@@ -35,6 +35,8 @@ const LazyLoadImage = ({
         src={src}
         alt={`${alt} placeholder`}
         className={className}
+        loading='lazy'
+        style={{ objectFit }}
       />
     </div>
   );

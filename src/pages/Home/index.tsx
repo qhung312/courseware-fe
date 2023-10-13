@@ -48,7 +48,8 @@ const Home = () => {
                   placeHolderSrc={item.imgPlaceholder}
                   containerClassName='h-full w-full'
                   alt={`slider background ${index}`}
-                  className='h-full w-full object-cover'
+                  className='h-full w-full'
+                  objectFit='cover'
                 />
 
                 <div
