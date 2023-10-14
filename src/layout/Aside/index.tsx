@@ -23,13 +23,13 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
       {/* Aside */}
       <aside
         ref={asideRef}
-        className={`with-nav-height fixed z-10 bg-white ${
+        className={`with-nav-height fixed z-10 m-auto bg-white ${
           params?.subjectId ? 'translate-x-[-100%]' : ''
         } ${
           !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
-        } w-full overflow-y-scroll transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
+        } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex items-center px-5 py-5'>
+        <div className='flex items-center justify-center py-5 px-5 3xl:py-8'>
           <div className='h-full w-full space-y-6'>
             {/* Title */}
             {title && (
@@ -48,7 +48,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
               <div className='hidden flex-row items-center justify-between md:flex'>
                 <h2
                   className='md:text-md hidden font-semibold transition duration-300 
-                md:block lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl'
+                  md:block lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl'
                 >
                   {subTitle}
                 </h2>
@@ -70,7 +70,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
         }}
         className={`fixed top-[50%] z-10 hidden rounded-r-xl bg-white md:block ${
           isAsideOpen
-            ? '3xl:translate-w-[500px] md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] '
+            ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
             : 'translate-x-0'
         } py-10 px-2 opacity-80 transition-all duration-300`}
       >

@@ -15,17 +15,9 @@ const LargeHeader = () => {
   const aboutUsRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
-  const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/material' || pathname === '/library/exam-archive'
-  );
-  const [isRoomOpen, setIsRoomOpen] = useState(
-    pathname === '/room/exercises' || pathname === '/room/tests'
-  );
-  const [isAboutUsOpen, setIsAboutUsOpen] = useState(
-    pathname === '/about-us' ||
-      pathname === '/about-us/activities' ||
-      pathname === '/about-us/partners'
-  );
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+  const [isRoomOpen, setIsRoomOpen] = useState(false);
+  const [isAboutUsOpen, setIsAboutUsOpen] = useState(false);
   const [isProfileDrop, setIsProfileDrop] = useState(false);
 
   const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
@@ -75,23 +67,23 @@ const LargeHeader = () => {
     <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
         className='z-30 flex w-[100%] flex-row items-center justify-between
-        bg-white px-[16px] py-[12px] 2xl:px-[32px] 2xl:py-[16px]'
+        bg-white px-[16px] py-[12px] 3xl:px-[32px] 3xl:py-[16px]'
       >
-        <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 2xl:h-[48px]'>
-          <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 2xl:h-[48px]' />
+        <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
+          <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]' />
         </NavLink>
         <div className='relative flex flex-row gap-x-[52px]'>
           <div className='relative flex flex-row items-center'>
             <input
               className='w-[400px] rounded-[40px] border border-[#49BBBD] bg-inherit
-              py-[8px] pl-[20px] pr-[60px] 2xl:w-[500px] 2xl:py-[12px]
-              2xl:pl-[24px] 2xl:pr-[72px]'
+              py-[8px] pl-[20px] pr-[60px] 3xl:w-[500px] 3xl:py-[12px]
+              3xl:pl-[24px] 3xl:pr-[72px]'
             />
             <button
               type='button'
-              className='absolute right-[16px] w-[16px] 2xl:right-[24px] 2xl:w-[24px]'
+              className='absolute right-[16px] w-[16px] 3xl:right-[24px] 3xl:w-[24px]'
             >
-              <Icon.Search className='aspect-square h-auto w-[16px] 2xl:w-[24px]' />
+              <Icon.Search className='aspect-square h-auto w-[16px] 3xl:w-[24px]' />
             </button>
           </div>
           {!isAuthenticated && (
@@ -116,7 +108,7 @@ const LargeHeader = () => {
                     alt='profile_pic'
                     src={user?.picture || require('../../assets/images/AvatarPic.png')}
                     className='mr-[16px] h-[42px] w-[42px] rounded-[999px] border-2
-                  border-[#49BBBD] bg-[#979797] 2xl:mr-[24px] 2xl:h-[50px] 2xl:w-[50px]'
+                  border-[#49BBBD] bg-[#979797] 3xl:mr-[24px] 3xl:h-[50px] 3xl:w-[50px]'
                   />
                   <Icon.ChevronUp
                     fill={'#3b3b3b'}
@@ -142,25 +134,25 @@ const LargeHeader = () => {
                 <NavLink
                   to='/profile'
                   end
-                  className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+                  className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
                   onClick={throttledLibraryClick}
                 >
                   <p
                     className='${ font-norma whitespace-nowrap bg-inherit 
-                px-2 py-1 text-[14px] text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-black 2xl:px-3
-                2xl:py-2 2xl:text-[18px]
+                px-2 py-1 text-[14px] text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-black 3xl:px-3
+                3xl:py-2 3xl:text-[18px]
                 '
                   >
                     Thông tin của tôi
                   </p>
                 </NavLink>
                 <button
-                  className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+                  className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
                   onClick={() => dispatch(logout())}
                 >
                   <p
-                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear 2xl:px-3
-                    2xl:py-2 2xl:text-[18px]'
+                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear 3xl:px-3
+                    3xl:py-2 3xl:text-[18px]'
                   >
                     Đăng xuất
                   </p>
@@ -178,11 +170,11 @@ const LargeHeader = () => {
           to='/'
           end
           className='flex h-[100%] items-center justify-start 
-          px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+          px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
         >
           <p
             className='whitespace-nowrap bg-inherit px-2 py-1
-            text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+            text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
             style={{
               color: pathname === '/' ? '#FFFFFF' : '#5B5B5B',
               backgroundColor: pathname === '/' ? '#4285f4' : 'transparent',
@@ -196,19 +188,21 @@ const LargeHeader = () => {
           <button
             type='button'
             className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
             onClick={throttledLibraryClick}
           >
             <p
               className='mr-[8px] whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
               style={{
                 color:
-                  pathname === '/library/material' || pathname === '/library/exam-archive'
+                  pathname.includes('/library/material') ||
+                  pathname.includes('/library/exam-archive')
                     ? '#FFFFFF'
                     : '#5B5B5B',
                 backgroundColor:
-                  pathname === '/library/material' || pathname === '/library/exam-archive'
+                  pathname.includes('/library/material') ||
+                  pathname.includes('/library/exam-archive')
                     ? '#4285f4'
                     : 'transparent',
                 borderRadius: '8px',
@@ -218,7 +212,7 @@ const LargeHeader = () => {
             </p>
             <Icon.ChevronUp
               fill={
-                pathname === '/library/material' || pathname === '/library/exam-archive'
+                pathname.includes('/library/material') || pathname.includes('/library/exam-archive')
                   ? '#3b3b3b'
                   : '#5B5B5B'
               }
@@ -242,16 +236,15 @@ const LargeHeader = () => {
           >
             <NavLink
               to='/library/material'
-              end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledLibraryClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
-                  color: pathname === '/library/material' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/library/material' ? '700' : 'normal',
+                  color: pathname.includes('/library/material') ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname.includes('/library/material') ? '700' : 'normal',
                 }}
               >
                 Tài liệu
@@ -259,16 +252,15 @@ const LargeHeader = () => {
             </NavLink>
             <NavLink
               to='/library/exam-archive'
-              end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledLibraryClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
-                  color: pathname === '/library/exam-archive' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/library/exam-archive' ? '700' : 'normal',
+                  color: pathname.includes('/library/exam-archive') ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname.includes('/library/exam-archive') ? '700' : 'normal',
                 }}
               >
                 Đề thi
@@ -280,19 +272,19 @@ const LargeHeader = () => {
           <button
             type='button'
             className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
             onClick={throttledRoomClick}
           >
             <p
               className='mr-[8px] bg-inherit px-2 py-1
-              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
               style={{
                 color:
-                  pathname === '/room/exercises' || pathname === '/room/tests'
+                  pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                     ? '#FFFFFF'
                     : '#5B5B5B',
                 backgroundColor:
-                  pathname === '/room/exercises' || pathname === '/room/tests'
+                  pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                     ? '#4285f4'
                     : 'transparent',
                 borderRadius: '8px',
@@ -303,7 +295,9 @@ const LargeHeader = () => {
 
             <Icon.ChevronUp
               fill={
-                pathname === '/room/exercises' || pathname === '/room/tests' ? '#3b3b3b' : '#5B5B5B'
+                pathname.includes('/room/exercises') || pathname.includes('/room/tests')
+                  ? '#3b3b3b'
+                  : '#5B5B5B'
               }
               fillOpacity={0.87}
               className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
@@ -325,16 +319,15 @@ const LargeHeader = () => {
           >
             <NavLink
               to='/room/exercises'
-              end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledRoomClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
-                  color: pathname === '/room/exercises' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/room/exercises' ? '700' : 'normal',
+                  color: pathname.includes('/room/exercises') ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname.includes('/room/exercises') ? '700' : 'normal',
                 }}
               >
                 Bài tập rèn luyện
@@ -342,16 +335,15 @@ const LargeHeader = () => {
             </NavLink>
             <NavLink
               to='/room/tests'
-              end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledRoomClick}
             >
               <p
                 className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
-                  color: pathname === '/room/tests' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/room/tests' ? '700' : 'normal',
+                  color: pathname.includes('/room/tests') ? '#3b3b3b' : '#5B5B5B',
+                  fontWeight: pathname.includes('/room/tests') ? '700' : 'normal',
                 }}
               >
                 Thi thử
@@ -363,12 +355,12 @@ const LargeHeader = () => {
           <button
             type='button'
             className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
             onClick={throttledAboutUsClick}
           >
             <p
               className='mr-[8px] whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
               style={{
                 color:
                   pathname === '/about-us' ||
@@ -417,11 +409,11 @@ const LargeHeader = () => {
             <NavLink
               to='/about-us'
               end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
                   color: pathname === '/about-us' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us' ? '700' : 'normal',
@@ -433,11 +425,11 @@ const LargeHeader = () => {
             <NavLink
               to='/about-us/activities'
               end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
                   color: pathname === '/about-us/activities' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us/activities' ? '700' : 'normal',
@@ -449,11 +441,11 @@ const LargeHeader = () => {
             <NavLink
               to='/about-us/partners'
               end
-              className='bg-inherit px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
                 style={{
                   color: pathname === '/about-us/partners' ? '#3b3b3b' : '#5B5B5B',
                   fontWeight: pathname === '/about-us/partners' ? '700' : 'normal',
@@ -468,11 +460,11 @@ const LargeHeader = () => {
           to='/help'
           end
           className='flex h-[100%] items-center justify-start
-            px-[16px] py-[8px] 2xl:px-[32px] 2xl:py-[12px]'
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
         >
           <p
             className='whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 2xl:px-3 2xl:py-2 2xl:text-[18px]'
+              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
             style={{
               color: pathname === '/help' ? '#FFFFFF' : '#5B5B5B',
               backgroundColor: pathname === '/help' ? '#4285f4' : 'transparent',

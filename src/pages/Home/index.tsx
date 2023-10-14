@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
     <Page>
       <main
-        className='flex w-[100vw] flex-col items-center justify-start gap-y-[120px] bg-inherit 
+        className='flex w-full flex-col items-center justify-start gap-y-[120px] bg-inherit 
         md:gap-y-[200px]'
       >
         <section id='homepage' className='w-full'>
@@ -33,7 +33,7 @@ const HomePage = () => {
             showThumbs={false}
             showStatus={false}
             autoPlay
-            emulateTouch
+            swipeable={false}
             infiniteLoop
             interval={3000}
             transitionTime={1000}
@@ -155,8 +155,8 @@ const HomePage = () => {
           style={{ backgroundImage: `url(${EventBackground})`, backgroundSize: 'cover' }}
         >
           <p
-            className='whitespace-normal text-center text-[24px] text-white 
-          md:w-[400px] md:font-bold xl:text-[32px] 2xl:text-[48px]'
+            className='whitespace-normal text-center text-[18px] font-bold text-white 
+          md:w-[400px] md:text-[24px] xl:text-[32px] 2xl:text-[48px]'
           >
             Những sự kiện đã tổ chức
           </p>
