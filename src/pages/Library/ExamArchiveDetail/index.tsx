@@ -2,10 +2,11 @@ import { useLayoutEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
 
-import { DocumentSideMenu, Icon } from '../../../components';
+import { Icon } from '../../../components';
 import PDF from '../../../components/PDF';
 import { API_URL } from '../../../config';
 import { useAppSelector } from '../../../hooks';
+import { DocumentSideMenu } from '../../../layout';
 import LibraryService from '../../../service/library.service';
 import { RootState } from '../../../store';
 import { ExamArchive } from '../../../types/library';

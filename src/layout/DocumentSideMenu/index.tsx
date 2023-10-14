@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { NavLink, useParams } from 'react-router-dom';
 
+import { Icon } from '../../components';
 import { useAppDispatch, useAppSelector, useWindowDimensions } from '../../hooks';
 import { AppAction } from '../../slices/app';
 import { RootState } from '../../store';
 import { Subject } from '../../types/library';
-import Icon from '../Icon';
 
 interface DocumentSideMenuProps {
   title: string;

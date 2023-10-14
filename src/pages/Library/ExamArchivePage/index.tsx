@@ -5,8 +5,9 @@ import { Link, useParams } from 'react-router-dom';
 
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
-import { DocumentCard, DocumentSideMenu, Icon } from '../../../components';
+import { DocumentCard, Icon } from '../../../components';
 import { useAppSelector } from '../../../hooks';
+import { DocumentSideMenu, Page } from '../../../layout';
 import LibraryService from '../../../service/library.service';
 import { RootState } from '../../../store';
 import { ExamArchive } from '../../../types/library';
@@ -39,7 +40,7 @@ const ExamArchivePage: React.FC = () => {
 
   if (!params?.subjectId) {
     return (
-      <>
+      <Page title='Đề thi'>
         <DocumentSideMenu
           title='Thư viện đề thi'
           subTitle='Đề thi các môn học'
@@ -64,12 +65,12 @@ const ExamArchivePage: React.FC = () => {
             </div>
           </div>
         </div>
-      </>
+      </Page>
     );
   }
 
   return (
-    <>
+    <Page title={`Đề thi ${subject?.name}`}>
       <DocumentSideMenu
         title='Thư viện đề thi'
         subTitle='Đề thi các môn học'
@@ -165,7 +166,7 @@ const ExamArchivePage: React.FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </Page>
   );
 };
 

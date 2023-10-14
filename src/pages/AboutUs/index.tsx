@@ -6,11 +6,12 @@ import MissionPlaceholder from '../../assets/images/Mission-small.png';
 import MissionImg from '../../assets/images/Mission.png';
 import VisionPlaceholder from '../../assets/images/Vision-small.jpg';
 import VisionImg from '../../assets/images/Vision.jpg';
-import { Footer, Container, LazyLoadImage } from '../../components';
+import { Footer, LazyLoadImage } from '../../components';
+import { Container, Page } from '../../layout';
 
 const AboutUsPage = () => {
   return (
-    <>
+    <Page title='Về chúng tôi'>
       <main className='w-full'>
         {/* Banner */}
         <Container className='flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
@@ -84,8 +85,8 @@ const AboutUsPage = () => {
             </div>
           </Container>
         </div>
-        {/* Section 3 */}
 
+        {/* Section 3 */}
         <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
           <div className='flex flex-1 items-center'>
             <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
@@ -139,7 +140,7 @@ const AboutUsPage = () => {
         </Container>
       </main>
       <Footer />
-    </>
+    </Page>
   );
 };
 

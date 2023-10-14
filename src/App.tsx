@@ -1,10 +1,10 @@
 import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { Header, Loading } from './components';
+import { Loading } from './components';
 import { ENVIRONMENT } from './config';
 import { useAppDispatch } from './hooks';
-import AppRoute from './routes';
+import { AdministratorRoute, UserRoute } from './routes';
 import { getAllSubjects } from './slices/actions/library.action';
 import { getUserProfile } from './slices/actions/user.action';
 import { AuthAction } from './slices/auth';
@@ -48,11 +48,10 @@ const App = () => {
   if (loading) return <Loading />;
   return (
     <>
-      <Header />
       <Suspense fallback={null}>
         <Routes>
-          <Route path='/admin/*' element={<AppRoute.AdministratorRoute />} />
-          <Route path='*' element={<AppRoute.UserRoute />} />
+          <Route path='/admin/*' element={<AdministratorRoute />} />
+          <Route path='*' element={<UserRoute />} />
         </Routes>
       </Suspense>
     </>

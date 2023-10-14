@@ -10,6 +10,7 @@ import { ReactComponent as LargeCTCTLogo } from '../../assets/svgs/LargeLogoCTCT
 import { CarouselArrow, CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../components';
 import { CarouselData as data } from '../../data/CarouselData';
 import { useWindowDimensions } from '../../hooks';
+import { Page } from '../../layout';
 
 const HomePage = () => {
   const { width } = useWindowDimensions();
@@ -22,7 +23,7 @@ const HomePage = () => {
   }, [width]);
 
   return (
-    <>
+    <Page>
       <main
         className='flex w-[100vw] flex-col items-center justify-start gap-y-[120px] bg-inherit 
         md:gap-y-[200px]'
@@ -542,7 +543,7 @@ const HomePage = () => {
         </section>
       </main>
       <Footer />
-    </>
+    </Page>
   );
 };
 
