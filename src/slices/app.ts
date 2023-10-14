@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export type TAppState = {
-  isMenuOpen: boolean;
+  isAsideOpen: boolean;
 };
 
 const initialState: TAppState = {
-  isMenuOpen: true,
+  isAsideOpen: true,
 };
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    toggleMenu: (state) => {
-      state.isMenuOpen = !state.isMenuOpen;
+    toggleAside: (state) => {
+      state.isAsideOpen = !state.isAsideOpen;
     },
   },
 });

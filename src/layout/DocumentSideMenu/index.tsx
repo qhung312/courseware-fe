@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Icon } from '../../components';
+import AsideLink from '../../components/AsideLink';
 import { useAppDispatch, useAppSelector, useWindowDimensions } from '../../hooks';
 import { AppAction } from '../../slices/app';
 import { RootState } from '../../store';
@@ -22,7 +23,7 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
   baseRoute,
 }) => {
   const { subjects } = useAppSelector((state: RootState) => state.library);
-  const isOpen = useAppSelector((state) => state.app.isMenuOpen);
+  const isOpen = useAppSelector((state) => state.app.isAsideOpen);
   const dispatch = useAppDispatch();
   const params = useParams();
   const { width } = useWindowDimensions();
@@ -68,41 +69,13 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
             <div className='flex flex-col space-y-4'>
               {subjects ? (
                 subjects?.map((subj: Subject) => {
-                  const isActive = subj._id === params?.subjectId;
                   return (
-                    <NavLink
+                    <AsideLink
                       to={`${baseRoute}/${subj._id}`}
-                      className={`group flex flex-1 items-center justify-between px-6 py-5 md:py-3 xl:py-4 2xl:py-5  ${
-                        isActive
-                          ? 'bg-[#9DCCFF] bg-opacity-30 md:bg-[#4285F4] md:bg-opacity-90'
-                          : 'bg-[#9DCCFF] bg-opacity-30'
-                      } rounded-xl transition-all duration-300  hover:bg-[#4285F4] hover:bg-opacity-90`}
+                      content={subj.name}
+                      Icon={Icon.Book}
                       key={subj._id}
-                    >
-                      <div className='flex items-center space-x-4'>
-                        <Icon.Book
-                          className={
-                            isActive
-                              ? 'fill-[#252641] group-hover:fill-white md:fill-white'
-                              : 'fill-[#252641] group-hover:fill-white'
-                          }
-                        />
-                        <p
-                          className={`max-w-[200px] truncate md:max-w-[96px] lg:max-w-[175px] xl:max-w-[200px] ${
-                            isActive
-                              ? 'text-[#252641] group-hover:text-white md:text-white'
-                              : 'text-[#252641] group-hover:text-white'
-                          }  `}
-                        >
-                          {subj.name}
-                        </p>
-                      </div>
-                      <Icon.ChevronRight
-                        className={`max-w-2 min-w-2 min-h-3 hidden h-auto max-h-3 md:block ${
-                          isActive ? 'md:fill-white' : 'fill-[#252641] group-hover:fill-white'
-                        } `}
-                      />
-                    </NavLink>
+                    />
                   );
                 })
               ) : (
@@ -122,7 +95,7 @@ const DocumentSideMenu: React.FC<DocumentSideMenuProps> = ({
         id='collapse-button'
         type='button'
         onClick={() => {
-          dispatch(AppAction.toggleMenu());
+          dispatch(AppAction.toggleAside());
         }}
         className={`fixed top-[50%] z-10 hidden rounded-r-xl bg-white md:block ${
           isOpen

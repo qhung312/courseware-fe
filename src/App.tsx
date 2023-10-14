@@ -5,7 +5,6 @@ import { Loading } from './components';
 import { ENVIRONMENT } from './config';
 import { useAppDispatch } from './hooks';
 import { AdministratorRoute, UserRoute } from './routes';
-import { getAllSubjects } from './slices/actions/library.action';
 import { getUserProfile } from './slices/actions/user.action';
 import { AuthAction } from './slices/auth';
 
@@ -31,11 +30,9 @@ const App = () => {
     ) {
       dispatch(AuthAction.setToken(queryToken));
     } else {
-      dispatch(getUserProfile())
-        .then(() => dispatch(getAllSubjects()))
-        .then(() => {
-          setTimeout(() => setLoading(false), 400);
-        });
+      dispatch(getUserProfile()).then(() => {
+        setTimeout(() => setLoading(false), 400);
+      });
     }
   }, [dispatch, queryToken]);
 

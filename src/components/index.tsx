@@ -1,3 +1,4 @@
+import AsideLink from './AsideLink';
 import CarouselArrow from './CarouselArrow';
 import CarouselIndicator from './CarouselIndicator';
 import DocumentCard from './DocumentCard';
@@ -9,6 +10,7 @@ import Loading from './Loading';
 import PDF from './PDF';
 
 export {
+  AsideLink,
   CarouselArrow,
   CarouselIndicator,
   DocumentCard,

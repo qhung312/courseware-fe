@@ -20,6 +20,9 @@ const librarySlice = createSlice({
     builder.addCase(getAllSubjects.fulfilled, (state, { payload }) => {
       state.subjects = payload;
     });
+    builder.addCase(getAllSubjects.rejected, (state) => {
+      state.subjects = [];
+    });
   },
 });
 
