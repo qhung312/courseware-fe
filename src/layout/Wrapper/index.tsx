@@ -12,7 +12,10 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth }) => 
   const isAsideOpen = useAppSelector((state) => state.app.isAsideOpen);
 
   return (
-    <div className='with-nav-height flex flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'>
+    <div
+      className='with-nav-height flex flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'
+      style={{ height: 'fit-content' }}
+    >
       {/* Add space */}
       {!fullWidth && (
         <div

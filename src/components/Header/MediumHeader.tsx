@@ -22,13 +22,14 @@ const MediumHeader = () => {
 
   const { View, playSegments } = useLottie(options, style);
   const { pathname } = useLocation();
+  console.log(pathname);
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(
-    pathname === '/library/material' || pathname === '/library/exam-archive'
+    pathname.includes('/library/material') || pathname.includes('/library/exam-archive')
   );
   const [isRoomOpen, setIsRoomOpen] = useState(
-    pathname === '/room/exercises' || pathname === '/room/tests'
+    pathname.includes('/room/exercises') || pathname.includes('/room/tests')
   );
   const [isAboutUsOpen, setIsAboutUsOpen] = useState(
     pathname === '/about-us' ||
@@ -142,7 +143,8 @@ const MediumHeader = () => {
                 <div className='flex flex-row items-center justify-start gap-x-[16px]'>
                   <Icon.Library
                     fill={
-                      pathname === '/library/material' || pathname === '/library/exam-archive'
+                      pathname.includes('/library/material') ||
+                      pathname.includes('/library/exam-archive')
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -150,7 +152,8 @@ const MediumHeader = () => {
                   <p
                     style={{
                       color:
-                        pathname === '/library/material' || pathname === '/library/exam-archive'
+                        pathname.includes('/library/material') ||
+                        pathname.includes('/library/exam-archive')
                           ? '#4285F4'
                           : '#696969',
                     }}
@@ -161,7 +164,8 @@ const MediumHeader = () => {
                 {isLibraryOpen ? (
                   <Icon.ChevronUp
                     fill={
-                      pathname === '/library/material' || pathname === '/library/exam-archive'
+                      pathname.includes('/library/material') ||
+                      pathname.includes('/library/exam-archive')
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -171,7 +175,8 @@ const MediumHeader = () => {
                 ) : (
                   <Icon.ChevronDown
                     fill={
-                      pathname === '/library/material' || pathname === '/library/exam-archive'
+                      pathname.includes('/library/material') ||
+                      pathname.includes('/library/exam-archive')
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -190,7 +195,6 @@ const MediumHeader = () => {
               >
                 <NavLink
                   to='/library/material'
-                  end
                   className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
@@ -214,7 +218,6 @@ const MediumHeader = () => {
                 </NavLink>
                 <NavLink
                   to='/library/exam-archive'
-                  end
                   className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
@@ -245,7 +248,7 @@ const MediumHeader = () => {
                 <div className='flex flex-row items-center justify-start gap-x-[16px]'>
                   <Icon.Room
                     fill={
-                      pathname === '/room/exercises' || pathname === '/room/tests'
+                      pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -253,7 +256,7 @@ const MediumHeader = () => {
                   <p
                     style={{
                       color:
-                        pathname === '/room/exercises' || pathname === '/room/tests'
+                        pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                           ? '#4285F4'
                           : '#696969',
                     }}
@@ -264,7 +267,7 @@ const MediumHeader = () => {
                 {isRoomOpen ? (
                   <Icon.ChevronUp
                     fill={
-                      pathname === '/room/exercises' || pathname === '/room/tests'
+                      pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -274,7 +277,7 @@ const MediumHeader = () => {
                 ) : (
                   <Icon.ChevronDown
                     fill={
-                      pathname === '/room/exercises' || pathname === '/room/tests'
+                      pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                         ? '#4285F4'
                         : '#696969'
                     }
@@ -293,7 +296,6 @@ const MediumHeader = () => {
               >
                 <NavLink
                   to='/room/exercises'
-                  end
                   className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
@@ -317,7 +319,6 @@ const MediumHeader = () => {
                 </NavLink>
                 <NavLink
                   to='/room/tests'
-                  end
                   className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
