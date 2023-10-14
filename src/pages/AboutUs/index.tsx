@@ -8,7 +8,7 @@ import VisionPlaceholder from '../../assets/images/Vision-small.jpg';
 import VisionImg from '../../assets/images/Vision.jpg';
 import { Footer, Container, LazyLoadImage } from '../../components';
 
-const AboutUs = () => {
+const AboutUsPage = () => {
   return (
     <>
       <main className='w-full'>
@@ -143,4 +143,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default AboutUsPage;

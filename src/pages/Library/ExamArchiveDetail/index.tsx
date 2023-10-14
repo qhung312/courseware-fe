@@ -10,7 +10,7 @@ import LibraryService from '../../../service/library.service';
 import { RootState } from '../../../store';
 import { ExamArchive } from '../../../types/library';
 
-const ExamArchiveDetail: React.FC = () => {
+const ExamArchiveDetailPage: React.FC = () => {
   const params = useParams();
 
   const [exam, setExam] = useState<ExamArchive | null>(null);
@@ -85,4 +85,4 @@ const ExamArchiveDetail: React.FC = () => {
   );
 };
 
-export default ExamArchiveDetail;
+export default ExamArchiveDetailPage;

@@ -11,7 +11,7 @@ import { CarouselArrow, CarouselIndicator, Footer, Icon, LazyLoadImage } from '.
 import { CarouselData as data } from '../../data/CarouselData';
 import { useWindowDimensions } from '../../hooks';
 
-const Home = () => {
+const HomePage = () => {
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -546,4 +546,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

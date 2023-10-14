@@ -4,11 +4,11 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 import { RootState } from '../store';
 
-type TPrivateRouteProps = {
+type ProtectedRouteProps = {
   children: ReactNode;
 };
 
-const ProtectedRoute: React.FC<TPrivateRouteProps> = ({ children }) => {
+const Protected: React.FC<ProtectedRouteProps> = ({ children }) => {
   let location = useLocation();
 
   const isAuthenticated = useSelector((state: RootState) => state.auth);
@@ -20,4 +20,4 @@ const ProtectedRoute: React.FC<TPrivateRouteProps> = ({ children }) => {
   return <React.Fragment>{children}</React.Fragment>;
 };
 
-export default ProtectedRoute;
+export default Protected;
