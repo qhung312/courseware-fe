@@ -1,23 +1,23 @@
+import AsideLink from './AsideLink';
 import CarouselArrow from './CarouselArrow';
 import CarouselIndicator from './CarouselIndicator';
-import Container from './Container';
 import DocumentCard from './DocumentCard';
-import DocumentSideMenu from './DocumentSideMenu';
 import Footer from './Footer';
 import Header from './Header';
 import Icon from './Icon';
 import LazyLoadImage from './LazyLoadImage';
 import Loading from './Loading';
+import PDF from './PDF';
 
 export {
-  LazyLoadImage,
+  AsideLink,
+  CarouselArrow,
+  CarouselIndicator,
+  DocumentCard,
   Footer,
   Header,
   Icon,
-  DocumentSideMenu,
-  DocumentCard,
+  LazyLoadImage,
   Loading,
-  CarouselIndicator,
-  CarouselArrow,
-  Container,
+  PDF,
 };

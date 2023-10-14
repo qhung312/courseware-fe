@@ -20,3 +20,15 @@ export type ExamArchive = {
   lastUpdatedAt: number;
   subject: string;
 };
+
+export type Material = {
+  _id: string;
+  name: string;
+  writeAccess: ROLES[];
+  readAccess: ROLES[];
+  resource: string;
+  createdBy: string;
+  createdAt: number;
+  lastUpdatedAt: number;
+  subject: string;
+};

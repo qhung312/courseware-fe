@@ -1,13 +1,10 @@
 import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { Header, Loading } from './components';
+import { Loading } from './components';
 import { ENVIRONMENT } from './config';
 import { useAppDispatch } from './hooks';
-import routes from './routes';
-import ProtectedRoute from './routes/ProtectedRoute';
-import TitleWrapper from './routes/TitleWrapper';
-import { getAllSubjects } from './slices/actions/library.action';
+import { AdministratorRoute, UserRoute } from './routes';
 import { getUserProfile } from './slices/actions/user.action';
 import { AuthAction } from './slices/auth';
 
@@ -25,14 +22,17 @@ const App = () => {
   useLayoutEffect(() => {
     console.log('Environment:', ENVIRONMENT);
 
-    if (queryToken && queryToken !== '') {
+    if (
+      queryToken &&
+      queryToken !== '' &&
+      window.location.pathname.split('/')[1] === 'login' &&
+      window.location.pathname.split('/').length === 2
+    ) {
       dispatch(AuthAction.setToken(queryToken));
     } else {
-      dispatch(getUserProfile())
-        .then(() => dispatch(getAllSubjects()))
-        .then(() => {
-          setTimeout(() => setLoading(false), 400);
-        });
+      dispatch(getUserProfile()).then(() => {
+        setTimeout(() => setLoading(false), 400);
+      });
     }
   }, [dispatch, queryToken]);
 
@@ -42,42 +42,13 @@ const App = () => {
     }
   }, [queryToken, navigate]);
 
-  return loading ? (
-    <Loading />
-  ) : (
+  if (loading) return <Loading />;
+  return (
     <>
-      <Header />
       <Suspense fallback={null}>
         <Routes>
-          {routes.map((route, index) => {
-            const Component: React.FC = route.component;
-            if (!route.isProtected) {
-              return (
-                <Route
-                  path={route.path}
-                  element={
-                    <TitleWrapper title={route.title}>
-                      <Component />
-                    </TitleWrapper>
-                  }
-                  key={index}
-                />
-              );
-            }
-            return (
-              <Route
-                path={route.path}
-                element={
-                  <TitleWrapper title={route.title}>
-                    <ProtectedRoute key={index}>
-                      <Component />
-                    </ProtectedRoute>
-                  </TitleWrapper>
-                }
-                key={index}
-              />
-            );
-          })}
+          <Route path='/admin/*' element={<AdministratorRoute />} />
+          <Route path='*' element={<UserRoute />} />
         </Routes>
       </Suspense>
     </>
