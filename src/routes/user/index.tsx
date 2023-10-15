@@ -33,7 +33,9 @@ const UserRoute = () => {
           </Route>
         </Route>
         <Route path='room' element={<Outlet />}>
-          <Route path='exercises/:subjectId?/:chapter?' element={<ExercisesPage />} />
+          <Route path='exercises' element={<ExercisesPage />} />
+          <Route path='exercises/:subjectId' element={<ExercisesPage />} />
+          <Route path='exercises/:subjectId/chapter/:chapterId' element={<ExercisesPage />} />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

@@ -27,7 +27,6 @@ const LazyLoadImage = ({
         style={{
           objectFit,
           opacity: loading ? 1 : 0,
-          filter: loading ? 'blur(10px)' : 'blur(0px)',
           transition: 'all 0.5s ease',
         }}
       />

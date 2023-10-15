@@ -22,7 +22,6 @@ const MediumHeader = () => {
 
   const { View, playSegments } = useLottie(options, style);
   const { pathname } = useLocation();
-  console.log(pathname);
 
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(

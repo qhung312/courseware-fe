@@ -1,12 +1,8 @@
-import { useLayoutEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import { AsideLink, Icon } from '../../components';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import subjects from '../../data/exercises';
 import { Aside } from '../../layout';
-import { getAllSubjects } from '../../slices/actions/library.action';
-import { RootState } from '../../store';
-import { Subject } from '../../types/library';
 
 interface RoomAsideProps {
   title: string;
@@ -16,25 +12,25 @@ interface RoomAsideProps {
 }
 
 const RoomAside: React.FC<RoomAsideProps> = ({ title, subTitle, description, baseRoute }) => {
-  const { subjects } = useAppSelector((state: RootState) => state.library);
+  // const { subjects } = useAppSelector((state: RootState) => state.library);
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  useLayoutEffect(() => {
-    dispatch(getAllSubjects());
-  }, [dispatch]);
+  // useLayoutEffect(() => {
+  //   dispatch(getAllSubjects());
+  // }, [dispatch]);
 
   return (
     <Aside title={title} subTitle={subTitle} description={description}>
       <div className='flex flex-col space-y-4'>
         {subjects !== null ? (
-          subjects?.map((subj: Subject) => {
+          subjects?.map((subj, index) => {
             return (
               <AsideLink
-                to={`${baseRoute}/${subj._id}`}
-                content={subj.name}
+                to={`${baseRoute}/${index}`}
+                content={subj.title}
                 Icon={Icon.Exercise}
-                key={subj._id}
+                key={index}
               />
             );
           })
