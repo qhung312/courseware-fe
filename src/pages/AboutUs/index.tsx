@@ -12,7 +12,7 @@ import { Container, Page } from '../../layout';
 const AboutUsPage = () => {
   return (
     <Page title='Về chúng tôi'>
-      <main className='w-full'>
+      <main className='w-full md:px-[48px]'>
         {/* Banner */}
         <Container className='flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
           <div className='z-[2] lg:absolute lg:text-white'>
@@ -102,7 +102,7 @@ const AboutUsPage = () => {
           </div>
           <div className='mb-8 flex-1 md:mb-0'>
             <LazyLoadImage
-              className='z-[1] block aspect-[360/200] rounded-lg md:rounded-xl lg:brightness-[50%] xl:rounded-2xl 2xl:rounded-3xl'
+              className='z-[1] block aspect-[360/200] rounded-lg md:rounded-xl xl:rounded-2xl 2xl:rounded-3xl'
               src={MissionImg}
               placeHolderSrc={MissionPlaceholder}
               alt='introduction_pic'
@@ -130,7 +130,7 @@ const AboutUsPage = () => {
           </div>
           <div className='mb-8 flex-1 md:mb-0'>
             <LazyLoadImage
-              className='z-[1] block aspect-[360/200] rounded-lg object-cover md:rounded-xl lg:brightness-[50%] xl:rounded-2xl 2xl:rounded-3xl'
+              className='z-[1] block aspect-[360/200] rounded-lg object-cover md:rounded-xl xl:rounded-2xl 2xl:rounded-3xl'
               src={VisionImg}
               placeHolderSrc={VisionPlaceholder}
               alt='introduction_pic'

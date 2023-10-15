@@ -19,21 +19,24 @@ const LazyLoadImage = ({
 }: LazyLoadImageProps) => {
   const [loading, setLoading] = useState(true);
   return (
-    <div
-      className={`${containerClassName} ${className} `}
-      style={{
-        backgroundImage: `url(${placeHolderSrc})`,
-        backgroundSize: objectFit,
-        filter: loading ? 'blur(10px)' : 'blur(0px)',
-        transition: 'all 0.5s ease',
-      }}
-    >
+    <div className={`${containerClassName} ${className} `}>
+      <img
+        src={placeHolderSrc}
+        alt={`${alt} placeholder`}
+        className={`absolute top-0 left-0 z-[8] ${className}`}
+        style={{
+          objectFit,
+          opacity: loading ? 1 : 0,
+          filter: loading ? 'blur(10px)' : 'blur(0px)',
+          transition: 'all 0.5s ease',
+        }}
+      />
       <img
         onLoad={() => {
           setLoading(false);
         }}
         src={src}
-        alt={`${alt} placeholder`}
+        alt={alt}
         className={className}
         loading='lazy'
         style={{ objectFit }}
