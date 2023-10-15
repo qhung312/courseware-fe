@@ -19,11 +19,11 @@ const LazyLoadImage = ({
 }: LazyLoadImageProps) => {
   const [loading, setLoading] = useState(true);
   return (
-    <div className={`${containerClassName} ${className} `}>
+    <div className={`relative ${containerClassName}`}>
       <img
         src={placeHolderSrc}
         alt={`${alt} placeholder`}
-        className={`absolute top-0 left-0 z-[8] ${className}`}
+        className={`absolute top-0 left-0 z-[3] h-full w-full ${className}`}
         style={{
           objectFit,
           opacity: loading ? 1 : 0,

@@ -14,8 +14,8 @@ const AboutUsPage = () => {
     <Page title='Về chúng tôi'>
       <main className='w-full md:px-[48px]'>
         {/* Banner */}
-        <Container className='flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
-          <div className='z-[2] lg:absolute lg:text-white'>
+        <Container className='relative flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
+          <div className='z-[4] lg:absolute lg:text-white'>
             <h1 className='text-center text-[28px] font-bold md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
               CHÚNG TA CÙNG TIẾN
             </h1>
@@ -30,7 +30,7 @@ const AboutUsPage = () => {
             <div className='absolute -bottom-8 left-0 z-0 aspect-square w-[20px] rounded-full bg-[#A0C3FF]  md:-left-6 md:-bottom-16 md:w-8 lg:-bottom-20 lg:w-10 xl:-bottom-24 xl:w-12 2xl:-bottom-32 2xl:w-16' />
 
             <LazyLoadImage
-              containerClassName='relative overflow-hidden w-full'
+              containerClassName='overflow-hidden w-full block aspect-[360/200]'
               className='z-[1] block aspect-[360/200] rounded-lg md:rounded-xl lg:brightness-[50%] xl:rounded-2xl 2xl:rounded-3xl'
               src={IntroductionImg}
               placeHolderSrc={IntroductionPlaceHolder}
