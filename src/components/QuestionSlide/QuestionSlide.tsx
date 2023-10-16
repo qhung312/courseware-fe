@@ -117,10 +117,10 @@ const QuestionSlide = ({ questions }: QuestionSlideProps) => {
               setCurrentSlide(question.questionNumber - 1);
             }}
             key={`question-${question.questionId}`}
-            className={`m-auto flex w-[80px] flex-shrink-0 items-center justify-center p-2 
-              transition-all duration-300 ${
+            className={`m-auto flex w-[80px] flex-shrink-0 items-center justify-center rounded-xl 
+              p-2 transition-all duration-300 ${
                 question.questionNumber - 1 === currentSlide
-                  ? 'rounded-xl bg-[rgba(66,133,244,0.9)] font-semibold text-white'
+                  ? 'bg-[rgba(66,133,244,0.9)] font-semibold text-white'
                   : ''
               }`}
           >

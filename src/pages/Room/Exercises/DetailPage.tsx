@@ -107,46 +107,11 @@ const data = [
   },
 ];
 
-// const PageSkeleton = () => (
-//   <div className='relative z-10 max-h-[266px] rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
-//     <div className='absolute right-4 top-3 flex space-x-1 md:space-x-2 lg:space-x-3 xl:space-x-4 2xl:space-x-5'></div>
-//     <div className='space-y-2'>
-//       <h2 className='text-base font-semibold md:text-xl lg:text-2xl'>
-//         {<Skeleton baseColor='#9DCCFF' width={100} />}
-//       </h2>
-//     </div>
-//     <div className='mt-4 bg-[#9DCCFF] bg-opacity-20 p-2 md:mt-5 md:p-3 xl:mt-6 xl:p-4 2xl:mt-7 2xl:p-5'>
-//       <p className='max-h-[75px] overflow-hidden text-ellipsis text-sm text-[#696984] md:text-base'>
-//         {<Skeleton count={3} baseColor='#9DCCFF' />}
-//       </p>
-//     </div>
-//   </div>
-// );
-
 const DetailPage: React.FC = () => {
   const params = useParams();
 
   const subject = params ? subjects[Number(params.subjectId)] : null;
   const chapter = params ? Number(params.chapterId) : null;
-
-  // const [materials, setMaterials] = useState<Material[] | null>(null);
-
-  // useLayoutEffect(() => {
-  //   if (params?.subjectId && params?.subjectId !== '') {
-  //     setMaterials(null);
-  //     LibraryService.getAllMaterialBySubjectId(params?.subjectId)
-  //       .then((res) => {
-  //         const { data } = res;
-  //         const { payload } = data;
-
-  //         setTimeout(() => setMaterials(payload), 300);
-  //       })
-  //       .catch((err) => {
-  //         console.log('Error in fetching all exams achives by subject id', err);
-  //         setTimeout(() => setMaterials([]), 300);
-  //       });
-  //   }
-  // }, [params]);
 
   return (
     <Page title={`Tài liệu ${subject?.title}`}>
@@ -157,7 +122,7 @@ const DetailPage: React.FC = () => {
         baseRoute='/room/exercises'
       />
 
-      <Wrapper className='flex max-w-full flex-1 flex-col' fullWidth>
+      <Wrapper className='flex max-w-full flex-1 flex-col'>
         {/* Banner */}
         <div className='hidden w-full bg-[#4285F4] px-5 py-5 text-white md:flex md:h-[88px] md:flex-col md:justify-between lg:h-[108px] lg:px-9 lg:py-6 xl:h-[132px] xl:px-10 xl:py-7 2xl:h-[164px] 2xl:px-11 2xl:py-8'>
           <h1 className='text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl 3xl:text-[44px]'>
