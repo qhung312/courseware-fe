@@ -47,11 +47,11 @@ const Question = ({ question }: { question: QuestionSlideProps['questions'][0] }
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   return (
     <div className='w-full px-5 py-4 md:px-8 xl:px-12'>
-      <div className='relative flex w-full flex-row items-center justify-center'>
-        <h1 className='text-center text-2xl font-bold'>Câu {question.questionNumber}</h1>
+      <div className='relative flex w-full flex-col flex-wrap items-center justify-center md:flex-row'>
+        <h1 className='flex text-center text-2xl font-bold'>Câu {question.questionNumber}</h1>
         <button
           type='button'
-          className='absolute right-0 hover:text-[#4285F4] hover:underline'
+          className='flex hover:text-[#4285F4] hover:underline md:absolute md:right-0'
           onClick={() => setSelectedAnswer(null)}
         >
           <p className='h-full w-full'>Đánh dấu chưa làm</p>
@@ -154,13 +154,6 @@ const QuestionSlide = ({ questions }: QuestionSlideProps) => {
             hasNext,
             label
           )
-        }
-        renderThumbs={() =>
-          questions.map((question) => (
-            <div key={`question-${question.questionId}`} className='m-auto w-full p-2'>
-              <p className='text-center'>Câu {question.questionNumber}</p>
-            </div>
-          ))
         }
         className='flex max-w-full flex-1 flex-col rounded-2xl bg-white'
       >

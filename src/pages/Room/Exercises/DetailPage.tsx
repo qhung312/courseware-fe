@@ -146,27 +146,27 @@ const DetailPage: React.FC = () => {
             <div className='w-full'>
               <div className='flex flex-row gap-x-4'>
                 <div className='flex flex-1'>
-                  {subject.chapters[chapter - 1] ? (
-                    <Link
-                      to={`/room/exercises/${params.subjectId}/chapter/${chapter - 1}`}
-                      className='flex w-full items-center justify-start space-x-2 hover:underline'
-                    >
-                      <Icon.ChevronLeft className='h-auto min-w-[8px] max-w-[10px] fill-black' />
-                      <p>Chương {`${chapter}`}</p>
-                    </Link>
-                  ) : null}
+                  <Link
+                    to={`/room/exercises/${params.subjectId}/chapter/${chapter - 1}`}
+                    className={`${
+                      subject.chapters[chapter - 1] ? '' : 'invisible'
+                    } flex w-full items-center justify-start space-x-2 hover:underline`}
+                  >
+                    <Icon.ChevronLeft className='h-auto min-w-[8px] max-w-[10px] fill-black' />
+                    <p>Chương {`${chapter}`}</p>
+                  </Link>
                 </div>
                 <h3 className='flex-[5] text-center text-3xl font-semibold'>{`${subject?.chapters[chapter].title}`}</h3>
                 <div className='flex flex-1'>
-                  {subject.chapters[chapter + 1] ? (
-                    <Link
-                      to={`/room/exercises/${params.subjectId}/chapter/${chapter + 1}`}
-                      className='flex w-full items-center justify-end space-x-2 hover:underline'
-                    >
-                      <p>Chương {`${chapter + 2}`}</p>
-                      <Icon.ChevronRight className='h-auto min-w-[8px] max-w-[10px] fill-black' />
-                    </Link>
-                  ) : null}
+                  <Link
+                    to={`/room/exercises/${params.subjectId}/chapter/${chapter + 1}`}
+                    className={`${
+                      subject.chapters[chapter + 1] ? '' : 'invisible'
+                    } flex w-full items-center justify-end space-x-2 hover:underline`}
+                  >
+                    <p>Chương {`${chapter + 2}`}</p>
+                    <Icon.ChevronRight className='h-auto min-w-[8px] max-w-[10px] fill-black' />
+                  </Link>
                 </div>
               </div>
               <QuestionSlide questions={data} />
