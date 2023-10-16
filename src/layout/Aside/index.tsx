@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Icon } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppAction } from '../../slices/app';
+import './index.css';
 
 interface AsideProps {
   title?: string;
@@ -62,24 +63,31 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
       </aside>
 
       {/* Collapse Button */}
-      <button
-        id='collapse-button'
-        type='button'
-        onClick={() => {
-          dispatch(AppAction.toggleAside());
-        }}
+      <div
+        id={isAsideOpen ? 'collapse-button-container' : 'open-button-container'}
         className={`fixed top-[50%] z-10 hidden rounded-r-xl bg-white md:block ${
           isAsideOpen
             ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
-            : 'translate-x-0'
-        } py-10 px-2 opacity-80 transition-all duration-300`}
+            : 'translate-x-[-50%] hover:translate-x-0'
+        } opacity-80 transition-all duration-300`}
       >
-        <Icon.ChevronUp
-          fill={'#5B5B5B'}
-          fillOpacity={0.87}
-          className={`aspect-[10/7] h-full w-auto ${isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'}`}
-        />
-      </button>
+        <button
+          id='collapse-button'
+          type='button'
+          onClick={() => {
+            dispatch(AppAction.toggleAside());
+          }}
+          className='h-full w-full px-2 py-10'
+        >
+          <Icon.ChevronUp
+            fill={'#5B5B5B'}
+            fillOpacity={0.87}
+            className={`aspect-[10/7] h-full w-auto ${
+              isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'
+            }`}
+          />
+        </button>
+      </div>
     </>
   );
 };

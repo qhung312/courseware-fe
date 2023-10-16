@@ -11,6 +11,7 @@ const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
 const ExamArchivePage = lazy(() => import('../../pages/Library/ExamArchivePage'));
 const ExamArchiveDetail = lazy(() => import('../../pages/Library/ExamArchiveDetail'));
+const ExercisesPage = lazy(() => import('../../pages/Room/Exercises'));
 
 const UserRoute = () => {
   return (
@@ -31,7 +32,11 @@ const UserRoute = () => {
             <Route path=':subjectId/pdf/:pdfId?' element={<ExamArchiveDetail />} />
           </Route>
         </Route>
-
+        <Route path='room' element={<Outlet />}>
+          <Route path='exercises' element={<ExercisesPage />} />
+          <Route path='exercises/:subjectId' element={<ExercisesPage />} />
+          <Route path='exercises/:subjectId/chapter/:chapterId' element={<ExercisesPage />} />
+        </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </>
