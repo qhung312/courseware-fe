@@ -66,6 +66,7 @@ const Question = ({ question }: { question: QuestionSlideProps['questions'][0] }
           >
             <div className='relative flex items-center'>
               <input
+                id={`question-${question.questionNumber}-answer-${answer}`}
                 onClick={() => setSelectedAnswer(answer)}
                 type='radio'
                 name='answer'
@@ -76,7 +77,9 @@ const Question = ({ question }: { question: QuestionSlideProps['questions'][0] }
                 <span className='ml-[-100%]'>{answer}</span>
               </span>
             </div>
-            <p>Lorem ipsum dolor sit amet</p>
+            <label htmlFor={`question-${question.questionNumber}-answer-${answer}`}>
+              <p>Lorem ipsum dolor sit amet</p>
+            </label>
           </div>
         ))}
       </div>
