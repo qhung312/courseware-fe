@@ -67,9 +67,9 @@ const Question = ({ question }: { question: QuestionSlideProps['questions'][0] }
             <div className='relative flex items-center'>
               <input
                 id={`question-${question.questionNumber}-answer-${answer}`}
-                onClick={() => setSelectedAnswer(answer)}
+                onChange={() => setSelectedAnswer(answer)}
                 type='radio'
-                name='answer'
+                name={`${question.questionId}`}
                 value={answer}
                 checked={selectedAnswer === answer}
               />
@@ -92,9 +92,8 @@ const QuestionSlide = ({ questions }: QuestionSlideProps) => {
 
   useEffect(() => {
     const nav = document.getElementById('question-nav');
-    console.log(nav?.getBoundingClientRect().left, nav?.getBoundingClientRect().width);
     const button = document.getElementById(`question-${currentSlide + 1}`);
-    console.log(button, button?.getBoundingClientRect().left);
+
     if (
       button &&
       nav &&
