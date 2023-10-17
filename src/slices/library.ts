@@ -1,31 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { StateCreator } from 'zustand';
 
+import LibraryService from '../service/library.service';
 import { Subject } from '../types/library';
 
-import { getAllSubjects } from './actions/library.action';
-
-export type TLibraryState = {
+export interface TLibraryState {
   subjects: Array<Subject> | null;
-};
+}
 
-const initialState: TLibraryState = {
+export interface TLibraryActions {
+  getAllSubjects: () => Promise<void>;
+}
+
+export interface TLibrarySlice extends TLibraryState, TLibraryActions {}
+
+export const initialState: TLibraryState = {
   subjects: null,
 };
 
-const librarySlice = createSlice({
-  name: 'library',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getAllSubjects.fulfilled, (state, { payload }) => {
-      state.subjects = payload;
-    });
-    builder.addCase(getAllSubjects.rejected, (state) => {
-      state.subjects = [];
-    });
+export const LibrarySlice: StateCreator<
+  TLibrarySlice,
+  [['zustand/devtools', never]],
+  [],
+  TLibrarySlice
+> = (set) => ({
+  ...initialState,
+  getAllSubjects: async () => {
+    try {
+      const { data } = await LibraryService.getAllSubjects();
+      set({ subjects: data.payload });
+    } catch (error: any) {
+      set({ ...initialState });
+    }
   },
 });
-
-export const LibraryAction = librarySlice.actions;
-const libraryReducer = librarySlice.reducer;
-export default libraryReducer;

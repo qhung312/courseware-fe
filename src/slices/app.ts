@@ -1,23 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { StateCreator } from 'zustand';
 
-export type TAppState = {
+export interface TAppSlice {
   isAsideOpen: boolean;
-};
+  toggleAside: () => void;
+}
 
-const initialState: TAppState = {
+export const AppSlice: StateCreator<TAppSlice, [['zustand/devtools', never]], [], TAppSlice> = (
+  set
+) => ({
   isAsideOpen: true,
-};
-
-const appSlice = createSlice({
-  name: 'app',
-  initialState,
-  reducers: {
-    toggleAside: (state) => {
-      state.isAsideOpen = !state.isAsideOpen;
-    },
-  },
+  toggleAside: () => set((state) => ({ isAsideOpen: !state.isAsideOpen })),
 });
-
-export const AppAction = appSlice.actions;
-const appReducer = appSlice.reducer;
-export default appReducer;

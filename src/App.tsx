@@ -3,13 +3,12 @@ import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Loading } from './components';
 import { ENVIRONMENT } from './config';
-import { useAppDispatch } from './hooks';
 import { AdministratorRoute, UserRoute } from './routes';
-import { getUserProfile } from './slices/actions/user.action';
-import { AuthAction } from './slices/auth';
+import useBoundStore from './store';
 
 const App = () => {
-  const dispatch = useAppDispatch();
+  const setToken = useBoundStore.use.setToken();
+  const getUserProfile = useBoundStore.use.getUserProfile();
 
   const [loading, setLoading] = useState(true);
 
@@ -28,13 +27,13 @@ const App = () => {
       window.location.pathname.split('/')[1] === 'login' &&
       window.location.pathname.split('/').length === 2
     ) {
-      dispatch(AuthAction.setToken(queryToken));
+      setToken(queryToken);
     } else {
-      dispatch(getUserProfile()).then(() => {
-        setTimeout(() => setLoading(false), 400);
+      getUserProfile().then(() => {
+        setTimeout(() => setLoading(false), 1000);
       });
     }
-  }, [dispatch, queryToken]);
+  }, [queryToken, setToken, getUserProfile]);
 
   useEffect(() => {
     if (queryToken && queryToken !== '') {
