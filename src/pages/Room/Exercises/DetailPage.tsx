@@ -122,7 +122,7 @@ const DetailPage: React.FC = () => {
         baseRoute='/room/exercises'
       />
 
-      <Wrapper className='flex max-w-full flex-1 flex-col'>
+      <Wrapper className='flex max-w-full flex-1 flex-col' fullWidth>
         {/* Banner */}
         <div className='hidden w-full bg-[#4285F4] px-5 py-5 text-white md:flex md:h-[88px] md:flex-col md:justify-between lg:h-[108px] lg:px-9 lg:py-6 xl:h-[132px] xl:px-10 xl:py-7 2xl:h-[164px] 2xl:px-11 2xl:py-8'>
           <h1 className='text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl 3xl:text-[44px]'>

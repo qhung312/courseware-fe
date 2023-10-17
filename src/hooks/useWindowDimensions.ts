@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce';
 import { useEffect, useState } from 'react';
 
 const useWindowDimensions = () => {
@@ -11,9 +12,10 @@ const useWindowDimensions = () => {
       setHeight(window.innerHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', debounce(handleResize, 400, { trailing: true }));
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () =>
+      window.removeEventListener('resize', debounce(handleResize, 400, { trailing: true }));
   }, []);
 
   return { width, height };
