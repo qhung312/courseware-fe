@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppAction } from '../../slices/app';
 
 type WrapperProps = {
   children: ReactNode;
@@ -10,10 +11,14 @@ type WrapperProps = {
 
 const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth }) => {
   const isAsideOpen = useAppSelector((state) => state.app.isAsideOpen);
+  const dispatch = useAppDispatch();
 
-  if (fullWidth) {
-    console.log(children);
-  }
+  useEffect(() => {
+    if (isAsideOpen) {
+      dispatch(AppAction.toggleAside());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
