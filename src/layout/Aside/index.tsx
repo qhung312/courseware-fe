@@ -30,7 +30,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
           !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
         } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex items-center justify-center py-5 px-5 3xl:py-8'>
+        <div className='flex items-center justify-center p-5 3xl:p-12'>
           <div className='h-full w-full space-y-6'>
             {/* Title */}
             {title && (

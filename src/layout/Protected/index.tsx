@@ -1,20 +1,22 @@
-import React, { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
 import useBoundStore from '../../store';
 
 type ProtectedRouteProps = {
-  Component: ReactNode;
+  admin?: boolean;
 };
 
-const Protected: React.FC<ProtectedRouteProps> = ({ Component: children }) => {
+const Protected: React.FC<ProtectedRouteProps> = ({ admin = false } = {}) => {
   const isAuthenticated = useBoundStore.use.isAuthenticated();
+  console.log('admin', admin);
 
+  //TODO: Add admin protected
   if (!isAuthenticated) {
     return <Navigate to='/' />;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return <Outlet />;
 };
 
 export default Protected;

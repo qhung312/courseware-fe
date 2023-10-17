@@ -3,94 +3,45 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Thin.ttf) format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-ThinItalic.ttf) format('truetype');
-  font-weight: 100;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Light.ttf) format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-LightItalic.ttf) format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Regular.ttf) format('truetype');
+  font-family: 'Baloo Chettan 2';
+  src: local('Baloo Chettan 2'), url(./assets/fonts/BalooChettan2-Regular.ttf) format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Italic.ttf) format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Medium.ttf) format('truetype');
+  font-family: 'Baloo Chettan 2';
+  src: local('Baloo Chettan 2'), url(./assets/fonts/BalooChettan2-Medium.ttf) format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-MediumItalic.ttf) format('truetype');
-  font-weight: 500;
-  font-style: italic;
+  font-family: 'Baloo Chettan 2';
+  src: local('Baloo Chettan 2'), url(./assets/fonts/BalooChettan2-SemiBold.ttf) format('truetype');
+  font-weight: 600;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Bold.ttf) format('truetype');
+  font-family: 'Baloo Chettan 2';
+  src: local('Baloo Chettan 2'), url(./assets/fonts/BalooChettan2-Bold.ttf) format('truetype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-BoldItalic.ttf) format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-Black.ttf) format('truetype');
+  font-family: 'Baloo Chettan 2';
+  src: local('Baloo Chettan 2'), url(./assets/fonts/BalooChettan2-ExtraBold.ttf) format('truetype');
   font-weight: 900;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: local('Google Sans'), url(./assets/fonts/GoogleSans-BlackItalic.ttf) format('truetype');
-  font-weight: 900;
-  font-style: italic;
 }
 
 body {
   background-color: #fcfbf9;
   margin: 0;
   color: '#252641';
-  font-family: 'Google Sans', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+  font-family: 'Baloo Chettan 2', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

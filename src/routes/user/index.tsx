@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
@@ -42,15 +42,17 @@ const UserRoute = () => {
             </Suspense>
           }
         />
-        <Route
-          path='profile'
-          element={
-            <Suspense fallback={<Loading />}>
-              <Protected Component={<HomePage />} />
-            </Suspense>
-          }
-        />
-        <Route path='library' element={<Outlet />}>
+        <Route path='profile' element={<Protected />}>
+          <Route
+            path=''
+            element={
+              <Suspense fallback={<Loading />}>
+                <HomePage />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route path='library' element={<Protected />}>
           <Route path='material'>
             <Route
               path=':subjectId?'
@@ -88,7 +90,7 @@ const UserRoute = () => {
             />
           </Route>
         </Route>
-        <Route path='room' element={<Outlet />}>
+        <Route path='room' element={<Protected />}>
           <Route
             path='exercises'
             element={
