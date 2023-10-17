@@ -152,11 +152,11 @@ const DetailPage: React.FC = () => {
                       subject.chapters[chapter - 1] ? '' : 'invisible'
                     } flex w-full items-center justify-start space-x-2 hover:underline`}
                   >
-                    <Icon.ChevronLeft className='h-auto min-w-[8px] max-w-[10px] fill-black' />
-                    <p>Chương {`${chapter}`}</p>
+                    <Icon.ChevronLeft className='h-auto min-w-[6px] max-w-[10px] fill-black' />
+                    <p className='text-xs md:text-base'>Chương {`${chapter}`}</p>
                   </Link>
                 </div>
-                <h3 className='flex-[5] text-center text-3xl font-semibold'>{`${subject?.chapters[chapter].title}`}</h3>
+                <h3 className='flex-[5] text-center text-xl font-semibold md:text-3xl'>{`${subject?.chapters[chapter].title}`}</h3>
                 <div className='flex flex-1'>
                   <Link
                     to={`/room/exercises/${params.subjectId}/chapter/${chapter + 1}`}
@@ -164,8 +164,8 @@ const DetailPage: React.FC = () => {
                       subject.chapters[chapter + 1] ? '' : 'invisible'
                     } flex w-full items-center justify-end space-x-2 hover:underline`}
                   >
-                    <p>Chương {`${chapter + 2}`}</p>
-                    <Icon.ChevronRight className='h-auto min-w-[8px] max-w-[10px] fill-black' />
+                    <p className='text-xs md:text-base'>Chương {`${chapter + 2}`}</p>
+                    <Icon.ChevronRight className='h-auto min-w-[6px] max-w-[10px] fill-black' />
                   </Link>
                 </div>
               </div>

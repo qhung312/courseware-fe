@@ -48,13 +48,15 @@ const Question = ({ question }: { question: QuestionSlideProps['questions'][0] }
   return (
     <div className='w-full px-5 py-4 md:px-8 xl:px-12'>
       <div className='relative flex w-full flex-col flex-wrap items-center justify-center md:flex-row'>
-        <h1 className='flex text-center text-2xl font-bold'>Câu {question.questionNumber}</h1>
+        <h1 className='flex text-center text-xl font-bold md:text-2xl'>
+          Câu {question.questionNumber}
+        </h1>
         <button
           type='button'
           className='flex hover:text-[#4285F4] hover:underline md:absolute md:right-0'
           onClick={() => setSelectedAnswer(null)}
         >
-          <p className='h-full w-full'>Đánh dấu chưa làm</p>
+          <p className='h-full w-full text-sm xl:text-lg'>Đánh dấu chưa làm</p>
         </button>
       </div>
       <p className='my-3 text-justify text-xs md:text-base'>{question.prompt}</p>
@@ -74,11 +76,11 @@ const Question = ({ question }: { question: QuestionSlideProps['questions'][0] }
                 checked={selectedAnswer === answer}
               />
               <span className='absolute left-[50%]'>
-                <span className='ml-[-100%]'>{answer}</span>
+                <span className='ml-[-100%] text-xs md:text-base'>{answer}</span>
               </span>
             </div>
             <label htmlFor={`question-${question.questionNumber}-answer-${answer}`}>
-              <p>Lorem ipsum dolor sit amet</p>
+              <p className='text-xs md:text-base'>Lorem ipsum dolor sit amet</p>
             </label>
           </div>
         ))}

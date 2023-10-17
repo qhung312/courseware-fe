@@ -16,6 +16,13 @@ input[type='radio'] {
   transition: all 300ms ease-out;
 }
 
+@media (max-width: 768px) {
+  input[type='radio'] {
+    width: auto;
+    height: 1.5em;
+  }
+}
+
 input[type='radio'] ~ span {
   pointer-events: none;
 }
