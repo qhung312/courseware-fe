@@ -2,10 +2,8 @@ import { useLayoutEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import { AsideLink, Icon } from '../../components';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Aside } from '../../layout';
-import { getAllSubjects } from '../../slices/actions/library.action';
-import { RootState } from '../../store';
+import useBoundStore from '../../store';
 import { Subject } from '../../types/library';
 
 interface LibraryAsideProps {
@@ -16,13 +14,12 @@ interface LibraryAsideProps {
 }
 
 const LibraryAside: React.FC<LibraryAsideProps> = ({ title, subTitle, description, baseRoute }) => {
-  const { subjects } = useAppSelector((state: RootState) => state.library);
-
-  const dispatch = useAppDispatch();
+  const subjects = useBoundStore.use.subjects();
+  const getAllSubjects = useBoundStore.use.getAllSubjects();
 
   useLayoutEffect(() => {
-    dispatch(getAllSubjects());
-  }, [dispatch]);
+    getAllSubjects();
+  }, [getAllSubjects]);
 
   return (
     <Aside title={title} subTitle={subTitle} description={description}>

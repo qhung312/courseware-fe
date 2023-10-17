@@ -2,9 +2,8 @@ import { ReactNode, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Icon } from '../../components';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppAction } from '../../slices/app';
 import './index.css';
+import useBoundStore from '../../store';
 
 interface AsideProps {
   title?: string;
@@ -14,8 +13,9 @@ interface AsideProps {
 }
 
 const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children }) => {
-  const { isAsideOpen } = useAppSelector((state) => state.app);
-  const dispatch = useAppDispatch();
+  const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const toggleAside = useBoundStore.use.toggleAside();
+
   const params = useParams();
   const asideRef = useRef(null);
 
@@ -74,9 +74,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
         <button
           id='collapse-button'
           type='button'
-          onClick={() => {
-            dispatch(AppAction.toggleAside());
-          }}
+          onClick={toggleAside}
           className='h-full w-full px-2 py-10'
         >
           <Icon.ChevronUp

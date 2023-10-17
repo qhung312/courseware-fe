@@ -1,24 +1,43 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { create, StoreApi, UseBoundStore } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
-import appReducer from './slices/app';
-import authReducer from './slices/auth';
-import libraryReducer from './slices/library';
-import userReducer from './slices/user';
+import { AppSlice, TAppSlice } from './slices/app';
+import { AuthSlice, TAuthSlice, initialState as authInitialState } from './slices/auth';
+import { LibrarySlice, TLibrarySlice } from './slices/library';
+import { TUserSlice, UserSlice, initialState as userInitialState } from './slices/user';
 
-export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    user: userReducer,
-    library: libraryReducer,
-    app: appReducer,
-  },
-});
+type WithSelectors<S> = S extends { getState: () => infer T }
+  ? S & { use: { [K in keyof T]: () => T[K] } }
+  : never;
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(_store: S) => {
+  let store = _store as WithSelectors<typeof _store>;
+  store.use = {};
+  for (let k of Object.keys(store.getState())) {
+    (store.use as any)[k] = () => store((s) => s[k as keyof typeof s]);
+  }
+
+  return store;
+};
+
+export interface TCommonActions {
+  logout: () => void;
+}
+
+const useBoundStoreBase = create<
+  TAppSlice & TAuthSlice & TUserSlice & TLibrarySlice & TCommonActions
+>()(
+  devtools((...a) => ({
+    ...AppSlice(...a),
+    ...AuthSlice(...a),
+    ...UserSlice(...a),
+    ...LibrarySlice(...a),
+    logout: () => {
+      a[0]({ ...authInitialState, ...userInitialState });
+    },
+  }))
+);
+
+const useBoundStore = createSelectors(useBoundStoreBase);
+
+export default useBoundStore;

@@ -3,10 +3,8 @@ import { CSSProperties, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as MediumLogoCTCT } from '../../assets/svgs/MediumLogoCTCT.svg';
-import { useAppDispatch, useAppSelector, useDebounce, useThrottle } from '../../hooks';
-import { logout } from '../../slices/actions/auth.action';
-import { AuthAction } from '../../slices/auth';
-import { RootState } from '../../store';
+import { useDebounce, useThrottle } from '../../hooks';
+import useBoundStore from '../../store';
 import Icon from '../Icon';
 
 const MediumHeader = () => {
@@ -36,9 +34,9 @@ const MediumHeader = () => {
       pathname === '/about-us/partners'
   );
 
-  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
-
-  const dispatch = useAppDispatch();
+  const isAuthenticated = useBoundStore.use.isAuthenticated();
+  const loginWithGoogle = useBoundStore.use.loginWithGoogle();
+  const logout = useBoundStore.use.logout();
 
   const onClick = () => {
     isOverlayOpen ? playSegments([60, 30], true) : playSegments([30, 60], true);
@@ -66,7 +64,7 @@ const MediumHeader = () => {
 
   const onLogout = () => {
     // TODO
-    dispatch(logout());
+    logout();
     setIsOverlayOpen(false);
     setIsLibraryOpen(false);
     setIsRoomOpen(false);
@@ -500,7 +498,7 @@ const MediumHeader = () => {
                 type='submit'
                 className='inset-y-5 right-5 w-[144px] cursor-pointer gap-x-[16px] rounded-[12px] bg-[#4285F4] px-[20px] py-[16px] text-base text-white duration-300 ease-out hover:bg-[#2374FA]
                 '
-                onClick={() => dispatch(AuthAction.loginWithGoogle())}
+                onClick={loginWithGoogle}
               >
                 Đăng nhập
               </button>

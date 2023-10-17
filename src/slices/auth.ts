@@ -1,49 +1,38 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { StateCreator } from 'zustand';
 
 import AuthService from '../service/auth.service';
 
-import { logout } from './actions/auth.action';
-import { getUserProfile } from './actions/user.action';
-
-export type TAuthState = {
+export interface TAuthState {
   isAuthenticated: boolean;
   token: string;
-};
+}
 
-const initialState: TAuthState = {
+export interface TAuthActions {
+  loginWithGoogle: () => void;
+  setToken: (token: string) => void;
+  logout: () => void;
+}
+
+export interface TAuthSlice extends TAuthState, TAuthActions {}
+
+export const initialState = {
   isAuthenticated: false,
   token: localStorage.getItem('token') || '',
 };
 
-const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    loginWithGoogle: () => {
-      AuthService.loginWithGoogle();
-    },
-    setToken: (state, { payload }) => {
-      localStorage.setItem('token', JSON.stringify(payload));
-      state.token = payload;
-    },
+export const AuthSlice: StateCreator<TAuthSlice, [['zustand/devtools', never]], [], TAuthSlice> = (
+  set
+) => ({
+  ...initialState,
+  loginWithGoogle: () => {
+    AuthService.loginWithGoogle();
   },
-  extraReducers: (builder) => {
-    builder.addCase(getUserProfile.fulfilled, (state) => {
-      state.isAuthenticated = true;
-    });
-
-    builder.addCase(getUserProfile.rejected, (state) => {
-      localStorage.clear();
-      Object.assign(state, initialState);
-    });
-
-    builder.addCase(logout, (state) => {
-      localStorage.clear();
-      Object.assign(state, initialState);
-    });
+  setToken: (token) => {
+    localStorage.setItem('token', JSON.stringify(token));
+    set({ isAuthenticated: true, token });
+  },
+  logout: () => {
+    localStorage.clear();
+    set({ ...initialState });
   },
 });
-
-export const AuthAction = authSlice.actions;
-const authReducer = authSlice.reducer;
-export default authReducer;

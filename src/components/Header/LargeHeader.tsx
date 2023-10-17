@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as LargeLogoCTCT } from '../../assets/svgs/LargeLogoCTCT.svg';
-import { useAppDispatch, useAppSelector, useThrottle } from '../../hooks';
-import { logout } from '../../slices/actions/auth.action';
-import { AuthAction } from '../../slices/auth';
-import { RootState } from '../../store';
+import { useThrottle } from '../../hooks';
+import useBoundStore from '../../store';
 import Icon from '../Icon';
 
 const LargeHeader = () => {
@@ -20,11 +18,10 @@ const LargeHeader = () => {
   const [isAboutUsOpen, setIsAboutUsOpen] = useState(false);
   const [isProfileDrop, setIsProfileDrop] = useState(false);
 
-  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
-
-  const user = useAppSelector((state: RootState) => state.user);
-
-  const dispatch = useAppDispatch();
+  const isAuthenticated = useBoundStore.use.isAuthenticated();
+  const user = useBoundStore.use.user();
+  const loginWithGoogle = useBoundStore.use.loginWithGoogle();
+  const logout = useBoundStore.use.logout();
 
   useEffect(() => {
     document.addEventListener('click', (event) => {
@@ -92,7 +89,7 @@ const LargeHeader = () => {
               className='inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] 
               bg-[#4285F4] text-base text-white 
               duration-300 ease-out hover:bg-[#2374FA]'
-              onClick={() => dispatch(AuthAction.loginWithGoogle())}
+              onClick={loginWithGoogle}
             >
               Đăng nhập
             </button>
@@ -148,7 +145,7 @@ const LargeHeader = () => {
                 </NavLink>
                 <button
                   className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-                  onClick={() => dispatch(logout())}
+                  onClick={logout}
                 >
                   <p
                     className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear 3xl:px-3

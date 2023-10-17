@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { StateCreator } from 'zustand';
 
+import UserService from '../service/user.service';
 import { ROLES } from '../types/auth';
 
-import { logout } from './actions/auth.action';
-import { getUserProfile } from './actions/user.action';
+import { TAuthSlice } from './auth';
 
-export type TUserState = {
+export interface TUserState {
   id: string | null;
   googleId: string | null;
   role: ROLES | null;
@@ -13,9 +13,17 @@ export type TUserState = {
   picture: string | null;
   dateOfBirth: number | null;
   email: string | null;
-};
+}
 
-const initialState: TUserState = {
+export interface TUserActions {
+  getUserProfile: () => Promise<void>;
+}
+
+export interface TUserSlice extends TUserActions {
+  user: TUserState;
+}
+
+export const initialState: TUserState = {
   id: null,
   googleId: null,
   role: null,
@@ -25,27 +33,31 @@ const initialState: TUserState = {
   email: null,
 };
 
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
-      state.id = payload?._id;
-      state.googleId = payload?.googleId;
-      state.role = payload?.role;
-      state.name = payload?.name;
-      state.picture = payload?.picture;
-      state.dateOfBirth = payload?.dateOfBirth;
-      state.email = payload?.email;
-    });
-
-    builder.addCase(getUserProfile.rejected, () => initialState);
-
-    builder.addCase(logout, () => initialState);
+export const UserSlice: StateCreator<
+  TUserSlice & TAuthSlice,
+  [['zustand/devtools', never]],
+  [],
+  TUserSlice
+> = (set) => ({
+  user: initialState,
+  getUserProfile: async () => {
+    try {
+      const { data } = await UserService.getUserProfile();
+      set((state) => ({
+        user: {
+          ...state.user,
+          id: data.payload?._id,
+          googleId: data.payload?.googleId,
+          role: data.payload?.role,
+          name: data.payload?.name,
+          picture: data.payload?.picture,
+          dateOfBirth: data.payload?.dateOfBirth,
+          email: data.payload?.email,
+        },
+        isAuthenticated: true,
+      }));
+    } catch (error: any) {
+      set({ user: { ...initialState }, isAuthenticated: false });
+    }
   },
 });
-
-export const UserAction = userSlice.actions;
-const userReducer = userSlice.reducer;
-export default userReducer;

@@ -6,11 +6,10 @@ import { Link, useParams } from 'react-router-dom';
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
 import { DocumentCard, Icon } from '../../../components';
-import { useAppSelector } from '../../../hooks';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
 import LibraryService from '../../../service/library.service';
-import { RootState } from '../../../store';
+import useBoundStore from '../../../store';
 import { ExamArchive } from '../../../types/library';
 import LibraryAside from '../LibraryAside';
 
@@ -33,7 +32,7 @@ const PageSkeleton = () => (
 const ExamArchivePage: React.FC = () => {
   const params = useParams();
 
-  const { subjects } = useAppSelector((state: RootState) => state.library);
+  const subjects = useBoundStore.use.subjects();
   const subject = _.find(subjects, (subj) => subj._id === params?.subjectId);
 
   const [examArchives, setExamArchives] = useState<ExamArchive[] | null>(null);

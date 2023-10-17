@@ -1,15 +1,14 @@
 import React, { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { RootState } from '../../store';
+import useBoundStore from '../../store';
 
 type ProtectedRouteProps = {
   Component: ReactNode;
 };
 
 const Protected: React.FC<ProtectedRouteProps> = ({ Component: children }) => {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const isAuthenticated = useBoundStore.use.isAuthenticated();
 
   if (!isAuthenticated) {
     return <Navigate to='/' />;

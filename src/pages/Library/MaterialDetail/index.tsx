@@ -5,11 +5,10 @@ import { Link, useParams } from 'react-router-dom';
 import { Icon } from '../../../components';
 import PDF from '../../../components/PDF';
 import { API_URL } from '../../../config';
-import { useAppSelector } from '../../../hooks';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
 import LibraryService from '../../../service/library.service';
-import { RootState } from '../../../store';
+import useBoundStore from '../../../store';
 import { Material } from '../../../types/library';
 import LibraryAside from '../LibraryAside';
 
@@ -17,9 +16,8 @@ const MaterialDetailPage: React.FC = () => {
   const params = useParams();
 
   const [material, setMaterial] = useState<Material | null>(null);
-  const isOpen = useAppSelector((state) => state.app.isAsideOpen);
-
-  const { subjects } = useAppSelector((state: RootState) => state.library);
+  const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const subjects = useBoundStore.use.subjects();
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
@@ -36,7 +34,7 @@ const MaterialDetailPage: React.FC = () => {
     if (detail) {
       detail.style.width = '100vw';
     }
-  }, [isOpen]);
+  }, [isAsideOpen]);
 
   return (
     <Page title={material?.name} description='From CTCT'>
@@ -49,7 +47,7 @@ const MaterialDetailPage: React.FC = () => {
 
       {/* Add space
         <div id='material-margin' /> */}
-      <Wrapper className={`flex w-full flex-col ${isOpen ? 'blur-none md:blur-sm' : ''}`} fullWidth>
+      <Wrapper className={`flex w-full flex-col`} fullWidth>
         {/* Banner */}
         <div
           className='hidden w-full bg-[#4285F4] px-5 py-5 text-white 
