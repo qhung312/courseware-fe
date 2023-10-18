@@ -63,7 +63,7 @@ const LargeHeader = () => {
   return (
     <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
-        className='z-30 flex w-[100%] flex-row items-center justify-between
+        className='z-30 flex w-full flex-row items-center justify-between
         bg-white px-[16px] py-[12px] 3xl:px-[32px] 3xl:py-[16px]'
       >
         <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
@@ -160,7 +160,7 @@ const LargeHeader = () => {
         </div>
       </div>
       <nav
-        className='z-20 flex w-[100%] flex-row items-center justify-start bg-[#E3F2FD]
+        className='z-20 flex w-full flex-row items-center justify-start bg-[#E3F2FD]
         transition-all duration-700 ease-out'
       >
         <NavLink

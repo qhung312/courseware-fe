@@ -9,6 +9,7 @@ import LazyLoadImage from './LazyLoadImage';
 import Loading from './Loading';
 import PDF from './PDF';
 import QuestionSlide from './QuestionSlide/QuestionSlide';
+import Select from './Select';
 
 export {
   AsideLink,
@@ -22,4 +23,5 @@ export {
   Loading,
   PDF,
   QuestionSlide,
+  Select,
 };

@@ -17,6 +17,8 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
   const toggleAside = useBoundStore.use.toggleAside();
 
   const params = useParams();
+  console.log(params);
+
   const asideRef = useRef(null);
 
   return (

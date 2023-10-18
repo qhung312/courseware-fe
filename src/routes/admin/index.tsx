@@ -32,7 +32,7 @@ const AdministratorRoute = () => {
               }
             />
           </Route>
-          <Route path='exam-archive' element={<Protected admin />}>
+          <Route path='exam-archive'>
             <Route
               path='manage'
               element={
@@ -50,7 +50,7 @@ const AdministratorRoute = () => {
               }
             />
           </Route>
-          <Route path='exercises' element={<Protected admin />}>
+          <Route path='exercises'>
             <Route
               path='manage'
               element={
@@ -68,7 +68,7 @@ const AdministratorRoute = () => {
               }
             />
           </Route>
-          <Route path='questions' element={<Protected admin />}>
+          <Route path='questions'>
             <Route
               path='manage'
               element={
