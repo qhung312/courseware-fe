@@ -56,13 +56,13 @@ const AdminAside: FC = () => {
     ) {
       setMenuState((prevState) => ({ ...prevState, isActive: 'exam' }));
     } else if (
-      pathname.includes('/admin/exercise/manage') ||
-      pathname.includes('/admin/exercise/create')
+      pathname.includes('/admin/exercises/manage') ||
+      pathname.includes('/admin/exercises/create')
     ) {
       setMenuState((prevState) => ({ ...prevState, isActive: 'exercise' }));
     } else if (
-      pathname.includes('/admin/question/manage') ||
-      pathname.includes('/admin/question/create')
+      pathname.includes('/admin/questions/manage') ||
+      pathname.includes('/admin/questions/create')
     ) {
       setMenuState((prevState) => ({ ...prevState, isActive: 'question' }));
     }
@@ -396,7 +396,7 @@ const AdminAside: FC = () => {
             }}
           >
             <NavLink
-              to='/admin/material/manage'
+              to='/admin/questions/manage'
               className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
@@ -412,7 +412,7 @@ const AdminAside: FC = () => {
               )}
             </NavLink>
             <NavLink
-              to='/admin/material/create'
+              to='/admin/questions/create'
               className='flex w-[100%] flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
