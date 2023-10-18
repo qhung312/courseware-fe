@@ -1,6 +1,8 @@
 import _ from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import './index.css';
 import { Icon, Select } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 
@@ -56,32 +58,35 @@ const materials = [
 ];
 
 type SearchFormValue = {
-  name: string | null;
-  subject: string | null;
-  chapter: string | null;
+  name: string;
+  subject: string;
+  chapter: string;
 };
 
-const DocumentList = () => {
+const MaterialList = () => {
   const [page, setPage] = useState(1);
   const [chunks, setChunks] = useState(_.chunk(materials, 10));
   const [value, setValue] = useState<SearchFormValue>({
-    name: null,
-    subject: null,
-    chapter: null,
+    name: '',
+    subject: '',
+    chapter: '',
   });
 
-  const handleSearch = () => {
+  useEffect(() => {
     const newMaterials = materials.filter((material) => {
       let result = true;
-      if (value.name && !material.name.toLowerCase().includes(value.name.toLowerCase())) {
-        result = false;
-      }
-      if (value.subject && !material.subject.toLowerCase().includes(value.subject.toLowerCase())) {
+      if (value.name !== '' && !material.name.toLowerCase().includes(value.name.toLowerCase())) {
         result = false;
       }
       if (
-        value.chapter &&
-        !material.chapter.toLowerCase().includes(value.chapter.split(' ')[1].toLowerCase())
+        value.subject !== '' &&
+        !material.subject.toLowerCase().includes(value.subject.toLowerCase())
+      ) {
+        result = false;
+      }
+      if (
+        value.chapter !== '' &&
+        !material.chapter.toLowerCase().includes(value.chapter.toLowerCase())
       ) {
         result = false;
       }
@@ -90,7 +95,7 @@ const DocumentList = () => {
     });
 
     setChunks(_.chunk(newMaterials, 10));
-  };
+  }, [value]);
 
   return (
     <Page>
@@ -101,52 +106,55 @@ const DocumentList = () => {
           </p>
         </div>
         <div className='w-full p-4'>
+          <Link className='mb-2 flex items-center hover:underline md:hidden' to='/admin'>
+            <Icon.Chevron className='h-5 -rotate-90 fill-black' />
+            <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
+          </Link>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex flex-col'>
-              <div className='mb-8 flex flex-1 flex-row items-center justify-between gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                <div className='relative flex flex-[2] items-center'>
+              <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
+                <div className='relative flex w-full flex-1 items-center'>
                   <input
                     className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={value.name || ''}
-                    onChange={({ target }) =>
-                      setValue({ ...value, name: target.value === '' ? null : target.value })
-                    }
+                    onChange={({ target }) => setValue({ ...value, name: target.value })}
                     placeholder='Tìm tên tài liệu'
                   />
-                  <button
-                    onClick={handleSearch}
-                    className='absolute right-1 h-4 lg:right-3 lg:h-5 3xl:right-5 3xl:h-6'
-                  >
-                    <Icon.Search fill='#5B5B5B' height={'100%'} />
-                  </button>
                 </div>
-                <Select
-                  options={['Giải tích 1', 'Giải tích 2', 'Vật lý đại cương A1', 'Hoá đại cương']}
-                  placeholder='Chọn môn'
-                  wrapperClassName='flex-1'
-                  state={value.subject || ''}
-                  setState={(subject) =>
-                    setValue({ ...value, subject: subject === '' ? null : subject })
-                  }
-                />
-                <Select
-                  options={['Chương 1', 'Chương 2', 'Chương 3']}
-                  placeholder='Chọn chương'
-                  wrapperClassName='flex-1'
-                  state={value.chapter || ''}
-                  isSearchable
-                  setState={(chapter) =>
-                    setValue({ ...value, chapter: chapter === '' ? null : chapter })
-                  }
-                />
+                <div className='flex w-full flex-1 flex-row gap-x-4'>
+                  <Select
+                    options={[
+                      { label: 'Giải tích 1', value: 'Giải tích 1' },
+                      { label: 'Giải tích 2', value: 'Giải tích 2' },
+                      { label: 'Vật lý đại cương A1', value: 'Vật lý đại cương A1' },
+                      { label: 'Hoá đại cương', value: 'Hoá đại cương' },
+                    ]}
+                    value={
+                      value.subject === '' ? null : { label: value.subject, value: value.subject }
+                    }
+                    onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
+                    placeholder='Chọn môn'
+                  />
+                  <Select
+                    options={[
+                      { label: 'Chương 1', value: '1' },
+                      { label: 'Chương 2', value: '2' },
+                      { label: 'Chương 3', value: '3' },
+                    ]}
+                    onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
+                    placeholder='Chọn chương'
+                  />
+                </div>
                 <button
-                  className={`flex flex-1 ${
-                    value.name || value.subject || value.chapter ? 'opacity-1' : 'opacity-0'
+                  className={`flex flex-[0.5] ${
+                    value.name !== '' || value.subject !== '' || value.chapter !== ''
+                      ? 'opacity-1'
+                      : 'opacity-0'
                   }`}
-                  disabled={!value.name && !value.subject && !value.chapter}
+                  disabled={value.name === '' && value.subject === '' && value.chapter === ''}
                   onClick={() => {
-                    setValue({ name: null, subject: null, chapter: null });
+                    setValue({ name: '', subject: '', chapter: '' });
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
@@ -236,6 +244,15 @@ const DocumentList = () => {
                   <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
                 </button>
               </div>
+              <Select
+                options={[
+                  { label: 'Chương 1', value: '1' },
+                  { label: 'Chương 2', value: '2' },
+                  { label: 'Chương 3', value: '3' },
+                ]}
+                onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
+                placeholder='Chọn chương'
+              />
             </main>
           </div>
         </div>
@@ -244,4 +261,4 @@ const DocumentList = () => {
   );
 };
 
-export default DocumentList;
+export default MaterialList;

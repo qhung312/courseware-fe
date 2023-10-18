@@ -34,6 +34,7 @@ import { ReactComponent as Result } from '../../assets/svgs/ResultIcon.svg';
 import { ReactComponent as Room } from '../../assets/svgs/RoomIcon.svg';
 import { ReactComponent as Search } from '../../assets/svgs/SearchIcon.svg';
 import { ReactComponent as Test } from '../../assets/svgs/TestIcon.svg';
+import { ReactComponent as Upload } from '../../assets/svgs/UploadIcon.svg';
 import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg';
 
 export default {
@@ -73,5 +74,6 @@ export default {
   Search,
   Test,
   Profile,
+  Upload,
   YoutubeIcon,
 };

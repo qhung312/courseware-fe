@@ -5,7 +5,8 @@ import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import AdminAside from '../../pages/Admin/AdminAside';
 
-const DocumentList = lazy(() => import('../../pages/Admin/Material/List'));
+const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
+const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
 
 const AdministratorRoute = () => {
   return (
@@ -19,7 +20,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />
@@ -27,7 +28,7 @@ const AdministratorRoute = () => {
               path='create'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialCreate />
                 </Suspense>
               }
             />
@@ -37,7 +38,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />
@@ -45,7 +46,7 @@ const AdministratorRoute = () => {
               path='create'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />
@@ -55,7 +56,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />
@@ -63,7 +64,7 @@ const AdministratorRoute = () => {
               path='create'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />
@@ -73,7 +74,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />
@@ -81,7 +82,7 @@ const AdministratorRoute = () => {
               path='create'
               element={
                 <Suspense fallback={<Loading />}>
-                  <DocumentList />
+                  <MaterialList />
                 </Suspense>
               }
             />

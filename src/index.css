@@ -40,13 +40,17 @@
 body {
   background-color: #fcfbf9;
   margin: 0;
-  color: '#252641';
+  color: #252641;
   font-family: 'Baloo Chettan 2', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   scrollbar-gutter: stable both-edges;
+}
+
+p {
+  color: '#252641';
 }
 
 ::-webkit-scrollbar {
@@ -67,6 +71,10 @@ body {
 
 ::-webkit-scrollbar-button {
   display: none;
+}
+
+*:focus {
+  outline: 2px auto #4285f4;
 }
 
 code {
