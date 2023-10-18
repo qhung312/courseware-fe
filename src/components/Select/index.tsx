@@ -3,7 +3,7 @@ import Select, { components, GroupBase, Props, DropdownIndicatorProps } from 're
 import Icon from '../Icon';
 import './index.css';
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
 };
