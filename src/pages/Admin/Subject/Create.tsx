@@ -3,20 +3,20 @@ import React, { ChangeEvent, useState } from 'react';
 import { Page, Wrapper } from '../../../layout';
 
 const CreateSubjectPage = () => {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value)
-  }
-  
+    setName(event.target.value);
+  };
+
   const onInputDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(event.target.value)
-  }
-  
+    setDescription(event.target.value);
+  };
+
   const onCreateSubject = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('hello world', event)
-  }
+    console.log('hello world', event);
+  };
 
   return (
     <Page>

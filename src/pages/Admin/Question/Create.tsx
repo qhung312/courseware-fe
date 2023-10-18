@@ -44,8 +44,8 @@ const CreateQuestionPage = () => {
   const [options, setOptions] = useState(['']);
   const [answerKey, setAnswerKey] = useState(0);
   const [shuffleOptions, setShuffleOptions] = useState(false);
-  
-  console.log(chapter)
+
+  console.log(chapter);
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => setName(event.target.value);
 
