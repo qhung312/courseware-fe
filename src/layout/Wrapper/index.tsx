@@ -13,7 +13,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth }) => 
   const toggleAside = useBoundStore.use.toggleAside();
 
   useEffect(() => {
-    if (isAsideOpen) {
+    if (isAsideOpen && fullWidth) {
       toggleAside();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
