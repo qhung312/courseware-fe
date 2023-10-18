@@ -86,7 +86,7 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     ],
-    "react/jsx-props-no-spreading": "warn",
+    "react/jsx-props-no-spreading": "off",
     "react/no-arrow-function-lifecycle": "off",
     "react/no-invalid-html-attribute": "off",
     "react/no-unescaped-entities": [

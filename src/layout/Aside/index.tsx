@@ -1,5 +1,5 @@
 import { ReactNode, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Icon } from '../../components';
 import './index.css';
@@ -17,6 +17,9 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
   const toggleAside = useBoundStore.use.toggleAside();
 
   const params = useParams();
+  const { pathname } = useLocation();
+  const pathTokens = pathname.split('/');
+  console.log(pathTokens);
   const asideRef = useRef(null);
 
   return (
@@ -25,7 +28,9 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
       <aside
         ref={asideRef}
         className={`with-nav-height fixed z-10 m-auto bg-white ${
-          params?.subjectId ? 'translate-x-[-100%]' : ''
+          params?.subjectId || (pathTokens[1] === 'admin' && pathTokens.length >= 3)
+            ? 'translate-x-[-100%]'
+            : ''
         } ${
           !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
         } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}

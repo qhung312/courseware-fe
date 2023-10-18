@@ -82,7 +82,7 @@ const MediumHeader = () => {
     <>
       <div className='relative top-0 z-50 w-full'>
         <div
-          className='relative z-40 flex h-[72px] w-[100%] flex-row items-center
+          className='relative z-40 flex h-[72px] w-full flex-row items-center
           justify-between bg-[#f5f7fc]
           px-[20px] py-[16px] md:hidden'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
@@ -95,7 +95,7 @@ const MediumHeader = () => {
           </button>
         </div>
         <div
-          className='absolute z-30 flex w-[100%] flex-col items-center justify-start
+          className='absolute z-30 flex w-full flex-col items-center justify-start
           gap-y-[24px] overflow-scroll overscroll-none whitespace-nowrap bg-white px-[20px]
           py-[16px] transition-all duration-[900ms] ease-in-out
           md:hidden'
@@ -104,20 +104,20 @@ const MediumHeader = () => {
             height: 'calc(100vh)',
           }}
         >
-          <div className='relative flex w-[100%] flex-row items-center justify-center'>
+          <div className='relative flex w-full flex-row items-center justify-center'>
             <input
-              className='w-[100%] rounded-[40px] border border-[#49BBBD] 
+              className='w-full rounded-[40px] border border-[#49BBBD] 
             bg-inherit px-[20px] py-[8px]'
             />
             <button type='button' className='absolute right-[20px] w-[20px]'>
               <Icon.Search className='w-[20px]' />
             </button>
           </div>
-          <nav className='flex w-[100%] flex-col items-center gap-y-[12px]'>
+          <nav className='flex w-full flex-col items-center gap-y-[12px]'>
             <NavLink
               to='/'
               end
-              className='z-20 flex w-[100%] flex-row items-center justify-start
+              className='z-20 flex w-full flex-row items-center justify-start
             gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -131,9 +131,9 @@ const MediumHeader = () => {
                 </>
               )}
             </NavLink>
-            <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+            <div className='flex h-[fit-content] w-full flex-col bg-white'>
               <button
-                className='z-20 flex w-[100%] flex-row
+                className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                 onClick={throttledLibraryClick}
               >
@@ -192,7 +192,7 @@ const MediumHeader = () => {
               >
                 <NavLink
                   to='/library/material'
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -215,7 +215,7 @@ const MediumHeader = () => {
                 </NavLink>
                 <NavLink
                   to='/library/exam-archive'
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -236,9 +236,9 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+            <div className='flex h-[fit-content] w-full flex-col bg-white'>
               <button
-                className='z-20 flex w-[100%] flex-row
+                className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                 onClick={throttledRoomClick}
               >
@@ -293,7 +293,7 @@ const MediumHeader = () => {
               >
                 <NavLink
                   to='/room/exercises'
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -316,7 +316,7 @@ const MediumHeader = () => {
                 </NavLink>
                 <NavLink
                   to='/room/tests'
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -339,9 +339,9 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+            <div className='flex h-[fit-content] w-full flex-col bg-white'>
               <button
-                className='z-20 flex w-[100%] flex-row
+                className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                 onClick={throttledAboutUsClick}
               >
@@ -405,7 +405,7 @@ const MediumHeader = () => {
                 <NavLink
                   to='/about-us'
                   end
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -429,7 +429,7 @@ const MediumHeader = () => {
                 <NavLink
                   to='/about-us/activities'
                   end
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -453,7 +453,7 @@ const MediumHeader = () => {
                 <NavLink
                   to='/about-us/partners'
                   end
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -479,7 +479,7 @@ const MediumHeader = () => {
             <NavLink
               to='/help'
               end
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -508,7 +508,7 @@ const MediumHeader = () => {
                 <NavLink
                   to='/profile'
                   end
-                  className='flex w-[100%] flex-row items-center justify-start
+                  className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
                     backgroundColor:
@@ -529,7 +529,7 @@ const MediumHeader = () => {
                   )}
                 </NavLink>
                 <button
-                  className='z-20 flex w-[100%] flex-row
+                  className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
                   onClick={debouncedLogout}
                 >

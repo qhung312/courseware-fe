@@ -214,7 +214,7 @@ const HomePage = () => {
                 <img
                   src={require('../../assets/images/EventPic.png')}
                   alt='bg'
-                  className='h-auto max-w-[100%]'
+                  className='h-auto max-w-full'
                 />
                 <div
                   className='absolute bottom-[16px] flex flex-row items-center bg-white/75 px-1 py-1 

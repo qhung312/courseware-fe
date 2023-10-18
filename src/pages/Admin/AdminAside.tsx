@@ -21,7 +21,6 @@ const AdminAside: FC = () => {
     question: false,
   });
   const { pathname } = useLocation();
-  console.log(menuState);
 
   const handleClick = (type: 'material' | 'exam' | 'exercise' | 'question') => {
     setMenuState((prevState) => {
@@ -30,9 +29,7 @@ const AdminAside: FC = () => {
 
       (Object.keys(newState) as Array<keyof typeof newState>).forEach((key) => {
         if (key !== type && key !== 'isActive') {
-          if (newState.isActive && key === newState.isActive) {
-            newState[key] = true;
-          } else {
+          if (!newState.isActive || key !== newState.isActive) {
             newState[key] = false;
           }
         }
@@ -69,11 +66,11 @@ const AdminAside: FC = () => {
   }, [pathname]);
 
   return (
-    <Aside>
+    <Aside subTitle='Admin Menu'>
       <div className='flex flex-col'>
-        <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+        <div className='flex h-[fit-content] w-full flex-col bg-white'>
           <button
-            className='z-20 flex w-[100%] flex-row
+            className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
             onClick={() => handleClick('material')}
           >
@@ -121,7 +118,7 @@ const AdminAside: FC = () => {
             )}
           </button>
           <nav
-            className='flex flex-col pl-[40px] transition-all ease-in-out'
+            className='flex flex-col pl-10 pr-5 transition-all ease-in-out'
             style={{
               maxHeight: menuState.material ? '300px' : '0px',
               overflow: 'hidden',
@@ -130,7 +127,7 @@ const AdminAside: FC = () => {
           >
             <NavLink
               to='/admin/material/manage'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -146,7 +143,7 @@ const AdminAside: FC = () => {
             </NavLink>
             <NavLink
               to='/admin/material/create'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -158,9 +155,9 @@ const AdminAside: FC = () => {
             </NavLink>
           </nav>
         </div>
-        <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+        <div className='flex h-[fit-content] w-full flex-col bg-white'>
           <button
-            className='z-20 flex w-[100%] flex-row
+            className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
             onClick={() => handleClick('exam')}
           >
@@ -208,7 +205,7 @@ const AdminAside: FC = () => {
             )}
           </button>
           <nav
-            className='flex flex-col pl-[40px] transition-all ease-in-out'
+            className='flex flex-col pl-10 pr-5 transition-all ease-in-out'
             style={{
               maxHeight: menuState.exam ? '300px' : '0px',
               overflow: 'hidden',
@@ -217,7 +214,7 @@ const AdminAside: FC = () => {
           >
             <NavLink
               to='/admin/exam-archive/manage'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -233,7 +230,7 @@ const AdminAside: FC = () => {
             </NavLink>
             <NavLink
               to='/admin/exam-archive/create'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -247,9 +244,9 @@ const AdminAside: FC = () => {
             </NavLink>
           </nav>
         </div>
-        <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+        <div className='flex h-[fit-content] w-full flex-col bg-white'>
           <button
-            className='z-20 flex w-[100%] flex-row
+            className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
             onClick={() => handleClick('exercise')}
           >
@@ -297,7 +294,7 @@ const AdminAside: FC = () => {
             )}
           </button>
           <nav
-            className='flex flex-col pl-[40px] transition-all ease-in-out'
+            className='flex flex-col pl-10 pr-5 transition-all ease-in-out'
             style={{
               maxHeight: menuState.exercise ? '300px' : '0px',
               overflow: 'hidden',
@@ -306,7 +303,7 @@ const AdminAside: FC = () => {
           >
             <NavLink
               to='/admin/exercises/manage'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -322,7 +319,7 @@ const AdminAside: FC = () => {
             </NavLink>
             <NavLink
               to='/admin/exercises/create'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -338,9 +335,9 @@ const AdminAside: FC = () => {
             </NavLink>
           </nav>
         </div>
-        <div className='flex h-[fit-content] w-[100%] flex-col bg-white'>
+        <div className='flex h-[fit-content] w-full flex-col bg-white'>
           <button
-            className='z-20 flex w-[100%] flex-row
+            className='z-20 flex w-full flex-row
               items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
             onClick={() => handleClick('question')}
           >
@@ -388,7 +385,7 @@ const AdminAside: FC = () => {
             )}
           </button>
           <nav
-            className='flex flex-col pl-[40px] transition-all ease-in-out'
+            className='flex flex-col pl-10 pr-5 transition-all ease-in-out'
             style={{
               maxHeight: menuState.question ? '300px' : '0px',
               overflow: 'hidden',
@@ -397,7 +394,7 @@ const AdminAside: FC = () => {
           >
             <NavLink
               to='/admin/questions/manage'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
@@ -413,7 +410,7 @@ const AdminAside: FC = () => {
             </NavLink>
             <NavLink
               to='/admin/questions/create'
-              className='flex w-[100%] flex-row items-center justify-start
+              className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
               style={({ isActive, isPending }) => ({
                 backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
