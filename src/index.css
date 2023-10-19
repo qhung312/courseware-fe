@@ -73,7 +73,8 @@ p {
   display: none;
 }
 
-*:focus {
+input:focus,
+textarea:focus {
   outline: 2px auto #4285f4;
 }
 
