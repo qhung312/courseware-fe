@@ -34,4 +34,5 @@
 
 .react-select__placeholder {
   position: absolute;
+  text-overflow: ellipsis;
 }

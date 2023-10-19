@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import _ from 'lodash';
+import { useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
 import { Link } from 'react-router-dom';
 
@@ -22,13 +23,15 @@ const MaterialCreate = () => {
     description: '',
     files: [],
   });
+  const fileUploaderRef = useRef<FilePond>(null);
+  const submitDisabled = _.some(value, (v) => _.isEmpty(v));
 
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
-            Danh sách tài liệu
+            Tạo tài liệu
           </p>
         </div>
         <div className='w-full p-4'>
@@ -66,6 +69,9 @@ const MaterialCreate = () => {
                       { label: 'Vật lý đại cương A1', value: 'Vật lý đại cương A1' },
                       { label: 'Hoá đại cương', value: 'Hoá đại cương' },
                     ]}
+                    value={
+                      value.subject === '' ? null : { label: value.subject, value: value.subject }
+                    }
                     onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
                     placeholder='Chọn môn'
                   />
@@ -78,6 +84,9 @@ const MaterialCreate = () => {
                       { label: 'Chương 2', value: '2' },
                       { label: 'Chương 3', value: '3' },
                     ]}
+                    value={
+                      value.chapter === '' ? null : { label: value.chapter, value: value.chapter }
+                    }
                     onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
                     placeholder='Chọn chương'
                   />
@@ -103,10 +112,12 @@ const MaterialCreate = () => {
                   Đăng tải tài liệu
                 </p>
                 <FilePond
-                  files={value.files}
+                  ref={fileUploaderRef}
                   onupdatefiles={(files) => {
-                    console.log(files);
-                    setValue({ ...value, files: [files[0]?.file as File] });
+                    setValue((prevValue) => ({
+                      ...prevValue,
+                      files: files[0] ? [files[0].file as File] : [],
+                    }));
                   }}
                   allowMultiple={false}
                   labelIdle='Kéo & Thả hoặc <span class="filepond--label-action">Chọn tài liệu</span>'
@@ -115,17 +126,22 @@ const MaterialCreate = () => {
               <div className='flex w-full flex-row items-center justify-center gap-x-4'>
                 <button
                   type='submit'
+                  disabled={submitDisabled}
                   onClick={(e) => {
                     e.preventDefault();
                   }}
-                  className='flex items-center rounded-lg bg-[#4285F4] px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
+                  className={`flex items-center rounded-lg px-6 py-1
+                  transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
+                    submitDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                  }`}
                 >
                   <p className='font-medium text-white'>Lưu</p>
                 </button>
                 <button
                   type='button'
-                  className='flex items-center rounded-lg px-6 py-1 focus:outline-none 
-                  lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
+                  className='flex items-center rounded-lg px-6 py-1 text-[#DB4437] 
+                  transition-all duration-200 hover:bg-[#DB4437] hover:text-white 
+                  focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
                     setValue({
                       name: '',
@@ -134,9 +150,10 @@ const MaterialCreate = () => {
                       description: '',
                       files: [],
                     });
+                    fileUploaderRef.current?.removeFiles();
                   }}
                 >
-                  <p className='font-medium text-[#DB4437]'>Huỷ</p>
+                  <p className='font-medium text-inherit'>Huỷ</p>
                 </button>
               </div>
             </form>

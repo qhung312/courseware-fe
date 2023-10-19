@@ -26,7 +26,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth }) => 
     >
       <div
         id='content-wrapper'
-        className={`pl-0 transition-all duration-300 ${
+        className={`w-fit overflow-x-auto pl-0 transition-all duration-300 ${
           isAsideOpen && !fullWidth
             ? 'md:pl-[264px] lg:pl-[332px] xl:pl-[400px] 3xl:pl-[500px]'
             : ''
