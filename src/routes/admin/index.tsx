@@ -8,6 +8,7 @@ import AdminAside from '../../pages/Admin/AdminAside';
 const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
 const ExamList = lazy(() => import('../../pages/Admin/Exam/List'));
+const ExamCreate = lazy(() => import('../../pages/Admin/Exam/Create'));
 
 const AdministratorRoute = () => {
   return (
@@ -47,7 +48,7 @@ const AdministratorRoute = () => {
               path='create'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <ExamCreate />
                 </Suspense>
               }
             />
