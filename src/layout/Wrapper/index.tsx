@@ -20,13 +20,10 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth }) => 
   }, []);
 
   return (
-    <div
-      className='with-nav-height flex flex-1 bg-[#F2F2F2] md:bg-[#E3F2FD]'
-      style={{ height: 'fit-content' }}
-    >
+    <div className='with-nav-height flex flex-1 overflow-y-auto bg-[#F2F2F2] md:bg-[#E3F2FD]'>
       <div
         id='content-wrapper'
-        className={`w-fit overflow-x-auto pl-0 transition-all duration-300 ${
+        className={`h-fit w-fit overflow-x-auto pl-0 transition-all duration-300 ${
           isAsideOpen && !fullWidth
             ? 'md:pl-[264px] lg:pl-[332px] xl:pl-[400px] 3xl:pl-[500px]'
             : ''

@@ -5,99 +5,116 @@ import { Link } from 'react-router-dom';
 import { Icon, Select } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 
-const materials = [
+const exams = [
   {
     id: 1,
+    name: 'Đề thi giữa kì 1 - Mã đề 2213',
     subject: 'Giải tích 1',
-    chapter: '1',
-    name: 'Giới hạn dãy số - hàm số',
+    type: 'midterm',
+    semester: '221',
     createdAt: '20/10/2021, 18:00',
     updatedAt: '3 giờ trước',
   },
   {
     id: 2,
+    name: 'Đề thi cuối kì 2 - Mã đề 2022',
     subject: 'Giải tích 1',
-    chapter: '2',
-    name: 'Đạo hàm - ứng dụng',
+    type: 'final',
+    semester: '202',
     createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
+    updatedAt: '3 giờ trước',
   },
   {
     id: 3,
+    name: 'Đề thi cuối kì 1 - Mã đề 1913',
     subject: 'Giải tích 1',
-    chapter: '3',
-    name: 'Tích phân - ứng dụng',
+    type: 'final',
+    semester: '191',
     createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
+    updatedAt: '3 giờ trước',
   },
   {
     id: 4,
+    name: 'Đề thi cuối kì 1 - Mã đề 2211',
     subject: 'Giải tích 1',
-    chapter: '4',
-    name: 'Phương trình vi phân',
+    type: 'final',
+    semester: '221',
     createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
+    updatedAt: '3 giờ trước',
   },
   {
     id: 5,
-    subject: 'Giải tích 2',
-    chapter: '1',
-    name: 'Giới hạn dãy số - hàm số',
+    name: 'Đề thi cuối kì 1 - Mã đề 2212',
+    subject: 'Giải tích 1',
+    type: 'final',
+    semester: '221',
     createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
+    updatedAt: '3 giờ trước',
   },
   {
     id: 6,
-    subject: 'Giải tích 2',
-    chapter: '1',
-    name: 'Giới hạn dãy số - hàm số',
+    name: 'Đề thi giữa kì 1 - Mã đề 2133',
+    subject: 'Giải tích 1',
+    type: 'midterm',
+    semester: '213',
     createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
+    updatedAt: '3 giờ trước',
   },
 ];
 
 type SearchFormValue = {
   name: string;
+  type: string;
   subject: string;
-  chapter: string;
+  semester: string;
 };
 
-const MaterialList = () => {
+const ExamList = () => {
   const [page, setPage] = useState(1);
-  const [chunks, setChunks] = useState(_.chunk(materials, 10));
+  const [chunks, setChunks] = useState(_.chunk(exams, 10));
   const [value, setValue] = useState<SearchFormValue>({
     name: '',
+    type: '',
     subject: '',
-    chapter: '',
+    semester: '',
   });
   const tableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    tableRef.current?.addEventListener('wheel', (e) => {
+    const handleWheeling = (e: WheelEvent) => {
       if (tableRef.current) {
         if (tableRef.current.scrollWidth > tableRef.current.clientWidth) {
           e.preventDefault();
           tableRef.current?.scrollBy(e.deltaY, 0);
         }
       }
-    });
+    };
+    const tableElement = tableRef.current;
+    tableElement?.addEventListener('wheel', handleWheeling);
+
+    return () => {
+      tableElement?.removeEventListener('wheel', handleWheeling);
+    };
   }, []);
 
   useEffect(() => {
-    const newMaterials = materials.filter((material) => {
+    const newExams = exams.filter((exam) => {
       let result = true;
-      if (value.name !== '' && !material.name.toLowerCase().includes(value.name.toLowerCase())) {
+      if (value.name !== '' && !exam.name.toLowerCase().includes(value.name.toLowerCase())) {
+        result = false;
+      }
+      if (value.type !== '' && !exam.type.toLowerCase().includes(value.type.toLowerCase())) {
         result = false;
       }
       if (
         value.subject !== '' &&
-        !material.subject.toLowerCase().includes(value.subject.toLowerCase())
+        !exam.subject.toLowerCase().includes(value.subject.toLowerCase())
       ) {
         result = false;
       }
       if (
-        value.chapter !== '' &&
-        !material.chapter.toLowerCase().includes(value.chapter.toLowerCase())
+        value.semester !== '' &&
+        !exam.semester.toLowerCase().includes(value.semester.toLowerCase())
       ) {
         result = false;
       }
@@ -105,7 +122,7 @@ const MaterialList = () => {
       return result;
     });
 
-    setChunks(_.chunk(newMaterials, 10));
+    setChunks(_.chunk(newExams, 10));
   }, [value]);
 
   return (
@@ -113,7 +130,7 @@ const MaterialList = () => {
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
-            Danh sách tài liệu
+            Danh sách đề thi
           </p>
         </div>
         <div className='w-full p-4'>
@@ -124,20 +141,20 @@ const MaterialList = () => {
           <div className='h-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex w-full flex-col'>
               <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
-                <div className='relative flex w-full flex-1 items-center'>
+                <div className='relative flex w-full flex-[2] items-center'>
                   <input
                     className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={value.name}
                     onChange={({ target }) => setValue({ ...value, name: target.value })}
-                    placeholder='Tìm tên tài liệu'
+                    placeholder='Tìm tên đề thi'
                   />
                 </div>
-                <div className='flex w-full flex-[2] flex-row gap-x-4'>
+                <div className='flex w-full flex-[3] flex-col gap-y-4 md:flex-row md:gap-x-4'>
                   <Select
-                    options={_.uniqBy(materials, 'subject').map((material) => ({
-                      label: material.subject,
-                      value: material.subject,
+                    options={_.uniqBy(exams, 'subject').map((exam) => ({
+                      label: exam.subject,
+                      value: exam.subject,
                     }))}
                     value={
                       value.subject === '' ? null : { label: value.subject, value: value.subject }
@@ -146,50 +163,75 @@ const MaterialList = () => {
                     placeholder='Chọn môn'
                   />
                   <Select
-                    options={_.uniqBy(materials, 'chapter').map((material) => ({
-                      label: `Chương ${material.chapter}`,
-                      value: material.chapter,
-                    }))}
-                    onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
+                    options={[
+                      {
+                        label: 'Giữa kì',
+                        value: 'midterm',
+                      },
+                      {
+                        label: 'Cuối kì',
+                        value: 'final',
+                      },
+                    ]}
+                    onChange={(v) => setValue({ ...value, type: v?.value || '' })}
                     value={
-                      value.chapter === ''
+                      value.type === ''
                         ? null
-                        : { label: `Chương ${value.chapter}`, value: value.chapter }
+                        : {
+                            label: value.type === 'midterm' ? 'Giữa kì' : 'Cuối kì',
+                            value: value.type,
+                          }
                     }
-                    placeholder='Chọn chương'
+                    placeholder='Chọn kì thi'
+                  />
+                  <Select
+                    options={_.uniqBy(exams, 'semester')
+                      .sort((a, b) => Number(b.semester) - Number(a.semester))
+                      .map((exam) => ({
+                        label: exam.semester,
+                        value: exam.semester,
+                      }))}
+                    onChange={(v) => setValue({ ...value, semester: v?.value || '' })}
+                    value={
+                      value.semester === ''
+                        ? null
+                        : { label: value.semester, value: value.semester }
+                    }
+                    placeholder='Chọn học kì'
                   />
                 </div>
                 <button
                   className={`flex flex-[0.5] ${
-                    value.name !== '' || value.subject !== '' || value.chapter !== ''
-                      ? 'opacity-1'
-                      : 'opacity-0'
+                    _.some(value, (v) => !_.isEmpty(v)) ? 'opacity-1' : 'opacity-0'
                   }`}
-                  disabled={value.name === '' && value.subject === '' && value.chapter === ''}
+                  disabled={_.every(value, (v) => _.isEmpty(v))}
                   onClick={() => {
-                    setValue({ name: '', subject: '', chapter: '' });
+                    setValue({ name: '', subject: '', type: '', semester: '' });
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
                 </button>
               </div>
-              <div ref={tableRef} className='w-full overflow-auto'>
-                <table className='flex w-full min-w-[720px] table-fixed flex-col gap-y-3 overflow-auto'>
+              <div ref={tableRef} className='w-full overflow-x-auto overscroll-auto'>
+                <table className='flex w-full min-w-[900px] table-fixed flex-col gap-y-3 overflow-auto'>
                   <thead>
                     <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                      <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Tên tài liệu
+                      <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        Tên đề thi
                       </th>
                       <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                         Môn
                       </th>
                       <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Chương
+                        Kì thi
                       </th>
-                      <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        Học kì
+                      </th>
+                      <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                         Thời gian tạo
                       </th>
-                      <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                      <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                         Thời gian cập nhật
                       </th>
                       <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
@@ -198,25 +240,28 @@ const MaterialList = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {chunks[page - 1]?.map((material) => (
+                    {chunks[page - 1]?.map((exam) => (
                       <tr
-                        key={`material-${material.id}`}
+                        key={`exam-${exam.id}`}
                         className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                       >
-                        <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.name}
+                        <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                          {exam.name}
                         </td>
                         <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.subject}
+                          {exam.subject}
                         </td>
-                        <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.chapter}
+                        <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                          {exam.type === 'midterm' ? 'Giữa kì' : 'Cuối kì'}
                         </td>
-                        <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.createdAt}
+                        <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                          {exam.semester}
                         </td>
-                        <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.updatedAt}
+                        <td className='flex flex-[2] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                          {exam.createdAt}
+                        </td>
+                        <td className='flex flex-[2] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                          {exam.updatedAt}
                         </td>
                         <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                           <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
@@ -281,4 +326,4 @@ const MaterialList = () => {
   );
 };
 
-export default MaterialList;
+export default ExamList;
