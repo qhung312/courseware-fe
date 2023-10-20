@@ -7,6 +7,7 @@ import AdminAside from '../../pages/Admin/AdminAside';
 import CreateExercisePage from '../../pages/Admin/Exercise/Create';
 import CreateQuestionPage from '../../pages/Admin/Question/Create';
 import CreateSubjectPage from '../../pages/Admin/Subject/Create';
+import SubjectList from '../../pages/Admin/Subject/SubjectList';
 
 const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
@@ -95,7 +96,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <SubjectList />
                 </Suspense>
               }
             />
