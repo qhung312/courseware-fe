@@ -1,19 +1,12 @@
 import { StateCreator } from 'zustand';
 
 import UserService from '../service/user.service';
-import { ROLES } from '../types/auth';
 
 import { TAuthSlice } from './auth';
 
-export interface TUserState {
-  id: string | null;
-  googleId: string | null;
-  role: ROLES | null;
-  name: string | null;
-  picture: string | null;
-  dateOfBirth: number | null;
-  email: string | null;
-}
+import type { User } from '../types/user';
+
+export interface TUserState extends User {}
 
 export interface TUserActions {
   getUserProfile: () => Promise<void>;
@@ -24,13 +17,13 @@ export interface TUserSlice extends TUserActions {
 }
 
 export const initialState: TUserState = {
-  id: null,
-  googleId: null,
-  role: null,
-  name: null,
-  picture: null,
-  dateOfBirth: null,
-  email: null,
+  googleId: '',
+  accessLevels: [],
+  isManager: false,
+  name: '',
+  picture: '',
+  dateOfBirth: 0,
+  email: '',
 };
 
 export const UserSlice: StateCreator<
@@ -46,9 +39,8 @@ export const UserSlice: StateCreator<
       set((state) => ({
         user: {
           ...state.user,
-          id: data.payload?._id,
           googleId: data.payload?.googleId,
-          role: data.payload?.role,
+          accessLevels: data.payload?.accessLevels,
           name: data.payload?.name,
           picture: data.payload?.picture,
           dateOfBirth: data.payload?.dateOfBirth,

@@ -7,10 +7,11 @@ import PDF from '../../../components/PDF';
 import { API_URL } from '../../../config';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
-import LibraryService from '../../../service/library.service';
+import MaterialService from '../../../service/material.service';
 import useBoundStore from '../../../store';
-import { Material } from '../../../types/library';
 import LibraryAside from '../LibraryAside';
+
+import type { Material } from '../../../types/material';
 
 const MaterialDetailPage: React.FC = () => {
   const params = useParams();
@@ -21,7 +22,7 @@ const MaterialDetailPage: React.FC = () => {
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
-      LibraryService.getMaterialById(params?.pdfId).then((res) => {
+      MaterialService.getById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;
         setMaterial(payload);
@@ -58,7 +59,7 @@ const MaterialDetailPage: React.FC = () => {
             {material?.name}
           </h1>
           <h3>
-            {subjects?.find((subject) => subject._id === material?.subject)?.name || (
+            {subjects?.find((subject) => subject._id === material?.subject._id)?.name || (
               <Skeleton baseColor='#9DCCFF' />
             )}
           </h3>
@@ -74,7 +75,7 @@ const MaterialDetailPage: React.FC = () => {
           </Link>
 
           {/* PDF */}
-          <PDF url={`${API_URL}material/download/${params.pdfId}`} />
+          <PDF url={`${API_URL}/material/download/${params.pdfId}`} />
         </div>
       </Wrapper>
     </Page>

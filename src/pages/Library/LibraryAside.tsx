@@ -4,7 +4,8 @@ import Skeleton from 'react-loading-skeleton';
 import { AsideLink, Icon } from '../../components';
 import { Aside } from '../../layout';
 import useBoundStore from '../../store';
-import { Subject } from '../../types/library';
+
+import type { Subject } from '../../types/subject';
 
 interface LibraryAsideProps {
   title: string;
