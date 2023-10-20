@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import NotFoundPage from '../../pages/NotFound';
+import ActivityHistory from '../../pages/Profile/ActivityHistory';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const HomePage = lazy(() => import('../../pages/Home'));
@@ -48,6 +49,14 @@ const UserRoute = () => {
             element={
               <Suspense fallback={<Loading />}>
                 <HomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='history'
+            element={
+              <Suspense fallback={<Loading />}>
+                <ActivityHistory />
               </Suspense>
             }
           />

@@ -3,6 +3,7 @@ import { ReactComponent as Activity } from '../../assets/svgs/ActivityIcon.svg';
 import { ReactComponent as ArrowRightFill } from '../../assets/svgs/ArrowRightFillIcon.svg';
 import { ReactComponent as ArrowRight } from '../../assets/svgs/ArrowRightIcon.svg';
 import { ReactComponent as Book } from '../../assets/svgs/Book.svg';
+import { ReactComponent as Camera } from '../../assets/svgs/CameraIcon.svg';
 import { ReactComponent as ChevronDown } from '../../assets/svgs/ChevronDownIcon.svg';
 import { ReactComponent as Chevron } from '../../assets/svgs/ChevronIcon.svg';
 import { ReactComponent as ChevronLeft } from '../../assets/svgs/ChevronLeftIcon.svg';
@@ -42,6 +43,7 @@ export default {
   Activity,
   ArrowRightFill,
   ArrowRight,
+  Camera,
   Chevron,
   ChevronDown,
   ChevronLeft,
