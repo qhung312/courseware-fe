@@ -1,18 +1,12 @@
-import { Chapter } from './chapter';
-import { Subject } from './subject';
-import { User } from './user';
-
 export type Material = {
   _id: string;
   name: string;
-  subject: Subject;
-  chapter: Chapter;
+  subject: string;
+  chapter: string;
 
   description: string;
-  resource: {
-    originalName: string;
-  };
-  createdBy: User;
+  resource: string;
+  createdBy: string;
   createdAt: number;
   lastUpdatedAt?: number;
 

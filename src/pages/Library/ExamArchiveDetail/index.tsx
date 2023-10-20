@@ -59,7 +59,7 @@ const ExamArchiveDetailPage: React.FC = () => {
             {exam?.name}
           </h1>
           <h3>
-            {subjects?.find((subject) => subject._id === exam?.subject._id)?.name || (
+            {subjects?.find((subject) => subject._id === exam?.subject)?.name || (
               <Skeleton baseColor='#9DCCFF' />
             )}
           </h3>
