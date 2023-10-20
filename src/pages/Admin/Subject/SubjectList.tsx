@@ -60,7 +60,7 @@ const SubjectList = () => {
               <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex w-96 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={filterName}
                     onChange={onInputFilterName}
@@ -110,7 +110,7 @@ const SubjectList = () => {
                   </div>
                 ))}
               {chunks.length > 0 && (
-                <div className='mt-4 flex flex-1 flex-row items-center justify-center gap-x-4'>
+                <div className='mt-4 flex flex-1 flex-row items-center justify-center gap-x-4 pt-4'>
                   <button
                     className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
                     disabled={page === 1}
