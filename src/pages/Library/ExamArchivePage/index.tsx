@@ -8,10 +8,11 @@ import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
 import { DocumentCard, Icon } from '../../../components';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
-import LibraryService from '../../../service/library.service';
+import ExamArchiveService from '../../../service/examArchive.service';
 import useBoundStore from '../../../store';
-import { ExamArchive } from '../../../types/library';
 import LibraryAside from '../LibraryAside';
+
+import type { ExamArchive } from '../../../types/examArchive';
 
 const PageSkeleton = () => (
   <div className='relative z-10 max-h-[266px] rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
@@ -40,7 +41,7 @@ const ExamArchivePage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setExamArchives(null);
-      LibraryService.getAllExamArchivesBySubjectId(params?.subjectId)
+      ExamArchiveService.getAllBySubject(params?.subjectId)
         .then((res) => {
           const { data } = res;
           const { payload } = data;
