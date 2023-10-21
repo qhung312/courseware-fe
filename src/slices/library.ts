@@ -1,7 +1,8 @@
 import { StateCreator } from 'zustand';
 
-import LibraryService from '../service/library.service';
-import { Subject } from '../types/library';
+import SubjectService from '../service/subject.service';
+
+import type { Subject } from '../types/subject';
 
 export interface TLibraryState {
   subjects: Array<Subject> | null;
@@ -26,7 +27,7 @@ export const LibrarySlice: StateCreator<
   ...initialState,
   getAllSubjects: async () => {
     try {
-      const { data } = await LibraryService.getAllSubjects();
+      const { data } = await SubjectService.getAll();
       set({ subjects: data.payload });
     } catch (error: any) {
       set({ ...initialState });

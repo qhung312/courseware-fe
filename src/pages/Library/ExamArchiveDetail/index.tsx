@@ -7,10 +7,11 @@ import PDF from '../../../components/PDF';
 import { API_URL } from '../../../config';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
-import LibraryService from '../../../service/library.service';
+import ExamArchiveService from '../../../service/examArchive.service';
 import useBoundStore from '../../../store';
-import { ExamArchive } from '../../../types/library';
 import LibraryAside from '../LibraryAside';
+
+import type { ExamArchive } from '../../../types/examArchive';
 
 const ExamArchiveDetailPage: React.FC = () => {
   const params = useParams();
@@ -21,7 +22,7 @@ const ExamArchiveDetailPage: React.FC = () => {
   const subjects = useBoundStore.use.subjects();
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
-      LibraryService.getPreviousExamById(params?.pdfId).then((res) => {
+      ExamArchiveService.getById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;
         setExam(payload);
@@ -58,7 +59,7 @@ const ExamArchiveDetailPage: React.FC = () => {
             {exam?.name}
           </h1>
           <h3>
-            {subjects?.find((subject) => subject._id === exam?.subject)?.name || (
+            {subjects?.find((subject) => subject._id === exam?.subject._id)?.name || (
               <Skeleton baseColor='#9DCCFF' />
             )}
           </h3>
@@ -74,7 +75,7 @@ const ExamArchiveDetailPage: React.FC = () => {
           </Link>
 
           {/* PDF */}
-          <PDF url={`${API_URL}previous-exams/download/${params.pdfId}`} />
+          <PDF url={`${API_URL}/previous-exams/download/${params.pdfId}`} />
         </div>
       </Wrapper>
     </Page>

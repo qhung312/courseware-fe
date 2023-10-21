@@ -8,10 +8,11 @@ import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
 import { DocumentCard, Icon } from '../../../components';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
-import LibraryService from '../../../service/library.service';
+import MaterialService from '../../../service/material.service';
 import useBoundStore from '../../../store';
-import { Material } from '../../../types/library';
 import LibraryAside from '../LibraryAside';
+
+import type { Material } from '../../../types/material';
 
 const PageSkeleton = () => (
   <div className='relative z-10 max-h-[266px] rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
@@ -40,7 +41,7 @@ const MaterialPage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setMaterials(null);
-      LibraryService.getAllMaterialBySubjectId(params?.subjectId)
+      MaterialService.getAllBySubject(params?.subjectId)
         .then((res) => {
           const { data } = res;
           const { payload } = data;
