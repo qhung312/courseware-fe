@@ -3,7 +3,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon } from '../../../components';
-// import CustomSelect from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
 
 const SUBJECTS = [

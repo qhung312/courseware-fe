@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { SingleValue } from 'react-select';
 
-import { Icon } from '../../../components';
-import CustomSelect, { Option } from '../../../components/Select';
+import { Icon, Select } from '../../../components';
+import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
 
 const SUBJECTS = [
@@ -111,22 +111,20 @@ const CreateQuestionPage = () => {
                 />
               </div>
               <div className='flex flex-row gap-x-8'>
-                <div className='flex flex-col gap-y-1'>
+                <div className='flex w-full flex-col gap-y-1'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
-                  <CustomSelect
+                  <Select
                     options={SUBJECTS}
                     placeholder='Chọn môn'
-                    className='w-80'
                     value={SUBJECTS.find((x) => x.value === subject)}
                     onChange={onSelectSubject}
                   />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex w-full flex-col'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
-                  <CustomSelect
+                  <Select
                     options={CHAPTERS}
                     placeholder='Chọn chương'
-                    className='w-80'
                     value={CHAPTERS.find((x) => x.value === subject)}
                     onChange={onSelectChapter}
                   />
@@ -206,7 +204,7 @@ const CreateQuestionPage = () => {
                 <div className='flex flex-row items-center gap-x-8'>
                   <div className='flex flex-row items-center gap-x-4'>
                     <p className='flex text-base lg:text-lg 3xl:text-xl'>Đáp án đúng:</p>
-                    <CustomSelect
+                    <Select
                       options={options.map((_, index) => ({
                         value: index.toString(),
                         label: (index + 1).toString(),
