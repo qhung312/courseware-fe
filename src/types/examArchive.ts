@@ -1,6 +1,3 @@
-import { Subject } from './subject';
-import { User } from './user';
-
 export enum Semester {
   SEMESTER_181 = 'SEMESTER_181',
   SEMESTER_182 = 'SEMESTER_182',
@@ -35,14 +32,12 @@ export enum ExamType {
 export type ExamArchive = {
   _id: string;
   name: string;
-  subject: Subject;
+  subject: string;
   semester: Semester;
   type: ExamType;
   description: string;
-  resource: {
-    originalName: string;
-  };
-  createdBy: User;
+  resource: string;
+  createdBy: string;
   lastUpdatedAt?: number;
   deletedAt?: number;
 };

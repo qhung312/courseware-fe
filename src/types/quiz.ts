@@ -1,19 +1,18 @@
-import { Chapter } from './chapter';
-import { Question } from './question';
+import { ConcreteQuestion } from './question';
 import { Subject } from './subject';
-import { User } from './user';
 
 export type QuizTemplate = {
+  _id: string;
   name: string;
   description: string;
   subject: Subject;
-  chapter: Chapter;
+  chapter: string;
 
   duration: number;
   potentialQuestions: string[];
   sampleSize: number;
 
-  createdBy: User;
+  createdBy: string;
   createdAt: number;
   lastUpdatedAt?: number;
   deletedAt?: number;
@@ -26,14 +25,14 @@ export enum QuizStatus {
 
 export type Quiz = {
   _id: string;
-  userId: User;
+  userId: string;
   status: QuizStatus;
   createdAt: number;
   duration: number;
   startTime: number;
   endTime?: number;
-  standardizedScore: number;
+  standardizedScore?: number;
 
   fromTemplate: QuizTemplate;
-  questions: Question[];
+  questions: ConcreteQuestion[];
 };

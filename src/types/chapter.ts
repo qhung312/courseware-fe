@@ -1,13 +1,10 @@
-import { Subject } from './subject';
-import { User } from './user';
-
 export type Chapter = {
   _id: string;
   name: string;
-  subject: Subject;
+  subject: string;
   description: string;
 
-  createdBy: User;
+  createdBy: string;
   createdAt: number;
   lastUpdatedAt?: number;
   deletedAt?: number;
