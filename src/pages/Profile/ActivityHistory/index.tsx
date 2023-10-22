@@ -124,9 +124,11 @@ const ActivityHistory = () => {
       <main className='w-full'>
         {/* Banner */}
         <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
-        <div className='bg-white px-5 pt-4 pb-[64px]'>
-          <h1 className='mb-3 text-2xl font-semibold text-[#2252641]'>Nhật ký hoạt động</h1>
-          <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white'>
+        <div className='bg-white px-5 pt-4 pb-[64px] lg:flex lg:gap-x-[2%] lg:pt-10'>
+          <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl lg:hidden'>
+            Nhật ký hoạt động
+          </h1>
+          <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white lg:hidden'>
             <button
               className='z-20 flex w-full flex-row
               items-center justify-between rounded-[20px] bg-white px-[20px] py-[16px]'
@@ -254,62 +256,135 @@ const ActivityHistory = () => {
               </button>
             </nav>
           </div>
-          {chunks[page - 1]?.map((activity, index) => (
-            <div className='mt-4' key={index}>
-              <Link
-                to={activity.pageUrl}
-                className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
-              >
-                <p className='text-xl text-[rgba(45,52,54,0.7)]'>{activity.date}</p>
-                <h2 className='mt-1 text-2xl text-[#2D3436]'>{activity.name}</h2>
-                <div className='mt-3 flex'>
-                  <Icon.OpenBook />
-                  <p className='ml-2 text-[#5B5B5B]'>{activity.chapter}</p>
-                </div>
-                <div className='ml-auto flex w-fit justify-end' onClick={(e) => e.preventDefault()}>
-                  <CopyIcon copyContent={activity.pageUrl} />
-                  <button
-                    className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437]'
-                    onClick={() => setDeleteModal(true)}
-                  >
-                    <Icon.Delete fill='white' className='h-4 w-4' />
-                  </button>
-                </div>
-              </Link>
+          <div className='hidden h-fit w-[29%] rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:block'>
+            <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl 2xl:text-[26px]'>
+              Nhật ký hoạt động
+            </h1>
+            <div className='mt-2 flex items-center'>
+              <div className='mr-2 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#4285f4]'>
+                <Icon.FilterIcon fill='#FFFFFF' className='h-5 w-5' />
+              </div>
+              <p className='text-[18px] font-semibold text-[#5B5B5B] 2xl:text-xl'>Bộ lọc</p>
             </div>
-          ))}
-          <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
+            <div className='mt-6 mb-5 h-[1px] w-full bg-[#696984]' />
             <button
-              className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
+              className={`flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 2xl:px-4 ${
+                filterOption === 1 && 'bg-[#9DCCFF]/[.3]'
+              }`}
+              onClick={() => {
+                if (filterOption === 1) setFilterOption(0);
+                else setFilterOption(1);
+              }}
             >
-              <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
+              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Tài liệu học tập</h3>
+              <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
+                <div className='flex items-center'>
+                  <Icon.ClockIcon className='mr-1' />
+                  <p className='2xl:text-base'>1 giờ trước</p>
+                </div>
+                <p className='2xl:text-base'>4 hoạt động</p>
+              </div>
             </button>
-            {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
-              <button
-                key={`page-${index}`}
-                className={`aspect-square rounded-full p-2 ${
-                  index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
-                }`}
-                onClick={() => setPage(index)}
-              >
-                <p
-                  className={`w-7 text-lg ${
-                    index === page ? 'font-semibold text-white' : 'font-medium'
-                  }`}
+            <button
+              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 2xl:px-4 ${
+                filterOption === 2 && 'bg-[#9DCCFF]/[.3]'
+              }`}
+              onClick={() => {
+                if (filterOption === 2) setFilterOption(0);
+                else setFilterOption(2);
+              }}
+            >
+              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Bài tập rèn luyện</h3>
+              <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
+                <div className='flex items-center'>
+                  <Icon.ClockIcon className='mr-1' />
+                  <p className='2xl:text-base'>45 phút trước</p>
+                </div>
+                <p className='2xl:text-base'>22 hoạt động</p>
+              </div>
+            </button>
+            <button
+              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 2xl:px-4 ${
+                filterOption === 3 && 'bg-[#9DCCFF]/[.3]'
+              }`}
+              onClick={() => {
+                if (filterOption === 3) setFilterOption(0);
+                else setFilterOption(3);
+              }}
+            >
+              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
+              <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
+                <div className='flex items-center'>
+                  <Icon.ClockIcon className='mr-1' />
+                  <p className='2xl:text-base'>45 phút trước</p>
+                </div>
+                <p className='2xl:text-base'>20 hoạt động</p>
+              </div>
+            </button>
+          </div>
+          <div className='lg:mt-[-16px] lg:w-[69%]'>
+            {chunks[page - 1]?.map((activity, index) => (
+              <div className='mt-4' key={index}>
+                <Link
+                  to={activity.pageUrl}
+                  className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
                 >
-                  {index}
-                </p>
-              </button>
+                  <p className='text-xl text-[rgba(45,52,54,0.7)]'>{activity.date}</p>
+                  <h2 className='mt-1 text-2xl text-[#2D3436]'>{activity.name}</h2>
+                  <div className='mt-3 flex items-center'>
+                    <Icon.OpenBook />
+                    <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
+                      {activity.chapter}
+                    </p>
+                  </div>
+                  <div
+                    className='ml-auto flex w-fit justify-end'
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <CopyIcon copyContent={activity.pageUrl} />
+                    <button
+                      className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437]'
+                      onClick={() => setDeleteModal(true)}
+                    >
+                      <Icon.Delete fill='white' className='h-4 w-4' />
+                    </button>
+                  </div>
+                </Link>
+              </div>
             ))}
-            <button
-              className={`rounded-full p-2 ${page === chunks.length ? '' : 'hover:bg-black/20'}`}
-              disabled={page === chunks.length}
-              onClick={() => setPage(page + 1)}
-            >
-              <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
-            </button>
+            <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
+              <button
+                className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
+              </button>
+              {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
+                <button
+                  key={`page-${index}`}
+                  className={`aspect-square rounded-full p-2 ${
+                    index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
+                  }`}
+                  onClick={() => setPage(index)}
+                >
+                  <p
+                    className={`w-7 text-lg ${
+                      index === page ? 'font-semibold text-white' : 'font-medium'
+                    }`}
+                  >
+                    {index}
+                  </p>
+                </button>
+              ))}
+              <button
+                className={`rounded-full p-2 ${page === chunks.length ? '' : 'hover:bg-black/20'}`}
+                disabled={page === chunks.length}
+                onClick={() => setPage(page + 1)}
+              >
+                <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
+              </button>
+            </div>
           </div>
         </div>
       </main>

@@ -10,6 +10,7 @@ import { ReactComponent as Chevron } from '../../assets/svgs/ChevronIcon.svg';
 import { ReactComponent as ChevronLeft } from '../../assets/svgs/ChevronLeftIcon.svg';
 import { ReactComponent as ChevronRight } from '../../assets/svgs/ChevronRightIcon.svg';
 import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg';
+import { ReactComponent as ClockIcon } from '../../assets/svgs/ClockIcon.svg';
 import { ReactComponent as CloseIconSnackbar } from '../../assets/svgs/CloseIconSnackbar.svg';
 import { ReactComponent as CloseQuote } from '../../assets/svgs/CloseQuoteIcon.svg';
 import { ReactComponent as Delete } from '../../assets/svgs/DeleteIcon.svg';
@@ -57,6 +58,7 @@ export default {
   ChevronRight,
   Book,
   ChevronUp,
+  ClockIcon,
   CloseIconSnackbar,
   Delete,
   DeleteModalIcon,
