@@ -1,18 +1,317 @@
+import _ from 'lodash';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Footer } from '../../../components';
+import CopyIcon from '../../../components/CopyIcon';
+import Icon from '../../../components/Icon';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import ProfileOption from '../../../components/ProfileOption';
+import DeleteSnackbar from '../../../components/Snackbar/DeleteSnackbar';
+import { useThrottle } from '../../../hooks';
 import { Page } from '../../../layout';
+
+type ActivityContent = {
+  date: string;
+  name: string;
+  chapter: string;
+  pageUrl: string;
+  type: number;
+};
+
+const demoData: ActivityContent[] = [
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Nguyễn Văn A đã truy cập Tài liệu học tập môn Giải tích 1',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 1,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Nguyễn Văn A đã bắt đầu làm Bài tập rèn luyện môn Giải tích 1',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 2,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Nguyễn Văn A đã tham gia Thi thử giữa kỳ môn Giải tích 1',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 3,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 1,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 1,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 3,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 3,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 1,
+  },
+  {
+    date: '00 thàng 00 năm 0000',
+    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    chapter: 'Chương 1: Đạo hàm hàm số',
+    pageUrl: '/',
+    type: 2,
+  },
+];
 
 const ActivityHistory = () => {
   const [currentOption, setCurrentOption] = useState(1);
+  const [page, setPage] = useState(1);
+  const [chunks, setChunks] = useState(_.chunk(demoData, 5));
+  const [filterOption, setFilterOption] = useState(0);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteSnackbar, setDeleteSnackbar] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const onFilterClick = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
+  useEffect(() => {
+    if (filterOption > 0) {
+      const filteredData = demoData.filter((activity) => activity.type === filterOption);
+      setChunks(_.chunk(filteredData, 5));
+    } else setChunks(_.chunk(demoData, 5));
+  }, [filterOption]);
+
+  const throttledLibraryClick = useThrottle(onFilterClick);
 
   return (
     <Page title='Thông tin người dùng - Lịch sử hoạt động'>
+      <DeleteModal
+        text='Hoạt động này sẽ bị xóa khỏi lịch sử hoạt động của bạn'
+        onClose={() => {
+          setDeleteModal(false);
+        }}
+        onDelete={() => setDeleteSnackbar(true)}
+        show={deleteModal}
+      />
+      <div className='fixed bottom-4 right-4 z-[60]'>
+        <DeleteSnackbar showSnackbar={deleteSnackbar} setShow={() => setDeleteSnackbar(false)} />
+      </div>
       <main className='w-full'>
         {/* Banner */}
         <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
+        <div className='bg-white px-5 pt-4 pb-[64px]'>
+          <h1 className='mb-3 text-2xl font-semibold text-[#2252641]'>Nhật ký hoạt động</h1>
+          <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white'>
+            <button
+              className='z-20 flex w-full flex-row
+              items-center justify-between rounded-[20px] bg-white px-[20px] py-[16px]'
+              onClick={throttledLibraryClick}
+            >
+              <div className='flex flex-row items-center justify-start gap-x-[16px]'>
+                <Icon.FilterIcon fill={isFilterOpen ? '#49BBBD' : '#4285f4'} />
+                <p
+                  className={`text-xl font-medium ${
+                    isFilterOpen ? 'text-[#49BBBD]' : 'text-[#252641]'
+                  }`}
+                >
+                  Bộ lọc
+                </p>
+              </div>
+              {isFilterOpen ? (
+                <Icon.ChevronUp fill='#49BBBD' fillOpacity={0.87} width={'20px'} />
+              ) : (
+                <Icon.ChevronDown fill='#252641' fillOpacity={0.87} width={'20px'} />
+              )}
+            </button>
+            <nav
+              className='flex flex-col px-[20px] transition-all ease-in-out'
+              style={{
+                maxHeight: isFilterOpen ? '300px' : '0px',
+                overflow: 'hidden',
+                transitionDuration: isFilterOpen ? '1.2s' : '0.8s',
+              }}
+            >
+              <button
+                className='flex w-full flex-row items-center justify-between
+                border-t-[1px] border-[#D9D9D9] py-3'
+                onClick={() => {
+                  if (filterOption === 1) setFilterOption(0);
+                  else setFilterOption(1);
+                }}
+              >
+                <div className='flex items-center'>
+                  {filterOption === 1 ? (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#49BBBD]'>
+                      <Icon.CheckIcon fill='#49BBBD' />
+                    </div>
+                  ) : (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#D9D9D9]' />
+                  )}
+                  <p
+                    className={`font-medium ${
+                      filterOption === 1 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                    }`}
+                  >
+                    Tài liệu học tập
+                  </p>
+                </div>
+                <p
+                  className={`text-[14px] font-medium ${
+                    filterOption === 1 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                  }`}
+                >
+                  4 hoạt động
+                </p>
+              </button>
+              <button
+                className='flex w-full flex-row items-center justify-between
+                border-t-[1px] border-[#D9D9D9] py-3'
+                onClick={() => {
+                  if (filterOption === 2) setFilterOption(0);
+                  else setFilterOption(2);
+                }}
+              >
+                <div className='flex items-center'>
+                  {filterOption === 2 ? (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#49BBBD]'>
+                      <Icon.CheckIcon fill='#49BBBD' />
+                    </div>
+                  ) : (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#D9D9D9]' />
+                  )}
+                  <p
+                    className={`font-medium ${
+                      filterOption === 2 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                    }`}
+                  >
+                    Bài tập rèn luyện
+                  </p>
+                </div>
+                <p
+                  className={`text-[14px] font-medium ${
+                    filterOption === 2 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                  }`}
+                >
+                  10 hoạt động
+                </p>
+              </button>
+              <button
+                className='flex w-full flex-row items-center justify-between
+                border-t-[1px] border-[#D9D9D9] py-3'
+                onClick={() => {
+                  if (filterOption === 3) setFilterOption(0);
+                  else setFilterOption(3);
+                }}
+              >
+                <div className='flex items-center'>
+                  {filterOption === 3 ? (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#49BBBD]'>
+                      <Icon.CheckIcon fill='#49BBBD' />
+                    </div>
+                  ) : (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#D9D9D9]' />
+                  )}
+                  <p
+                    className={`font-medium ${
+                      filterOption === 3 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                    }`}
+                  >
+                    Thi thử
+                  </p>
+                </div>
+                <p
+                  className={`text-[14px] font-medium ${
+                    filterOption === 3 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                  }`}
+                >
+                  22 hoạt động
+                </p>
+              </button>
+            </nav>
+          </div>
+          {chunks[page - 1]?.map((activity, index) => (
+            <div className='mt-4' key={index}>
+              <Link
+                to={activity.pageUrl}
+                className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
+              >
+                <p className='text-xl text-[rgba(45,52,54,0.7)]'>{activity.date}</p>
+                <h2 className='mt-1 text-2xl text-[#2D3436]'>{activity.name}</h2>
+                <div className='mt-3 flex'>
+                  <Icon.OpenBook />
+                  <p className='ml-2 text-[#5B5B5B]'>{activity.chapter}</p>
+                </div>
+                <div className='ml-auto flex w-fit justify-end' onClick={(e) => e.preventDefault()}>
+                  <CopyIcon copyContent={activity.pageUrl} />
+                  <button
+                    className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437]'
+                    onClick={() => setDeleteModal(true)}
+                  >
+                    <Icon.Delete fill='white' className='h-4 w-4' />
+                  </button>
+                </div>
+              </Link>
+            </div>
+          ))}
+          <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
+            <button
+              className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+            >
+              <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
+            </button>
+            {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
+              <button
+                key={`page-${index}`}
+                className={`aspect-square rounded-full p-2 ${
+                  index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
+                }`}
+                onClick={() => setPage(index)}
+              >
+                <p
+                  className={`w-7 text-lg ${
+                    index === page ? 'font-semibold text-white' : 'font-medium'
+                  }`}
+                >
+                  {index}
+                </p>
+              </button>
+            ))}
+            <button
+              className={`rounded-full p-2 ${page === chunks.length ? '' : 'hover:bg-black/20'}`}
+              disabled={page === chunks.length}
+              onClick={() => setPage(page + 1)}
+            >
+              <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
+            </button>
+          </div>
+        </div>
       </main>
       <Footer />
     </Page>
