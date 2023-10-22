@@ -117,10 +117,10 @@ const QuestionListPage = () => {
           </Link>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex flex-col'>
-              <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
+              <div className='mb-8 flex flex-1 flex-col items-center gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex w-96 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={filterName}
                     onChange={onInputFilterName}
@@ -219,7 +219,7 @@ const QuestionListPage = () => {
                             </button>
                           </td>
                         </tr>
-                    ))}
+                      ))}
                   </tbody>
                 </table>
               </div>
