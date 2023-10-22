@@ -4,10 +4,12 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import AdminAside from '../../pages/Admin/AdminAside';
-import CreateExercisePage from '../../pages/Admin/Exercise/Create';
-import CreateQuestionPage from '../../pages/Admin/Question/Create';
-import CreateSubjectPage from '../../pages/Admin/Subject/Create';
-import SubjectList from '../../pages/Admin/Subject/SubjectList';
+
+const CreateExercisePage = lazy(() => import('../../pages/Admin/Exercise/Create'));
+const CreateQuestionPage = lazy(() => import('../../pages/Admin/Question/Create'));
+const CreateSubjectPage = lazy(() => import('../../pages/Admin/Subject/Create'));
+const SubjectList = lazy(() => import('../../pages/Admin/Subject/SubjectList'));
+const QuestionListPage = lazy(() => import('../../pages/Admin/Question/List'));
 
 const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
@@ -80,7 +82,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <QuestionListPage />
                 </Suspense>
               }
             />
