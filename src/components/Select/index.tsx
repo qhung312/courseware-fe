@@ -9,7 +9,7 @@ import Select, {
 import Icon from '../Icon';
 import './index.css';
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
 };
