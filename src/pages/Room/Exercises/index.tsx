@@ -5,8 +5,9 @@ import MainPage from './MainPage';
 
 const Exercises: React.FC = () => {
   const params = useParams();
+  console.log(params);
 
-  if (params?.chapterId === undefined) {
+  if (params?.quizId === undefined) {
     return <MainPage />;
   }
 

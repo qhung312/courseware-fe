@@ -1,8 +1,11 @@
+import { Chapter } from './chapter';
+import { Subject } from './subject';
+
 export type Material = {
   _id: string;
   name: string;
-  subject: string;
-  chapter: string;
+  subject: Subject;
+  chapter: Chapter;
 
   description: string;
   resource: string;

@@ -1,13 +1,12 @@
 import Skeleton from 'react-loading-skeleton';
 
 import { AsideLink, Icon } from '../../components';
-import subjects from '../../data/exercises';
+import subjects from '../../data/subjects';
 import { Aside } from '../../layout';
-
 interface RoomAsideProps {
-  title: string;
-  subTitle: string;
-  description: string;
+  title?: string;
+  subTitle?: string;
+  description?: string;
   baseRoute: string;
 }
 
@@ -30,7 +29,7 @@ const RoomAside: React.FC<RoomAsideProps> = ({ title, subTitle, description, bas
                 to={`${baseRoute}/${index}`}
                 content={subj.title}
                 Icon={Icon.Exercise}
-                key={index}
+                key={`${subj.title}-${index}`}
               />
             );
           })

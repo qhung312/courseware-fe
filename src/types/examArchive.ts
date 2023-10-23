@@ -1,3 +1,5 @@
+import { Subject } from './subject';
+
 export enum Semester {
   SEMESTER_181 = 'SEMESTER_181',
   SEMESTER_182 = 'SEMESTER_182',
@@ -32,7 +34,7 @@ export enum ExamType {
 export type ExamArchive = {
   _id: string;
   name: string;
-  subject: string;
+  subject: Subject;
   semester: Semester;
   type: ExamType;
   description: string;
