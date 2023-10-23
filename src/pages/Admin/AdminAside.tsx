@@ -5,12 +5,13 @@ import { Icon } from '../../components';
 import { Aside } from '../../layout';
 
 type AdminAsideState = {
-  isActive: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | null;
+  isActive: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | 'chapter' | null;
   material: boolean;
   exam: boolean;
   exercise: boolean;
   question: boolean;
   subject: boolean;
+  chapter: boolean;
 };
 
 const AdminAside: FC = () => {
@@ -21,10 +22,13 @@ const AdminAside: FC = () => {
     exercise: false,
     question: false,
     subject: false,
+    chapter: false,
   });
   const { pathname } = useLocation();
 
-  const handleClick = (type: 'material' | 'exam' | 'exercise' | 'question' | 'subject') => {
+  const handleClick = (
+    type: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | 'chapter'
+  ) => {
     setMenuState((prevState) => {
       const newState = { ...prevState };
       const newStateForType = !newState[type];
@@ -69,6 +73,11 @@ const AdminAside: FC = () => {
       pathname.includes('/admin/subject/manage')
     ) {
       setMenuState((prevState) => ({ ...prevState, isActive: 'subject' }));
+    } else if (
+      pathname.includes('admin/chapter/create') ||
+      pathname.includes('admin/chapter/manage')
+    ) {
+      setMenuState((prevState) => ({ ...prevState, isActive: 'chapter' }));
     }
   }, [pathname]);
 
@@ -517,6 +526,95 @@ const AdminAside: FC = () => {
               {({ isActive, isPending }) => (
                 <>
                   <p style={{ color: isActive || isPending ? '#4285F4' : '#5B5B5B' }}>Tạo môn</p>
+                </>
+              )}
+            </NavLink>
+          </nav>
+        </div>
+        <div className='flex h-[fit-content] w-full flex-col bg-white'>
+          <button
+            className='z-20 flex w-full flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
+            onClick={() => handleClick('chapter')}
+          >
+            <div className='flex flex-row items-center justify-start gap-x-[16px]'>
+              <Icon.Test
+                fill={
+                  pathname.includes('/admin/chapter/manage') ||
+                  pathname.includes('/admin/chapter/create')
+                    ? '#4285F4'
+                    : '#5B5B5B'
+                }
+              />
+              <p
+                style={{
+                  color:
+                    pathname.includes('/admin/chapter/manage') ||
+                    pathname.includes('/admin/chapter/create')
+                      ? '#4285F4'
+                      : '#5B5B5B',
+                }}
+              >
+                Quản lý chương
+              </p>
+            </div>
+            {menuState.chapter ? (
+              <Icon.ChevronUp
+                fill={
+                  pathname.includes('/admin/chapter/manage') ||
+                  pathname.includes('/admin/chapter/create')
+                    ? '#4285F4'
+                    : '#5B5B5B'
+                }
+                width={'20px'}
+              />
+            ) : (
+              <Icon.ChevronDown
+                fill={
+                  pathname.includes('/admin/chapter/manage') ||
+                  pathname.includes('/admin/chapter/create')
+                    ? '#4285F4'
+                    : '#5B5B5B'
+                }
+                width={'20px'}
+              />
+            )}
+          </button>
+          <nav
+            className='flex flex-col pl-10 pr-5 transition-all ease-in-out'
+            style={{
+              maxHeight: menuState.chapter ? '300px' : '0px',
+              overflow: 'hidden',
+              transitionDuration: menuState.chapter ? '1.2s' : '0.8s',
+            }}
+          >
+            <NavLink
+              to='/admin/chapter/manage'
+              className='flex w-full flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
+              style={({ isActive, isPending }) => ({
+                backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+              })}
+            >
+              {({ isActive, isPending }) => (
+                <>
+                  <p style={{ color: isActive || isPending ? '#4285F4' : '#5B5B5B' }}>
+                    Danh sách chương
+                  </p>
+                </>
+              )}
+            </NavLink>
+            <NavLink
+              to='/admin/chapter/create'
+              className='flex w-full flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
+              style={({ isActive, isPending }) => ({
+                backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+              })}
+            >
+              {({ isActive, isPending }) => (
+                <>
+                  <p style={{ color: isActive || isPending ? '#4285F4' : '#5B5B5B' }}>Tạo chương</p>
                 </>
               )}
             </NavLink>

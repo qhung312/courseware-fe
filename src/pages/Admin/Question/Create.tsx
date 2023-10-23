@@ -44,6 +44,7 @@ const CreateQuestionPage = () => {
   const [options, setOptions] = useState(['']);
   const [answerKey, setAnswerKey] = useState(0);
   const [shuffleOptions, setShuffleOptions] = useState(false);
+  const [explanation, setExplanation] = useState('');
 
   console.log(chapter);
 
@@ -77,6 +78,9 @@ const CreateQuestionPage = () => {
       setAnswerKey(parseInt(event.value));
     }
   };
+
+  const onInputExplanation = (event: ChangeEvent<HTMLTextAreaElement>) =>
+    setExplanation(event.target.value);
 
   const toggleShuffleOptions = (_: ChangeEvent<HTMLInputElement>) =>
     setShuffleOptions(!shuffleOptions);
@@ -187,7 +191,7 @@ const CreateQuestionPage = () => {
                             onClick={() => {
                               const newOptions = JSON.parse(JSON.stringify(options)) as string[];
                               newOptions.splice(index, 1);
-                              setOptions(options);
+                              setOptions(newOptions);
                               setAnswerKey(Math.min(newOptions.length - 1, answerKey));
                             }}
                           >
@@ -227,7 +231,22 @@ const CreateQuestionPage = () => {
                   </div>
                 </div>
               </div>
-              <div className='flex flex-row-reverse gap-x-8'>
+              <div className='flex flex-col gap-y-1'>
+                <label
+                  className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
+                  htmlFor='explanation'
+                >
+                  Giải thích
+                </label>
+                <textarea
+                  id='explanation'
+                  rows={10}
+                  className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                  value={explanation}
+                  onChange={onInputExplanation}
+                />
+              </div>
+              <div className='mt-4 flex flex-row-reverse gap-x-8'>
                 <button
                   className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
                   onClick={() => {

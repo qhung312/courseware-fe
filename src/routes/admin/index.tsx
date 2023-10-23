@@ -10,6 +10,9 @@ const CreateQuestionPage = lazy(() => import('../../pages/Admin/Question/Create'
 const CreateSubjectPage = lazy(() => import('../../pages/Admin/Subject/Create'));
 const SubjectList = lazy(() => import('../../pages/Admin/Subject/SubjectList'));
 const QuestionListPage = lazy(() => import('../../pages/Admin/Question/List'));
+const ExerciseListPage = lazy(() => import('../../pages/Admin/Exercise/ExerciseList'));
+const CreateChapterPage = lazy(() => import('../../pages/Admin/Chapter/CreateChapter'));
+const ChapterListPage = lazy(() => import('../../pages/Admin/Chapter/ChapterList'));
 
 const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
@@ -64,7 +67,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <ExerciseListPage />
                 </Suspense>
               }
             />
@@ -127,6 +130,24 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateSubjectPage />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route path='chapter'>
+            <Route
+              path='manage'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='create'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <CreateChapterPage />
                 </Suspense>
               }
             />
