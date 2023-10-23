@@ -19,7 +19,6 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
   const params = useParams();
   const { pathname } = useLocation();
   const pathTokens = pathname.split('/');
-  console.log(pathTokens);
   const asideRef = useRef(null);
 
   return (

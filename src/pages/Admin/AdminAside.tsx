@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 import { Icon } from '../../components';
 import { Aside } from '../../layout';
+import useBoundStore from '../../store';
 
 type AdminAsideState = {
   isActive: 'material' | 'exam' | 'exercise' | 'question' | null;
@@ -13,6 +14,7 @@ type AdminAsideState = {
 };
 
 const AdminAside: FC = () => {
+  const getAllSubjects = useBoundStore.use.getAllSubjects();
   const [menuState, setMenuState] = useState<AdminAsideState>({
     isActive: null,
     material: false,
@@ -21,6 +23,10 @@ const AdminAside: FC = () => {
     question: false,
   });
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    getAllSubjects();
+  }, [getAllSubjects]);
 
   const handleClick = (type: 'material' | 'exam' | 'exercise' | 'question') => {
     setMenuState((prevState) => {

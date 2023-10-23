@@ -2,6 +2,15 @@ export function test() {
   return null;
 }
 
+export function formatTime(time: number) {
+  const date = new Date(time);
+
+  return `${date.toLocaleTimeString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}, ${date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+}
+
 export function getOffset(ref: React.RefObject<HTMLElement>) {
   const rect =
       ref.current === null || ref.current === undefined

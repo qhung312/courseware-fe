@@ -7,6 +7,7 @@ import Header from './Header';
 import Icon from './Icon';
 import LazyLoadImage from './LazyLoadImage';
 import Loading from './Loading';
+import Pagination from './Pagination';
 import PDF from './PDF';
 import QuestionSlide from './QuestionSlide/QuestionSlide';
 import Select from './Select';
@@ -21,6 +22,7 @@ export {
   Icon,
   LazyLoadImage,
   Loading,
+  Pagination,
   PDF,
   QuestionSlide,
   Select,

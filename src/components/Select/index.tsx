@@ -47,7 +47,7 @@ const CustomSelect = ({ options, onChange, ...props }: Props<Option, false, Grou
       classNamePrefix='react-select'
       className='react-select__container'
       menuPlacement='auto'
-      isSearchable={false}
+      isClearable
       styles={{
         control: (baseStyle, { isFocused }) => ({
           ...baseStyle,
