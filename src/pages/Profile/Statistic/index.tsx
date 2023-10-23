@@ -30,6 +30,14 @@ const demoExerciseGrade: SubjectGrade[] = [
     name: 'Xác suất thống kê',
     grade: 10,
   },
+  {
+    name: 'Giải tích 2',
+    grade: 5.41,
+  },
+  {
+    name: 'Vật lý 2',
+    grade: 6.25,
+  },
 ];
 
 const Statistic = () => {
@@ -54,11 +62,13 @@ const Statistic = () => {
       <main className='w-full'>
         {/* Banner */}
         <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
-        <div className='bg-white px-5 pt-4 pb-[64px] lg:flex lg:gap-x-[2%] lg:pt-10'>
-          <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl lg:hidden'>
+        <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:gap-x-[2%] md:pt-10 lg:px-[60px]'>
+          <div className='absolute bottom-10 right-0 z-0 hidden h-[220px] w-[220px] rounded-[20px] bg-[#33EFA0] md:block lg:right-10' />
+          <div className='absolute top-5 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block lg:left-10' />
+          <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:hidden md:text-xl'>
             Thống kê điểm số
           </h1>
-          <div className='mb-5 flex h-fit w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white lg:hidden'>
+          <div className='mb-5 flex h-fit w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white md:hidden'>
             <button
               className='z-20 flex w-full flex-row
               items-center justify-between rounded-[20px] bg-white px-[20px] py-[16px]'
@@ -112,7 +122,7 @@ const Statistic = () => {
               ))}
             </nav>
           </div>
-          <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white lg:hidden'>
+          <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white md:hidden'>
             <button
               className='z-20 flex w-full flex-row
               items-center justify-between rounded-[20px] bg-white px-[20px] py-[16px]'
@@ -142,6 +152,72 @@ const Statistic = () => {
                 maxHeight: isTestGradeOpen ? 'fit-content' : '0px',
                 overflow: 'hidden',
                 transitionDuration: isTestGradeOpen ? '1.2s' : '0.8s',
+              }}
+            >
+              {demoExerciseGrade.map((subject, index) => (
+                <div className='flex flex-col items-center' key={index}>
+                  <ProgressBar
+                    size={160}
+                    progress={subject.grade}
+                    trackWidth={20}
+                    trackColor='rgba(187, 187, 187, 0.50)'
+                    indicatorWidth={20}
+                    indicatorColor='rgba(73, 187, 189, 0.50)'
+                    indicatorCap='square'
+                    label='Loadind...'
+                    labelColor='#333'
+                    spinnerMode={false}
+                    spinnerSpeed={1}
+                  />
+                  <button className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 font-bold text-white'>
+                    {subject.name}
+                  </button>
+                </div>
+              ))}
+            </nav>
+          </div>
+          <div className='show-scrollbar z-10 hidden h-fit w-[49%] rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
+            <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-xl 2xl:text-[26px]'>
+              Điểm trung bình bài tập
+            </h1>
+            <nav
+              className='flex flex-wrap items-center justify-center gap-x-10 gap-y-6 px-[20px] transition-all ease-in-out'
+              style={{
+                maxHeight: 'fit-content',
+                overflow: 'hidden',
+              }}
+            >
+              {demoExerciseGrade.map((subject, index) => (
+                <div className='flex flex-col items-center' key={index}>
+                  <ProgressBar
+                    size={160}
+                    progress={subject.grade}
+                    trackWidth={20}
+                    trackColor='rgba(187, 187, 187, 0.50)'
+                    indicatorWidth={20}
+                    indicatorColor='rgba(73, 187, 189, 0.50)'
+                    indicatorCap='square'
+                    label='Loadind...'
+                    labelColor='#333'
+                    spinnerMode={false}
+                    spinnerSpeed={1}
+                  />
+                  <button className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 font-bold text-white'>
+                    {subject.name}
+                  </button>
+                </div>
+              ))}
+            </nav>
+          </div>
+          <div className='show-scrollbar z-10 hidden h-fit w-[49%] rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
+            <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-xl 2xl:text-[26px]'>
+              Điểm trung bình kiểm tra
+            </h1>
+            <nav
+              className='flex flex-wrap items-center justify-center gap-x-10 gap-y-6 px-[20px] transition-all ease-in-out'
+              style={{
+                maxHeight: 'fit-content',
+                overflow: 'hidden',
               }}
             >
               {demoExerciseGrade.map((subject, index) => (

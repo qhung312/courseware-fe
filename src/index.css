@@ -79,6 +79,24 @@ p {
   display: none;
 }
 
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  background-color: transparent;
+  width: 4px;
+}
+
+.show-scrollbar::-webkit-scrollbar-track {
+  background-color: #fff;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 20px;
+  border: 0;
+}
+
 input:focus,
 textarea:focus {
   outline: 2px auto #4285f4;
