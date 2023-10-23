@@ -1,15 +1,114 @@
-import { Icon } from '../../../../components';
+import _ from 'lodash';
+import { useCallback, useState } from 'react';
+
+import { Icon, Pagination } from '../../../../components';
 import QuestionCard from '../../../../components/QuestionCard';
-import quiz from '../../../../data/exercises';
+import Quiz from '../../../../data/exercises';
+import { ConcreteQuestion } from '../../../../types/question';
+
+const QuestionBoard: React.FC<{ quiz: typeof Quiz }> = ({ quiz }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  return (
+    <div
+      className={`fixed top-0 z-10 block h-full w-full space-y-4 bg-white pt-[84px] transition-all duration-500 ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}
+    >
+      <button
+        className={`relative bg-[#9DCCFF] p-3 ${
+          isOpen ? 'translate-x-0 rounded-r-full' : '-translate-x-full rounded-l-full opacity-40'
+        }`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <Icon.Chevron className={`h-6 w-auto ${isOpen ? 'rotate-90' : '-rotate-90'}`} fill='#666' />
+      </button>
+      <div className='flex flex-col items-start justify-between space-y-4 px-4'>
+        <div className='flex w-full flex-1 flex-wrap items-center justify-center gap-x-2 gap-y-2'>
+          {quiz.questions.map((question) =>
+            question.subQuestions.map((subQuestion, index) => (
+              <div
+                key={subQuestion._id}
+                className={`border- flex h-10 w-10 items-center justify-center ${
+                  subQuestion.isCorrect !== undefined
+                    ? subQuestion.isCorrect
+                      ? 'bg-[#49BBBD]'
+                      : 'bg-[#DB4437]'
+                    : _.some(
+                        [
+                          subQuestion.userAnswerKeys,
+                          subQuestion.userAnswerField,
+                          subQuestion.userAnswerKey,
+                        ],
+                        (v) => !_.isEmpty(v)
+                      ) || subQuestion.userAnswerKey !== undefined
+                    ? 'bg-[#4285F4]'
+                    : subQuestion.starred
+                    ? 'bg-[#F4B400]'
+                    : 'border border-[#4285F4]/50 bg-transparent'
+                }`}
+              >
+                <p
+                  className={`text-center text-base font-semibold ${
+                    _.some(
+                      [subQuestion.userAnswerKeys, subQuestion.userAnswerField],
+                      (v) => !_.isEmpty(v)
+                    ) ||
+                    subQuestion.userAnswerKey !== undefined ||
+                    subQuestion.starred
+                      ? 'text-white'
+                      : ''
+                  }`}
+                >
+                  {index + 1}
+                </p>
+              </div>
+            ))
+          )}
+        </div>
+        <div className='flex flex-1 flex-row items-center justify-between'>
+          <button type='button' className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'>
+            <p className='text-base font-semibold text-white'>Hoàn thành bài làm</p>
+          </button>
+          <Pagination
+            totalCount={quiz.questions[0].subQuestions.length}
+            pageSize={40}
+            currentPage={page}
+            onPageChange={setPage}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Medium: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const [quiz, setQuiz] = useState(Quiz);
+
+  const onQuestionChange = useCallback((question: ConcreteQuestion['subQuestions'][0]) => {
+    setQuiz((prev) => {
+      const newQuestions = prev.questions.map((q) => {
+        return {
+          ...q,
+          subQuestions: q.subQuestions.map((subQ) => {
+            if (subQ._id === question._id) {
+              return question;
+            }
+            return subQ;
+          }),
+        };
+      });
+      return { ...prev, questions: newQuestions };
+    });
+  }, []);
   // const params = useParams();
 
   // const quizId = params ? Number(params.chapterId) : null;
 
   return (
-    <>
-      <div className='with-nav-height flex w-full flex-col items-start justify-start overflow-y-auto bg-[#F2F2F2] p-5 md:hidden'>
+    <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden'>
+      <div className='flex w-full flex-col items-start justify-start bg-[#F2F2F2] p-5 md:hidden'>
         <div className='flex w-full flex-col space-y-4'>
           <h1 className='text-2xl font-bold'>{quiz.fromTemplate.name}</h1>
           <h3 className='text-xl'>Môn: {quiz.fromTemplate.subject.name}</h3>
@@ -26,7 +125,7 @@ const Medium: React.FC = () => {
           </div>
 
           <div className='w-fit rounded-lg bg-[#4285F4] p-3'>
-            <p className='text-sm text-white'>Trang: 1/5</p>
+            <p className='text-sm text-white'>Trang: {page}/3</p>
           </div>
 
           <div className='flex flex-col space-y-4'>
@@ -37,13 +136,16 @@ const Medium: React.FC = () => {
                   question={subQuestion}
                   status={quiz.status}
                   questionNumber={index + 1}
+                  handleChange={onQuestionChange}
                 />
               ))
             )}
           </div>
+          <Pagination totalCount={6} pageSize={2} currentPage={page} onPageChange={setPage} />
         </div>
       </div>
-    </>
+      <QuestionBoard quiz={quiz} />
+    </div>
   );
 };
 

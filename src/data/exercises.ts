@@ -16,6 +16,7 @@ const quiz: Quiz = {
         {
           _id: 'abebaeb',
           type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
+          starred: false,
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Blandit massa enim nec dui. Aliquet nec ullamcorper sit amet. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices. Nibh tellus molestie nunc non blandit. In ante metus dictum at tempor. Volutpat lacus laoreet non curabitur gravida arcu ac tortor. Ut consequat semper viverra nam libero justo laoreet. Tellus cras adipiscing enim eu. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Vitae nunc sed velit dignissim sodales ut eu sem integer. Morbi enim nunc faucibus a pellentesque sit amet porttitor eget.',
           options: [
@@ -31,6 +32,7 @@ const quiz: Quiz = {
         {
           _id: 'abebaeadfba',
           type: QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWERS,
+          starred: false,
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Blandit massa enim nec dui. Aliquet nec ullamcorper sit amet. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices. Nibh tellus molestie nunc non blandit. In ante metus dictum at tempor. Volutpat lacus laoreet non curabitur gravida arcu ac tortor. Ut consequat semper viverra nam libero justo laoreet. Tellus cras adipiscing enim eu. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Vitae nunc sed velit dignissim sodales ut eu sem integer. Morbi enim nunc faucibus a pellentesque sit amet porttitor eget.',
           options: [

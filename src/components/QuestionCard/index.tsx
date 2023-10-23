@@ -20,6 +20,7 @@ type InputAnswerProps = {
     stringAnswer: string;
     singleValueAnswer: number;
     multipleValueAnswer: number[];
+    setQuestion: (question: ConcreteQuestion['subQuestions'][0]) => void;
     setStringAnswer: Dispatch<SetStateAction<string>>;
     setSingleValueAnswer: Dispatch<SetStateAction<number>>;
     setMultipleValueAnswer: Dispatch<SetStateAction<number[]>>;
@@ -31,6 +32,7 @@ const InputAnswer = memo(function Component({ question, helpers }: InputAnswerPr
     stringAnswer,
     singleValueAnswer,
     multipleValueAnswer,
+    setQuestion,
     setSingleValueAnswer,
     setMultipleValueAnswer,
   } = helpers;
@@ -38,13 +40,24 @@ const InputAnswer = memo(function Component({ question, helpers }: InputAnswerPr
 
   const optimizedSetMultipleValueAnswer = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      setQuestion({
+        ...question,
+        userAnswerKeys:
+          question.userAnswerKeys !== undefined
+            ? _.includes(question.userAnswerKeys, Number(e.target.value))
+              ? question.userAnswerKeys.length <= 1
+                ? _.without(question.userAnswerKeys, Number(e.target.value))
+                : undefined
+              : _.concat(question.userAnswerKeys, Number(e.target.value))
+            : [Number(e.target.value)],
+      });
       setMultipleValueAnswer((prevState) =>
         _.includes(prevState, Number(e.target.value))
           ? _.without(prevState, Number(e.target.value))
           : _.concat(prevState, Number(e.target.value))
       );
     },
-    [setMultipleValueAnswer]
+    [setMultipleValueAnswer, setQuestion, question]
   );
 
   switch (question.type) {
@@ -59,7 +72,13 @@ const InputAnswer = memo(function Component({ question, helpers }: InputAnswerPr
               <div className='relative flex items-center'>
                 <input
                   id={`question-${question._id}-answer-${option.key}`}
-                  onChange={() => setSingleValueAnswer(option.key)}
+                  onChange={() => {
+                    setSingleValueAnswer(option.key);
+                    setQuestion({
+                      ...question,
+                      userAnswerKey: option.key,
+                    });
+                  }}
                   type='radio'
                   name={`question-${question._id}`}
                   value={option.key}
@@ -135,19 +154,27 @@ type Props = {
   question: ConcreteQuestion['subQuestions'][0];
   status: QuizStatus;
   questionNumber: number;
+  handleChange: (question: ConcreteQuestion['subQuestions'][0]) => void;
 };
 
-const QuestionCard = ({ question, status, questionNumber }: Props) => {
-  const [starred, setStarred] = useState(false);
-  const [stringAnswer, setStringAnswer] = useState<string>('');
-  const [singleValueAnswer, setSingleValueAnswer] = useState<number>(-1);
-  const [multipleValueAnswer, setMultipleValueAnswer] = useState<number[]>([]);
+const QuestionCard = ({ question, status, questionNumber, handleChange }: Props) => {
+  const [starred, setStarred] = useState(question.starred);
+  const [stringAnswer, setStringAnswer] = useState<string>(String(question.userAnswerField));
+  const [singleValueAnswer, setSingleValueAnswer] = useState<number>(question.userAnswerKey || -1);
+  const [multipleValueAnswer, setMultipleValueAnswer] = useState<number[]>(
+    question.userAnswerKeys || []
+  );
 
   useEffect(() => {
     if (stringAnswer !== '' || singleValueAnswer !== -1 || multipleValueAnswer.length !== 0) {
       setStarred(false);
+      handleChange({
+        ...question,
+        starred: false,
+      });
     }
-  }, [stringAnswer, singleValueAnswer, multipleValueAnswer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stringAnswer, singleValueAnswer, multipleValueAnswer, handleChange]);
 
   return (
     <div className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4'>
@@ -169,6 +196,13 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
               setStringAnswer('');
               setSingleValueAnswer(-1);
               setMultipleValueAnswer([]);
+              handleChange({
+                ...question,
+                starred: true,
+                userAnswerField: undefined,
+                userAnswerKey: undefined,
+                userAnswerKeys: undefined,
+              });
             }}
             disabled={status === QuizStatus.ENDED || starred}
             className={`absolute transition-all duration-300 ${starred ? '-z-10 opacity-0' : ''}`}
@@ -177,7 +211,10 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
           </button>
           <button
             type='button'
-            onClick={() => setStarred(false)}
+            onClick={() => {
+              setStarred(false);
+              handleChange({ ...question, starred: false });
+            }}
             disabled={status === QuizStatus.ENDED || !starred}
             className={`relative transition-all duration-300 ${starred ? '' : '-z-10 opacity-0'}`}
           >
@@ -199,6 +236,7 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
             stringAnswer,
             singleValueAnswer,
             multipleValueAnswer,
+            setQuestion: handleChange,
             setSingleValueAnswer,
             setStringAnswer,
             setMultipleValueAnswer,

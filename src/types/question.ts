@@ -20,6 +20,7 @@ export type ConcreteQuestion = {
       description: string;
     }[];
     answerKey?: number;
+    starred: boolean;
     answerKeys?: number[];
     answerField?: string | number;
     matchCase?: boolean;
