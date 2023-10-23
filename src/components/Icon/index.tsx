@@ -16,10 +16,12 @@ import { ReactComponent as CloseQuote } from '../../assets/svgs/CloseQuoteIcon.s
 import { ReactComponent as Delete } from '../../assets/svgs/DeleteIcon.svg';
 import { ReactComponent as DeleteIconSnackbar } from '../../assets/svgs/DeleteIconSnackbar.svg';
 import { ReactComponent as DeleteModalIcon } from '../../assets/svgs/DeleteModalIcon.svg';
+import { ReactComponent as DescriptionIcon } from '../../assets/svgs/DescriptionIcon.svg';
 import { ReactComponent as DocumentCopy } from '../../assets/svgs/DocumentCopy.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
 import { ReactComponent as DocumentShare } from '../../assets/svgs/DocumentShare.svg';
 import { ReactComponent as Edit } from '../../assets/svgs/EditIcon.svg';
+import { ReactComponent as EducationHat } from '../../assets/svgs/EducationHatIcon.svg';
 import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/svgs/FacebookIcon.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/FilterIcon.svg';
@@ -62,11 +64,13 @@ export default {
   CloseIconSnackbar,
   Delete,
   DeleteModalIcon,
+  DescriptionIcon,
   DeleteIconSnackbar,
   Document,
   DocumentCopy,
   DocumentShare,
   Edit,
+  EducationHat,
   FacebookIcon,
   FilterIcon,
   LocationIcon,

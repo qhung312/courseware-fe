@@ -5,6 +5,7 @@ import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import NotFoundPage from '../../pages/NotFound';
 import ActivityHistory from '../../pages/Profile/ActivityHistory';
+import Statistic from '../../pages/Profile/Statistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const HomePage = lazy(() => import('../../pages/Home'));
@@ -57,6 +58,14 @@ const UserRoute = () => {
             element={
               <Suspense fallback={<Loading />}>
                 <ActivityHistory />
+              </Suspense>
+            }
+          />
+          <Route
+            path='statistic'
+            element={
+              <Suspense fallback={<Loading />}>
+                <Statistic />
               </Suspense>
             }
           />
