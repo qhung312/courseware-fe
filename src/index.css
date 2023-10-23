@@ -59,7 +59,7 @@ p {
   color: '#252641';
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
   background-color: #fff;
   width: 16px;
@@ -77,7 +77,7 @@ p {
 
 ::-webkit-scrollbar-button {
   display: none;
-}
+} */
 
 input:focus,
 textarea:focus {

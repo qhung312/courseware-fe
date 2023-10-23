@@ -81,23 +81,6 @@ const ExamList = () => {
   const tableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleWheeling = (e: WheelEvent) => {
-      if (tableRef.current) {
-        if (tableRef.current.scrollWidth > tableRef.current.clientWidth) {
-          e.preventDefault();
-          tableRef.current?.scrollBy(e.deltaY, 0);
-        }
-      }
-    };
-    const tableElement = tableRef.current;
-    tableElement?.addEventListener('wheel', handleWheeling);
-
-    return () => {
-      tableElement?.removeEventListener('wheel', handleWheeling);
-    };
-  }, []);
-
-  useEffect(() => {
     const newExams = exams.filter((exam) => {
       let result = true;
       if (value.name !== '' && !exam.name.toLowerCase().includes(value.name.toLowerCase())) {

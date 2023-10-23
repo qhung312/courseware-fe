@@ -41,12 +41,12 @@ const MaterialPage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setMaterials(null);
-      MaterialService.getAllBySubject(params?.subjectId)
+      MaterialService.getAll({ subjectId: params?.subjectId })
         .then((res) => {
           const { data } = res;
           const { payload } = data;
 
-          setTimeout(() => setMaterials(payload), 300);
+          setTimeout(() => setMaterials(payload.result), 300);
         })
         .catch((err) => {
           console.log('Error in fetching all exams achives by subject id', err);

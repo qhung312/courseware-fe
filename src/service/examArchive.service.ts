@@ -1,10 +1,23 @@
 import { API_URL } from '../config';
 import { axios } from '../utils/custom-axios';
+import { generateQuery } from '../utils/helper';
 
 import type { ExamArchive } from '../types/examArchive';
+import type { GetPaginationOptions } from '../types/request';
 import type { Response } from '../types/response';
 
-const getAll = () => axios.get<Response<ExamArchive[]>>(`${API_URL}previous-exam/`);
+interface GetRequestProps extends GetPaginationOptions {
+  name?: string;
+  subjectId?: string;
+  chapterId?: string;
+}
+
+const getAll = ({ page, pageSize, name, subjectId, chapterId }: GetRequestProps = {}) => {
+  const queryUrl = generateQuery({ page, pageSize, name, subjectId, chapterId });
+  return page || pageSize
+    ? axios.get<Response<ExamArchive[], true>>(`${API_URL}previous-exam${queryUrl}`)
+    : axios.get<Response<ExamArchive[]>>(`${API_URL}previous-exam${queryUrl}`);
+};
 
 const create = () => axios.post<Response<ExamArchive>>(`${API_URL}previous-exam/`);
 
@@ -20,9 +33,6 @@ const download = (examId: string) =>
 const getById = (examId: string) =>
   axios.get<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
 
-const getAllBySubject = (subjectId: string) =>
-  axios.get<Response<ExamArchive[]>>(`${API_URL}previous-exam/subject/${subjectId}`);
-
 const ExamArchiveService = {
   getAll,
   create,
@@ -30,7 +40,6 @@ const ExamArchiveService = {
   deleteById,
   download,
   getById,
-  getAllBySubject,
 };
 
 export default ExamArchiveService;

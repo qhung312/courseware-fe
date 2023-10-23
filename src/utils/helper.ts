@@ -1,5 +1,16 @@
+import type { GetPaginationOptions } from '../types/request';
+
 export function test() {
   return null;
+}
+
+export function formatTime(time: number) {
+  const date = new Date(time);
+
+  return `${date.toLocaleTimeString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}, ${date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
 }
 
 export function getOffset(ref: React.RefObject<HTMLElement>) {
@@ -34,4 +45,38 @@ export function getOS() {
   // @ts-ignore
   document.documentElement.setAttribute('os', os);
   return os;
+}
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number';
+}
+
+export function isString(value: unknown): value is string {
+  return typeof value === 'string' || value instanceof String;
+}
+
+interface GenerateQueryProps extends GetPaginationOptions {
+  name?: string;
+  subjectId?: string;
+  chapterId?: string;
+  quizId?: string;
+  questionId?: string;
+}
+
+export function generateQuery({ page, pageSize, ...rest }: GenerateQueryProps) {
+  let filterUrl = '';
+  (Object.keys(rest) as Array<keyof typeof rest>).forEach((key) => {
+    if (isString(key)) {
+      const value = rest[key];
+
+      if (key === 'name' && value) {
+        filterUrl += `name=${encodeURIComponent(value)}`;
+      } else if (key.includes('Id') && value) {
+        filterUrl += `&${key.slice(0, -2)}=${value}`;
+      }
+    }
+  });
+  return page || pageSize
+    ? `?${filterUrl}${page ? `&page=${page}` : ''}${pageSize ? `&pageSize=${pageSize}` : ''}`
+    : `?${filterUrl}&pagination=false`;
 }

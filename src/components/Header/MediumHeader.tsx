@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { LottieOptions, useLottie } from 'lottie-react';
 import { CSSProperties, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -35,6 +36,7 @@ const MediumHeader = () => {
   );
 
   const isAuthenticated = useBoundStore.use.isAuthenticated();
+  const user = useBoundStore.use.user();
   const loginWithGoogle = useBoundStore.use.loginWithGoogle();
   const logout = useBoundStore.use.logout();
 
@@ -95,13 +97,13 @@ const MediumHeader = () => {
           </button>
         </div>
         <div
-          className='absolute z-30 flex w-full flex-col items-center justify-start
+          className='with-nav-height absolute z-30 flex w-full flex-col items-center justify-start
           gap-y-[24px] overflow-scroll overscroll-none whitespace-nowrap bg-white px-[20px]
           py-[16px] transition-all duration-[900ms] ease-in-out
           md:hidden'
           style={{
             transform: isOverlayOpen ? 'translateY(0%)' : 'translateY(calc(-100vh - 72px))',
-            height: 'calc(100vh)',
+            height: 'calc(100vh - 72px)',
           }}
         >
           <div className='relative flex w-full flex-row items-center justify-center'>
@@ -503,6 +505,27 @@ const MediumHeader = () => {
                 Đăng nhập
               </button>
             )}
+            {isAuthenticated &&
+            (user.isManager ||
+              _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (
+              <NavLink
+                to='/admin'
+                className='z-20 flex w-full flex-row items-center justify-start
+            gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
+                style={({ isActive, isPending }) => ({
+                  backgroundColor:
+                    isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                })}
+                onClick={() => setTimeout(throttledOnClick, 1000)}
+              >
+                {({ isActive, isPending }) => (
+                  <>
+                    <Icon.Admin fill={isActive || isPending ? '#4285F4' : '#696969'} />
+                    <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>Admin</p>
+                  </>
+                )}
+              </NavLink>
+            ) : null}
             {isAuthenticated && (
               <>
                 <NavLink

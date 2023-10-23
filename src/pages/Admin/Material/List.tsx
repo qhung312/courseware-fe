@@ -1,60 +1,15 @@
 import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
-import { Icon, Select } from '../../../components';
+import { Icon, Pagination, Select } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
+import MaterialService from '../../../service/material.service';
+import useBoundStore from '../../../store';
+import { formatTime } from '../../../utils/helper';
 
-const materials = [
-  {
-    id: 1,
-    subject: 'Giải tích 1',
-    chapter: '1',
-    name: 'Giới hạn dãy số - hàm số',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-  {
-    id: 2,
-    subject: 'Giải tích 1',
-    chapter: '2',
-    name: 'Đạo hàm - ứng dụng',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
-  },
-  {
-    id: 3,
-    subject: 'Giải tích 1',
-    chapter: '3',
-    name: 'Tích phân - ứng dụng',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
-  },
-  {
-    id: 4,
-    subject: 'Giải tích 1',
-    chapter: '4',
-    name: 'Phương trình vi phân',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
-  },
-  {
-    id: 5,
-    subject: 'Giải tích 2',
-    chapter: '1',
-    name: 'Giới hạn dãy số - hàm số',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
-  },
-  {
-    id: 6,
-    subject: 'Giải tích 2',
-    chapter: '1',
-    name: 'Giới hạn dãy số - hàm số',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '20/02/2023, 18:00',
-  },
-];
+import type { Material } from '../../../types/material';
 
 type SearchFormValue = {
   name: string;
@@ -63,49 +18,62 @@ type SearchFormValue = {
 };
 
 const MaterialList = () => {
+  const pageSize = 10;
   const [page, setPage] = useState(1);
-  const [chunks, setChunks] = useState(_.chunk(materials, 10));
+  const [loading, setLoading] = useState(true);
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [filteredMaterials, setFilteredMaterials] = useState<Material[]>([]);
   const [value, setValue] = useState<SearchFormValue>({
     name: '',
     subject: '',
     chapter: '',
   });
   const tableRef = useRef<HTMLDivElement>(null);
-
+  const subjects = useBoundStore.use.subjects();
   useEffect(() => {
-    tableRef.current?.addEventListener('wheel', (e) => {
-      if (tableRef.current) {
-        if (tableRef.current.scrollWidth > tableRef.current.clientWidth) {
-          e.preventDefault();
-          tableRef.current?.scrollBy(e.deltaY, 0);
-        }
+    (async () => {
+      try {
+        const { data } = await MaterialService.getAll();
+        setLoading(false);
+        const payload = data.payload.result.sort((a, b) => {
+          const aTime = a.lastUpdatedAt ? a.lastUpdatedAt : a.createdAt;
+          const bTime = b.lastUpdatedAt ? b.lastUpdatedAt : b.createdAt;
+          return bTime - aTime;
+        });
+        setMaterials(payload);
+        setFilteredMaterials(payload);
+      } catch (err) {
+        setLoading(true);
+        console.log('Error in fetching all materials', err);
       }
-    });
+    })();
   }, []);
 
   useEffect(() => {
-    const newMaterials = materials.filter((material) => {
-      let result = true;
-      if (value.name !== '' && !material.name.toLowerCase().includes(value.name.toLowerCase())) {
-        result = false;
-      }
-      if (
-        value.subject !== '' &&
-        !material.subject.toLowerCase().includes(value.subject.toLowerCase())
-      ) {
-        result = false;
-      }
-      if (
-        value.chapter !== '' &&
-        !material.chapter.toLowerCase().includes(value.chapter.toLowerCase())
-      ) {
-        result = false;
-      }
+    setFilteredMaterials(
+      materials.filter((material) => {
+        let result = true;
+        if (value.name !== '' && !material.name.toLowerCase().includes(value.name.toLowerCase())) {
+          result = false;
+        }
+        if (
+          value.subject !== '' &&
+          !material.subject.name.toLowerCase().includes(value.subject.toLowerCase())
+        ) {
+          result = false;
+        }
+        if (
+          value.chapter !== '' &&
+          !material.chapter.name.toLowerCase().includes(value.chapter.toLowerCase())
+        ) {
+          result = false;
+        }
 
-      return result;
-    });
+        return result;
+      })
+    );
 
-    setChunks(_.chunk(newMaterials, 10));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
@@ -135,20 +103,26 @@ const MaterialList = () => {
                 </div>
                 <div className='flex w-full flex-[2] flex-row gap-x-4'>
                   <Select
-                    options={_.uniqBy(materials, 'subject').map((material) => ({
-                      label: material.subject,
-                      value: material.subject,
+                    options={subjects.map((subject) => ({
+                      label: subject.name,
+                      value: subject._id,
                     }))}
                     value={
-                      value.subject === '' ? null : { label: value.subject, value: value.subject }
+                      value.subject === ''
+                        ? null
+                        : {
+                            label: subjects.find((subject) => subject._id === value.subject)
+                              ?.name as string,
+                            value: value.subject,
+                          }
                     }
                     onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
                     placeholder='Chọn môn'
                   />
                   <Select
                     options={_.uniqBy(materials, 'chapter').map((material) => ({
-                      label: `Chương ${material.chapter}`,
-                      value: material.chapter,
+                      label: `Chương ${material.chapter.name}`,
+                      value: material.chapter.name,
                     }))}
                     onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
                     value={
@@ -174,105 +148,108 @@ const MaterialList = () => {
                 </button>
               </div>
               <div ref={tableRef} className='w-full overflow-auto'>
-                <table className='flex w-full min-w-[720px] table-fixed flex-col gap-y-3 overflow-auto'>
-                  <thead>
-                    <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                      <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Tên tài liệu
-                      </th>
-                      <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Môn
-                      </th>
-                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Chương
-                      </th>
-                      <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Thời gian tạo
-                      </th>
-                      <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Thời gian cập nhật
-                      </th>
-                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        {''}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {chunks[page - 1]?.map((material) => (
-                      <tr
-                        key={`material-${material.id}`}
-                        className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
-                      >
-                        <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.name}
-                        </td>
-                        <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.subject}
-                        </td>
-                        <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.chapter}
-                        </td>
-                        <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.createdAt}
-                        </td>
-                        <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.updatedAt}
-                        </td>
-                        <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                          <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
-                            <Icon.Edit
-                              fill='white'
-                              className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                            />
-                          </button>
-                          <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
-                            <Icon.Delete
-                              fill='white'
-                              className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                            />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className='mt-4 flex flex-1 flex-row items-center justify-center gap-x-4'>
-                <button
-                  className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
-                </button>
-                {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
-                  <button
-                    key={`page-${index}`}
-                    className={`aspect-square rounded-full p-2 ${
-                      index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
-                    }`}
-                    onClick={() => setPage(index)}
-                  >
-                    <p
-                      className={`w-7 text-lg ${
-                        index === page ? 'font-semibold text-white' : 'font-medium'
-                      }`}
-                    >
-                      {index}
+                {loading ? (
+                  <>
+                    <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                      <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
                     </p>
-                  </button>
-                ))}
-                <button
-                  className={`rounded-full p-2 ${
-                    page === chunks.length ? '' : 'hover:bg-black/20'
-                  }`}
-                  disabled={page === chunks.length}
-                  onClick={() => setPage(page + 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
-                </button>
+                    <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                      {
+                        <Skeleton
+                          count={10}
+                          className='my-2 box-content lg:my-4 3xl:my-6'
+                          width={'100%'}
+                          height={40}
+                          baseColor='#9DCCFF'
+                        />
+                      }
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <table className='flex w-full min-w-[900px] table-fixed flex-col gap-y-3 overflow-auto'>
+                      <thead>
+                        <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
+                          <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Tên tài liệu
+                          </th>
+                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Môn
+                          </th>
+                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Chương
+                          </th>
+                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Thời gian tạo
+                          </th>
+                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Thời gian cập nhật
+                          </th>
+                          <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            {''}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className='w-full'>
+                        {filteredMaterials
+                          .slice((page - 1) * pageSize, page * pageSize)
+                          .map((material) => (
+                            <tr
+                              key={`material-${material._id}`}
+                              className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                            >
+                              <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {material.name}
+                              </td>
+                              <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {material.subject.name}
+                              </td>
+                              <td className='flex flex-[2.5] items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {material.chapter.name}
+                              </td>
+                              <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {formatTime(material.createdAt)}
+                              </td>
+                              <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {formatTime(
+                                  material.lastUpdatedAt
+                                    ? material.lastUpdatedAt
+                                    : material.createdAt
+                                )}
+                              </td>
+                              <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                                <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                                  <Icon.Edit
+                                    fill='white'
+                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  />
+                                </button>
+                                <button
+                                  onClick={async () => {
+                                    await MaterialService.deleteById(material._id);
+                                    setMaterials(materials.filter((m) => m._id !== material._id));
+                                  }}
+                                  className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                >
+                                  <Icon.Delete
+                                    fill='white'
+                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </>
+                )}
               </div>
+              <Pagination
+                totalCount={filteredMaterials.length}
+                pageSize={pageSize}
+                currentPage={page}
+                onPageChange={setPage}
+              />
             </main>
           </div>
         </div>

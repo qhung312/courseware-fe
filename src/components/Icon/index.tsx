@@ -1,5 +1,6 @@
 import { ReactComponent as AboutUs } from '../../assets/svgs/AboutUsIcon.svg';
 import { ReactComponent as Activity } from '../../assets/svgs/ActivityIcon.svg';
+import { ReactComponent as Admin } from '../../assets/svgs/AdminIcon.svg';
 import { ReactComponent as ArrowRightFill } from '../../assets/svgs/ArrowRightFillIcon.svg';
 import { ReactComponent as ArrowRight } from '../../assets/svgs/ArrowRightIcon.svg';
 import { ReactComponent as Book } from '../../assets/svgs/Book.svg';
@@ -44,6 +45,7 @@ import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg
 export default {
   AboutUs,
   Activity,
+  Admin,
   ArrowRightFill,
   ArrowRight,
   Chevron,

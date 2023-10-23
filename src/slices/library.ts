@@ -28,7 +28,7 @@ export const LibrarySlice: StateCreator<
   getAllSubjects: async () => {
     try {
       const { data } = await SubjectService.getAll();
-      set({ subjects: data.payload });
+      set({ subjects: data.payload.result });
     } catch (error: any) {
       set({ ...initialState });
     }
