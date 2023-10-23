@@ -10,6 +10,7 @@ import { ReactComponent as Chevron } from '../../assets/svgs/ChevronIcon.svg';
 import { ReactComponent as ChevronLeft } from '../../assets/svgs/ChevronLeftIcon.svg';
 import { ReactComponent as ChevronRight } from '../../assets/svgs/ChevronRightIcon.svg';
 import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg';
+import { ReactComponent as ClipboardIcon } from '../../assets/svgs/ClipboardIcon.svg';
 import { ReactComponent as ClockIcon } from '../../assets/svgs/ClockIcon.svg';
 import { ReactComponent as CloseIconSnackbar } from '../../assets/svgs/CloseIconSnackbar.svg';
 import { ReactComponent as CloseQuote } from '../../assets/svgs/CloseQuoteIcon.svg';
@@ -22,6 +23,7 @@ import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
 import { ReactComponent as DocumentShare } from '../../assets/svgs/DocumentShare.svg';
 import { ReactComponent as Edit } from '../../assets/svgs/EditIcon.svg';
 import { ReactComponent as EducationHat } from '../../assets/svgs/EducationHatIcon.svg';
+import { ReactComponent as EqualizerIcon } from '../../assets/svgs/EqualizerIcon.svg';
 import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/svgs/FacebookIcon.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/FilterIcon.svg';
@@ -60,6 +62,7 @@ export default {
   ChevronRight,
   Book,
   ChevronUp,
+  ClipboardIcon,
   ClockIcon,
   CloseIconSnackbar,
   Delete,
@@ -71,6 +74,7 @@ export default {
   DocumentShare,
   Edit,
   EducationHat,
+  EqualizerIcon,
   FacebookIcon,
   FilterIcon,
   LocationIcon,

@@ -6,6 +6,7 @@ import { Protected } from '../../layout';
 import NotFoundPage from '../../pages/NotFound';
 import ActivityHistory from '../../pages/Profile/ActivityHistory';
 import Statistic from '../../pages/Profile/Statistic';
+import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const HomePage = lazy(() => import('../../pages/Home'));
@@ -66,6 +67,14 @@ const UserRoute = () => {
             element={
               <Suspense fallback={<Loading />}>
                 <Statistic />
+              </Suspense>
+            }
+          />
+          <Route
+            path='statistic/:subjectId'
+            element={
+              <Suspense fallback={<Loading />}>
+                <SubjectStatistic />
               </Suspense>
             }
           />
