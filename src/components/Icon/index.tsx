@@ -39,6 +39,7 @@ import { ReactComponent as MailIcon } from '../../assets/svgs/MailIcon.svg';
 import { ReactComponent as OpenBook } from '../../assets/svgs/OpenBookIcon.svg';
 import { ReactComponent as OpenQuote } from '../../assets/svgs/OpenQuoteIcon.svg';
 import { ReactComponent as Partner } from '../../assets/svgs/PartnerIcon.svg';
+import { ReactComponent as PencilIcon } from '../../assets/svgs/PencilIcon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/svgs/PhoneIcon.svg';
 import { ReactComponent as Profile } from '../../assets/svgs/ProfileIcon.svg';
 import { ReactComponent as Quiz } from '../../assets/svgs/QuizIcon.svg';
@@ -89,6 +90,7 @@ export default {
   Library,
   Logout,
   Partner,
+  PencilIcon,
   Quiz,
   OpenBook,
   OpenQuote,

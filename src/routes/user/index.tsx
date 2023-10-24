@@ -5,6 +5,7 @@ import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import NotFoundPage from '../../pages/NotFound';
 import ActivityHistory from '../../pages/Profile/ActivityHistory';
+import UserInformation from '../../pages/Profile/Information';
 import Statistic from '../../pages/Profile/Statistic';
 import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
@@ -51,6 +52,14 @@ const UserRoute = () => {
             element={
               <Suspense fallback={<Loading />}>
                 <HomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='information'
+            element={
+              <Suspense fallback={<Loading />}>
+                <UserInformation />
               </Suspense>
             }
           />

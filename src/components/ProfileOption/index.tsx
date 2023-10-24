@@ -23,7 +23,7 @@ const ProfileOption = ({ option, setOption }: Option) => {
               className='h-[180px] w-[180px] rounded-full bg-slate-600 md:h-[140px] md:w-[140px] lg:h-[160px] lg:w-[160px] 3xl:h-[200px] 3xl:w-[200px]'
             />
           </div>
-          <button className='absolute bottom-0 right-6 h-8 w-8 rounded-full bg-[#4285f4] xl:h-12 xl:w-12'>
+          <button className='absolute bottom-0 right-6 h-8 w-[32px] rounded-full bg-[#4285f4] xl:h-10 xl:w-10'>
             <Icon.Camera className='m-auto xl:h-8 xl:w-8' />
           </button>
         </div>

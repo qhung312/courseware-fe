@@ -1,5 +1,6 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Footer } from '../../../components';
 import Icon from '../../../components/Icon';
@@ -11,32 +12,39 @@ import { Page } from '../../../layout';
 type SubjectGrade = {
   name: string;
   grade: number;
+  link: string;
 };
 
 const demoExerciseGrade: SubjectGrade[] = [
   {
     name: 'Giải tích 1',
     grade: 5.41,
+    link: '1',
   },
   {
     name: 'Vật lý 1',
     grade: 6.25,
+    link: '2',
   },
   {
     name: 'Đại số tuyến tính',
     grade: 7.5,
+    link: '3',
   },
   {
     name: 'Xác suất thống kê',
     grade: 10,
+    link: '4',
   },
   {
     name: 'Giải tích 2',
     grade: 5.41,
+    link: '5',
   },
   {
     name: 'Vật lý 2',
     grade: 6.25,
+    link: '6',
   },
 ];
 
@@ -115,9 +123,12 @@ const Statistic = () => {
                     spinnerMode={false}
                     spinnerSpeed={1}
                   />
-                  <button className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 font-bold text-white'>
+                  <Link
+                    to={subject.link}
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                  >
                     {subject.name}
-                  </button>
+                  </Link>
                 </div>
               ))}
             </nav>
@@ -169,9 +180,12 @@ const Statistic = () => {
                     spinnerMode={false}
                     spinnerSpeed={1}
                   />
-                  <button className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 font-bold text-white'>
+                  <Link
+                    to={subject.link}
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                  >
                     {subject.name}
-                  </button>
+                  </Link>
                 </div>
               ))}
             </nav>
@@ -202,9 +216,12 @@ const Statistic = () => {
                     spinnerMode={false}
                     spinnerSpeed={1}
                   />
-                  <button className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 font-bold text-white'>
+                  <Link
+                    to={subject.link}
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                  >
                     {subject.name}
-                  </button>
+                  </Link>
                 </div>
               ))}
             </nav>
@@ -235,9 +252,12 @@ const Statistic = () => {
                     spinnerMode={false}
                     spinnerSpeed={1}
                   />
-                  <button className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 font-bold text-white'>
+                  <Link
+                    to={subject.link}
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                  >
                     {subject.name}
-                  </button>
+                  </Link>
                 </div>
               ))}
             </nav>

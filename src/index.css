@@ -97,6 +97,19 @@ p {
   border: 0;
 }
 
+.black-placeholder::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #252641;
+  opacity: 1; /* Firefox */
+}
+
+.black-placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #252641;
+}
+
+.black-placeholde::-ms-input-placeholder { /* Microsoft Edge */
+  color: #252641;
+}
+
 input:focus,
 textarea:focus {
   outline: 2px auto #4285f4;

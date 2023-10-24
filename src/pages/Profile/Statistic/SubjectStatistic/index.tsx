@@ -1,6 +1,6 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import DemoLineChart from '../../../../assets/images/DemoLineChart.png';
 import { Footer } from '../../../../components';
@@ -13,6 +13,14 @@ interface SubjectStatisticProps {
   grade: number;
   link: string;
 }
+const SubjectIdMapping: string[] = [
+  'Giải tích 1',
+  'Vật lý 1',
+  'Đại số tuyến tính',
+  'Xác suất thống kê',
+  'Giải tích 2',
+  'Vật lý 2',
+];
 const SubjectStatisticData: SubjectStatisticProps[] = [
   {
     name: 'Bài tập rèn luyện chương 1',
@@ -48,6 +56,8 @@ const SubjectStatisticData: SubjectStatisticProps[] = [
 
 const SubjectStatistic = () => {
   const [currentOption, setCurrentOption] = useState(3);
+  const params = useParams();
+  const subject = params ? SubjectIdMapping[Number(params.subjectId) - 1] : null;
 
   return (
     <Page title='Thông tin người dùng - Thống kê điểm số'>
@@ -63,7 +73,7 @@ const SubjectStatistic = () => {
             Quay lại
           </Link>
           <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-center lg:text-[28px] 3xl:text-[36px]'>
-            Thống kê môn <span className='md:text-[#4285f4]'>Giải tích 1</span>
+            Thống kê môn <span className='md:text-[#4285f4]'>{subject}</span>
           </h1>
           <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:border-0'>
             <div className='flex flex-row items-center justify-start gap-x-2'>
