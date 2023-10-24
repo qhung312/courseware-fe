@@ -31,7 +31,6 @@ const demoUserProfile: UserInformationProps = {
 };
 
 const UserInformation = () => {
-  const [currentOption, setCurrentOption] = useState(3);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [userLastName, setUserLastName] = useState(demoUserProfile.lastname);
@@ -57,7 +56,7 @@ const UserInformation = () => {
       </div>
       <main className='w-full'>
         {/* Banner */}
-        <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
+        <ProfileOption option={1} />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:rounded-[20px] md:px-10 md:pt-10 lg:px-[120px] xl:px-[240px] 2xl:px-[360px] 3xl:px-[460px]'>
           <div className='md:rounded-[20px] md:px-5 md:py-8 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:px-8 xl:px-10'>
             <h1 className='text-2xl font-semibold text-[#2252641] 3xl:text-[28px]'>
@@ -70,7 +69,7 @@ const UserInformation = () => {
             ) : (
               <button
                 onClick={() => setIsEditMode(true)}
-                className='mt-3 mb-5 flex w-fit gap-x-1 rounded-[12px] bg-[#E3F2FD] px-3 py-2'
+                className='mt-3 mb-5 flex w-fit gap-x-1 rounded-[12px] bg-[#E3F2FD] px-3 py-2 hover:bg-[#9DCCFF]'
               >
                 <Icon.PencilIcon fill='#252641' />
                 <p className='font-semibold text-[#252641] xl:text-xl'>Chỉnh sửa thông tin</p>
@@ -93,7 +92,9 @@ const UserInformation = () => {
                   value={userLastName}
                   onChange={(e) => setUserLastName(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -113,7 +114,9 @@ const UserInformation = () => {
                   value={userFirstName}
                   onChange={(e) => setUserFirstName(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -133,7 +136,9 @@ const UserInformation = () => {
                   value={userStudentId}
                   onChange={(e) => setUserStudentId(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -153,7 +158,9 @@ const UserInformation = () => {
                   placeholder={userMajor}
                   onChange={(e) => setUserMajor(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -173,7 +180,9 @@ const UserInformation = () => {
                   value={userBirthday}
                   onChange={(e) => setUserBirthday(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -188,7 +197,7 @@ const UserInformation = () => {
                   <div className='relative mt-2 md:w-[70%]'>
                     <button
                       type='button'
-                      className='z-20 flex w-[60%] flex-row items-center justify-between rounded-[10px] border-[1px] border-[#D9D9D9] p-4 md:w-[40%]'
+                      className='z-20 flex w-[60%] flex-row items-center justify-between rounded-[10px] border-[1px] border-[#D9D9D9] p-4 hover:border-[#4285f4] focus:border-[#4285f4] md:w-[40%]'
                       onClick={throttledLibraryClick}
                     >
                       <p className='text-xl text-[#252641] transition-colors duration-300 ease-linear'>
@@ -258,7 +267,9 @@ const UserInformation = () => {
                 ) : (
                   <div
                     className={`black-placeholder mt-2 w-[60%] rounded-[10px] md:w-[28%] ${
-                      isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                      isEditMode
+                        ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                        : 'bg-[#D9D9D9]'
                     } p-4 text-xl text-[#252641]`}
                   >
                     {demoUserProfile.gender}
@@ -281,7 +292,9 @@ const UserInformation = () => {
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -301,7 +314,9 @@ const UserInformation = () => {
                   value={userPhone}
                   onChange={(e) => setUserPhone(e.target.value)}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
-                    isEditMode ? 'border-[1px] border-[#D9D9D9]' : 'bg-[#D9D9D9]'
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641]`}
                 />
               </div>
@@ -312,7 +327,7 @@ const UserInformation = () => {
                   setIsEditMode(false);
                   setSuccessSnackbar(true);
                 }}
-                className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-3 px-6 text-xl font-semibold text-white'
+                className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-3 px-6 text-xl font-semibold text-white hover:bg-[#4285f4]/[.7]'
               >
                 Cập nhật
               </button>

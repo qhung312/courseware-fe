@@ -1,5 +1,4 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import DemoLineChart from '../../../../assets/images/DemoLineChart.png';
@@ -55,7 +54,6 @@ const SubjectStatisticData: SubjectStatisticProps[] = [
 ];
 
 const SubjectStatistic = () => {
-  const [currentOption, setCurrentOption] = useState(3);
   const params = useParams();
   const subject = params ? SubjectIdMapping[Number(params.subjectId) - 1] : null;
 
@@ -63,11 +61,11 @@ const SubjectStatistic = () => {
     <Page title='Thông tin người dùng - Thống kê điểm số'>
       <main className='w-full'>
         {/* Banner */}
-        <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
+        <ProfileOption option={3} />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:pt-10 lg:px-[60px]'>
           <Link
             to='/profile/statistic'
-            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white lg:text-[18px] 3xl:text-2xl'
+            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:text-[18px] 3xl:text-2xl'
           >
             <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
             Quay lại
@@ -113,7 +111,10 @@ const SubjectStatistic = () => {
                 <div className='flex flex-col border-t-[1px] border-t-[#D9D9D9] pt-3' key={index}>
                   <div className='flex justify-between'>
                     <p className='font-medium text-[#252641]'>{test.name}</p>
-                    <Link to={test.link} className='font-semibold text-[#252641] underline'>
+                    <Link
+                      to={test.link}
+                      className='font-semibold text-[#252641] underline hover:text-[#4285f4]'
+                    >
                       Xem lại
                     </Link>
                   </div>
@@ -142,7 +143,7 @@ const SubjectStatistic = () => {
                     </div>
                     <Link
                       to={test.link}
-                      className='font-semibold text-[#252641] underline lg:text-[18px] 3xl:text-2xl'
+                      className='font-semibold text-[#252641] underline hover:text-[#4285f4] lg:text-[18px] 3xl:text-2xl'
                     >
                       Xem lại
                     </Link>

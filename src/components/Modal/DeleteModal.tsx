@@ -59,14 +59,14 @@ const DeleteModal = ({ text, onClose, onDelete, show }: DeleteModalProps) => {
         <div className='mt-3 flex w-[260px] justify-between'>
           <button
             type='button'
-            className='h-11 w-[92px] rounded-[4px] border border-[#E9E9E9] bg-white text-center text-base text-[#404046]'
+            className='h-11 w-[92px] rounded-[4px] border border-[#E9E9E9] bg-white text-center text-base text-[#404046] hover:bg-black/[.2]'
             onClick={handleCancel}
           >
             Hủy
           </button>
           <button
             type='button'
-            className='h-11 w-[92px] rounded-[4px] border bg-[#DB4437] text-center text-base text-white'
+            className='h-11 w-[92px] rounded-[4px] border bg-[#DB4437] text-center text-base text-white hover:bg-[#DB4437]/[.8]'
             onClick={handleDelete}
           >
             Xóa

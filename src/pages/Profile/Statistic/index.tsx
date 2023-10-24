@@ -49,7 +49,6 @@ const demoExerciseGrade: SubjectGrade[] = [
 ];
 
 const Statistic = () => {
-  const [currentOption, setCurrentOption] = useState(3);
   const [isTestGradeOpen, setIsTestGradeOpen] = useState(false);
   const [isExerciseGradeOpen, setIsExerciseGradeOpen] = useState(false);
 
@@ -69,7 +68,7 @@ const Statistic = () => {
     <Page title='Thông tin người dùng - Thống kê điểm số'>
       <main className='w-full'>
         {/* Banner */}
-        <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
+        <ProfileOption option={3} />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:gap-x-[2%] md:pt-10 lg:px-[60px]'>
           <div className='absolute bottom-10 right-0 z-0 hidden h-[220px] w-[220px] rounded-[20px] bg-[#33EFA0] md:block lg:right-10' />
           <div className='absolute top-5 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block lg:left-10' />
@@ -125,7 +124,7 @@ const Statistic = () => {
                   />
                   <Link
                     to={subject.link}
-                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white hover:bg-[#49BBBD]/[.8]'
                   >
                     {subject.name}
                   </Link>
@@ -182,7 +181,7 @@ const Statistic = () => {
                   />
                   <Link
                     to={subject.link}
-                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white hover:bg-[#49BBBD]/[.8]'
                   >
                     {subject.name}
                   </Link>
@@ -218,7 +217,7 @@ const Statistic = () => {
                   />
                   <Link
                     to={subject.link}
-                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white hover:bg-[#49BBBD]/[.8]'
                   >
                     {subject.name}
                   </Link>
@@ -254,7 +253,7 @@ const Statistic = () => {
                   />
                   <Link
                     to={subject.link}
-                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white'
+                    className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white hover:bg-[#49BBBD]/[.8]'
                   >
                     {subject.name}
                   </Link>

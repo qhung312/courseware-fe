@@ -87,7 +87,6 @@ const demoData: ActivityContent[] = [
 ];
 
 const ActivityHistory = () => {
-  const [currentOption, setCurrentOption] = useState(1);
   const [page, setPage] = useState(1);
   const [chunks, setChunks] = useState(_.chunk(demoData, 5));
   const [filterOption, setFilterOption] = useState(0);
@@ -123,7 +122,7 @@ const ActivityHistory = () => {
       </div>
       <main className='w-full'>
         {/* Banner */}
-        <ProfileOption option={currentOption} setOption={(opt) => setCurrentOption(opt)} />
+        <ProfileOption option={2} />
         <div className='bg-white px-5 pt-4 pb-[64px] lg:flex lg:gap-x-[2%] lg:pt-10'>
           <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl lg:hidden'>
             Nhật ký hoạt động
@@ -268,7 +267,7 @@ const ActivityHistory = () => {
             </div>
             <div className='mt-6 mb-5 h-[1px] w-full bg-[#696984]' />
             <button
-              className={`flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 2xl:px-4 ${
+              className={`flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 1 && 'bg-[#9DCCFF]/[.3]'
               }`}
               onClick={() => {
@@ -286,7 +285,7 @@ const ActivityHistory = () => {
               </div>
             </button>
             <button
-              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 2xl:px-4 ${
+              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 2 && 'bg-[#9DCCFF]/[.3]'
               }`}
               onClick={() => {
@@ -304,7 +303,7 @@ const ActivityHistory = () => {
               </div>
             </button>
             <button
-              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 2xl:px-4 ${
+              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 3 && 'bg-[#9DCCFF]/[.3]'
               }`}
               onClick={() => {
@@ -343,7 +342,7 @@ const ActivityHistory = () => {
                   >
                     <CopyIcon copyContent={activity.pageUrl} />
                     <button
-                      className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437]'
+                      className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437] hover:bg-[#DB4437]/[.8]'
                       onClick={() => setDeleteModal(true)}
                     >
                       <Icon.Delete fill='white' className='h-4 w-4' />
