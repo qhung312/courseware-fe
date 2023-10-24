@@ -5,7 +5,7 @@ import SubjectService from '../service/subject.service';
 import type { Subject } from '../types/subject';
 
 export interface TLibraryState {
-  subjects: Array<Subject> | null;
+  subjects: Array<Subject>;
 }
 
 export interface TLibraryActions {
@@ -15,7 +15,7 @@ export interface TLibraryActions {
 export interface TLibrarySlice extends TLibraryState, TLibraryActions {}
 
 export const initialState: TLibraryState = {
-  subjects: null,
+  subjects: [],
 };
 
 export const LibrarySlice: StateCreator<
@@ -28,7 +28,7 @@ export const LibrarySlice: StateCreator<
   getAllSubjects: async () => {
     try {
       const { data } = await SubjectService.getAll();
-      set({ subjects: data.payload });
+      set({ subjects: data.payload.result });
     } catch (error: any) {
       set({ ...initialState });
     }
