@@ -10,7 +10,6 @@ export interface TAuthState {
 export interface TAuthActions {
   loginWithGoogle: () => void;
   setToken: (token: string) => void;
-  logout: () => void;
 }
 
 export interface TAuthSlice extends TAuthState, TAuthActions {}
@@ -30,9 +29,5 @@ export const AuthSlice: StateCreator<TAuthSlice, [['zustand/devtools', never]], 
   setToken: (token) => {
     localStorage.setItem('token', JSON.stringify(token));
     set({ isAuthenticated: true, token });
-  },
-  logout: () => {
-    localStorage.clear();
-    set({ ...initialState });
   },
 });

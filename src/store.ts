@@ -33,6 +33,7 @@ const useBoundStoreBase = create<
     ...UserSlice(...a),
     ...LibrarySlice(...a),
     logout: () => {
+      localStorage.clear();
       a[0]({ ...authInitialState, ...userInitialState });
     },
   }))

@@ -11,29 +11,23 @@ input[type='checkbox'] {
   color: currentColor;
   aspect-ratio: 1;
   width: auto;
-  height: 2em;
+  height: 1.5rem;
   border: 1px solid currentColor;
   border-radius: 50%;
   transition: all 300ms ease-out;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
   input[type='radio'],
   input[type='checkbox'] {
     width: auto;
-    height: 1.5em;
+    height: 2em;
   }
 }
 
 input[type='radio'] ~ span,
 input[type='checkbox'] ~ span {
   pointer-events: none;
-}
-
-input[type='radio']:checked,
-input[type='checkbox']:checked {
-  background-color: #49bbbd;
-  border: none;
 }
 
 input[type='radio']:focus,

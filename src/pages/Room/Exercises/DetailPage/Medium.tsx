@@ -9,9 +9,12 @@ import { ConcreteQuestion } from '../../../../types/question';
 const QuestionBoard: React.FC<{ quiz: typeof Quiz }> = ({ quiz }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
+
+  const maxPage = Math.ceil(quiz.questions[0].subQuestions.length / 40);
+
   return (
     <div
-      className={`fixed top-0 z-10 block h-full w-full space-y-4 bg-white pt-[84px] transition-all duration-500 ${
+      className={`fixed top-0 z-10 block h-full w-full space-y-4 bg-white pt-[84px] transition-all duration-500 md:hidden ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
@@ -24,7 +27,8 @@ const QuestionBoard: React.FC<{ quiz: typeof Quiz }> = ({ quiz }) => {
         <Icon.Chevron className={`h-6 w-auto ${isOpen ? 'rotate-90' : '-rotate-90'}`} fill='#666' />
       </button>
       <div className='flex flex-col items-start justify-between space-y-4 px-4'>
-        <div className='flex w-full flex-1 flex-wrap items-center justify-center gap-x-2 gap-y-2'>
+        <h2 className='text-xl font-medium'>Danh sách câu hỏi</h2>
+        <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
           {quiz.questions.map((question) =>
             question.subQuestions.map((subQuestion, index) => (
               <div
@@ -66,16 +70,39 @@ const QuestionBoard: React.FC<{ quiz: typeof Quiz }> = ({ quiz }) => {
             ))
           )}
         </div>
-        <div className='flex flex-1 flex-row items-center justify-between'>
+        <div className='flex w-full flex-1 flex-row items-center justify-between'>
           <button type='button' className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'>
             <p className='text-base font-semibold text-white'>Hoàn thành bài làm</p>
           </button>
-          <Pagination
-            totalCount={quiz.questions[0].subQuestions.length}
-            pageSize={40}
-            currentPage={page}
-            onPageChange={setPage}
-          />
+          <ul className='flex flex-row items-center justify-center gap-x-4'>
+            <li className='flex h-fit w-fit'>
+              <button
+                type='button'
+                className={`flex h-10 w-10 items-center justify-center rounded-lg bg-[#49CCCF] ${
+                  page === 1 ? 'cursor-not-allowed opacity-50' : ''
+                }`}
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                <Icon.Chevron className='h-7 w-7 -rotate-90 fill-white' />
+              </button>
+            </li>
+            <li className='flex h-fit w-fit'>
+              <p className='text-base font-semibold'>{page}</p>
+            </li>
+            <li className='flex h-fit w-fit'>
+              <button
+                type='button'
+                className={`flex h-10 w-10 items-center justify-center rounded-lg bg-[#49CCCF] ${
+                  page === maxPage ? 'cursor-not-allowed opacity-50' : ''
+                }`}
+                disabled={page === maxPage}
+                onClick={() => setPage(page + 1)}
+              >
+                <Icon.Chevron className='h-7 w-7 rotate-90 fill-white' />
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -102,12 +129,9 @@ const Medium: React.FC = () => {
       return { ...prev, questions: newQuestions };
     });
   }, []);
-  // const params = useParams();
-
-  // const quizId = params ? Number(params.chapterId) : null;
 
   return (
-    <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden'>
+    <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden md:hidden'>
       <div className='flex w-full flex-col items-start justify-start bg-[#F2F2F2] p-5 md:hidden'>
         <div className='flex w-full flex-col space-y-4'>
           <h1 className='text-2xl font-bold'>{quiz.fromTemplate.name}</h1>
@@ -141,7 +165,7 @@ const Medium: React.FC = () => {
               ))
             )}
           </div>
-          <Pagination totalCount={6} pageSize={2} currentPage={page} onPageChange={setPage} />
+          <Pagination totalCount={100} pageSize={2} currentPage={page} onPageChange={setPage} />
         </div>
       </div>
       <QuestionBoard quiz={quiz} />

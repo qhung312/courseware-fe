@@ -15,6 +15,7 @@ import { QuizStatus } from '../../types/quiz';
 import Icon from '../Icon';
 
 type InputAnswerProps = {
+  status: QuizStatus;
   question: ConcreteQuestion['subQuestions'][0];
   helpers: {
     stringAnswer: string;
@@ -27,7 +28,7 @@ type InputAnswerProps = {
   };
 };
 
-const InputAnswer = memo(function Component({ question, helpers }: InputAnswerProps) {
+const InputAnswer = memo(function Component({ status, question, helpers }: InputAnswerProps) {
   const {
     stringAnswer,
     singleValueAnswer,
@@ -79,6 +80,14 @@ const InputAnswer = memo(function Component({ question, helpers }: InputAnswerPr
                       userAnswerKey: option.key,
                     });
                   }}
+                  disabled={status !== QuizStatus.ONGOING}
+                  className={`${
+                    status === QuizStatus.ONGOING
+                      ? 'checked:bg-[#4285F4]'
+                      : question.isCorrect
+                      ? 'checked:bg-[#49CCCF]'
+                      : 'checked:bg-[#DB4437]'
+                  }`}
                   type='radio'
                   name={`question-${question._id}`}
                   value={option.key}
@@ -108,6 +117,14 @@ const InputAnswer = memo(function Component({ question, helpers }: InputAnswerPr
               <div className='relative flex items-center'>
                 <input
                   id={`question-${question._id}-answer-${option.key}`}
+                  className={`${
+                    status === QuizStatus.ONGOING
+                      ? 'checked:bg-[#4285F4]'
+                      : question.isCorrect
+                      ? 'checked:bg-[#49CCCF]'
+                      : 'checked:bg-[#DB4437]'
+                  }`}
+                  disabled={status !== QuizStatus.ONGOING}
                   onChange={optimizedSetMultipleValueAnswer}
                   name={`question-${question._id}`}
                   type='checkbox'
@@ -140,6 +157,7 @@ const InputAnswer = memo(function Component({ question, helpers }: InputAnswerPr
           <input
             id={`question-${question._id}`}
             type='text'
+            disabled={status !== QuizStatus.ONGOING}
             placeholder='Nhập câu trả lời'
             value={stringAnswer}
           />
@@ -177,15 +195,28 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
   }, [stringAnswer, singleValueAnswer, multipleValueAnswer, handleChange]);
 
   return (
-    <div className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4'>
+    <div
+      className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4 
+      md:bg-[#9DCCFF]/20 3xl:space-y-6'
+    >
       <div className='flex w-full flex-row items-center justify-between gap-x-6'>
         <div className='flex flex-row items-center gap-x-2'>
           <div
-            className={`h-5 w-5 rounded-full bg-[#49BBBD] ${
-              status === QuizStatus.ENDED ? '' : 'hidden'
+            className={`h-5 w-5 rounded-full ${status === QuizStatus.ENDED ? '' : 'hidden'} ${
+              question.isCorrect === undefined
+                ? 'bg-transparent'
+                : question.isCorrect
+                ? 'bg-[#49CCCF]'
+                : 'bg-[#DB4437]'
             }`}
-          />
-          <p className='text-base font-semibold'>Câu {questionNumber}</p>
+          >
+            <Icon.XMark
+              className={`${
+                question.isCorrect === undefined ? 'hidden' : question.isCorrect ? 'hidden' : ''
+              }`}
+            />
+          </div>
+          <p className='text-base font-semibold md:text-lg 3xl:text-xl'>Câu {questionNumber}</p>
         </div>
 
         <div className='relative flex flex-row items-center'>
@@ -223,14 +254,21 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
         </div>
       </div>
 
-      <div className='flex flex-col items-start space-y-2 rounded-lg bg-[#9DCCFF]/20 p-2'>
-        <p className='text-sm'>
+      <span className='hidden w-full border border-t-[#666] md:flex' />
+
+      <div
+        className='flex flex-col items-start space-y-2 rounded-lg bg-[#9DCCFF]/20 p-2
+        md:bg-transparent md:p-0 lg:space-y-3
+        3xl:space-y-6'
+      >
+        <p className='text-sm md:text-base'>
           Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do eiusmodadipiscing elit,
           sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing
           elit
         </p>
         <InputAnswer
+          status={status}
           question={question}
           helpers={{
             stringAnswer,

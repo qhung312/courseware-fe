@@ -121,8 +121,8 @@ const MaterialList = () => {
                   />
                   <Select
                     options={_.uniqBy(materials, 'chapter').map((material) => ({
-                      label: `Chương ${material.chapter.name}`,
-                      value: material.chapter.name,
+                      label: `Chương ${material.chapter?.name}`,
+                      value: material.chapter?.name,
                     }))}
                     onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
                     value={
@@ -205,7 +205,7 @@ const MaterialList = () => {
                                 {material.subject.name}
                               </td>
                               <td className='flex flex-[2.5] items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
-                                {material.chapter.name}
+                                {material.chapter?.name}
                               </td>
                               <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                                 {formatTime(material.createdAt)}
