@@ -1,10 +1,10 @@
-import { Chapter } from "./chapter";
-import { ExamArchive } from "./examArchive";
-import { Material } from "./material";
-import { QuestionType, ConcreteQuestion, QuestionTemplate } from "./question";
-import { QuizTemplate, QuizStatus, Quiz } from "./quiz";
-import { Subject } from "./subject";
-import { User } from "./user";
+import { Chapter } from './chapter';
+import { ExamArchive } from './examArchive';
+import { Material } from './material';
+import { QuestionType, ConcreteQuestion, QuestionTemplate } from './question';
+import { QuizTemplate, QuizStatus, Quiz } from './quiz';
+import { Subject } from './subject';
+import { User } from './user';
 
 export type {
   Chapter,
@@ -17,5 +17,5 @@ export type {
   QuizStatus,
   Quiz,
   Subject,
-  User
-}
+  User,
+};

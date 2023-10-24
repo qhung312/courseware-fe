@@ -59,7 +59,7 @@ const MaterialDetailPage: React.FC = () => {
             {material?.name}
           </h1>
           <h3>
-            {subjects?.find((subject) => subject._id === material?.subject)?.name || (
+            {subjects?.find((subject) => subject._id === material?.subject.name)?.name || (
               <Skeleton baseColor='#9DCCFF' />
             )}
           </h3>

@@ -17,6 +17,7 @@ const SubjectList = () => {
 
   const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
+    setPage(1);
   };
 
   const fetchSubjects = useDebounce(() => {
@@ -29,7 +30,6 @@ const SubjectList = () => {
         const { pageCount, result: allSubjects } = res.data.payload;
         setSubjects(allSubjects);
         setMaxPage(pageCount);
-        setPage(Math.min(page, pageCount));
       })
       .catch((err) => {
         console.error(err);
@@ -58,7 +58,7 @@ const SubjectList = () => {
               <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={filterName}
                     onChange={onInputFilterName}
@@ -81,7 +81,7 @@ const SubjectList = () => {
               {subjects.map((subject, index) => (
                 <div
                   key={index}
-                  className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60 
+                  className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60
                   px-6 py-2 lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
                 >
                   <p className='flex flex-[2.5] text-xs font-medium lg:text-sm 3xl:text-base'>

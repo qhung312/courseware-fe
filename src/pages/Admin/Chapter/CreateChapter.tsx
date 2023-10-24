@@ -1,29 +1,17 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
 
 import { Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
-
-const SUBJECTS = [
-  {
-    value: '1',
-    label: 'Giải tích 1',
-  },
-  {
-    value: '2',
-    label: 'Giải tích 2',
-  },
-  {
-    value: '3',
-    label: 'Giải tích 3',
-  },
-];
+import SubjectService from '../../../service/subject.service';
 
 const CreateChapterPage = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [subject, setSubject] = useState('');
+
+  const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -33,15 +21,32 @@ const CreateChapterPage = () => {
     setDescription(event.target.value);
   };
 
-  const onCreateSubject = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('hello world', event);
-  };
-  
+  const createChapter = (_: React.MouseEvent<HTMLButtonElement>) => {};
+
   const onSelectSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
       setSubject(event.value);
     }
   };
+
+  useEffect(() => {
+    // fetch subjects on first load
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setSubjectOptions(
+          allSubjects.map((sub) => {
+            return {
+              label: sub.name,
+              value: sub._id,
+            };
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <Page>
@@ -71,8 +76,8 @@ const CreateChapterPage = () => {
               <div className='flex flex-col gap-y-1'>
                 <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Tên</p>
                 <Select
-                  options={SUBJECTS}
-                  value={SUBJECTS.find((x) => x.value === subject) ?? null}
+                  options={subjectOptions}
+                  value={subjectOptions.find((x) => x.value === subject) ?? null}
                   onChange={onSelectSubject}
                   placeholder='Chọn chương'
                 />
@@ -99,7 +104,7 @@ const CreateChapterPage = () => {
                * Create button
                */}
               <div className='my-5 flex flex-row-reverse gap-x-8'>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={onCreateSubject}>
+                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createChapter}>
                   <p className='text-white'>Tạo</p>
                 </button>
               </div>

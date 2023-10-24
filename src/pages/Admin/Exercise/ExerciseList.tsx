@@ -26,21 +26,25 @@ const ExerciseListPage = () => {
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
-  const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) =>
+  const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
+    setPage(1);
+  };
 
   const onSelectFilterSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
       setFilterSubject(event.value);
+      setPage(1);
     }
   };
 
   const onSelectFilterChapter = (event: SingleValue<Option>) => {
     if (event !== null) {
       setFilterChapter(event.value);
+      setPage(1);
     }
   };
-  
+
   const fetchExercises = useDebounce(() => {
     QuizTemplateService.getAllPaginated({
       name: filterName,
@@ -49,21 +53,20 @@ const ExerciseListPage = () => {
       pageNumber: page,
       pageSize: ITEMS_PER_PAGE,
     })
-      .then(res => {
-        const { pageCount, result: allExercises } = res.data.payload
+      .then((res) => {
+        const { pageCount, result: allExercises } = res.data.payload;
         setExercises(allExercises);
         setMaxPage(pageCount);
-        setPage(Math.min(page, pageCount));
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
-      })
-  })
-  
+      });
+  });
+
   useEffect(() => {
     fetchExercises();
   }, [filterName, filterSubject, filterChapter, page, fetchExercises]);
-  
+
   useEffect(() => {
     // update options for chapter when the selected subject changes
     if (filterSubject === '') {
@@ -71,35 +74,39 @@ const ExerciseListPage = () => {
       setFilterChapter('');
       return;
     }
-    
+
     ChapterService.getAll({ subject: filterSubject })
-      .then(res => {
+      .then((res) => {
         const { result: chapters } = res.data.payload;
-        setFilterChapterOptions(chapters.map(chapter => ({
-          value: chapter._id,
-          label: chapter.name,
-        })))
+        setFilterChapterOptions(
+          chapters.map((chapter) => ({
+            value: chapter._id,
+            label: chapter.name,
+          }))
+        );
         setFilterChapter('');
       })
-      .catch(err => {
-        console.error(err)
-      })
-  }, [filterSubject])
-  
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [filterSubject]);
+
   useEffect(() => {
     // fetch subjects on first load
     SubjectService.getAll({})
-      .then(res => {
+      .then((res) => {
         const { result: allSubjects } = res.data.payload;
-        setFilterSubjectOptions(allSubjects.map(subject => ({
-          value: subject._id,
-          label: subject.name,
-        })))
+        setFilterSubjectOptions(
+          allSubjects.map((subject) => ({
+            value: subject._id,
+            label: subject.name,
+          }))
+        );
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
-      })
-  }, [])
+      });
+  }, []);
 
   return (
     <Page>
@@ -119,7 +126,7 @@ const ExerciseListPage = () => {
               <div className='mb-8 flex flex-1 flex-col items-center gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={filterName}
                     onChange={onInputFilterName}
@@ -151,6 +158,7 @@ const ExerciseListPage = () => {
                     setFilterName('');
                     setFilterSubject('');
                     setFilterChapter('');
+                    setPage(1);
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>

@@ -4,7 +4,47 @@ import { axios } from '../utils/custom-axios';
 import type { Material } from '../types/material';
 import type { Response } from '../types/response';
 
-const getAll = () => axios.get<Response<Material[]>>(`${API_URL}material`);
+type GetAllMaterialArgument = {
+  name?: string;
+  subject?: string;
+  chapter?: string;
+};
+type GetAllMaterialReturnType = {
+  total: number;
+  result: Material[];
+};
+const getAll = (query: GetAllMaterialArgument) => {
+  const queryString = `${API_URL}material?pagination=false\
+${query.name ? `&name=${query.name}` : ''}
+${query.subject ? `&subject=${query.subject}` : ''}
+${query.chapter ? `&chapter=${query.chapter}` : ''}`;
+
+  return axios.get<Response<GetAllMaterialReturnType>>(queryString);
+};
+
+type GetAllMaterialPaginatedArgument = {
+  name?: string;
+  subject?: string;
+  chapter?: string;
+  pageNumber?: number;
+  pageSize?: number;
+};
+type GetAllMaterialPaginatedReturnType = {
+  total: number;
+  pageSize: number;
+  pageCount: number;
+  result: Material[];
+};
+const getAllPaginated = (query: GetAllMaterialPaginatedArgument) => {
+  const queryString = `${API_URL}material?pagination=true\
+${query.name ? `&name=${query.name}` : ''}\
+${query.subject ? `&subject=${query.subject}` : ''}\
+${query.chapter ? `&chapter=${query.chapter}` : ''}\
+${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
+${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
+
+  return axios.get<Response<GetAllMaterialPaginatedReturnType>>(queryString);
+};
 
 const create = () => axios.post<Response<Material>>(`${API_URL}material`);
 
@@ -25,6 +65,7 @@ const getAllBySubject = (subjectId: string) =>
 
 const MaterialService = {
   getAll,
+  getAllPaginated,
   create,
   getAllBySubject,
   edit,

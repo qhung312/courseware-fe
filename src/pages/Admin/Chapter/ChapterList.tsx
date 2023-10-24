@@ -23,12 +23,15 @@ const ChapterListPage = () => {
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
-  const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) =>
+  const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
+    setPage(1);
+  };
 
   const onSelectFilterSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
       setFilterSubject(event.value);
+      setPage(1);
     }
   };
 
@@ -43,7 +46,6 @@ const ChapterListPage = () => {
         const { pageCount, result: allChapters } = res.data.payload;
         setChapters(allChapters);
         setMaxPage(pageCount);
-        setPage(Math.min(page, pageCount));
       })
       .catch((err) => {
         console.error(err);
@@ -90,7 +92,7 @@ const ChapterListPage = () => {
               <div className='mb-8 flex flex-1 flex-col items-center gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={filterName}
                     onChange={onInputFilterName}
@@ -113,6 +115,7 @@ const ChapterListPage = () => {
                   onClick={() => {
                     setFilterName('');
                     setFilterSubject('');
+                    setPage(1);
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>

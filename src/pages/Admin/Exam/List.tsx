@@ -1,83 +1,28 @@
-import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon, Select } from '../../../components';
+import { Option } from '../../../components/Select';
+import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
+import ExamArchiveService from '../../../service/examArchive.service';
+import SubjectService from '../../../service/subject.service';
+import { ExamArchive } from '../../../types';
+import { FILTER_EXAM_TYPE_OPTIONS, FILTER_SEMESTER_OPTIONS } from '../../../types/examArchive';
 
-const exams = [
-  {
-    id: 1,
-    name: 'Đề thi giữa kì 1 - Mã đề 2213',
-    subject: 'Giải tích 1',
-    type: 'midterm',
-    semester: '221',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-  {
-    id: 2,
-    name: 'Đề thi cuối kì 2 - Mã đề 2022',
-    subject: 'Giải tích 1',
-    type: 'final',
-    semester: '202',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-  {
-    id: 3,
-    name: 'Đề thi cuối kì 1 - Mã đề 1913',
-    subject: 'Giải tích 1',
-    type: 'final',
-    semester: '191',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-  {
-    id: 4,
-    name: 'Đề thi cuối kì 1 - Mã đề 2211',
-    subject: 'Giải tích 1',
-    type: 'final',
-    semester: '221',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-  {
-    id: 5,
-    name: 'Đề thi cuối kì 1 - Mã đề 2212',
-    subject: 'Giải tích 1',
-    type: 'final',
-    semester: '221',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-  {
-    id: 6,
-    name: 'Đề thi giữa kì 1 - Mã đề 2133',
-    subject: 'Giải tích 1',
-    type: 'midterm',
-    semester: '213',
-    createdAt: '20/10/2021, 18:00',
-    updatedAt: '3 giờ trước',
-  },
-];
-
-type SearchFormValue = {
-  name: string;
-  type: string;
-  subject: string;
-  semester: string;
-};
+const ITEMS_PER_PAGE = 10;
 
 const ExamList = () => {
+  const [filterName, setFilterName] = useState('');
+  const [filterSubject, setFilterSubject] = useState('');
+  const [filterSemester, setFilterSemester] = useState('');
+  const [filterExamType, setFilterExamType] = useState('');
+
+  const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
+  const [examArchives, setExamArchives] = useState<ExamArchive[]>([]);
+  const [maxPage, setMaxPage] = useState(1);
   const [page, setPage] = useState(1);
-  const [chunks, setChunks] = useState(_.chunk(exams, 10));
-  const [value, setValue] = useState<SearchFormValue>({
-    name: '',
-    type: '',
-    subject: '',
-    semester: '',
-  });
+
   const tableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -97,33 +42,45 @@ const ExamList = () => {
     };
   }, []);
 
+  const fetchExamArchive = useDebounce(() => {
+    ExamArchiveService.getAllPaginated({
+      name: filterName,
+      subject: filterSubject === '' ? undefined : filterSubject,
+      semester: filterSemester === '' ? undefined : filterSemester,
+      type: filterExamType === '' ? undefined : filterExamType,
+      pageNumber: page,
+      pageSize: ITEMS_PER_PAGE,
+    })
+      .then((res) => {
+        const { pageCount, result: allExamArchives } = res.data.payload;
+        setExamArchives(allExamArchives);
+        setMaxPage(pageCount);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+
   useEffect(() => {
-    const newExams = exams.filter((exam) => {
-      let result = true;
-      if (value.name !== '' && !exam.name.toLowerCase().includes(value.name.toLowerCase())) {
-        result = false;
-      }
-      if (value.type !== '' && !exam.type.toLowerCase().includes(value.type.toLowerCase())) {
-        result = false;
-      }
-      if (
-        value.subject !== '' &&
-        !exam.subject.toLowerCase().includes(value.subject.toLowerCase())
-      ) {
-        result = false;
-      }
-      if (
-        value.semester !== '' &&
-        !exam.semester.toLowerCase().includes(value.semester.toLowerCase())
-      ) {
-        result = false;
-      }
+    fetchExamArchive();
+  }, [page, filterName, filterSubject, filterSemester, filterExamType, fetchExamArchive]);
 
-      return result;
-    });
-
-    setChunks(_.chunk(newExams, 10));
-  }, [value]);
+  useEffect(() => {
+    // fetch all subjects on first load
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setFilterSubjectOptions(
+          allSubjects.map((subject) => ({
+            value: subject._id,
+            label: subject.name,
+          }))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <Page>
@@ -143,70 +100,72 @@ const ExamList = () => {
               <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-[2] items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={value.name}
-                    onChange={({ target }) => setValue({ ...value, name: target.value })}
+                    value={filterName}
+                    onChange={({ target }) => {
+                      setFilterName(target.value);
+                      setPage(1);
+                    }}
                     placeholder='Tìm tên đề thi'
                   />
                 </div>
                 <div className='flex w-full flex-[3] flex-col gap-y-4 md:flex-row md:gap-x-4'>
                   <Select
-                    options={_.uniqBy(exams, 'subject').map((exam) => ({
-                      label: exam.subject,
-                      value: exam.subject,
-                    }))}
-                    value={
-                      value.subject === '' ? null : { label: value.subject, value: value.subject }
-                    }
-                    onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
+                    options={filterSubjectOptions}
+                    value={filterSubjectOptions.find((x) => x.value === filterSubject) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setFilterSubject(v.value);
+                        setPage(1);
+                      }
+                    }}
                     placeholder='Chọn môn'
                   />
                   <Select
-                    options={[
-                      {
-                        label: 'Giữa kì',
-                        value: 'midterm',
-                      },
-                      {
-                        label: 'Cuối kì',
-                        value: 'final',
-                      },
-                    ]}
-                    onChange={(v) => setValue({ ...value, type: v?.value || '' })}
-                    value={
-                      value.type === ''
-                        ? null
-                        : {
-                            label: value.type === 'midterm' ? 'Giữa kì' : 'Cuối kì',
-                            value: value.type,
-                          }
-                    }
-                    placeholder='Chọn kì thi'
+                    options={FILTER_SEMESTER_OPTIONS}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setFilterSemester(v.value);
+                        setPage(1);
+                      }
+                    }}
+                    value={FILTER_SEMESTER_OPTIONS.find((x) => x.value === filterSemester) ?? null}
+                    placeholder='Chọn học kì'
                   />
                   <Select
-                    options={_.uniqBy(exams, 'semester')
-                      .sort((a, b) => Number(b.semester) - Number(a.semester))
-                      .map((exam) => ({
-                        label: exam.semester,
-                        value: exam.semester,
-                      }))}
-                    onChange={(v) => setValue({ ...value, semester: v?.value || '' })}
-                    value={
-                      value.semester === ''
-                        ? null
-                        : { label: value.semester, value: value.semester }
-                    }
-                    placeholder='Chọn học kì'
+                    options={FILTER_EXAM_TYPE_OPTIONS}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setFilterExamType(v.value);
+                        setPage(1);
+                      }
+                    }}
+                    value={FILTER_EXAM_TYPE_OPTIONS.find((x) => x.value === filterExamType) ?? null}
+                    placeholder='Chọn loại đề thi'
                   />
                 </div>
                 <button
                   className={`flex flex-[0.5] ${
-                    _.some(value, (v) => !_.isEmpty(v)) ? 'opacity-1' : 'opacity-0'
+                    filterName !== '' ||
+                    filterSubject !== '' ||
+                    filterSemester !== '' ||
+                    filterExamType !== ''
+                      ? 'opacity-1'
+                      : 'opacity-0'
                   }`}
-                  disabled={_.every(value, (v) => _.isEmpty(v))}
+                  disabled={
+                    filterName === '' &&
+                    filterSubject === '' &&
+                    filterSemester === '' &&
+                    filterExamType === ''
+                  }
                   onClick={() => {
-                    setValue({ name: '', subject: '', type: '', semester: '' });
+                    setFilterName('');
+                    setFilterSubject('');
+                    setFilterSemester('');
+                    setFilterExamType('');
+                    setPage(1);
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
@@ -223,16 +182,10 @@ const ExamList = () => {
                         Môn
                       </th>
                       <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Kì thi
-                      </th>
-                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                         Học kì
                       </th>
-                      <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Thời gian tạo
-                      </th>
-                      <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Thời gian cập nhật
+                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        Kì thi
                       </th>
                       <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                         {''}
@@ -240,28 +193,22 @@ const ExamList = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {chunks[page - 1]?.map((exam) => (
+                    {examArchives.map((exam) => (
                       <tr
-                        key={`exam-${exam.id}`}
+                        key={`exam-${exam._id}`}
                         className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                       >
                         <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                           {exam.name}
                         </td>
                         <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {exam.subject}
+                          {exam?.subject?.name}
                         </td>
                         <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {exam.type === 'midterm' ? 'Giữa kì' : 'Cuối kì'}
+                          {FILTER_SEMESTER_OPTIONS.find((x) => x.value === exam.semester)?.label}
                         </td>
                         <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {exam.semester}
-                        </td>
-                        <td className='flex flex-[2] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {exam.createdAt}
-                        </td>
-                        <td className='flex flex-[2] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {exam.updatedAt}
+                          {FILTER_EXAM_TYPE_OPTIONS.find((x) => x.value === exam.type)?.label}
                         </td>
                         <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                           <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
@@ -291,7 +238,7 @@ const ExamList = () => {
                 >
                   <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
                 </button>
-                {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
+                {Array.from({ length: maxPage }, (_e, index) => index + 1).map((index) => (
                   <button
                     key={`page-${index}`}
                     className={`aspect-square rounded-full p-2 ${
@@ -309,10 +256,8 @@ const ExamList = () => {
                   </button>
                 ))}
                 <button
-                  className={`rounded-full p-2 ${
-                    page === chunks.length ? '' : 'hover:bg-black/20'
-                  }`}
-                  disabled={page === chunks.length}
+                  className={`rounded-full p-2 ${page === maxPage ? '' : 'hover:bg-black/20'}`}
+                  disabled={page === maxPage}
                   onClick={() => setPage(page + 1)}
                 >
                   <Icon.Chevron fill='#5B5B5B' className='rotate-90' />

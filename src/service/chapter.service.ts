@@ -4,13 +4,13 @@ import { Response } from '../types/response';
 import { axios } from '../utils/custom-axios';
 
 type GetAllChaptersArgument = {
-  name?: string
-  subject?: string
-}
+  name?: string;
+  subject?: string;
+};
 type GetAllChaptersReturnType = {
-  total: number
-  result: Chapter[]
-}
+  total: number;
+  result: Chapter[];
+};
 const getAll = (query: GetAllChaptersArgument) => {
   const queryString = `${API_URL}chapter?pagination=false\
 ${query.name ? `&name=${encodeURIComponent(query.name)}` : ''}\
@@ -20,16 +20,16 @@ ${query.subject ? `&subject=${encodeURIComponent(query.subject)}` : ''}`;
 };
 
 type GetAllChaptersPaginatedArgument = {
-  name?: string
-  subject?: string
-  pageNumber?: number
-  pageSize?: number
+  name?: string;
+  subject?: string;
+  pageNumber?: number;
+  pageSize?: number;
 };
 type GetAllChaptersPaginatedReturnType = {
-  total: number
-  pageCount: number
-  pageSize: number
-  result: Chapter[]
+  total: number;
+  pageCount: number;
+  pageSize: number;
+  result: Chapter[];
 };
 const getAllPaginated = (query: GetAllChaptersPaginatedArgument) => {
   const queryString = `${API_URL}chapter?pagination=true\

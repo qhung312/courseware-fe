@@ -27,18 +27,22 @@ const QuestionListPage = () => {
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
-  const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) =>
+  const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
+    setPage(1);
+  };
 
   const onSelectFilterSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
       setFilterSubject(event.value);
+      setPage(1);
     }
   };
 
   const onSelectFilterChapter = (event: SingleValue<Option>) => {
     if (event !== null) {
       setFilterChapter(event.value);
+      setPage(1);
     }
   };
 
@@ -50,13 +54,12 @@ const QuestionListPage = () => {
       pageNumber: page,
       pageSize: ITEMS_PER_PAGE,
     })
-      .then(res => {
+      .then((res) => {
         const { pageCount, result: allQuestionTemplates } = res.data.payload;
         setQuestionTemplates(allQuestionTemplates);
         setMaxPage(pageCount);
-        setPage(Math.min(page, pageCount));
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -64,11 +67,11 @@ const QuestionListPage = () => {
   useEffect(() => {
     fetchQuestionTemplates();
   }, [page, filterName, filterSubject, filterChapter, fetchQuestionTemplates]);
-  
+
   useEffect(() => {
     // fetch all subjects on first load
     SubjectService.getAll({})
-      .then(res => {
+      .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
           allSubjects.map((subject) => ({
@@ -77,11 +80,11 @@ const QuestionListPage = () => {
           }))
         );
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }, []);
-  
+
   useEffect(() => {
     // fetch all chapters when the selected subject changes
     if (filterSubject === '') {
@@ -89,9 +92,9 @@ const QuestionListPage = () => {
       setFilterChapter('');
       return;
     }
-    
+
     ChapterService.getAll({ subject: filterSubject })
-      .then(res => {
+      .then((res) => {
         const { result: allChapters } = res.data.payload;
         setFilterChapterOptions(
           allChapters.map((chapter) => {
@@ -103,9 +106,9 @@ const QuestionListPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err)
-      })
-  }, [filterSubject])
+        console.error(err);
+      });
+  }, [filterSubject]);
 
   return (
     <Page>
@@ -125,7 +128,7 @@ const QuestionListPage = () => {
               <div className='mb-8 flex flex-1 flex-col items-center gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={filterName}
                     onChange={onInputFilterName}
@@ -157,6 +160,7 @@ const QuestionListPage = () => {
                     setFilterName('');
                     setFilterSubject('');
                     setFilterChapter('');
+                    setPage(1);
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
