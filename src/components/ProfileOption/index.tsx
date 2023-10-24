@@ -35,7 +35,7 @@ const ProfileOption = ({ option }: Option) => {
       </div>
       <div className='mt-8 grid w-full max-w-[496px] grid-cols-3 gap-x-2 px-5 md:mt-0 md:flex md:max-w-full md:justify-end md:bg-[#E3F2FD] md:py-5 md:pr-10 xl:justify-center'>
         <Link
-          to='/profile/information'
+          to='/profile'
           className={`w-full max-w-[160px] rounded-[12px] lg:max-w-[160px] 3xl:max-w-[200px] ${
             option === 1
               ? 'bg-[#4285f4] text-white'

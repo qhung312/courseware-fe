@@ -51,14 +51,6 @@ const UserRoute = () => {
             path=''
             element={
               <Suspense fallback={<Loading />}>
-                <HomePage />
-              </Suspense>
-            }
-          />
-          <Route
-            path='information'
-            element={
-              <Suspense fallback={<Loading />}>
                 <UserInformation />
               </Suspense>
             }

@@ -33,14 +33,7 @@ const demoUserProfile: UserInformationProps = {
 const UserInformation = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isGenderOpen, setIsGenderOpen] = useState(false);
-  const [userLastName, setUserLastName] = useState(demoUserProfile.lastname);
-  const [userFirstName, setUserFirstName] = useState(demoUserProfile.firstname);
-  const [userStudentId, setUserStudentId] = useState(demoUserProfile.studentId);
-  const [userMajor, setUserMajor] = useState(demoUserProfile.major);
-  const [userBirthday, setUserBirthday] = useState(demoUserProfile.birthday);
-  const [userGender, setUserGender] = useState(demoUserProfile.gender);
-  const [userEmail, setUserEmail] = useState(demoUserProfile.email);
-  const [userPhone, setUserPhone] = useState(demoUserProfile.phone);
+  const [userProfile, setUserProfile] = useState<UserInformationProps>(demoUserProfile);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
 
   const onLibraryClick = () => {
@@ -88,9 +81,9 @@ const UserInformation = () => {
                   id='lastname&middlename'
                   name='lastname&middlename'
                   disabled={!isEditMode}
-                  placeholder={userLastName}
-                  value={userLastName}
-                  onChange={(e) => setUserLastName(e.target.value)}
+                  placeholder={userProfile.lastname}
+                  value={userProfile.lastname}
+                  onChange={(e) => setUserProfile({ ...userProfile, lastname: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -110,9 +103,9 @@ const UserInformation = () => {
                   id='firstname'
                   name='firstname'
                   disabled={!isEditMode}
-                  placeholder={userFirstName}
-                  value={userFirstName}
-                  onChange={(e) => setUserFirstName(e.target.value)}
+                  placeholder={userProfile.firstname}
+                  value={userProfile.firstname}
+                  onChange={(e) => setUserProfile({ ...userProfile, firstname: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -132,9 +125,9 @@ const UserInformation = () => {
                   id='studentId'
                   name='studentId'
                   disabled={!isEditMode}
-                  placeholder={userStudentId}
-                  value={userStudentId}
-                  onChange={(e) => setUserStudentId(e.target.value)}
+                  placeholder={userProfile.studentId}
+                  value={userProfile.studentId}
+                  onChange={(e) => setUserProfile({ ...userProfile, studentId: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -154,9 +147,9 @@ const UserInformation = () => {
                   id='major'
                   name='major'
                   disabled={!isEditMode}
-                  value={userMajor}
-                  placeholder={userMajor}
-                  onChange={(e) => setUserMajor(e.target.value)}
+                  value={userProfile.major}
+                  placeholder={userProfile.major}
+                  onChange={(e) => setUserProfile({ ...userProfile, major: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -176,9 +169,9 @@ const UserInformation = () => {
                   id='birthday'
                   name='birthday'
                   disabled={!isEditMode}
-                  placeholder={userBirthday}
-                  value={userBirthday}
-                  onChange={(e) => setUserBirthday(e.target.value)}
+                  placeholder={userProfile.birthday}
+                  value={userProfile.birthday}
+                  onChange={(e) => setUserProfile({ ...userProfile, birthday: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -201,7 +194,7 @@ const UserInformation = () => {
                       onClick={throttledLibraryClick}
                     >
                       <p className='text-xl text-[#252641] transition-colors duration-300 ease-linear'>
-                        {userGender}
+                        {userProfile.gender}
                       </p>
                       <Icon.ChevronUp
                         fillOpacity={0.87}
@@ -225,10 +218,10 @@ const UserInformation = () => {
                     >
                       <div
                         className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userGender === 'Nam' && 'bg-[#E3F2FD]'
+                          userProfile.gender === 'Nam' && 'bg-[#E3F2FD]'
                         }`}
                         onClick={() => {
-                          setUserGender('Nam');
+                          setUserProfile({ ...userProfile, gender: 'Nam' });
                           throttledLibraryClick();
                         }}
                       >
@@ -238,10 +231,10 @@ const UserInformation = () => {
                       </div>
                       <div
                         className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userGender === 'Nữ' && 'bg-[#E3F2FD]'
+                          userProfile.gender === 'Nữ' && 'bg-[#E3F2FD]'
                         }`}
                         onClick={() => {
-                          setUserGender('Nữ');
+                          setUserProfile({ ...userProfile, gender: 'Nữ' });
                           throttledLibraryClick();
                         }}
                       >
@@ -251,10 +244,10 @@ const UserInformation = () => {
                       </div>
                       <div
                         className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userGender === 'Khác' && 'bg-[#E3F2FD]'
+                          userProfile.gender === 'Khác' && 'bg-[#E3F2FD]'
                         }`}
                         onClick={() => {
-                          setUserGender('Khác');
+                          setUserProfile({ ...userProfile, gender: 'Khácu4' });
                           throttledLibraryClick();
                         }}
                       >
@@ -288,9 +281,9 @@ const UserInformation = () => {
                   id='email'
                   name='email'
                   disabled={!isEditMode}
-                  placeholder={userEmail}
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
+                  placeholder={userProfile.email}
+                  value={userProfile.email}
+                  onChange={(e) => setUserProfile({ ...userProfile, email: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -310,9 +303,9 @@ const UserInformation = () => {
                   id='phone'
                   name='phone'
                   disabled={!isEditMode}
-                  placeholder={userPhone}
-                  value={userPhone}
-                  onChange={(e) => setUserPhone(e.target.value)}
+                  placeholder={userProfile.phone}
+                  value={userProfile.phone}
+                  onChange={(e) => setUserProfile({ ...userProfile, phone: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
