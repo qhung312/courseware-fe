@@ -41,6 +41,7 @@ export const UserSlice: StateCreator<
           ...state.user,
           googleId: data.payload?.googleId,
           accessLevels: data.payload?.accessLevels,
+          isManager: data.payload?.isManager,
           name: data.payload?.name,
           picture: data.payload?.picture,
           dateOfBirth: data.payload?.dateOfBirth,

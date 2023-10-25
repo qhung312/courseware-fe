@@ -27,7 +27,7 @@ const CopyIcon: React.FC<CopyIconProps> = ({ copyContent }) => {
         }`}
         data-tooltip-content={copied ? 'Copied' : 'Copy'}
       >
-        <Icon.DocumentCopy className='h-4 w-4 fill-white' />
+        <Icon.Copy className='h-4 w-4 fill-white' />
       </button>
       <Tooltip anchorSelect='.copy-anchor' />
     </div>

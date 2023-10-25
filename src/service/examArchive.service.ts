@@ -50,22 +50,19 @@ ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
   return axios.get<Response<GetAllExamArchivePaginatedReturnType>>(queryString);
 };
 
-const create = () => axios.post<Response<ExamArchive>>(`${API_URL}previous-exams/`);
+const create = () => axios.post<Response<ExamArchive>>(`${API_URL}previous-exam/`);
 
 const edit = (examId: string) =>
-  axios.patch<Response<ExamArchive>>(`${API_URL}previous-exams/${examId}`);
+  axios.patch<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
 
 const deleteById = (examId: string) =>
-  axios.delete<Response<ExamArchive>>(`${API_URL}previous-exams/${examId}`);
+  axios.delete<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
 
 const download = (examId: string) =>
-  axios.get<Response<ExamArchive>>(`${API_URL}previous-exams/download/${examId}`);
+  axios.get<Response<ExamArchive>>(`${API_URL}previous-exam/download/${examId}`);
 
 const getById = (examId: string) =>
-  axios.get<Response<ExamArchive>>(`${API_URL}previous-exams/${examId}`);
-
-const getAllBySubject = (subjectId: string) =>
-  axios.get<Response<ExamArchive[]>>(`${API_URL}previous-exams/subject/${subjectId}`);
+  axios.get<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
 
 const ExamArchiveService = {
   getAll,
@@ -75,7 +72,6 @@ const ExamArchiveService = {
   deleteById,
   download,
   getById,
-  getAllBySubject,
 };
 
 export default ExamArchiveService;

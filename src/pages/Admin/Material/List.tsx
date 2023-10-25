@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
-import { Icon, Select } from '../../../components';
+import { Icon, Pagination, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -13,6 +14,8 @@ import { Material } from '../../../types';
 const ITEMS_PER_PAGE = 10;
 
 const MaterialList = () => {
+  const [loading, setLoading] = useState(false);
+
   const [filterName, setFilterName] = useState('');
   const [filterSubject, setFilterSubject] = useState('');
   const [filterChapter, setFilterChapter] = useState('');
@@ -21,23 +24,13 @@ const MaterialList = () => {
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
 
   const [materials, setMaterials] = useState<Material[]>([]);
-  const [maxPage, setMaxPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
   const [page, setPage] = useState(1);
 
   const tableRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    tableRef.current?.addEventListener('wheel', (e) => {
-      if (tableRef.current) {
-        if (tableRef.current.scrollWidth > tableRef.current.clientWidth) {
-          e.preventDefault();
-          tableRef.current?.scrollBy(e.deltaY, 0);
-        }
-      }
-    });
-  }, []);
-
   const fetchMaterial = useDebounce(() => {
+    setLoading(true);
     MaterialService.getAllPaginated({
       name: filterName,
       subject: filterSubject === '' ? undefined : filterSubject,
@@ -46,12 +39,15 @@ const MaterialList = () => {
       pageSize: ITEMS_PER_PAGE,
     })
       .then((res) => {
-        const { pageCount, result: allMaterials } = res.data.payload;
+        const { total, result: allMaterials } = res.data.payload;
         setMaterials(allMaterials);
-        setMaxPage(pageCount);
+        setTotalCount(total);
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   });
 
@@ -73,6 +69,9 @@ const MaterialList = () => {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -171,91 +170,90 @@ const MaterialList = () => {
                 </button>
               </div>
               <div ref={tableRef} className='w-full overflow-auto'>
-                <table className='flex w-full min-w-[720px] table-fixed flex-col gap-y-3 overflow-auto'>
-                  <thead>
-                    <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                      <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Tên tài liệu
-                      </th>
-                      <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Môn
-                      </th>
-                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        Chương
-                      </th>
-                      <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                        {''}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {materials.map((material) => (
-                      <tr
-                        key={`material-${material._id}`}
-                        className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
-                      >
-                        <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material.name}
-                        </td>
-                        <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material?.subject?.name}
-                        </td>
-                        <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {material?.chapter?.name}
-                        </td>
-                        <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                          <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
-                            <Icon.Edit
-                              fill='white'
-                              className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                            />
-                          </button>
-                          <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
-                            <Icon.Delete
-                              fill='white'
-                              className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                            />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className='mt-4 flex flex-1 flex-row items-center justify-center gap-x-4'>
-                <button
-                  className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
-                </button>
-                {Array.from({ length: maxPage }, (_e, index) => index + 1).map((index) => (
-                  <button
-                    key={`page-${index}`}
-                    className={`aspect-square rounded-full p-2 ${
-                      index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
-                    }`}
-                    onClick={() => setPage(index)}
-                  >
-                    <p
-                      className={`w-7 text-lg ${
-                        index === page ? 'font-semibold text-white' : 'font-medium'
-                      }`}
-                    >
-                      {index}
+                {loading ? (
+                  <>
+                    <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                      <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
                     </p>
-                  </button>
-                ))}
-                <button
-                  className={`rounded-full p-2 ${page === maxPage ? '' : 'hover:bg-black/20'}`}
-                  disabled={page === maxPage}
-                  onClick={() => setPage(page + 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
-                </button>
+                    <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                      {
+                        <Skeleton
+                          count={10}
+                          className='my-2 box-content lg:my-4 3xl:my-6'
+                          width={'100%'}
+                          height={40}
+                          baseColor='#9DCCFF'
+                        />
+                      }
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <table className='flex w-full min-w-[900px] table-fixed flex-col gap-y-3 overflow-auto'>
+                      <thead>
+                        <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
+                          <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Tên tài liệu
+                          </th>
+                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Môn
+                          </th>
+                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Chương
+                          </th>
+                          <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            {''}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className='w-full'>
+                        {materials.map((material) => (
+                          <tr
+                            key={`material-${material._id}`}
+                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                          >
+                            <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {material.name}
+                            </td>
+                            <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {material.subject?.name}
+                            </td>
+                            <td className='flex flex-[2.5] items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {material.chapter?.name}
+                            </td>
+                            <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                                <Icon.Edit
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                              <button
+                                onClick={async () => {
+                                  await MaterialService.deleteById(material._id);
+                                  setMaterials(materials.filter((m) => m._id !== material._id));
+                                }}
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                              >
+                                <Icon.Delete
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </>
+                )}
               </div>
+              <Pagination
+                pageSize={ITEMS_PER_PAGE}
+                totalCount={totalCount}
+                currentPage={page}
+                onPageChange={setPage}
+              />
             </main>
           </div>
         </div>

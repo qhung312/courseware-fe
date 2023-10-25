@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
-import { Icon } from '../../../components';
+import { Icon, Pagination } from '../../../components';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import SubjectService from '../../../service/subject.service';
@@ -10,10 +11,14 @@ import { Subject } from '../../../types';
 const ITEMS_PER_PAGE = 10;
 
 const SubjectList = () => {
+  const [loading, setLoading] = useState(false);
+
   const [page, setPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
   const [filterName, setFilterName] = useState('');
   const [subjects, setSubjects] = useState<Subject[]>([]);
+
+  const tableRef = React.useRef<HTMLDivElement>(null);
 
   const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
@@ -21,18 +26,22 @@ const SubjectList = () => {
   };
 
   const fetchSubjects = useDebounce(() => {
+    setLoading(true);
     SubjectService.getAllPaginated({
       name: filterName,
       pageNumber: page,
       pageSize: ITEMS_PER_PAGE,
     })
       .then((res) => {
-        const { pageCount, result: allSubjects } = res.data.payload;
+        const { total, result: allSubjects } = res.data.payload;
         setSubjects(allSubjects);
-        setMaxPage(pageCount);
+        setTotalCount(total);
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   });
 
@@ -78,66 +87,87 @@ const SubjectList = () => {
                 </p>
                 <div className='flex flex-1' />
               </div>
-              {subjects.map((subject, index) => (
-                <div
-                  key={index}
-                  className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60
-                  px-6 py-2 lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
-                >
-                  <p className='flex flex-[2.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                    {subject.name}
+
+              {loading ? (
+                <>
+                  <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                    <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
                   </p>
-                  <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                    {new Date(subject.createdAt).toLocaleString()}
+                  <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                    {
+                      <Skeleton
+                        count={10}
+                        className='my-2 box-content lg:my-4 3xl:my-6'
+                        width={'100%'}
+                        height={40}
+                        baseColor='#9DCCFF'
+                      />
+                    }
                   </p>
-                  <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                    {subject.lastUpdatedAt === undefined
-                      ? undefined
-                      : new Date(subject.lastUpdatedAt).toLocaleString()}
-                  </p>
-                  <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
-                    <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
-                      <Icon.Edit fill='white' className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6' />
-                    </button>
-                    <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
-                      <Icon.Delete fill='white' className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6' />
-                    </button>
+                </>
+              ) : (
+                <>
+                  <div ref={tableRef} className='w-full overflow-auto'>
+                    <table className='flex w-full min-w-[720px] table-fixed flex-col gap-y-3 overflow-auto'>
+                      <thead>
+                        <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
+                          <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Tên
+                          </th>
+                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Môn
+                          </th>
+                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            Chương
+                          </th>
+                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                            {''}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {subjects.map((subject) => (
+                          <tr
+                            key={`material-${subject._id}`}
+                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                          >
+                            <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {subject.name}
+                            </td>
+                            <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {subject?.name}
+                            </td>
+                            <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {new Date(subject.createdAt).toLocaleDateString()}
+                            </td>
+                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                                <Icon.Edit
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                              <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
+                                <Icon.Delete
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                </div>
-              ))}
-              <div className='mt-4 flex flex-1 flex-row items-center justify-center gap-x-4 pt-4'>
-                <button
-                  className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
-                </button>
-                {Array.from({ length: maxPage }, (_e, index) => index + 1).map((index) => (
-                  <button
-                    key={`page-${index}`}
-                    className={`aspect-square rounded-full p-2 ${
-                      index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
-                    }`}
-                    onClick={() => setPage(index)}
-                  >
-                    <p
-                      className={`w-7 text-lg ${
-                        index === page ? 'font-semibold text-white' : 'font-medium'
-                      }`}
-                    >
-                      {index}
-                    </p>
-                  </button>
-                ))}
-                <button
-                  className={`rounded-full p-2 ${page === maxPage ? '' : 'hover:bg-black/20'}`}
-                  disabled={page === maxPage}
-                  onClick={() => setPage(page + 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
-                </button>
-              </div>
+                </>
+              )}
+
+              <Pagination
+                currentPage={page}
+                totalCount={totalCount}
+                pageSize={ITEMS_PER_PAGE}
+                onPageChange={setPage}
+              />
             </main>
           </div>
         </div>

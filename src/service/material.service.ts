@@ -60,14 +60,10 @@ const download = (materialId: string) =>
 const getById = (materialId: string) =>
   axios.get<Response<Material>>(`${API_URL}material/${materialId}`);
 
-const getAllBySubject = (subjectId: string) =>
-  axios.get<Response<Material[]>>(`${API_URL}material/subject/${subjectId}`);
-
 const MaterialService = {
   getAll,
   getAllPaginated,
   create,
-  getAllBySubject,
   edit,
   deleteById,
   download,

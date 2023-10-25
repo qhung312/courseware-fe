@@ -41,12 +41,12 @@ const ExamArchivePage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setExamArchives(null);
-      ExamArchiveService.getAllBySubject(params?.subjectId)
+      ExamArchiveService.getAll({ subject: params?.subjectId })
         .then((res) => {
           const { data } = res;
           const { payload } = data;
 
-          setTimeout(() => setExamArchives(payload), 300);
+          setTimeout(() => setExamArchives(payload.result), 300);
         })
         .catch((err) => {
           console.log('Error in fetching all exams achives by subject id', err);

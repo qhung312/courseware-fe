@@ -11,15 +11,16 @@ export enum QuestionType {
 export type ConcreteQuestion = {
   _id: string;
   description?: string;
-  questions: {
+  subQuestions: {
     _id: string;
-    questionType: QuestionType;
+    type: QuestionType;
     description: string;
     options?: {
       key: number;
       description: string;
     }[];
     answerKey?: number;
+    starred: boolean;
     answerKeys?: number[];
     answerField?: string | number;
     matchCase?: boolean;
@@ -30,7 +31,7 @@ export type ConcreteQuestion = {
     userAnswerKey?: number;
     userAnswerKeys?: number[];
     userAnswerField?: string | number;
-    isCorrect: boolean;
+    isCorrect?: boolean;
   }[];
 };
 
@@ -48,8 +49,9 @@ export type QuestionTemplate = {
   subject: Subject;
   chapter: Chapter;
 
-  questions: {
+  subQuestions: {
     _id: string;
+    type: { type: String; enum: QuestionType; required: true };
     questionType: QuestionType;
     description: string;
     /**
@@ -60,14 +62,14 @@ export type QuestionTemplate = {
       key: number;
       description: string;
     }[];
-    shuffleOptions?: boolean;
+    shuffleOptions: boolean;
     answerKey?: number;
     answerKeys?: number[];
 
     /**
      * Store the correct answer on text or number field questions
      */
-    answerField: string;
+    answerField?: string;
     matchCase?: boolean; // require matching case on text questions
     maximumError?: number; // maximum error allowed on numeric questions
 
