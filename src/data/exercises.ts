@@ -75,7 +75,6 @@ const quiz: Quiz = {
     },
 
     duration: 3600000,
-    potentialQuestions: ['abebabdabdabebabdabd', 'ab', '21341234'],
     sampleSize: 40,
 
     createdBy: 'abadabeda',

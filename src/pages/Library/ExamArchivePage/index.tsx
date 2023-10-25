@@ -41,7 +41,7 @@ const ExamArchivePage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setExamArchives(null);
-      ExamArchiveService.getAll({ subjectId: params?.subjectId })
+      ExamArchiveService.getAll({ subject: params?.subjectId })
         .then((res) => {
           const { data } = res;
           const { payload } = data;

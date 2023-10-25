@@ -1,39 +1,11 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
 
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
-
-const SUBJECTS = [
-  {
-    value: '123',
-    label: 'Giải tích 1',
-  },
-  {
-    value: '1234',
-    label: 'Giải tích 2',
-  },
-  {
-    value: '789',
-    label: 'Giải tích 3',
-  },
-];
-
-const CHAPTERS = [
-  {
-    value: '111',
-    label: 'Đạo hàm hàm số',
-  },
-  {
-    value: '112',
-    label: 'Tích phân',
-  },
-  {
-    value: '113',
-    label: 'abc',
-  },
-];
+import ChapterService from '../../../service/chapter.service';
+import SubjectService from '../../../service/subject.service';
 
 const CreateQuestionPage = () => {
   const [name, setName] = useState('');
@@ -46,7 +18,51 @@ const CreateQuestionPage = () => {
   const [shuffleOptions, setShuffleOptions] = useState(false);
   const [explanation, setExplanation] = useState('');
 
+  const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
+  const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
+
   console.log(chapter);
+
+  useEffect(() => {
+    // update options for chapter when the selected subject changes
+    if (subject === '') {
+      setChapterOptions([]);
+      setChapter('');
+      return;
+    }
+
+    ChapterService.getAll({ subject: subject })
+      .then((res) => {
+        const { result: chapters } = res.data.payload;
+        setChapterOptions(
+          chapters.map((chap) => ({
+            value: chap._id,
+            label: chap.name,
+          }))
+        );
+        setChapter('');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [subject]);
+
+  useEffect(() => {
+    // fetch subjects on first load
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setSubjectOptions(
+          allSubjects.map((sub) => ({
+            value: sub._id,
+            label: sub.name,
+          }))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => setName(event.target.value);
 
@@ -85,8 +101,12 @@ const CreateQuestionPage = () => {
   const toggleShuffleOptions = (_: ChangeEvent<HTMLInputElement>) =>
     setShuffleOptions(!shuffleOptions);
 
+  const previewQuestion = (_: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO
+  };
+
   const createQuestion = (_: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('creating a question');
+    // TODO
   };
 
   return (
@@ -118,18 +138,18 @@ const CreateQuestionPage = () => {
                 <div className='flex w-full flex-col gap-y-1'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
                   <Select
-                    options={SUBJECTS}
+                    options={subjectOptions}
                     placeholder='Chọn môn'
-                    value={SUBJECTS.find((x) => x.value === subject)}
+                    value={subjectOptions.find((x) => x.value === subject)}
                     onChange={onSelectSubject}
                   />
                 </div>
                 <div className='flex w-full flex-col'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
                   <Select
-                    options={CHAPTERS}
+                    options={chapterOptions}
                     placeholder='Chọn chương'
-                    value={CHAPTERS.find((x) => x.value === subject)}
+                    value={chapterOptions.find((x) => x.value === subject)}
                     onChange={onSelectChapter}
                   />
                 </div>
@@ -247,12 +267,7 @@ const CreateQuestionPage = () => {
                 />
               </div>
               <div className='mt-4 flex flex-row-reverse gap-x-8'>
-                <button
-                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
-                  onClick={() => {
-                    console.log(`Create`);
-                  }}
-                >
+                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={previewQuestion}>
                   <p className='text-white'>Tạo</p>
                 </button>
                 <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createQuestion}>

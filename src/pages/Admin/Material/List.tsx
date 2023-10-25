@@ -1,80 +1,104 @@
-import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
 import { Icon, Pagination, Select } from '../../../components';
+import { Option } from '../../../components/Select';
+import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
+import ChapterService from '../../../service/chapter.service';
 import MaterialService from '../../../service/material.service';
-import useBoundStore from '../../../store';
-import { formatTime } from '../../../utils/helper';
+import SubjectService from '../../../service/subject.service';
+import { Material } from '../../../types';
 
-import type { Material } from '../../../types/material';
-
-type SearchFormValue = {
-  name: string;
-  subject: string;
-  chapter: string;
-};
+const ITEMS_PER_PAGE = 10;
 
 const MaterialList = () => {
-  const pageSize = 10;
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const [filterName, setFilterName] = useState('');
+  const [filterSubject, setFilterSubject] = useState('');
+  const [filterChapter, setFilterChapter] = useState('');
+
+  const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
+  const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
+
   const [materials, setMaterials] = useState<Material[]>([]);
-  const [filteredMaterials, setFilteredMaterials] = useState<Material[]>([]);
-  const [value, setValue] = useState<SearchFormValue>({
-    name: '',
-    subject: '',
-    chapter: '',
-  });
+  const [totalCount, setTotalCount] = useState(1);
+  const [page, setPage] = useState(1);
+
   const tableRef = useRef<HTMLDivElement>(null);
-  const subjects = useBoundStore.use.subjects();
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await MaterialService.getAll();
+
+  const fetchMaterial = useDebounce(() => {
+    setLoading(true);
+    MaterialService.getAllPaginated({
+      name: filterName,
+      subject: filterSubject === '' ? undefined : filterSubject,
+      chapter: filterChapter === '' ? undefined : filterChapter,
+      pageNumber: page,
+      pageSize: ITEMS_PER_PAGE,
+    })
+      .then((res) => {
+        const { total, result: allMaterials } = res.data.payload;
+        setMaterials(allMaterials);
+        setTotalCount(total);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
         setLoading(false);
-        const payload = data.payload.result.sort((a, b) => {
-          const aTime = a.lastUpdatedAt ? a.lastUpdatedAt : a.createdAt;
-          const bTime = b.lastUpdatedAt ? b.lastUpdatedAt : b.createdAt;
-          return bTime - aTime;
-        });
-        setMaterials(payload);
-        setFilteredMaterials(payload);
-      } catch (err) {
-        setLoading(true);
-        console.log('Error in fetching all materials', err);
-      }
-    })();
+      });
+  });
+
+  useEffect(() => {
+    fetchMaterial();
+  }, [page, filterName, filterSubject, filterChapter, fetchMaterial]);
+
+  useEffect(() => {
+    // fetch subjects on first load
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setFilterSubjectOptions(
+          allSubjects.map((subject) => ({
+            value: subject._id,
+            label: subject.name,
+          }))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
-    setFilteredMaterials(
-      materials.filter((material) => {
-        let result = true;
-        if (value.name !== '' && !material.name.toLowerCase().includes(value.name.toLowerCase())) {
-          result = false;
-        }
-        if (
-          value.subject !== '' &&
-          !material.subject.name.toLowerCase().includes(value.subject.toLowerCase())
-        ) {
-          result = false;
-        }
-        if (
-          value.chapter !== '' &&
-          !material.chapter.name.toLowerCase().includes(value.chapter.toLowerCase())
-        ) {
-          result = false;
-        }
+    // fetch all chapters when the selected subject changes
+    if (filterSubject === '') {
+      setFilterChapterOptions([]);
+      setFilterChapter('');
+      return;
+    }
 
-        return result;
+    ChapterService.getAll({ subject: filterSubject })
+      .then((res) => {
+        const { result: allChapters } = res.data.payload;
+        setFilterChapterOptions(
+          allChapters.map((chapter) => {
+            return {
+              value: chapter._id,
+              label: chapter.name,
+            };
+          })
+        );
       })
-    );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [filterSubject]);
 
   return (
     <Page>
@@ -94,54 +118,52 @@ const MaterialList = () => {
               <div className='mb-8 flex flex-1 flex-col items-center justify-between gap-x-4 gap-y-4 px-6 md:flex-row lg:px-8 3xl:px-10'>
                 <div className='relative flex w-full flex-1 items-center'>
                   <input
-                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                    className='flex flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium
                     lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={value.name}
-                    onChange={({ target }) => setValue({ ...value, name: target.value })}
+                    value={filterName}
+                    onChange={({ target }) => {
+                      setFilterName(target.value);
+                      setPage(1);
+                    }}
                     placeholder='Tìm tên tài liệu'
                   />
                 </div>
                 <div className='flex w-full flex-[2] flex-row gap-x-4'>
                   <Select
-                    options={subjects.map((subject) => ({
-                      label: subject.name,
-                      value: subject._id,
-                    }))}
-                    value={
-                      value.subject === ''
-                        ? null
-                        : {
-                            label: subjects.find((subject) => subject._id === value.subject)
-                              ?.name as string,
-                            value: value.subject,
-                          }
-                    }
-                    onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
+                    options={filterSubjectOptions}
+                    value={filterSubjectOptions.find((x) => x.value === filterSubject) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setFilterSubject(v.value);
+                        setPage(1);
+                      }
+                    }}
                     placeholder='Chọn môn'
                   />
                   <Select
-                    options={_.uniqBy(materials, 'chapter').map((material) => ({
-                      label: `Chương ${material.chapter?.name}`,
-                      value: material.chapter?.name,
-                    }))}
-                    onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
-                    value={
-                      value.chapter === ''
-                        ? null
-                        : { label: `Chương ${value.chapter}`, value: value.chapter }
-                    }
+                    options={filterChapterOptions}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setFilterChapter(v.value);
+                        setPage(1);
+                      }
+                    }}
+                    value={filterChapterOptions.find((x) => x.value === filterChapter) ?? null}
                     placeholder='Chọn chương'
                   />
                 </div>
                 <button
                   className={`flex flex-[0.5] ${
-                    value.name !== '' || value.subject !== '' || value.chapter !== ''
+                    filterName !== '' || filterSubject !== '' || filterChapter !== ''
                       ? 'opacity-1'
                       : 'opacity-0'
                   }`}
-                  disabled={value.name === '' && value.subject === '' && value.chapter === ''}
+                  disabled={filterName === '' && filterSubject === '' && filterChapter === ''}
                   onClick={() => {
-                    setValue({ name: '', subject: '', chapter: '' });
+                    setFilterName('');
+                    setFilterSubject('');
+                    setFilterChapter('');
+                    setPage(1);
                   }}
                 >
                   <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
@@ -179,74 +201,56 @@ const MaterialList = () => {
                           <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             Chương
                           </th>
-                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Thời gian tạo
-                          </th>
-                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Thời gian cập nhật
-                          </th>
                           <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             {''}
                           </th>
                         </tr>
                       </thead>
                       <tbody className='w-full'>
-                        {filteredMaterials
-                          .slice((page - 1) * pageSize, page * pageSize)
-                          .map((material) => (
-                            <tr
-                              key={`material-${material._id}`}
-                              className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
-                            >
-                              <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                                {material.name}
-                              </td>
-                              <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                                {material.subject.name}
-                              </td>
-                              <td className='flex flex-[2.5] items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
-                                {material.chapter?.name}
-                              </td>
-                              <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                                {formatTime(material.createdAt)}
-                              </td>
-                              <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                                {formatTime(
-                                  material.lastUpdatedAt
-                                    ? material.lastUpdatedAt
-                                    : material.createdAt
-                                )}
-                              </td>
-                              <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                                <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
-                                  <Icon.Edit
-                                    fill='white'
-                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                  />
-                                </button>
-                                <button
-                                  onClick={async () => {
-                                    await MaterialService.deleteById(material._id);
-                                    setMaterials(materials.filter((m) => m._id !== material._id));
-                                  }}
-                                  className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
-                                >
-                                  <Icon.Delete
-                                    fill='white'
-                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                  />
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
+                        {materials.map((material) => (
+                          <tr
+                            key={`material-${material._id}`}
+                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                          >
+                            <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {material.name}
+                            </td>
+                            <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {material.subject?.name}
+                            </td>
+                            <td className='flex flex-[2.5] items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                              {material.chapter?.name}
+                            </td>
+                            <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                                <Icon.Edit
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                              <button
+                                onClick={async () => {
+                                  await MaterialService.deleteById(material._id);
+                                  setMaterials(materials.filter((m) => m._id !== material._id));
+                                }}
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                              >
+                                <Icon.Delete
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </>
                 )}
               </div>
               <Pagination
-                totalCount={filteredMaterials.length}
-                pageSize={pageSize}
+                pageSize={ITEMS_PER_PAGE}
+                totalCount={totalCount}
                 currentPage={page}
                 onPageChange={setPage}
               />

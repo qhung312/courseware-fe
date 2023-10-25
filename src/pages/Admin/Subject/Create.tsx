@@ -14,8 +14,8 @@ const CreateSubjectPage = () => {
     setDescription(event.target.value);
   };
 
-  const onCreateSubject = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('hello world', event);
+  const onCreateSubject = (_: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO
   };
 
   return (

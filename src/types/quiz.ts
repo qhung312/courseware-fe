@@ -1,5 +1,5 @@
 import { Chapter } from './chapter';
-import { ConcreteQuestion } from './question';
+import { ConcreteQuestion, QuestionTemplate } from './question';
 import { Subject } from './subject';
 
 export type QuizTemplate = {
@@ -10,7 +10,7 @@ export type QuizTemplate = {
   chapter: Chapter;
 
   duration: number;
-  potentialQuestions: string[];
+  potentialQuestions?: QuestionTemplate[];
   sampleSize: number;
 
   createdBy: string;

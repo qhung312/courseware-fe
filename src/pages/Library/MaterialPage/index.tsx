@@ -41,7 +41,7 @@ const MaterialPage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setMaterials(null);
-      MaterialService.getAll({ subjectId: params?.subjectId })
+      MaterialService.getAll({ subject: params?.subjectId })
         .then((res) => {
           const { data } = res;
           const { payload } = data;

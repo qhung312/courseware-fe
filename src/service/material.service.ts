@@ -1,23 +1,51 @@
 import { API_URL } from '../config';
 import { axios } from '../utils/custom-axios';
-import { generateQuery } from '../utils/helper';
 
 import type { Material } from '../types/material';
-import type { GetPaginationOptions } from '../types/request';
 import type { Response } from '../types/response';
 
-interface GetRequestProps extends GetPaginationOptions {
+type GetAllMaterialArgument = {
   name?: string;
-  subjectId?: string;
-  chapterId?: string;
-}
-
-const getAll = ({ page, pageSize, name, subjectId, chapterId }: GetRequestProps = {}) => {
-  const queryUrl = generateQuery({ page, pageSize, name, subjectId, chapterId });
-  return page || pageSize
-    ? axios.get<Response<Material[], true>>(`${API_URL}material${queryUrl}`)
-    : axios.get<Response<Material[]>>(`${API_URL}material${queryUrl}`);
+  subject?: string;
+  chapter?: string;
 };
+type GetAllMaterialReturnType = {
+  total: number;
+  result: Material[];
+};
+const getAll = (query: GetAllMaterialArgument) => {
+  const queryString = `${API_URL}material?pagination=false\
+${query.name ? `&name=${query.name}` : ''}
+${query.subject ? `&subject=${query.subject}` : ''}
+${query.chapter ? `&chapter=${query.chapter}` : ''}`;
+
+  return axios.get<Response<GetAllMaterialReturnType>>(queryString);
+};
+
+type GetAllMaterialPaginatedArgument = {
+  name?: string;
+  subject?: string;
+  chapter?: string;
+  pageNumber?: number;
+  pageSize?: number;
+};
+type GetAllMaterialPaginatedReturnType = {
+  total: number;
+  pageSize: number;
+  pageCount: number;
+  result: Material[];
+};
+const getAllPaginated = (query: GetAllMaterialPaginatedArgument) => {
+  const queryString = `${API_URL}material?pagination=true\
+${query.name ? `&name=${query.name}` : ''}\
+${query.subject ? `&subject=${query.subject}` : ''}\
+${query.chapter ? `&chapter=${query.chapter}` : ''}\
+${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
+${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
+
+  return axios.get<Response<GetAllMaterialPaginatedReturnType>>(queryString);
+};
+
 const create = () => axios.post<Response<Material>>(`${API_URL}material`);
 
 const edit = (materialId: string) =>
@@ -34,6 +62,7 @@ const getById = (materialId: string) =>
 
 const MaterialService = {
   getAll,
+  getAllPaginated,
   create,
   edit,
   deleteById,

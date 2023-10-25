@@ -1,22 +1,53 @@
 import { API_URL } from '../config';
 import { axios } from '../utils/custom-axios';
-import { generateQuery } from '../utils/helper';
 
 import type { ExamArchive } from '../types/examArchive';
-import type { GetPaginationOptions } from '../types/request';
 import type { Response } from '../types/response';
 
-interface GetRequestProps extends GetPaginationOptions {
+type GetAllExamArchiveArgument = {
   name?: string;
-  subjectId?: string;
-  chapterId?: string;
-}
+  subject?: string;
+  semester?: string;
+  type?: string;
+};
+type GetAllExamArchiveReturnType = {
+  total: number;
+  result: ExamArchive[];
+};
+const getAll = (query: GetAllExamArchiveArgument) => {
+  const queryString = `${API_URL}previous-exam?pagination=false\
+${query.name ? `&name=${query.name}` : ''}\
+${query.subject ? `&subject=${query.subject}` : ''}\
+${query.semester ? `&semester=${query.semester}` : ''}\
+${query.type ? `&type=${query.type}` : ''}`;
 
-const getAll = ({ page, pageSize, name, subjectId, chapterId }: GetRequestProps = {}) => {
-  const queryUrl = generateQuery({ page, pageSize, name, subjectId, chapterId });
-  return page || pageSize
-    ? axios.get<Response<ExamArchive[], true>>(`${API_URL}previous-exam${queryUrl}`)
-    : axios.get<Response<ExamArchive[]>>(`${API_URL}previous-exam${queryUrl}`);
+  return axios.get<Response<GetAllExamArchiveReturnType>>(queryString);
+};
+
+type GetAllExamArchivePaginatedArgument = {
+  name?: string;
+  subject?: string;
+  semester?: string;
+  type?: string;
+  pageNumber?: number;
+  pageSize?: number;
+};
+type GetAllExamArchivePaginatedReturnType = {
+  total: number;
+  pageCount: number;
+  pageSize: number;
+  result: ExamArchive[];
+};
+const getAllPaginated = (query: GetAllExamArchivePaginatedArgument) => {
+  const queryString = `${API_URL}previous-exam?pagination=true\
+${query.name ? `&name=${query.name}` : ''}\
+${query.subject ? `&subject=${query.subject}` : ''}\
+${query.semester ? `&semester=${query.semester}` : ''}\
+${query.type ? `&type=${query.type}` : ''}\
+${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
+${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
+
+  return axios.get<Response<GetAllExamArchivePaginatedReturnType>>(queryString);
 };
 
 const create = () => axios.post<Response<ExamArchive>>(`${API_URL}previous-exam/`);
@@ -35,6 +66,7 @@ const getById = (examId: string) =>
 
 const ExamArchiveService = {
   getAll,
+  getAllPaginated,
   create,
   edit,
   deleteById,
