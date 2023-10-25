@@ -46,6 +46,7 @@ import { ReactComponent as StarLit } from '../../assets/svgs/StarLitIcon.svg';
 import { ReactComponent as Test } from '../../assets/svgs/TestIcon.svg';
 import { ReactComponent as Upload } from '../../assets/svgs/UploadIcon.svg';
 import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.svg';
+import { ReactComponent as ViewIcon } from '../../assets/svgs/ViewIcon.svg';
 import { ReactComponent as XMark } from '../../assets/svgs/XMarkIcon.svg';
 import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg';
 
@@ -97,6 +98,7 @@ export default {
   Test,
   Profile,
   Upload,
+  ViewIcon,
   XMark,
   Pen,
   YoutubeIcon,

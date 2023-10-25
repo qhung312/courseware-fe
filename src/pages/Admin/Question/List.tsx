@@ -206,7 +206,7 @@ const QuestionListPage = () => {
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             Chương
                           </th>
-                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[2] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             {''}
                           </th>
                         </tr>
@@ -226,13 +226,25 @@ const QuestionListPage = () => {
                             <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
                               {question?.chapter?.name}
                             </td>
-                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                            <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                              <Link
+                                to={`/admin/questions/view/${index}`}
+                                className='flex items-center justify-center rounded-full bg-[#CCCCCC] p-2'
+                              >
+                                <Icon.ViewIcon
+                                  fill='#252641'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </Link>
+                              <Link
+                                to={`/admin/questions/edit/${index}`}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                              >
                                 <Icon.Edit
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
-                              </button>
+                              </Link>
                               <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
                                 <Icon.Delete
                                   fill='white'

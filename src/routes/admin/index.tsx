@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import AdminAside from '../../pages/Admin/AdminAside';
+import EditQuestionPage from '../../pages/Admin/Question/Edit';
+import ViewQuestionPage from '../../pages/Admin/Question/View';
 
 const CreateExercisePage = lazy(() => import('../../pages/Admin/Exercise/Create'));
 const CreateQuestionPage = lazy(() => import('../../pages/Admin/Question/Create'));
@@ -94,6 +96,22 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateQuestionPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:questionid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ViewQuestionPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:questionid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EditQuestionPage />
                 </Suspense>
               }
             />
