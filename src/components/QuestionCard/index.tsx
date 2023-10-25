@@ -10,6 +10,7 @@ import {
 } from 'react';
 
 import './index.css';
+import { Markdown } from '..';
 import { QuestionType, type ConcreteQuestion } from '../../types/question';
 import { QuizStatus } from '../../types/quiz';
 import Icon from '../Icon';
@@ -21,7 +22,7 @@ type InputAnswerProps = {
     stringAnswer: string;
     singleValueAnswer: number;
     multipleValueAnswer: number[];
-    setQuestion: (question: ConcreteQuestion['subQuestions'][0]) => void;
+    setQuestion?: (question: ConcreteQuestion['subQuestions'][0]) => void;
     setStringAnswer: Dispatch<SetStateAction<string>>;
     setSingleValueAnswer: Dispatch<SetStateAction<number>>;
     setMultipleValueAnswer: Dispatch<SetStateAction<number[]>>;
@@ -41,17 +42,18 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
 
   const optimizedSetMultipleValueAnswer = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setQuestion({
-        ...question,
-        userAnswerKeys:
-          question.userAnswerKeys !== undefined
-            ? _.includes(question.userAnswerKeys, Number(e.target.value))
-              ? question.userAnswerKeys.length <= 1
-                ? _.without(question.userAnswerKeys, Number(e.target.value))
-                : undefined
-              : _.concat(question.userAnswerKeys, Number(e.target.value))
-            : [Number(e.target.value)],
-      });
+      setQuestion &&
+        setQuestion({
+          ...question,
+          userAnswerKeys:
+            question.userAnswerKeys !== undefined
+              ? _.includes(question.userAnswerKeys, Number(e.target.value))
+                ? question.userAnswerKeys.length > 1
+                  ? _.without(question.userAnswerKeys, Number(e.target.value))
+                  : undefined
+                : _.concat(question.userAnswerKeys, Number(e.target.value))
+              : [Number(e.target.value)],
+        });
       setMultipleValueAnswer((prevState) =>
         _.includes(prevState, Number(e.target.value))
           ? _.without(prevState, Number(e.target.value))
@@ -75,23 +77,32 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   id={`question-${question._id}-answer-${option.key}`}
                   onChange={() => {
                     setSingleValueAnswer(option.key);
-                    setQuestion({
-                      ...question,
-                      userAnswerKey: option.key,
-                    });
+                    setQuestion &&
+                      setQuestion({
+                        ...question,
+                        userAnswerKey: option.key,
+                      });
                   }}
                   disabled={status !== QuizStatus.ONGOING}
                   className={`${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
-                      : question.isCorrect
+                      : question.isCorrect === undefined || question.userAnswerKey === undefined
+                      ? 'checked:bg-transparent'
+                      : (question.isCorrect && question.userAnswerKey === option.key) ||
+                        question.answerKey === option.key
                       ? 'checked:bg-[#49CCCF]'
                       : 'checked:bg-[#DB4437]'
                   }`}
-                  type='radio'
+                  style={{ borderRadius: '9999px' }}
+                  type='checkbox'
                   name={`question-${question._id}`}
                   value={option.key}
-                  checked={singleValueAnswer === option.key}
+                  multiple={status === QuizStatus.ENDED}
+                  checked={
+                    singleValueAnswer === option.key ||
+                    (status === QuizStatus.ENDED && question.answerKey === option.key)
+                  }
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
                   <span className='-ml-[100%] h-full text-xs md:text-base'>
@@ -109,7 +120,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
     case QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWERS:
       return (
         <div className='flex flex-col flex-wrap items-start justify-center gap-y-4'>
-          {question.options?.map((option, index) => (
+          {question.options?.map((option) => (
             <div
               key={`question-${question._id}-answer-${option.key}`}
               className='relative flex flex-row flex-nowrap items-center justify-center gap-x-2'
@@ -120,7 +131,10 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   className={`${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
-                      : question.isCorrect
+                      : question.isCorrect === undefined || question.userAnswerKeys === undefined
+                      ? ''
+                      : (question.isCorrect && question.userAnswerKeys.includes(option.key)) ||
+                        question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
                       : 'checked:bg-[#DB4437]'
                   }`}
@@ -130,11 +144,20 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   type='checkbox'
                   multiple
                   value={option.key}
-                  checked={multipleValueAnswer.includes(option.key)}
+                  checked={
+                    multipleValueAnswer.includes(option.key) ||
+                    (status === QuizStatus.ENDED && question.answerKeys?.includes(option.key))
+                  }
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
                   <span className='-ml-[100%] h-full text-xs md:text-base'>
-                    {optionLabels[index]}
+                    {question.isCorrect === undefined ? null : (question.isCorrect &&
+                        question.userAnswerKeys?.includes(option.key)) ||
+                      question.answerKeys?.includes(option.key) ? (
+                      <Icon.Checkmark className='h-4 w-auto md:h-6' />
+                    ) : (
+                      <Icon.XMark className='h-4 w-auto md:h-6' />
+                    )}
                   </span>
                 </span>
               </div>
@@ -172,24 +195,29 @@ type Props = {
   question: ConcreteQuestion['subQuestions'][0];
   status: QuizStatus;
   questionNumber: number;
-  handleChange: (question: ConcreteQuestion['subQuestions'][0]) => void;
+  handleChange?: (question: ConcreteQuestion['subQuestions'][0]) => void;
 };
 
 const QuestionCard = ({ question, status, questionNumber, handleChange }: Props) => {
   const [starred, setStarred] = useState(question.starred);
-  const [stringAnswer, setStringAnswer] = useState<string>(String(question.userAnswerField));
-  const [singleValueAnswer, setSingleValueAnswer] = useState<number>(question.userAnswerKey || -1);
+  const [stringAnswer, setStringAnswer] = useState<string>(
+    String(question.userAnswerField || question.answerField)
+  );
+  const [singleValueAnswer, setSingleValueAnswer] = useState<number>(
+    question.userAnswerKey || question.answerKey || -1
+  );
   const [multipleValueAnswer, setMultipleValueAnswer] = useState<number[]>(
-    question.userAnswerKeys || []
+    question.userAnswerKeys || question.answerKeys || []
   );
 
   useEffect(() => {
     if (stringAnswer !== '' || singleValueAnswer !== -1 || multipleValueAnswer.length !== 0) {
       setStarred(false);
-      handleChange({
-        ...question,
-        starred: false,
-      });
+      handleChange &&
+        handleChange({
+          ...question,
+          starred: false,
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stringAnswer, singleValueAnswer, multipleValueAnswer, handleChange]);
@@ -202,16 +230,18 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
       <div className='flex w-full flex-row items-center justify-between gap-x-6'>
         <div className='flex flex-row items-center gap-x-2'>
           <div
-            className={`h-5 w-5 rounded-full ${status === QuizStatus.ENDED ? '' : 'hidden'} ${
+            className={`flex h-5 w-5 items-center justify-center rounded-full p-1 ${
+              status === QuizStatus.ENDED ? '' : 'hidden'
+            } ${
               question.isCorrect === undefined
-                ? 'bg-transparent'
+                ? 'border border-[#49CCCF] bg-transparent'
                 : question.isCorrect
                 ? 'bg-[#49CCCF]'
                 : 'bg-[#DB4437]'
             }`}
           >
             <Icon.XMark
-              className={`${
+              className={`h-full w-full ${
                 question.isCorrect === undefined ? 'hidden' : question.isCorrect ? 'hidden' : ''
               }`}
             />
@@ -227,13 +257,14 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
               setStringAnswer('');
               setSingleValueAnswer(-1);
               setMultipleValueAnswer([]);
-              handleChange({
-                ...question,
-                starred: true,
-                userAnswerField: undefined,
-                userAnswerKey: undefined,
-                userAnswerKeys: undefined,
-              });
+              handleChange &&
+                handleChange({
+                  ...question,
+                  starred: true,
+                  userAnswerField: undefined,
+                  userAnswerKey: undefined,
+                  userAnswerKeys: undefined,
+                });
             }}
             disabled={status === QuizStatus.ENDED || starred}
             className={`absolute transition-all duration-300 ${starred ? '-z-10 opacity-0' : ''}`}
@@ -244,7 +275,7 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
             type='button'
             onClick={() => {
               setStarred(false);
-              handleChange({ ...question, starred: false });
+              handleChange && handleChange({ ...question, starred: false });
             }}
             disabled={status === QuizStatus.ENDED || !starred}
             className={`relative transition-all duration-300 ${starred ? '' : '-z-10 opacity-0'}`}
@@ -257,16 +288,11 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
       <span className='hidden w-full border border-t-[#666] md:flex' />
 
       <div
-        className='flex flex-col items-start space-y-2 rounded-lg bg-[#9DCCFF]/20 p-2
+        className='flex w-full flex-col items-start space-y-2 rounded-lg bg-[#9DCCFF]/20 p-2
         md:bg-transparent md:p-0 lg:space-y-3
         3xl:space-y-6'
       >
-        <p className='text-sm md:text-base'>
-          Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do eiusmodadipiscing elit,
-          sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing
-          elit
-        </p>
+        <Markdown>{question.description}</Markdown>
         <InputAnswer
           status={status}
           question={question}

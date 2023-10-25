@@ -1,7 +1,5 @@
-input[type='radio'],
-input[type='checkbox'] {
+input[type='radio'] {
   /* Add if not using autoprefixer */
-  -webkit-appearance: none;
   appearance: none;
   /* For iOS < 15 to remove gradient background */
   background-color: #fff;
@@ -14,6 +12,21 @@ input[type='checkbox'] {
   height: 1.5rem;
   border: 1px solid currentColor;
   border-radius: 50%;
+  transition: all 300ms ease-out;
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  aspect-ratio: 1;
+  width: auto;
+  height: 1.5rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
   transition: all 300ms ease-out;
 }
 

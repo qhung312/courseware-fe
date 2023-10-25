@@ -1,9 +1,11 @@
 import { ReactComponent as AboutUs } from '../../assets/svgs/AboutUsIcon.svg';
 import { ReactComponent as Activity } from '../../assets/svgs/ActivityIcon.svg';
 import { ReactComponent as Admin } from '../../assets/svgs/AdminIcon.svg';
+import { ReactComponent as Answer } from '../../assets/svgs/AnswerIcon.svg';
 import { ReactComponent as ArrowRightFill } from '../../assets/svgs/ArrowRightFillIcon.svg';
 import { ReactComponent as ArrowRight } from '../../assets/svgs/ArrowRightIcon.svg';
 import { ReactComponent as Book } from '../../assets/svgs/Book.svg';
+import { ReactComponent as Checkmark } from '../../assets/svgs/CheckmarkIcon.svg';
 import { ReactComponent as ChevronDown } from '../../assets/svgs/ChevronDownIcon.svg';
 import { ReactComponent as Chevron } from '../../assets/svgs/ChevronIcon.svg';
 import { ReactComponent as ChevronLeft } from '../../assets/svgs/ChevronLeftIcon.svg';
@@ -12,6 +14,7 @@ import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg
 import { ReactComponent as Clock } from '../../assets/svgs/ClockIcon.svg';
 import { ReactComponent as CloseQuote } from '../../assets/svgs/CloseQuoteIcon.svg';
 import { ReactComponent as Copy } from '../../assets/svgs/CopyIcon.svg';
+import { ReactComponent as CorrectTotal } from '../../assets/svgs/CorrectTotalIcon.svg';
 import { ReactComponent as Delete } from '../../assets/svgs/DeleteIcon.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
 import { ReactComponent as Edit } from '../../assets/svgs/EditIcon.svg';
@@ -29,7 +32,9 @@ import { ReactComponent as Logout } from '../../assets/svgs/LogoutIcon.svg';
 import { ReactComponent as MailIcon } from '../../assets/svgs/MailIcon.svg';
 import { ReactComponent as OpenQuote } from '../../assets/svgs/OpenQuoteIcon.svg';
 import { ReactComponent as Partner } from '../../assets/svgs/PartnerIcon.svg';
+import { ReactComponent as Pen } from '../../assets/svgs/PenIcon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/svgs/PhoneIcon.svg';
+import { ReactComponent as PieChart } from '../../assets/svgs/PieChartIcon.svg';
 import { ReactComponent as Profile } from '../../assets/svgs/ProfileIcon.svg';
 import { ReactComponent as Quiz } from '../../assets/svgs/QuizIcon.svg';
 import { ReactComponent as Result } from '../../assets/svgs/ResultIcon.svg';
@@ -40,6 +45,7 @@ import { ReactComponent as StarDim } from '../../assets/svgs/StarDimIcon.svg';
 import { ReactComponent as StarLit } from '../../assets/svgs/StarLitIcon.svg';
 import { ReactComponent as Test } from '../../assets/svgs/TestIcon.svg';
 import { ReactComponent as Upload } from '../../assets/svgs/UploadIcon.svg';
+import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.svg';
 import { ReactComponent as XMark } from '../../assets/svgs/XMarkIcon.svg';
 import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg';
 
@@ -47,8 +53,10 @@ export default {
   AboutUs,
   Activity,
   Admin,
+  Answer,
   ArrowRightFill,
   ArrowRight,
+  Checkmark,
   Chevron,
   ChevronDown,
   ChevronLeft,
@@ -77,15 +85,19 @@ export default {
   Quiz,
   OpenQuote,
   CloseQuote,
+  UserAnswer,
   Result,
   Room,
   Search,
   Share,
   StarLit,
+  PieChart,
+  CorrectTotal,
   StarDim,
   Test,
   Profile,
   Upload,
   XMark,
+  Pen,
   YoutubeIcon,
 };

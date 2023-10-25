@@ -22,7 +22,7 @@ const MaterialCreate = () => {
   const fileUploaderRef = useRef<FilePond>(null);
   const submitDisabled = name === '' || subject === '' || chapter === '';
 
-  console.log(uploadedFiles)
+  console.log(uploadedFiles);
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
