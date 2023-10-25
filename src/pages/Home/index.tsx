@@ -1,7 +1,6 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import './index.css';
 
-import { useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 
@@ -9,26 +8,16 @@ import EventBackground from '../../assets/images/EventBackground.png';
 import { ReactComponent as LargeCTCTLogo } from '../../assets/svgs/LargeLogoCTCT.svg';
 import { CarouselArrow, CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../components';
 import { CarouselData as data } from '../../data/CarouselData';
-import { useWindowDimensions } from '../../hooks';
 import { Page } from '../../layout';
 
 const HomePage = () => {
-  const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    const navbar = document.getElementById('navbar') as HTMLElement;
-    const homepage = document.getElementById('homepage') as HTMLElement;
-
-    homepage.style.height = `calc(100vh - ${navbar.clientHeight}px)`;
-  }, [width]);
-
   return (
     <Page>
       <main
-        className='flex w-full flex-col items-center justify-start gap-y-[120px] bg-inherit 
+        className='with-nav-height flex w-full flex-col items-center justify-start gap-y-[120px] overflow-y-auto bg-inherit 
         md:gap-y-[200px]'
       >
-        <section id='homepage' className='w-full'>
+        <section className='w-full'>
           <Carousel
             showThumbs={false}
             showStatus={false}

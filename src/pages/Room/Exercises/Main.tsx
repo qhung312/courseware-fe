@@ -9,7 +9,7 @@ import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
 import RoomAside from '../RoomAside';
 
-const MainPage: React.FC = () => {
+const Main: React.FC = () => {
   const params = useParams();
 
   const subject = params?.subjectId ? subjects[Number(params.subjectId)] : null;
@@ -154,4 +154,4 @@ const MainPage: React.FC = () => {
   );
 };
 
-export default MainPage;
+export default Main;

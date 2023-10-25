@@ -1,5 +1,5 @@
+import { Icon } from '..';
 import { usePagination } from '../../hooks';
-import Icon from '../Icon';
 
 type Props = {
   totalCount: number;

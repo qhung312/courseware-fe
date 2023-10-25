@@ -11,7 +11,6 @@ import ChapterService from '../../../service/chapter.service';
 import SubjectService from '../../../service/subject.service';
 import { Chapter } from '../../../types';
 
-
 const ITEMS_PER_PAGE = 10;
 
 const ChapterListPage = () => {
