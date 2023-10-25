@@ -8,7 +8,7 @@ import { Page, Wrapper } from '../../../layout';
 import ExamArchiveService from '../../../service/examArchive.service';
 import SubjectService from '../../../service/subject.service';
 import { ExamArchive } from '../../../types';
-import { FILTER_EXAM_TYPE_OPTIONS, FILTER_SEMESTER_OPTIONS } from '../../../types/examArchive';
+import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -123,25 +123,25 @@ const ExamList = () => {
                     placeholder='Chọn môn'
                   />
                   <Select
-                    options={FILTER_SEMESTER_OPTIONS}
+                    options={SEMESTER_OPTIONS}
                     onChange={(v) => {
                       if (v !== null) {
                         setFilterSemester(v.value);
                         setPage(1);
                       }
                     }}
-                    value={FILTER_SEMESTER_OPTIONS.find((x) => x.value === filterSemester) ?? null}
+                    value={SEMESTER_OPTIONS.find((x) => x.value === filterSemester) ?? null}
                     placeholder='Chọn học kì'
                   />
                   <Select
-                    options={FILTER_EXAM_TYPE_OPTIONS}
+                    options={EXAM_TYPE_OPTIONS}
                     onChange={(v) => {
                       if (v !== null) {
                         setFilterExamType(v.value);
                         setPage(1);
                       }
                     }}
-                    value={FILTER_EXAM_TYPE_OPTIONS.find((x) => x.value === filterExamType) ?? null}
+                    value={EXAM_TYPE_OPTIONS.find((x) => x.value === filterExamType) ?? null}
                     placeholder='Chọn loại đề thi'
                   />
                 </div>
@@ -205,10 +205,10 @@ const ExamList = () => {
                           {exam?.subject?.name}
                         </td>
                         <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {FILTER_SEMESTER_OPTIONS.find((x) => x.value === exam.semester)?.label}
+                          {SEMESTER_OPTIONS.find((x) => x.value === exam.semester)?.label}
                         </td>
                         <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {FILTER_EXAM_TYPE_OPTIONS.find((x) => x.value === exam.type)?.label}
+                          {EXAM_TYPE_OPTIONS.find((x) => x.value === exam.type)?.label}
                         </td>
                         <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                           <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>

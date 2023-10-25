@@ -33,7 +33,7 @@ export enum ExamType {
   FINAL_EXAM = 'FINAL_EXAM',
 }
 
-export const FILTER_SEMESTER_OPTIONS: Option[] = [
+export const SEMESTER_OPTIONS: Option[] = [
   { value: Semester.SEMESTER_181, label: 'Học kì 181' },
   { value: Semester.SEMESTER_182, label: 'Học kì 182' },
   { value: Semester.SEMESTER_183, label: 'Học kì 183' },
@@ -59,7 +59,7 @@ export const FILTER_SEMESTER_OPTIONS: Option[] = [
   { value: Semester.SEMESTER_233, label: 'Học kì 233' },
 ];
 
-export const FILTER_EXAM_TYPE_OPTIONS: Option[] = [
+export const EXAM_TYPE_OPTIONS: Option[] = [
   { value: ExamType.MIDTERM_EXAM, label: 'Giữa kì' },
   { value: ExamType.FINAL_EXAM, label: 'Cuối kì' },
 ];

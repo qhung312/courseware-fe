@@ -1,32 +1,49 @@
 import _ from 'lodash';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
 import { Link } from 'react-router-dom';
 
 import './index.css';
 import { Icon, Select } from '../../../components';
+import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
-
-type FormValue = {
-  name: string;
-  subject: string;
-  type: string;
-  semester: string;
-  description: string;
-  files: File[];
-};
+import SubjectService from '../../../service/subject.service';
+import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
 const ExamCreate = () => {
-  const [value, setValue] = useState<FormValue>({
-    name: '',
-    subject: '',
-    type: '',
-    semester: '',
-    description: '',
-    files: [],
-  });
+  const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [type, setType] = useState('');
+  const [semester, setSemester] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
+  const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
+
   const fileUploaderRef = useRef<FilePond>(null);
-  const submitDisabled = _.some(value, (v) => _.isEmpty(v));
+  const submitDisabled = _.some([name, subject, type, semester], _.isEmpty);
+
+  console.log(uploadedFiles);
+
+  useEffect(() => {
+    // fetch subject on first load
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setSubjectOptions(
+          allSubjects.map((sub) => {
+            return {
+              value: sub._id,
+              label: sub.name,
+            };
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <Page>
@@ -54,75 +71,50 @@ const ExamCreate = () => {
                 </label>
                 <input
                   id='exam-name'
-                  className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                  className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
                   lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  value={value.name}
+                  value={name}
                   placeholder='Nhập tên đề thi'
-                  onChange={({ target }) => setValue({ ...value, name: target.value })}
+                  onChange={({ target }) => setName(target.value)}
                 />
               </div>
               <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
                   <Select
-                    options={[
-                      { label: 'Giải tích 1', value: 'Giải tích 1' },
-                      { label: 'Giải tích 2', value: 'Giải tích 2' },
-                      { label: 'Vật lý đại cương A1', value: 'Vật lý đại cương A1' },
-                      { label: 'Hoá đại cương', value: 'Hoá đại cương' },
-                    ]}
-                    value={
-                      value.subject === '' ? null : { label: value.subject, value: value.subject }
-                    }
-                    onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
+                    options={subjectOptions}
+                    value={subjectOptions.find((x) => x.value === subject) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setSubject(v.value);
+                      }
+                    }}
                     placeholder='Chọn môn'
                   />
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Kì thi</p>
                   <Select
-                    options={[
-                      { label: 'Giữa kì', value: 'midterm' },
-                      { label: 'Cuối kì', value: 'final' },
-                    ]}
-                    value={
-                      value.type === ''
-                        ? null
-                        : {
-                            label: value.type === 'midterm' ? 'Giữa kì' : 'Cuối kì',
-                            value: value.type,
-                          }
-                    }
-                    onChange={(v) => setValue({ ...value, type: v?.value || '' })}
+                    options={EXAM_TYPE_OPTIONS}
+                    value={EXAM_TYPE_OPTIONS.find((x) => x.value === type) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setType(v.value);
+                      }
+                    }}
                     placeholder='Chọn kì thi'
                   />
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Học kì</p>
                   <Select
-                    options={[
-                      { label: '233', value: '233' },
-                      { label: '232', value: '232' },
-                      { label: '231', value: '231' },
-                      { label: '223', value: '223' },
-                      { label: '222', value: '222' },
-                      { label: '221', value: '221' },
-                      { label: '213', value: '213' },
-                      { label: '212', value: '212' },
-                      { label: '211', value: '211' },
-                      { label: '203', value: '203' },
-                      { label: '202', value: '202' },
-                      { label: '201', value: '201' },
-                    ]}
-                    value={
-                      value.type === ''
-                        ? null
-                        : {
-                            label: value.semester,
-                            value: value.semester,
-                          }
-                    }
-                    onChange={(v) => setValue({ ...value, semester: v?.value || '' })}
+                    options={SEMESTER_OPTIONS}
+                    value={SEMESTER_OPTIONS.find((x) => x.value === semester) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setSemester(v.value);
+                      }
+                    }}
                     placeholder='Chọn học kì'
                   />
                 </div>
@@ -135,10 +127,12 @@ const ExamCreate = () => {
                   id='exam-description'
                   className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs
                   font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base '
-                  value={value.description}
+                  value={description}
                   placeholder='Nhập chú thích đề thi'
                   rows={5}
-                  onChange={({ target }) => setValue({ ...value, description: target.value })}
+                  onChange={({ target }) => {
+                    setDescription(target.value);
+                  }}
                 />
               </div>
 
@@ -149,10 +143,7 @@ const ExamCreate = () => {
                 <FilePond
                   ref={fileUploaderRef}
                   onupdatefiles={(files) => {
-                    setValue((prevValue) => ({
-                      ...prevValue,
-                      files: files[0] ? [files[0].file as File] : [],
-                    }));
+                    setUploadedFiles(files[0] ? [files[0].file as File] : []);
                   }}
                   allowMultiple={false}
                   labelIdle='Kéo & Thả hoặc <span class="filepond--label-action">Chọn đề thi</span>'
@@ -174,18 +165,16 @@ const ExamCreate = () => {
                 </button>
                 <button
                   type='button'
-                  className='flex items-center rounded-lg px-6 py-1 text-[#DB4437] 
-                  transition-all duration-200 hover:bg-[#DB4437] hover:text-white 
+                  className='flex items-center rounded-lg px-6 py-1 text-[#DB4437]
+                  transition-all duration-200 hover:bg-[#DB4437] hover:text-white
                   focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
-                    setValue({
-                      name: '',
-                      subject: '',
-                      type: '',
-                      semester: '',
-                      description: '',
-                      files: [],
-                    });
+                    setName('');
+                    setSubject('');
+                    setType('');
+                    setSemester('');
+                    setDescription('');
+                    setUploadedFiles([]);
                     fileUploaderRef.current?.removeFiles();
                   }}
                 >
