@@ -10,22 +10,22 @@ import SubjectService from '../../../service/subject.service';
 
 const ChapterEdit = () => {
   const params = useParams();
-  const defaultName = params.id || '';
-  const defaultSubject = '6443b456e19766de19fbc588';
-  const defaultDescription = 'Không có chú thích nào cả';
+  const currentName = params.id || '';
+  const currentSubject = '6443b456e19766de19fbc588';
+  const currentDescription = 'Không có chú thích nào cả';
 
-  const [name, setName] = useState(defaultName);
-  const [description, setDescription] = useState(defaultDescription);
-  const [subject, setSubject] = useState(defaultSubject);
+  const [name, setName] = useState(currentName);
+  const [description, setDescription] = useState(currentDescription);
+  const [subject, setSubject] = useState(currentSubject);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [canSave, setCanSave] = useState(false);
 
   const setSave = useDebounce(() => {
     setCanSave(
-      name === defaultName &&
-        subject === defaultSubject &&
-        _.trim(description) === defaultDescription
+      name === currentName &&
+        subject === currentSubject &&
+        _.trim(description) === currentDescription
     );
   });
 
@@ -61,7 +61,10 @@ const ChapterEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to='/admin/chapter/manage'>
+          <Link
+            className='mb-2 flex items-center hover:underline'
+            to={`/admin/chapter/view/${params.id}`}
+          >
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
@@ -139,9 +142,9 @@ const ChapterEdit = () => {
                   transition-all duration-200 hover:bg-[#DB4437] hover:text-white
                   focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
-                    setName(defaultName);
-                    setSubject(defaultSubject);
-                    setDescription(defaultDescription);
+                    setName(currentName);
+                    setSubject(currentSubject);
+                    setDescription(currentDescription);
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>

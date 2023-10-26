@@ -8,16 +8,16 @@ import { Page, Wrapper } from '../../../layout';
 
 const SubjectEdit = () => {
   const params = useParams();
-  const defaultName = params.id || '';
-  const defaultDescription = 'Không có chú thích nào cả';
+  const currentName = params.id || '';
+  const currentDescription = 'Không có chú thích nào cả';
 
-  const [name, setName] = useState(defaultName);
-  const [description, setDescription] = useState(defaultDescription);
+  const [name, setName] = useState(currentName);
+  const [description, setDescription] = useState(currentDescription);
 
   const [canSave, setCanSave] = useState(false);
 
   const setSave = useDebounce(() => {
-    setCanSave(name === defaultName && _.trim(description) === defaultDescription);
+    setCanSave(name === currentName && _.trim(description) === currentDescription);
   });
 
   useEffect(() => {
@@ -33,7 +33,10 @@ const SubjectEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to='/admin/subject/manage'>
+          <Link
+            className='mb-2 flex items-center hover:underline'
+            to={`/admin/subject/view/${params.id}`}
+          >
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
@@ -98,8 +101,8 @@ const SubjectEdit = () => {
                   transition-all duration-200 hover:bg-[#DB4437] hover:text-white
                   focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
-                    setName(defaultName);
-                    setDescription(defaultDescription);
+                    setName(currentName);
+                    setDescription(currentDescription);
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>

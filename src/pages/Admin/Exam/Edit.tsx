@@ -12,17 +12,17 @@ import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive'
 
 const ExamEdit = () => {
   const params = useParams();
-  const defaultName = params.id || '';
-  const defaultSubject = '6443b456e19766de19fbc588';
-  const defaultType = 'MIDTERM_EXAM';
-  const defaultSemester = 'SEMESTER_221';
-  const defaultDescription = 'Không có chú thích nào cả';
+  const currentName = params.id || '';
+  const currentSubject = '6443b456e19766de19fbc588';
+  const currentType = 'MIDTERM_EXAM';
+  const currentSemester = 'SEMESTER_221';
+  const currentDescription = 'Không có chú thích nào cả';
 
-  const [name, setName] = useState(defaultName);
-  const [subject, setSubject] = useState(defaultSubject);
-  const [type, setType] = useState(defaultType);
-  const [semester, setSemester] = useState(defaultSemester);
-  const [description, setDescription] = useState(defaultDescription);
+  const [name, setName] = useState(currentName);
+  const [subject, setSubject] = useState(currentSubject);
+  const [type, setType] = useState(currentType);
+  const [semester, setSemester] = useState(currentSemester);
+  const [description, setDescription] = useState(currentDescription);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
@@ -30,11 +30,11 @@ const ExamEdit = () => {
 
   const setSave = useDebounce(() => {
     setCanSave(
-      name === defaultName &&
-        subject === defaultSubject &&
-        type === defaultType &&
-        semester === defaultSemester &&
-        _.trim(description) === defaultDescription
+      name === currentName &&
+        subject === currentSubject &&
+        type === currentType &&
+        semester === currentSemester &&
+        _.trim(description) === currentDescription
     );
   });
 
@@ -70,7 +70,10 @@ const ExamEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to='/admin/exam-archive/manage'>
+          <Link
+            className='mb-2 flex items-center hover:underline'
+            to={`/admin/exam-archive/view/${params.id}`}
+          >
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
@@ -174,11 +177,11 @@ const ExamEdit = () => {
                   transition-all duration-200 hover:bg-[#DB4437] hover:text-white
                   focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
-                    setName(defaultName);
-                    setSubject(defaultSubject);
-                    setType(defaultType);
-                    setSemester(defaultSemester);
-                    setDescription(defaultDescription);
+                    setName(currentName);
+                    setSubject(currentSubject);
+                    setType(currentType);
+                    setSemester(currentSemester);
+                    setDescription(currentDescription);
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>

@@ -12,15 +12,15 @@ import SubjectService from '../../../service/subject.service';
 
 const MaterialEdit = () => {
   const params = useParams();
-  const defaultName = params.id || '';
-  const defaultSubject = '6443b456e19766de19fbc588';
-  const defaultChapter = '';
-  const defaultDescription = 'Không có chú thích nào cả';
+  const currentName = params.id || '';
+  const currentSubject = '6443b456e19766de19fbc588';
+  const currentChapter = '';
+  const currentDescription = 'Không có chú thích nào cả';
 
-  const [name, setName] = useState(defaultName);
-  const [subject, setSubject] = useState(defaultSubject);
-  const [chapter, setChapter] = useState(defaultChapter);
-  const [description, setDescription] = useState(defaultDescription);
+  const [name, setName] = useState(currentName);
+  const [subject, setSubject] = useState(currentSubject);
+  const [chapter, setChapter] = useState(currentChapter);
+  const [description, setDescription] = useState(currentDescription);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
@@ -29,10 +29,10 @@ const MaterialEdit = () => {
 
   const setSave = useDebounce(() => {
     setCanSave(
-      name === defaultName &&
-        subject === defaultSubject &&
-        chapter === defaultChapter &&
-        _.trim(description) === defaultDescription
+      name === currentName &&
+        subject === currentSubject &&
+        chapter === currentChapter &&
+        _.trim(description) === currentDescription
     );
   });
 
@@ -92,7 +92,10 @@ const MaterialEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to='/admin/exam-archive/manage'>
+          <Link
+            className='mb-2 flex items-center hover:underline'
+            to={`/admin/material/view/${params.id}`}
+          >
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
@@ -181,10 +184,10 @@ const MaterialEdit = () => {
                   transition-all duration-200 hover:bg-[#DB4437] hover:text-white
                   focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
-                    setName(defaultName);
-                    setSubject(defaultSubject);
-                    setChapter(defaultChapter);
-                    setDescription(defaultDescription);
+                    setName(currentName);
+                    setSubject(currentSubject);
+                    setChapter(currentChapter);
+                    setDescription(currentDescription);
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>

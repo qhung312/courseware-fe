@@ -17,7 +17,7 @@ const ChapterView = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to='/admin/exam-archive/manage'>
+          <Link className='mb-2 flex items-center hover:underline' to='/admin/chapter/manage'>
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
@@ -75,20 +75,19 @@ const ChapterView = () => {
                   Không có chú thích nào cả
                 </div>
               </div>
-              {/**
-               * Create button
-               */}
+              <div className='my-4 flex w-full justify-end'>
+                <button
+                  type='button'
+                  onClick={() => navigate(`/admin/chapter/edit/${params.id}`)}
+                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                >
+                  <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                    Chỉnh sửa
+                  </p>
+                </button>
+              </div>
             </main>
           </div>
-          <button
-            type='button'
-            onClick={() => navigate(`/admin/chapter/edit/${params.id}`)}
-            className='w-full cursor-pointer bg-[#4285F4]/80 py-4 hover:bg-[#4285F4]'
-          >
-            <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl '>
-              Chỉnh sửa chương
-            </p>
-          </button>
         </div>
       </Wrapper>
     </Page>
