@@ -7,8 +7,11 @@ import Header from './Header';
 import Icon from './Icon';
 import LazyLoadImage from './LazyLoadImage';
 import Loading from './Loading';
+import Markdown from './Markdown';
+import Pagination from './Pagination';
 import PDF from './PDF';
-import QuestionSlide from './QuestionSlide/QuestionSlide';
+import QuestionBoard from './QuestionBoard';
+import QuestionCard from './QuestionCard';
 import Select from './Select';
 
 export {
@@ -19,9 +22,12 @@ export {
   Footer,
   Header,
   Icon,
+  Markdown,
   LazyLoadImage,
   Loading,
+  Pagination,
+  QuestionBoard,
+  QuestionCard,
   PDF,
-  QuestionSlide,
   Select,
 };

@@ -1,16 +1,16 @@
 import { useParams } from 'react-router-dom';
 
-import DetailPage from './DetailPage';
-import MainPage from './MainPage';
+import Detail from './Detail';
+import Main from './Main';
 
 const Exercises: React.FC = () => {
   const params = useParams();
 
-  if (params?.chapterId === undefined) {
-    return <MainPage />;
+  if (params?.quizId === undefined) {
+    return <Main />;
   }
 
-  return <DetailPage />;
+  return <Detail />;
 };
 
 export default Exercises;

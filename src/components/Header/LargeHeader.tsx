@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
@@ -118,8 +119,8 @@ const LargeHeader = () => {
               </div>
               <nav
                 className='set-11 absolute right-0 top-[136%] z-10 mt-1 flex w-[200px] flex-col 
-            items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all duration-300'
+                items-center justify-center rounded-lg bg-[#FBFCFF]
+                transition-all duration-300'
                 style={{
                   transform: isProfileDrop ? 'translateY(0%)' : 'translateY(10%)',
                   maxHeight: isProfileDrop ? '1000px' : '0px',
@@ -471,6 +472,28 @@ const LargeHeader = () => {
             Hỗ trợ
           </p>
         </NavLink>
+        {isAuthenticated &&
+        (user.isManager ||
+          _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (
+          <NavLink
+            to='/admin'
+            end
+            className='flex h-[100%] items-center justify-start 
+          px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+          >
+            <p
+              className='whitespace-nowrap bg-inherit px-2 py-1
+            text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+              style={{
+                color: pathname.includes('/admin') ? '#FFFFFF' : '#5B5B5B',
+                backgroundColor: pathname.includes('/admin') ? '#4285f4' : 'transparent',
+                borderRadius: '8px',
+              }}
+            >
+              Admin
+            </p>
+          </NavLink>
+        ) : null}
       </nav>
     </div>
   );

@@ -1,30 +1,75 @@
-import _ from 'lodash';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
 import { Link } from 'react-router-dom';
 
 import './index.css';
 import { Icon, Select } from '../../../components';
+import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
-
-type FormValue = {
-  name: string;
-  subject: string;
-  chapter: string;
-  description: string;
-  files: File[];
-};
+import ChapterService from '../../../service/chapter.service';
+import SubjectService from '../../../service/subject.service';
 
 const MaterialCreate = () => {
-  const [value, setValue] = useState<FormValue>({
-    name: '',
-    subject: '',
-    chapter: '',
-    description: '',
-    files: [],
-  });
+  const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [chapter, setChapter] = useState('');
+  const [description, setDescription] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
+  const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
+  const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
+
   const fileUploaderRef = useRef<FilePond>(null);
-  const submitDisabled = _.some(value, (v) => _.isEmpty(v));
+  const submitDisabled = name === '' || subject === '' || chapter === '';
+
+  console.log(uploadedFiles);
+
+  useEffect(() => {
+    // update options for chapter when the selected subject changes
+    if (subject === '') {
+      setChapterOptions([]);
+      setChapter('');
+      return;
+    }
+
+    ChapterService.getAll({ subject: subject })
+      .then((res) => {
+        const { result: chapters } = res.data.payload;
+        setChapterOptions(
+          chapters.map((chap) => ({
+            value: chap._id,
+            label: chap.name,
+          }))
+        );
+        setChapter('');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [subject]);
+
+  useEffect(() => {
+    // fetch subjects on first load
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setSubjectOptions(
+          allSubjects.map((sub) => ({
+            value: sub._id,
+            label: sub.name,
+          }))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  const createMaterial = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // TODO
+  };
 
   return (
     <Page>
@@ -52,42 +97,37 @@ const MaterialCreate = () => {
                 </label>
                 <input
                   id='material-name'
-                  className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium 
+                  className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
                   lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  value={value.name}
+                  value={name}
                   placeholder='Nhập tên tài liệu'
-                  onChange={({ target }) => setValue({ ...value, name: target.value })}
+                  onChange={({ target }) => setName(target.value)}
                 />
               </div>
               <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
                   <Select
-                    options={[
-                      { label: 'Giải tích 1', value: 'Giải tích 1' },
-                      { label: 'Giải tích 2', value: 'Giải tích 2' },
-                      { label: 'Vật lý đại cương A1', value: 'Vật lý đại cương A1' },
-                      { label: 'Hoá đại cương', value: 'Hoá đại cương' },
-                    ]}
-                    value={
-                      value.subject === '' ? null : { label: value.subject, value: value.subject }
-                    }
-                    onChange={(v) => setValue({ ...value, subject: v?.value || '' })}
+                    options={subjectOptions}
+                    value={subjectOptions.find((x) => x.value === subject) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setSubject(v.value);
+                      }
+                    }}
                     placeholder='Chọn môn'
                   />
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chương</p>
                   <Select
-                    options={[
-                      { label: 'Chương 1', value: '1' },
-                      { label: 'Chương 2', value: '2' },
-                      { label: 'Chương 3', value: '3' },
-                    ]}
-                    value={
-                      value.chapter === '' ? null : { label: value.chapter, value: value.chapter }
-                    }
-                    onChange={(v) => setValue({ ...value, chapter: v?.value || '' })}
+                    options={chapterOptions}
+                    value={chapterOptions.find((x) => x.value === chapter) ?? null}
+                    onChange={(v) => {
+                      if (v !== null) {
+                        setChapter(v.value);
+                      }
+                    }}
                     placeholder='Chọn chương'
                   />
                 </div>
@@ -100,10 +140,10 @@ const MaterialCreate = () => {
                   id='material-description'
                   className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs
                   font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base '
-                  value={value.description}
+                  value={description}
                   placeholder='Nhập chú thích tài liệu'
                   rows={5}
-                  onChange={({ target }) => setValue({ ...value, description: target.value })}
+                  onChange={({ target }) => setDescription(target.value)}
                 />
               </div>
 
@@ -113,12 +153,9 @@ const MaterialCreate = () => {
                 </p>
                 <FilePond
                   ref={fileUploaderRef}
-                  onupdatefiles={(files) => {
-                    setValue((prevValue) => ({
-                      ...prevValue,
-                      files: files[0] ? [files[0].file as File] : [],
-                    }));
-                  }}
+                  onupdatefiles={(files) =>
+                    setUploadedFiles(files[0] ? [files[0].file as File] : [])
+                  }
                   allowMultiple={false}
                   labelIdle='Kéo & Thả hoặc <span class="filepond--label-action">Chọn tài liệu</span>'
                 />
@@ -127,9 +164,7 @@ const MaterialCreate = () => {
                 <button
                   type='submit'
                   disabled={submitDisabled}
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
+                  onClick={createMaterial}
                   className={`flex items-center rounded-lg px-6 py-1
                   transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
                     submitDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
@@ -139,17 +174,15 @@ const MaterialCreate = () => {
                 </button>
                 <button
                   type='button'
-                  className='flex items-center rounded-lg px-6 py-1 text-[#DB4437] 
-                  transition-all duration-200 hover:bg-[#DB4437] hover:text-white 
+                  className='flex items-center rounded-lg px-6 py-1 text-[#DB4437]
+                  transition-all duration-200 hover:bg-[#DB4437] hover:text-white
                   focus:outline-none lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   onClick={() => {
-                    setValue({
-                      name: '',
-                      subject: '',
-                      chapter: '',
-                      description: '',
-                      files: [],
-                    });
+                    setName('');
+                    setSubject('');
+                    setChapter('');
+                    setDescription('');
+                    setUploadedFiles([]);
                     fileUploaderRef.current?.removeFiles();
                   }}
                 >

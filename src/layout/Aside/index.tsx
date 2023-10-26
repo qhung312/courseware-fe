@@ -19,7 +19,6 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
   const params = useParams();
   const { pathname } = useLocation();
   const pathTokens = pathname.split('/');
-  console.log(pathTokens);
   const asideRef = useRef(null);
 
   return (
@@ -70,11 +69,11 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
       {/* Collapse Button */}
       <div
         id={isAsideOpen ? 'collapse-button-container' : 'open-button-container'}
-        className={`fixed top-[50%] z-10 hidden rounded-r-xl bg-white md:block ${
+        className={`fixed top-[50%] z-10 hidden rounded-r-lg border-y border-r border-[#CCC] bg-white md:block ${
           isAsideOpen
             ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
-            : 'translate-x-[-50%] hover:translate-x-0'
-        } opacity-80 transition-all duration-300`}
+            : 'translate-x-[-75%] hover:translate-x-0'
+        } transition-all duration-300`}
       >
         <button
           id='collapse-button'
@@ -82,10 +81,9 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
           onClick={toggleAside}
           className='h-full w-full px-2 py-10'
         >
-          <Icon.ChevronUp
+          <Icon.Chevron
             fill={'#5B5B5B'}
-            fillOpacity={0.87}
-            className={`aspect-[10/7] h-full w-auto ${
+            className={`h-full transition-all duration-300 ${
               isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'
             }`}
           />

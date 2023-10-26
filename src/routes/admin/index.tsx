@@ -4,10 +4,19 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import AdminAside from '../../pages/Admin/AdminAside';
-import CreateExercisePage from '../../pages/Admin/Exercise/Create';
-import CreateQuestionPage from '../../pages/Admin/Question/Create';
-import CreateSubjectPage from '../../pages/Admin/Subject/Create';
-import SubjectList from '../../pages/Admin/Subject/SubjectList';
+import EditExercisePage from '../../pages/Admin/Exercise/Edit';
+import ViewExercisePage from '../../pages/Admin/Exercise/View';
+import EditQuestionPage from '../../pages/Admin/Question/Edit';
+import ViewQuestionPage from '../../pages/Admin/Question/View';
+
+const CreateExercisePage = lazy(() => import('../../pages/Admin/Exercise/Create'));
+const CreateQuestionPage = lazy(() => import('../../pages/Admin/Question/Create'));
+const CreateSubjectPage = lazy(() => import('../../pages/Admin/Subject/Create'));
+const SubjectList = lazy(() => import('../../pages/Admin/Subject/SubjectList'));
+const QuestionListPage = lazy(() => import('../../pages/Admin/Question/List'));
+const ExerciseListPage = lazy(() => import('../../pages/Admin/Exercise/ExerciseList'));
+const CreateChapterPage = lazy(() => import('../../pages/Admin/Chapter/CreateChapter'));
+const ChapterListPage = lazy(() => import('../../pages/Admin/Chapter/ChapterList'));
 
 const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
@@ -62,7 +71,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <ExerciseListPage />
                 </Suspense>
               }
             />
@@ -74,13 +83,29 @@ const AdministratorRoute = () => {
                 </Suspense>
               }
             />
+            <Route
+              path='edit/:exerciseid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EditExercisePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:exerciseid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ViewExercisePage />
+                </Suspense>
+              }
+            />
           </Route>
           <Route path='questions'>
             <Route
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <QuestionListPage />
                 </Suspense>
               }
             />
@@ -89,6 +114,22 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateQuestionPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:questionid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ViewQuestionPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:questionid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EditQuestionPage />
                 </Suspense>
               }
             />
@@ -125,6 +166,24 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateSubjectPage />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route path='chapter'>
+            <Route
+              path='manage'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='create'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <CreateChapterPage />
                 </Suspense>
               }
             />

@@ -27,7 +27,7 @@ const ProgressBar = ({
   const center = size / 2,
     radius = center - (trackWidth > indicatorWidth ? trackWidth : indicatorWidth),
     dashArray = 2 * Math.PI * radius,
-    dashOffset = dashArray * ((100 - progress*10) / 100);
+    dashOffset = dashArray * ((100 - progress * 10) / 100);
   return (
     <div>
       <div className='relative' style={{ width: size, height: size }}>

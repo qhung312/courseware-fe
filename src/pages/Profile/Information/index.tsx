@@ -64,7 +64,7 @@ const UserInformation = () => {
                 onClick={() => setIsEditMode(true)}
                 className='mt-3 mb-5 flex w-fit gap-x-1 rounded-[12px] bg-[#E3F2FD] px-3 py-2 hover:bg-[#9DCCFF]'
               >
-                <Icon.PencilIcon fill='#252641' />
+                <Icon.Pen fill='#252641' />
                 <p className='font-semibold text-[#252641] xl:text-xl'>Chỉnh sửa thông tin</p>
               </button>
             )}

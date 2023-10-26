@@ -278,7 +278,7 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Tài liệu học tập</h3>
               <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
-                  <Icon.ClockIcon className='mr-1' />
+                  <Icon.Clock className='mr-1' />
                   <p className='2xl:text-base'>1 giờ trước</p>
                 </div>
                 <p className='2xl:text-base'>4 hoạt động</p>
@@ -296,7 +296,7 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Bài tập rèn luyện</h3>
               <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
-                  <Icon.ClockIcon className='mr-1' />
+                  <Icon.Clock className='mr-1' />
                   <p className='2xl:text-base'>45 phút trước</p>
                 </div>
                 <p className='2xl:text-base'>22 hoạt động</p>
@@ -314,7 +314,7 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
               <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
-                  <Icon.ClockIcon className='mr-1' />
+                  <Icon.Clock className='mr-1' />
                   <p className='2xl:text-base'>45 phút trước</p>
                 </div>
                 <p className='2xl:text-base'>20 hoạt động</p>
