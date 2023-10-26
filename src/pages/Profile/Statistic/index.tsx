@@ -66,7 +66,7 @@ const Statistic = () => {
 
   return (
     <Page title='Thông tin người dùng - Thống kê điểm số'>
-      <main className='w-full'>
+      <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
         <ProfileOption option={3} />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:gap-x-[2%] md:pt-10 lg:px-[60px]'>

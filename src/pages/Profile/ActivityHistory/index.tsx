@@ -120,7 +120,7 @@ const ActivityHistory = () => {
       <div className='fixed bottom-4 right-4 z-[60]'>
         <DeleteSnackbar showSnackbar={deleteSnackbar} setShow={() => setDeleteSnackbar(false)} />
       </div>
-      <main className='w-full'>
+      <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
         <ProfileOption option={2} />
         <div className='bg-white px-5 pt-4 pb-[64px] lg:flex lg:gap-x-[2%] lg:pt-10'>

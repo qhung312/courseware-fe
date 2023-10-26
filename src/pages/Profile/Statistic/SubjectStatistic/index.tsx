@@ -10,6 +10,7 @@ import { Page } from '../../../../layout';
 interface SubjectStatisticProps {
   name: string;
   grade: number;
+  finishDate: string;
   link: string;
 }
 const SubjectIdMapping: string[] = [
@@ -24,31 +25,37 @@ const SubjectStatisticData: SubjectStatisticProps[] = [
   {
     name: 'Bài tập rèn luyện chương 1',
     grade: 10,
+    finishDate: '01/07/2023',
     link: '/statistic',
   },
   {
     name: 'Bài tập rèn luyện chương 2',
     grade: 0,
+    finishDate: '02/07/2023',
     link: '/statistic',
   },
   {
     name: 'Bài tập rèn luyện chương 3',
     grade: 5,
+    finishDate: '11/07/2023',
     link: '/statistic',
   },
   {
     name: 'Bài tập rèn luyện chương 4',
     grade: 6.25,
+    finishDate: '14/07/2023',
     link: '/statistic',
   },
   {
     name: 'Bài tập rèn luyện chương 5',
     grade: 7.5,
+    finishDate: '03/07/2023',
     link: '/statistic',
   },
   {
     name: 'Bài tập rèn luyện chương 6',
     grade: 7.5,
+    finishDate: '05/07/2023',
     link: '/statistic',
   },
 ];
@@ -59,7 +66,7 @@ const SubjectStatistic = () => {
 
   return (
     <Page title='Thông tin người dùng - Thống kê điểm số'>
-      <main className='w-full'>
+      <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
         <ProfileOption option={3} />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:pt-10 lg:px-[60px]'>
@@ -95,14 +102,17 @@ const SubjectStatistic = () => {
                 Lịch sử làm bài
               </p>
             </div>
-            <div className='mt-6 flex items-center md:w-[60%] md:justify-between'>
-              <div className='flex items-center gap-x-2'>
+            <div className='mt-6 flex items-center md:w-[80%]'>
+              <div className='flex items-center gap-x-2 md:flex-[6]'>
                 <div className='h-4 w-4 rounded-full bg-[#49BBBD] md:bg-[#9DCCFF] 3xl:h-5 3xl:w-5' />
                 <p className='font-medium text-[#49BBBD] md:text-[18px] md:text-[#9DCCFF] lg:text-xl 3xl:text-[28px]'>
                   Danh sách các bài kiểm tra
                 </p>
               </div>
-              <p className='hidden md:block md:text-[18px] md:text-[#9DCCFF] lg:text-xl 3xl:text-[28px]'>
+              <p className='hidden md:block md:flex-[3] md:text-[18px] md:text-[#9DCCFF] lg:text-xl 3xl:text-[28px]'>
+                Ngày hoàn thành
+              </p>
+              <p className='hidden md:block md:flex-[1] md:text-[18px] md:text-[#9DCCFF] lg:text-xl 3xl:text-[28px]'>
                 Điểm
               </p>
             </div>
@@ -118,10 +128,15 @@ const SubjectStatistic = () => {
                       Xem lại
                     </Link>
                   </div>
-                  <p className='text-[14px] font-medium text-[#252641]'>
-                    Điểm: {test.grade < 10 && 0}
-                    {test.grade.toFixed(2)}
-                  </p>
+                  <div className='flex gap-x-2'>
+                    <p className='w-[148px] text-[14px] font-medium text-[#252641]'>
+                      <span className='text-[#0f9d58]'>Hoàn thành:</span> {test.finishDate}
+                    </p>
+                    <p className='text-[14px] font-medium text-[#252641]'>
+                      <span className='text-[#0f9d58]'>Điểm:</span> {test.grade < 10 && 0}
+                      {test.grade.toFixed(2)}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -132,11 +147,14 @@ const SubjectStatistic = () => {
                   key={index}
                 >
                   <div className='flex justify-between'>
-                    <div className='flex w-[60%] items-center justify-between'>
-                      <p className='pl-5 font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
+                    <div className='flex w-[80%] items-center justify-between'>
+                      <p className='flex-[6] pl-5 font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
                         {test.name}
                       </p>
-                      <p className='font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
+                      <p className='flex-[3] font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
+                        {test.finishDate}
+                      </p>
+                      <p className='flex-[1] font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
                         {test.grade < 10 && 0}
                         {test.grade.toFixed(2)}
                       </p>

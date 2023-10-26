@@ -47,7 +47,7 @@ const UserInformation = () => {
       <div className='fixed bottom-4 right-4 z-[60]'>
         <SuccessSnackbar showSnackbar={successSnackbar} setShow={() => setSuccessSnackbar(false)} />
       </div>
-      <main className='w-full'>
+      <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
         <ProfileOption option={1} />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:rounded-[20px] md:px-10 md:pt-10 lg:px-[120px] xl:px-[240px] 2xl:px-[360px] 3xl:px-[460px]'>
