@@ -1,11 +1,13 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Link, useParams } from 'react-router-dom';
 
-import DemoLineChart from '../../../../assets/images/DemoLineChart.png';
+// import DemoLineChart from '../../../../assets/images/DemoLineChart.png';
 import { Footer } from '../../../../components';
 import Icon from '../../../../components/Icon';
 import ProfileOption from '../../../../components/ProfileOption';
 import { Page } from '../../../../layout';
+
+import RenderLineChart from './LineChart';
 
 interface SubjectStatisticProps {
   name: string;
@@ -88,11 +90,12 @@ const SubjectStatistic = () => {
               </p>
             </div>
             <div className='mt-4 h-[1px] w-full bg-[#D9D9D9] md:hidden' />
-            <div className='mt-5 md:self-center'>
-              <p className='text-semibold text-sm text-[#696969] md:text-base lg:text-xl 3xl:text-[28px]'>
+            <div className='mt-5 h-[200px] sm:h-[320px] md:h-[360px] md:w-[70vw] md:self-center lg:h-[400px] lg:w-[60vw] xl:w-[50vw]'>
+              {/* <p className='text-semibold text-sm text-[#696969] md:text-base lg:text-xl 3xl:text-[28px]'>
                 Điểm
-              </p>
-              <img src={DemoLineChart} alt='Demo Line Chart' className='h-fit w-full md:w-[70vw]' />
+              </p> */}
+              {/* <img src={DemoLineChart} alt='Demo Line Chart' className='h-fit w-full md:w-[70vw]' /> */}
+              <RenderLineChart />
             </div>
           </div>
           <div className='show-scrollbar mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:max-h-[50vh] md:overflow-y-scroll md:border-0 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'>
