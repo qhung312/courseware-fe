@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 
 import { Icon, Pagination, Select } from '../../../components';
@@ -14,6 +14,7 @@ import { Chapter } from '../../../types';
 const ITEMS_PER_PAGE = 10;
 
 const ChapterListPage = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [filterName, setFilterName] = useState('');
@@ -190,7 +191,11 @@ const ChapterListPage = () => {
                                 : undefined}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                              <button
+                                type='button'
+                                onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                              >
                                 <Icon.Edit
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'

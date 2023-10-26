@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Icon, Pagination } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -11,6 +11,7 @@ import { Subject } from '../../../types';
 const ITEMS_PER_PAGE = 10;
 
 const SubjectList = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -141,7 +142,11 @@ const SubjectList = () => {
                               {new Date(subject.createdAt).toLocaleDateString()}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                              <button
+                                type='button'
+                                onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                              >
                                 <Icon.Edit
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
