@@ -13,7 +13,11 @@ interface ExerciseProps {
   name: string;
   subject: string;
   chapter: string;
-  duration: string;
+  duration: {
+    hours: number;
+    minutes: number;
+    seconds: number;
+  };
   sampleSize: string;
   description: string;
   question: {
@@ -56,7 +60,11 @@ const demoExercise: ExerciseProps = {
   name: 'Bài tập 1',
   subject: '123',
   chapter: '111',
-  duration: '00:30:00',
+  duration: {
+    hours: 0,
+    minutes: 30,
+    seconds: 0,
+  },
   sampleSize: '10',
   description: 'Bài tập 1',
   question: {
@@ -206,8 +214,20 @@ const ViewExercisePage = () => {
                   </p>
                   <input
                     className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={exercise.duration}
-                    placeholder={exercise.duration}
+                    value={
+                      String(exercise.duration.hours).padStart(2, '0') +
+                      ':' +
+                      String(exercise.duration.minutes).padStart(2, '0') +
+                      ':' +
+                      String(exercise.duration.seconds).padStart(2, '0')
+                    }
+                    placeholder={
+                      String(exercise.duration.hours).padStart(2, '0') +
+                      ':' +
+                      String(exercise.duration.minutes).padStart(2, '0') +
+                      ':' +
+                      String(exercise.duration.seconds).padStart(2, '0')
+                    }
                     disabled
                   />
                 </div>

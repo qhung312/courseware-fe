@@ -10,6 +10,12 @@ import QuestionTemplateService from '../../../service/questionTemplate.service';
 import SubjectService from '../../../service/subject.service';
 import { QuestionTemplate } from '../../../types';
 
+interface CountDown {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 type OptionWithQuestion = Option & { question: QuestionTemplate };
 
 const CreateExercisePage = () => {
@@ -17,7 +23,11 @@ const CreateExercisePage = () => {
   const [subject, setSubject] = useState('');
   const [chapter, setChapter] = useState('');
 
-  const [duration, setDuration] = useState('');
+  const [duration, setDuration] = useState<CountDown>({
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const [sampleSize, setSampleSize] = useState('');
   const [description, setDescription] = useState('');
 
@@ -44,7 +54,14 @@ const CreateExercisePage = () => {
     }
   };
 
-  const onInputDuration = (event: ChangeEvent<HTMLInputElement>) => setDuration(event.target.value);
+  const onInputDurationHours = (event: ChangeEvent<HTMLInputElement>) =>
+    setDuration({ ...duration, hours: parseInt(event.target.value) });
+
+  const onInputDurationMinutes = (event: ChangeEvent<HTMLInputElement>) =>
+    setDuration({ ...duration, minutes: parseInt(event.target.value) });
+
+  const onInputDurationSeconds = (event: ChangeEvent<HTMLInputElement>) =>
+    setDuration({ ...duration, seconds: parseInt(event.target.value) });
 
   const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
     setSampleSize(event.target.value);
@@ -214,11 +231,26 @@ const CreateExercisePage = () => {
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
                     Thời gian làm bài (hh:mm:ss)
                   </p>
-                  <input
-                    className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={duration}
-                    onChange={onInputDuration}
-                  />
+                  <div className='flex justify-around'>
+                    <input
+                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      value={duration.hours}
+                      type='number'
+                      onChange={onInputDurationHours}
+                    />
+                    <input
+                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      value={duration.minutes}
+                      type='number'
+                      onChange={onInputDurationMinutes}
+                    />
+                    <input
+                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      value={duration.seconds}
+                      type='number'
+                      onChange={onInputDurationSeconds}
+                    />
+                  </div>
                 </div>
                 <div className='flex flex-col'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
