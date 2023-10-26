@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import AdminAside from '../../pages/Admin/AdminAside';
+import EditExercisePage from '../../pages/Admin/Exercise/Edit';
+import ViewExercisePage from '../../pages/Admin/Exercise/View';
 import EditQuestionPage from '../../pages/Admin/Question/Edit';
 import ViewQuestionPage from '../../pages/Admin/Question/View';
 
@@ -78,6 +80,22 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateExercisePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:exerciseid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EditExercisePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:exerciseid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ViewExercisePage />
                 </Suspense>
               }
             />
