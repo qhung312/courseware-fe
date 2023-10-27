@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import './index.css';
 import { Icon, Select } from '../../../components';
@@ -11,6 +11,7 @@ import ChapterService from '../../../service/chapter.service';
 import SubjectService from '../../../service/subject.service';
 
 const MaterialEdit = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const currentName = params.id || '';
   const currentSubject = '6443b456e19766de19fbc588';
@@ -92,10 +93,14 @@ const MaterialEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to='/admin/material/manage'>
+          <button
+            type='button'
+            onClick={() => navigate(-1)}
+            className='mb-2 flex items-center hover:underline'
+          >
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
-          </Link>
+          </button>
           <div
             className='h-full w-full rounded-lg bg-white px-8 py-2
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-6'

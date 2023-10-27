@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Icon } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -8,6 +8,7 @@ import { Page, Wrapper } from '../../../layout';
 
 const SubjectEdit = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const currentName = params.id || '';
   const currentDescription = 'Không có chú thích nào cả';
 
@@ -33,10 +34,14 @@ const SubjectEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link className='mb-2 flex items-center hover:underline' to={`/admin/subject/manage`}>
+          <button
+            type='button'
+            onClick={() => navigate(-1)}
+            className='mb-2 flex items-center hover:underline'
+          >
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
-          </Link>
+          </button>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex flex-col gap-y-4'>
               {/**
