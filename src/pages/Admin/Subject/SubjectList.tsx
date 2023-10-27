@@ -76,7 +76,7 @@ const SubjectList = () => {
                   />
                 </div>
               </div>
-              <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
+              {/* <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
                 <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                   Tên
                 </p>
@@ -87,7 +87,7 @@ const SubjectList = () => {
                   Thời gian cập nhật
                 </p>
                 <div className='flex flex-1' />
-              </div>
+              </div> */}
 
               {loading ? (
                 <>
@@ -119,7 +119,7 @@ const SubjectList = () => {
                             Môn
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Chương
+                            Thời Gian Tạo
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             {''}
@@ -138,7 +138,7 @@ const SubjectList = () => {
                             <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {subject?.name}
                             </td>
-                            <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                            <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {new Date(subject.createdAt).toLocaleDateString()}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
