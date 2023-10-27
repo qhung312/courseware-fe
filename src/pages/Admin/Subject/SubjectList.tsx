@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Icon, Pagination } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -11,6 +11,7 @@ import { Subject } from '../../../types';
 const ITEMS_PER_PAGE = 10;
 
 const SubjectList = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -75,7 +76,7 @@ const SubjectList = () => {
                   />
                 </div>
               </div>
-              <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
+              {/* <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
                 <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                   Tên
                 </p>
@@ -86,7 +87,7 @@ const SubjectList = () => {
                   Thời gian cập nhật
                 </p>
                 <div className='flex flex-1' />
-              </div>
+              </div> */}
 
               {loading ? (
                 <>
@@ -118,7 +119,7 @@ const SubjectList = () => {
                             Môn
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Chương
+                            Thời Gian Tạo
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             {''}
@@ -137,11 +138,25 @@ const SubjectList = () => {
                             <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {subject?.name}
                             </td>
-                            <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                            <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {new Date(subject.createdAt).toLocaleDateString()}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                              <button
+                                type='button'
+                                onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
+                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
+                              >
+                                <Icon.Edit
+                                  fill='white'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </button>
+                              <button
+                                type='button'
+                                onClick={() => navigate(`/admin/subject/edit/${subject._id}`)}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                              >
                                 <Icon.Edit
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'

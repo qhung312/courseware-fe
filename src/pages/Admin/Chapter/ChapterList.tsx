@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 
 import { Icon, Pagination, Select } from '../../../components';
@@ -14,6 +14,7 @@ import { Chapter } from '../../../types';
 const ITEMS_PER_PAGE = 10;
 
 const ChapterListPage = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [filterName, setFilterName] = useState('');
@@ -151,7 +152,7 @@ const ChapterListPage = () => {
                   <div ref={tableRef} className='w-full overflow-auto'>
                     <table className='flex w-full min-w-[720px] table-fixed flex-col gap-y-3 overflow-auto'>
                       <thead>
-                        <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
+                        <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-4 lg:px-6 3xl:px-8'>
                           <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             Tên
                           </th>
@@ -173,7 +174,7 @@ const ChapterListPage = () => {
                         {chapters.map((chapter) => (
                           <tr
                             key={`material-${chapter._id}`}
-                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                            className='flex w-full flex-1 items-center justify-start gap-x-3 border-b border-b-[#CCC] p-2 px-2 lg:p-4 lg:px-4 3xl:p-6 3xl:px-6'
                           >
                             <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {chapter.name}
@@ -189,17 +190,31 @@ const ChapterListPage = () => {
                                 ? new Date(chapter.lastUpdatedAt).toLocaleString()
                                 : undefined}
                             </td>
-                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-2 gap-y-2 xl:flex-nowrap xl:whitespace-nowrap'>
+                              <button
+                                type='button'
+                                onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
+                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
+                              >
                                 <Icon.Edit
                                   fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
+                                />
+                              </button>
+                              <button
+                                type='button'
+                                onClick={() => navigate(`/admin/chapter/edit/${chapter._id}`)}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                              >
+                                <Icon.Edit
+                                  fill='white'
+                                  className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
                                 />
                               </button>
                               <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
                                 <Icon.Delete
                                   fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
                                 />
                               </button>
                             </td>
