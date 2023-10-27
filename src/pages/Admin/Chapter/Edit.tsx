@@ -61,10 +61,7 @@ const ChapterEdit = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          <Link
-            className='mb-2 flex items-center hover:underline'
-            to={`/admin/chapter/view/${params.id}`}
-          >
+          <Link className='mb-2 flex items-center hover:underline' to='/admin/chapter/manage'>
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
