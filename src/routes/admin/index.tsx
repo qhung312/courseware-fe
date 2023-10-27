@@ -8,14 +8,14 @@ import ChapterEdit from '../../pages/Admin/Chapter/Edit';
 import ChapterView from '../../pages/Admin/Chapter/View';
 import ExamEdit from '../../pages/Admin/Exam/Edit';
 import ExamView from '../../pages/Admin/Exam/View';
-import MaterialEdit from '../../pages/Admin/Material/Edit';
-import MaterialView from '../../pages/Admin/Material/View';
-import SubjectEdit from '../../pages/Admin/Subject/Edit';
-import SubjectView from '../../pages/Admin/Subject/View';
 import EditExercisePage from '../../pages/Admin/Exercise/Edit';
 import ViewExercisePage from '../../pages/Admin/Exercise/View';
+import MaterialEdit from '../../pages/Admin/Material/Edit';
+import MaterialView from '../../pages/Admin/Material/View';
 import EditQuestionPage from '../../pages/Admin/Question/Edit';
 import ViewQuestionPage from '../../pages/Admin/Question/View';
+import SubjectEdit from '../../pages/Admin/Subject/Edit';
+import SubjectView from '../../pages/Admin/Subject/View';
 
 const CreateExercisePage = lazy(() => import('../../pages/Admin/Exercise/Create'));
 const CreateQuestionPage = lazy(() => import('../../pages/Admin/Question/Create'));
