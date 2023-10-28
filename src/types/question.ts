@@ -8,73 +8,54 @@ export enum QuestionType {
   NUMBER = 'NUMBER',
 }
 
-export type ConcreteQuestion = {
-  _id: string;
-  description?: string;
-  subQuestions: {
-    _id: string;
-    type: QuestionType;
-    description: string;
-    options?: {
-      key: number;
-      description: string;
-    }[];
-    answerKey?: number;
-    starred: boolean;
-    answerKeys?: number[];
-    answerField?: string | number;
-    matchCase?: boolean;
-    maximumError?: number;
-    explanation: string;
-
-    // fields for logging user answer
-    userAnswerKey?: number;
-    userAnswerKeys?: number[];
-    userAnswerField?: string | number;
-    isCorrect?: boolean;
-  }[];
+export type UserAnswer = {
+  answerKeys?: number[];
+  answerField?: string | number;
 };
 
-export type QuestionTemplate = {
+export type ConcreteQuestion = {
+  _id: string;
+  type: QuestionType;
+  description: string;
+  options?: {
+    key: number;
+    description: string;
+  }[];
+  answerKeys?: number[];
+  answerField?: string | number;
+  starred: boolean;
+
+  matchCase?: boolean;
+  maximumError?: number;
+  explanation: string;
+
+  userAnswerKeys?: number[];
+  userAnswerField?: string | number;
+  isCorrect?: boolean;
+};
+
+export type Question = {
   _id: string;
   name: string;
-  /**
-   * Description of the question, written in Markdown
-   * This is used as a unified description for all subquestions, since
-   * a question may have multiple subquestions
-   */
-  description?: string;
 
   code: string;
   subject: Subject;
   chapter: Chapter;
 
-  subQuestions: {
-    _id: string;
-    type: { type: String; enum: QuestionType; required: true };
-    questionType: QuestionType;
+  type: QuestionType;
+  description: string;
+
+  options?: {
+    key: number;
     description: string;
-    /**
-     * Options to choose from (multiple choice questions)
-     * and the key for the correct answer
-     */
-    options?: {
-      key: number;
-      description: string;
-    }[];
-    shuffleOptions: boolean;
-    answerKey?: number;
-    answerKeys?: number[];
-
-    /**
-     * Store the correct answer on text or number field questions
-     */
-    answerField?: string;
-    matchCase?: boolean; // require matching case on text questions
-    maximumError?: number; // maximum error allowed on numeric questions
-
-    explanation: string;
   }[];
+  shuffleOptions?: boolean;
+  answerKeys?: number[];
+  answerField: string;
+  matchCase?: boolean;
+  maximumError?: number;
+
+  explanation: string;
 
   createdAt: number;
   createdBy: string;

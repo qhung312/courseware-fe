@@ -1,8 +1,10 @@
 import { Chapter } from './chapter';
 import { ExamArchive } from './examArchive';
 import { Material } from './material';
-import { QuestionType, ConcreteQuestion, QuestionTemplate } from './question';
-import { QuizTemplate, QuizStatus, Quiz } from './quiz';
+import { QuestionType, UserAnswer, ConcreteQuestion, Question } from './question';
+import { Quiz, QuizStatus, QuizSession } from './quiz';
+import { GetPaginationOptions } from './request';
+import { Response } from './response';
 import { Subject } from './subject';
 import { User } from './user';
 
@@ -12,10 +14,13 @@ export type {
   Material,
   QuestionType,
   ConcreteQuestion,
-  QuestionTemplate,
-  QuizTemplate,
-  QuizStatus,
+  UserAnswer,
+  Question,
   Quiz,
+  QuizStatus,
+  QuizSession,
+  GetPaginationOptions,
+  Response,
   Subject,
   User,
 };

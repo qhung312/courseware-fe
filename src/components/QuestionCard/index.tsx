@@ -17,12 +17,12 @@ import Icon from '../Icon';
 
 type InputAnswerProps = {
   status: QuizStatus;
-  question: ConcreteQuestion['subQuestions'][0];
+  question: ConcreteQuestion;
   helpers: {
     stringAnswer: string;
     singleValueAnswer: number;
     multipleValueAnswer: number[];
-    setQuestion?: (question: ConcreteQuestion['subQuestions'][0]) => void;
+    setQuestion?: (question: ConcreteQuestion) => void;
     setStringAnswer: Dispatch<SetStateAction<string>>;
     setSingleValueAnswer: Dispatch<SetStateAction<number>>;
     setMultipleValueAnswer: Dispatch<SetStateAction<number[]>>;
@@ -80,17 +80,17 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                     setQuestion &&
                       setQuestion({
                         ...question,
-                        userAnswerKey: option.key,
+                        userAnswerField: option.key,
                       });
                   }}
                   disabled={status !== QuizStatus.ONGOING}
                   className={`${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
-                      : question.isCorrect === undefined || question.userAnswerKey === undefined
+                      : question.isCorrect === undefined || question.userAnswerField === undefined
                       ? 'checked:bg-transparent'
-                      : (question.isCorrect && question.userAnswerKey === option.key) ||
-                        question.answerKey === option.key
+                      : (question.isCorrect && Number(question.userAnswerField) === option.key) ||
+                        Number(question.answerField) === option.key
                       ? 'checked:bg-[#49CCCF]'
                       : 'checked:bg-[#DB4437]'
                   }`}
@@ -101,7 +101,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   multiple={status === QuizStatus.ENDED}
                   checked={
                     singleValueAnswer === option.key ||
-                    (status === QuizStatus.ENDED && question.answerKey === option.key)
+                    (status === QuizStatus.ENDED && Number(question.answerField) === option.key)
                   }
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
@@ -192,10 +192,10 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
 });
 
 type Props = {
-  question: ConcreteQuestion['subQuestions'][0];
+  question: ConcreteQuestion;
   status: QuizStatus;
   questionNumber: number;
-  handleChange?: (question: ConcreteQuestion['subQuestions'][0]) => void;
+  handleChange?: (question: ConcreteQuestion) => void;
 };
 
 const QuestionCard = ({ question, status, questionNumber, handleChange }: Props) => {
@@ -204,7 +204,7 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
     String(question.userAnswerField || question.answerField)
   );
   const [singleValueAnswer, setSingleValueAnswer] = useState<number>(
-    question.userAnswerKey || question.answerKey || -1
+    Number(question.userAnswerField) || Number(question.userAnswerField) || -1
   );
   const [multipleValueAnswer, setMultipleValueAnswer] = useState<number[]>(
     question.userAnswerKeys || question.answerKeys || []
@@ -262,7 +262,6 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
                   ...question,
                   starred: true,
                   userAnswerField: undefined,
-                  userAnswerKey: undefined,
                   userAnswerKeys: undefined,
                 });
             }}

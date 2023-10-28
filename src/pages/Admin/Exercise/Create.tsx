@@ -6,9 +6,9 @@ import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
-import QuestionTemplateService from '../../../service/questionTemplate.service';
+import QuestionTemplateService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
-import { QuestionTemplate } from '../../../types';
+import { Question } from '../../../types';
 
 interface CountDown {
   hours: number;
@@ -33,11 +33,11 @@ const CreateExercisePage = () => {
 
   const [filterSubject, setFilterSubject] = useState('');
   const [filterChapter, setFilterChapter] = useState('');
-  const [potentialQuestions, setPotentialQuestions] = useState<QuestionTemplate[]>([]);
+  const [potentialQuestions, setPotentialQuestions] = useState<Question[]>([]);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
-  const [questionOptions, setQuestionOptions] = useState<QuestionTemplate[]>([]);
+  const [questionOptions, setQuestionOptions] = useState<Question[]>([]);
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => setName(event.target.value);
@@ -363,7 +363,7 @@ const CreateExercisePage = () => {
                           onClick={() => {
                             const newPotentialQuestions = JSON.parse(
                               JSON.stringify(potentialQuestions)
-                            ) as QuestionTemplate[];
+                            ) as Question[];
                             newPotentialQuestions.splice(index, 1);
                             setPotentialQuestions(newPotentialQuestions);
                           }}

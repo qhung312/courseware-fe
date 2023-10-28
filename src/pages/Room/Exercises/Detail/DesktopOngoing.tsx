@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
-import { ConcreteQuestion, Quiz } from '../../../../types';
+import { ConcreteQuestion, QuizSession } from '../../../../types';
 
 const DesktopOngoing: React.FC<{
-  quiz: Quiz;
-  handleAnswer: (question: ConcreteQuestion['subQuestions'][0]) => void;
+  quiz: QuizSession;
+  handleAnswer: (question: ConcreteQuestion) => void;
 }> = ({ quiz, handleAnswer }) => {
   const [page, setPage] = useState(1);
 
@@ -18,9 +18,9 @@ const DesktopOngoing: React.FC<{
       <div className='flex w-full flex-col items-start justify-start bg-white p-5 lg:p-8 3xl:p-20'>
         <div className='flex w-full flex-col space-y-4 lg:space-y-5 3xl:space-y-6'>
           <h3 className='text-xl font-semibold text-[#666] lg:text-2xl 3xl:text-3xl'>
-            {quiz.fromTemplate.subject.name}
+            {quiz.fromQuiz.subject.name}
           </h3>
-          <h1 className='text-2xl font-bold lg:text-3xl 3xl:text-4xl'>{quiz.fromTemplate.name}</h1>
+          <h1 className='text-2xl font-bold lg:text-3xl 3xl:text-4xl'>{quiz.fromQuiz.name}</h1>
 
           <div className='flex flex-1 flex-row gap-x-4'>
             <div className='flex flex-row items-center gap-x-1'>
@@ -49,17 +49,15 @@ const DesktopOngoing: React.FC<{
           </div>
 
           <div className='flex flex-col space-y-4'>
-            {quiz.questions.map((question) =>
-              question.subQuestions.map((subQuestion, index) => (
-                <QuestionCard
-                  key={subQuestion._id}
-                  question={subQuestion}
-                  status={quiz.status}
-                  questionNumber={index + 1}
-                  handleChange={handleAnswer}
-                />
-              ))
-            )}
+            {quiz.questions.map((question, index) => (
+              <QuestionCard
+                key={question._id}
+                question={question}
+                status={quiz.status}
+                questionNumber={index + 1}
+                handleChange={handleAnswer}
+              />
+            ))}
           </div>
           <Pagination totalCount={2} pageSize={2} currentPage={page} onPageChange={setPage} />
         </div>
