@@ -221,16 +221,28 @@ const ExerciseListPage = () => {
                             <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {exercise?.subject?.name}
                             </td>
-                            <td className='flex flex-1 items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                            <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {exercise?.chapter?.name}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'>
+                              <Link
+                                to={`/admin/exercises/view/${exercise._id}`}
+                                className='flex items-center justify-center rounded-full bg-[#CCCCCC] p-2'
+                              >
+                                <Icon.ViewIcon
+                                  fill='#252641'
+                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                />
+                              </Link>
+                              <Link
+                                to={`/admin/exercises/edit/${exercise._id}`}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                              >
                                 <Icon.Edit
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
-                              </button>
+                              </Link>
                               <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
                                 <Icon.Delete
                                   fill='white'

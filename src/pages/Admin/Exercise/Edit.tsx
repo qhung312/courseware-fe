@@ -1,73 +1,222 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
-import { useDebounce } from '../../../hooks';
+// import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
-import ChapterService from '../../../service/chapter.service';
-import QuestionTemplateService from '../../../service/questionTemplate.service';
-import SubjectService from '../../../service/subject.service';
+// import ChapterService from '../../../service/chapter.service';
+// import QuestionTemplateService from '../../../service/questionTemplate.service';
+// import SubjectService from '../../../service/subject.service';
 import { QuestionTemplate } from '../../../types';
-
-interface CountDown {
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
 
 type OptionWithQuestion = Option & { question: QuestionTemplate };
 
-const CreateExercisePage = () => {
-  const [name, setName] = useState('');
-  const [subject, setSubject] = useState('');
-  const [chapter, setChapter] = useState('');
+interface ExerciseProps {
+  name: string;
+  subject: string;
+  chapter: string;
+  duration: {
+    hours: number;
+    minutes: number;
+    seconds: number;
+  };
+  sampleSize: string;
+  description: string;
+  question: {
+    filterSubject: string;
+    filterChapter: string;
+  };
+}
 
-  const [duration, setDuration] = useState<CountDown>({
+const SUBJECTS = [
+  {
+    value: '123',
+    label: 'Giải tích 1',
+  },
+  {
+    value: '1234',
+    label: 'Giải tích 2',
+  },
+  {
+    value: '789',
+    label: 'Giải tích 3',
+  },
+];
+
+const CHAPTERS = [
+  {
+    value: '111',
+    label: 'Đạo hàm hàm số',
+  },
+  {
+    value: '112',
+    label: 'Tích phân',
+  },
+  {
+    value: '113',
+    label: 'abc',
+  },
+];
+
+const demoExercise: ExerciseProps = {
+  name: 'Bài tập 1',
+  subject: '123',
+  chapter: '111',
+  duration: {
     hours: 0,
-    minutes: 0,
+    minutes: 30,
     seconds: 0,
-  });
-  const [sampleSize, setSampleSize] = useState('');
-  const [description, setDescription] = useState('');
+  },
+  sampleSize: '10',
+  description: 'Bài tập 1',
+  question: {
+    filterSubject: '123',
+    filterChapter: '111',
+  },
+};
 
-  const [filterSubject, setFilterSubject] = useState('');
-  const [filterChapter, setFilterChapter] = useState('');
-  const [potentialQuestions, setPotentialQuestions] = useState<QuestionTemplate[]>([]);
+const demoQuestion: QuestionTemplate[] = [
+  {
+    _id: '1',
+    name: 'Câu hỏi 1',
+    description: 'Câu hỏi 1',
+    code: '1 + 1 = ?',
+    subject: {
+      _id: '123',
+      name: 'Giải tích 1',
+      description: 'Giải tích 1',
+      createdBy: 'Demo',
+      createdAt: 0,
+      lastUpdatedAt: 0,
+      deletedAt: 0,
+    },
+    chapter: {
+      _id: '111',
+      name: 'Đạo hàm hàm số',
+      subject: {
+        _id: '123',
+        name: 'Giải tích 1',
+        description: 'Giải tích 1',
+        createdBy: 'Demo',
+        createdAt: 0,
+        lastUpdatedAt: 0,
+        deletedAt: 0,
+      },
+      description: 'Đạo hàm hàm số',
 
-  const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
-  const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
-  const [questionOptions, setQuestionOptions] = useState<QuestionTemplate[]>([]);
-  const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
+      createdBy: 'Demo',
+      createdAt: 0,
+      lastUpdatedAt: 0,
+      deletedAt: 0,
+    },
+    subQuestions: [],
+    createdAt: 0,
+    createdBy: 'Demo',
+    lastUpdatedAt: 0,
+    deletedAt: 0,
+  },
+  {
+    _id: '2',
+    name: 'Câu hỏi 2',
+    description: 'Câu hỏi 2',
+    code: '1 + 2 = ?',
+    subject: {
+      _id: '1234',
+      name: 'Giải tích 2',
+      description: 'Giải tích 2',
+      createdBy: 'Demo',
+      createdAt: 0,
+      lastUpdatedAt: 0,
+      deletedAt: 0,
+    },
+    chapter: {
+      _id: '112',
+      name: 'Tích phân',
+      subject: {
+        _id: '1234',
+        name: 'Giải tích 2',
+        description: 'Giải tích 2',
+        createdBy: 'Demo',
+        createdAt: 0,
+        lastUpdatedAt: 0,
+        deletedAt: 0,
+      },
+      description: 'Tích phân',
 
-  const onInputName = (event: ChangeEvent<HTMLInputElement>) => setName(event.target.value);
+      createdBy: 'Demo',
+      createdAt: 0,
+      lastUpdatedAt: 0,
+      deletedAt: 0,
+    },
+    subQuestions: [],
+    createdAt: 0,
+    createdBy: 'Demo',
+    lastUpdatedAt: 0,
+    deletedAt: 0,
+  },
+];
+
+const EditExercisePage = () => {
+  const [exercise, setExercise] = useState<ExerciseProps>(demoExercise);
+  // const [name, setName] = useState('');
+  // const [subject, setSubject] = useState('');
+  // const [chapter, setChapter] = useState('');
+
+  // const [duration, setDuration] = useState('');
+  // const [sampleSize, setSampleSize] = useState('');
+  // const [description, setDescription] = useState('');
+
+  // const [filterSubject, setFilterSubject] = useState('');
+  // const [filterChapter, setFilterChapter] = useState('');
+  const [potentialQuestions, setPotentialQuestions] = useState<QuestionTemplate[]>(
+    demoQuestion.slice(0, 1)
+  );
+
+  // const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
+  // const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
+  const [questionOptions] = useState<QuestionTemplate[]>(demoQuestion);
+  // const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
+
+  const onInputName = (event: ChangeEvent<HTMLInputElement>) =>
+    setExercise({ ...exercise, name: event.target.value });
 
   const onSelectSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
-      setSubject(event.value);
+      setExercise({ ...exercise, subject: event.value });
     }
   };
 
   const onSelectChapter = (event: SingleValue<Option>) => {
     if (event !== null) {
-      setChapter(event.value);
+      setExercise({ ...exercise, chapter: event.value });
     }
   };
 
   const onInputDurationHours = (event: ChangeEvent<HTMLInputElement>) =>
-    setDuration({ ...duration, hours: parseInt(event.target.value) });
+    setExercise({
+      ...exercise,
+      duration: { ...exercise.duration, hours: parseInt(event.target.value) },
+    });
 
   const onInputDurationMinutes = (event: ChangeEvent<HTMLInputElement>) =>
-    setDuration({ ...duration, minutes: parseInt(event.target.value) });
+    setExercise({
+      ...exercise,
+      duration: { ...exercise.duration, minutes: parseInt(event.target.value) },
+    });
 
   const onInputDurationSeconds = (event: ChangeEvent<HTMLInputElement>) =>
-    setDuration({ ...duration, seconds: parseInt(event.target.value) });
+    setExercise({
+      ...exercise,
+      duration: { ...exercise.duration, seconds: parseInt(event.target.value) },
+    });
 
   const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
-    setSampleSize(event.target.value);
+    setExercise({ ...exercise, sampleSize: event.target.value });
 
   const onInputDescription = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setDescription(event.target.value);
+    setExercise({ ...exercise, description: event.target.value });
 
   const onSelectAddQuestion = (value: SingleValue<Option>) => {
     if (value !== null) {
@@ -84,13 +233,13 @@ const CreateExercisePage = () => {
 
   const onSelectFilterSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
-      setFilterSubject(event.value);
+      setExercise({ ...exercise, question: { ...exercise.question, filterSubject: event.value } });
     }
   };
 
   const onSelectFilterChapter = (event: SingleValue<Option>) => {
     if (event !== null) {
-      setFilterChapter(event.value);
+      setExercise({ ...exercise, question: { ...exercise.question, filterChapter: event.value } });
     }
   };
 
@@ -98,101 +247,108 @@ const CreateExercisePage = () => {
     // TODO
   };
 
-  const fetchQuestions = useDebounce(() => {
-    QuestionTemplateService.getAll({
-      subject: filterSubject === '' ? undefined : filterSubject,
-      chapter: filterChapter === '' ? undefined : filterChapter,
-    })
-      .then((res) => {
-        const { result: allQuestions } = res.data.payload;
-        setQuestionOptions(allQuestions);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
+  // const fetchQuestions = useDebounce(() => {
+  //   QuestionTemplateService.getAll({
+  //     subject: filterSubject === '' ? undefined : filterSubject,
+  //     chapter: filterChapter === '' ? undefined : filterChapter,
+  //   })
+  //     .then((res) => {
+  //       const { result: allQuestions } = res.data.payload;
+  //       setQuestionOptions(allQuestions);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // });
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [filterSubject, filterChapter, fetchQuestions]);
+  // useEffect(() => {
+  //   fetchQuestions();
+  // }, [filterSubject, filterChapter, fetchQuestions]);
 
-  useEffect(() => {
-    SubjectService.getAll({})
-      .then((res) => {
-        const { result: allSubjects } = res.data.payload;
-        setSubjectOptions(
-          allSubjects.map((sub) => {
-            return {
-              value: sub._id,
-              label: sub.name,
-            };
-          })
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   SubjectService.getAll({})
+  //     .then((res) => {
+  //       const { result: allSubjects } = res.data.payload;
+  //       setSubjectOptions(
+  //         allSubjects.map((sub) => {
+  //           return {
+  //             value: sub._id,
+  //             label: sub.name,
+  //           };
+  //         })
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    // update options for chapter when the selected subject changes
-    if (subject === '') {
-      setChapterOptions([]);
-      setChapter('');
-      return;
-    }
+  // useEffect(() => {
+  //   update options for chapter when the selected subject changes
+  //   if (subject === '') {
+  //     setChapterOptions([]);
+  //     setChapter('');
+  //     return;
+  //   }
 
-    ChapterService.getAll({ subject: subject })
-      .then((res) => {
-        const { result: chapters } = res.data.payload;
-        setChapterOptions(
-          chapters.map((chap) => ({
-            value: chap._id,
-            label: chap.name,
-          }))
-        );
-        setChapter('');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [subject]);
+  //   ChapterService.getAll({ subject: subject })
+  //     .then((res) => {
+  //       const { result: chapters } = res.data.payload;
+  //       setChapterOptions(
+  //         chapters.map((chap) => ({
+  //           value: chap._id,
+  //           label: chap.name,
+  //         }))
+  //       );
+  //       setChapter('');
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, [subject]);
 
-  useEffect(() => {
-    // update options for filter chapter when filter subject changes
-    if (filterSubject === '') {
-      setFilterChapterOptions([]);
-      setFilterChapter('');
-      return;
-    }
+  // useEffect(() => {
+  //   update options for filter chapter when filter subject changes
+  //   if (filterSubject === '') {
+  //     setFilterChapterOptions([]);
+  //     setFilterChapter('');
+  //     return;
+  //   }
 
-    ChapterService.getAll({ subject: filterSubject })
-      .then((res) => {
-        const { result: allFilterChapters } = res.data.payload;
-        setFilterChapterOptions(
-          allFilterChapters.map((chap) => ({
-            value: chap._id,
-            label: chap.name,
-          }))
-        );
-        setFilterChapter('');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [filterSubject]);
+  //   ChapterService.getAll({ subject: filterSubject })
+  //     .then((res) => {
+  //       const { result: allFilterChapters } = res.data.payload;
+  //       setFilterChapterOptions(
+  //         allFilterChapters.map((chap) => ({
+  //           value: chap._id,
+  //           label: chap.name,
+  //         }))
+  //       );
+  //       setFilterChapter('');
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, [filterSubject]);
 
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
-            Tạo bài tập rèn luyện
+            Chỉnh sửa bài tập rèn luyện
           </p>
         </div>
         <div className='w-full p-4'>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex flex-col gap-y-4'>
+              <Link
+                to='/admin/exercises/manage'
+                className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:text-[18px] 3xl:text-2xl'
+              >
+                <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
+                Quay lại
+              </Link>
               <div className='flex flex-col gap-y-1'>
                 <label
                   className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -203,7 +359,8 @@ const CreateExercisePage = () => {
                 <input
                   id='question_name'
                   className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  value={name}
+                  value={exercise.name}
+                  placeholder={exercise.name}
                   onChange={onInputName}
                 />
               </div>
@@ -211,19 +368,19 @@ const CreateExercisePage = () => {
                 <div className='flex w-full flex-col gap-y-1'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
                   <Select
-                    options={subjectOptions}
+                    options={SUBJECTS}
                     placeholder='Chọn môn'
-                    value={subjectOptions.find((x) => x.value === subject) ?? null}
+                    value={SUBJECTS.find((x) => x.value === exercise.subject) ?? null}
                     onChange={onSelectSubject}
                   />
                 </div>
                 <div className='flex w-full flex-col gap-y-1'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
                   <Select
-                    options={chapterOptions}
+                    options={CHAPTERS}
                     placeholder='Chọn chương'
                     className='w-80'
-                    value={chapterOptions.find((x) => x.value === chapter) ?? null}
+                    value={CHAPTERS.find((x) => x.value === exercise.chapter) ?? null}
                     onChange={onSelectChapter}
                   />
                 </div>
@@ -234,19 +391,19 @@ const CreateExercisePage = () => {
                   <div className='flex justify-around'>
                     <input
                       className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={duration.hours}
+                      value={exercise.duration.hours}
                       type='number'
                       onChange={onInputDurationHours}
                     />
                     <input
                       className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={duration.minutes}
+                      value={exercise.duration.minutes}
                       type='number'
                       onChange={onInputDurationMinutes}
                     />
                     <input
                       className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={duration.seconds}
+                      value={exercise.duration.seconds}
                       type='number'
                       onChange={onInputDurationSeconds}
                     />
@@ -256,7 +413,8 @@ const CreateExercisePage = () => {
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
                   <input
                     className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={sampleSize}
+                    value={exercise.sampleSize}
+                    placeholder={exercise.sampleSize}
                     onChange={onInputSampleSize}
                   />
                 </div>
@@ -272,7 +430,8 @@ const CreateExercisePage = () => {
                   id='description'
                   rows={10}
                   className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  value={description}
+                  value={exercise.description}
+                  placeholder={exercise.description}
                   onChange={onInputDescription}
                 />
               </div>
@@ -298,25 +457,39 @@ const CreateExercisePage = () => {
                       onChange={onSelectAddQuestion}
                     />
                     <Select
-                      options={subjectOptions}
+                      options={SUBJECTS}
                       placeholder='Chọn môn'
-                      value={subjectOptions.find((x) => x.value === filterSubject) ?? null}
+                      value={
+                        SUBJECTS.find((x) => x.value === exercise.question.filterSubject) ?? null
+                      }
                       onChange={onSelectFilterSubject}
                     />
                     <Select
-                      options={filterChapterOptions}
+                      options={CHAPTERS}
                       placeholder='Chọn chương'
-                      value={filterChapterOptions.find((x) => x.value === filterChapter) ?? null}
+                      value={
+                        CHAPTERS.find((x) => x.value === exercise.question.filterChapter) ?? null
+                      }
                       onChange={onSelectFilterChapter}
                     />
                     <button
                       className={`flex flex-[0.5] ${
-                        filterSubject !== '' || filterChapter !== '' ? 'opacity-1' : 'opacity-0'
+                        exercise.question.filterSubject !== '' ||
+                        exercise.question.filterChapter !== ''
+                          ? 'opacity-1'
+                          : 'opacity-0'
                       }`}
-                      disabled={filterSubject === '' && filterChapter === ''}
+                      disabled={
+                        exercise.question.filterSubject === '' &&
+                        exercise.question.filterChapter === ''
+                      }
                       onClick={() => {
-                        setFilterSubject('');
-                        setFilterChapter('');
+                        // setFilterSubject('');
+                        // setFilterChapter('');
+                        setExercise({
+                          ...exercise,
+                          question: { filterSubject: '', filterChapter: '' },
+                        });
                       }}
                     >
                       <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
@@ -380,7 +553,7 @@ const CreateExercisePage = () => {
               </div>
               <div className='my-5 flex flex-row-reverse gap-x-8'>
                 <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createExercise}>
-                  <p className='text-white'>Tạo</p>
+                  <p className='text-white'>Lưu thay đổi</p>
                 </button>
               </div>
             </main>
@@ -391,4 +564,4 @@ const CreateExercisePage = () => {
   );
 };
 
-export default CreateExercisePage;
+export default EditExercisePage;

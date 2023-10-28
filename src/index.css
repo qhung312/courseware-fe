@@ -81,6 +81,40 @@ p {
   display: none;
 } */
 
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  background-color: transparent;
+  width: 4px;
+}
+
+.show-scrollbar::-webkit-scrollbar-track {
+  background-color: #fff;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 20px;
+  border: 0;
+}
+
+.black-placeholder::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #252641;
+  opacity: 1; /* Firefox */
+}
+
+.black-placeholder:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #252641;
+}
+
+.black-placeholde::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #252641;
+}
+
 input:focus,
 textarea:focus {
   outline: 2px auto #4285f4;
@@ -116,4 +150,8 @@ code {
     min-height: calc(100vh - 149px);
     height: calc(100vh - 149px);
   }
+}
+
+.recharts-wrapper {
+  margin-left: -20px;
 }
