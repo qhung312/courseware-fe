@@ -4,6 +4,10 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import NotFoundPage from '../../pages/NotFound';
+import ActivityHistory from '../../pages/Profile/ActivityHistory';
+import UserInformation from '../../pages/Profile/Information';
+import Statistic from '../../pages/Profile/Statistic';
+import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const HomePage = lazy(() => import('../../pages/Home'));
@@ -47,7 +51,31 @@ const UserRoute = () => {
             path=''
             element={
               <Suspense fallback={<Loading />}>
-                <HomePage />
+                <UserInformation />
+              </Suspense>
+            }
+          />
+          <Route
+            path='history'
+            element={
+              <Suspense fallback={<Loading />}>
+                <ActivityHistory />
+              </Suspense>
+            }
+          />
+          <Route
+            path='statistic'
+            element={
+              <Suspense fallback={<Loading />}>
+                <Statistic />
+              </Suspense>
+            }
+          />
+          <Route
+            path='statistic/:subjectId'
+            element={
+              <Suspense fallback={<Loading />}>
+                <SubjectStatistic />
               </Suspense>
             }
           />

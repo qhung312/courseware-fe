@@ -4,6 +4,18 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import AdminAside from '../../pages/Admin/AdminAside';
+import ChapterEdit from '../../pages/Admin/Chapter/Edit';
+import ChapterView from '../../pages/Admin/Chapter/View';
+import ExamEdit from '../../pages/Admin/Exam/Edit';
+import ExamView from '../../pages/Admin/Exam/View';
+import EditExercisePage from '../../pages/Admin/Exercise/Edit';
+import ViewExercisePage from '../../pages/Admin/Exercise/View';
+import MaterialEdit from '../../pages/Admin/Material/Edit';
+import MaterialView from '../../pages/Admin/Material/View';
+import EditQuestionPage from '../../pages/Admin/Question/Edit';
+import ViewQuestionPage from '../../pages/Admin/Question/View';
+import SubjectEdit from '../../pages/Admin/Subject/Edit';
+import SubjectView from '../../pages/Admin/Subject/View';
 
 const CreateExercisePage = lazy(() => import('../../pages/Admin/Exercise/Create'));
 const CreateQuestionPage = lazy(() => import('../../pages/Admin/Question/Create'));
@@ -43,6 +55,22 @@ const AdministratorRoute = () => {
                 </Suspense>
               }
             />
+            <Route
+              path='view/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MaterialView />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MaterialEdit />
+                </Suspense>
+              }
+            />
           </Route>
           <Route path='exam-archive'>
             <Route
@@ -58,6 +86,22 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <ExamCreate />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ExamView />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ExamEdit />
                 </Suspense>
               }
             />
@@ -79,6 +123,22 @@ const AdministratorRoute = () => {
                 </Suspense>
               }
             />
+            <Route
+              path='edit/:exerciseid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EditExercisePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:exerciseid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ViewExercisePage />
+                </Suspense>
+              }
+            />
           </Route>
           <Route path='questions'>
             <Route
@@ -97,6 +157,22 @@ const AdministratorRoute = () => {
                 </Suspense>
               }
             />
+            <Route
+              path='view/:questionid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ViewQuestionPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:questionid'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EditQuestionPage />
+                </Suspense>
+              }
+            />
           </Route>
           <Route path='subject'>
             <Route
@@ -112,6 +188,22 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateSubjectPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <SubjectView />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <SubjectEdit />
                 </Suspense>
               }
             />
@@ -148,6 +240,22 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateChapterPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterView />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterEdit />
                 </Suspense>
               }
             />
