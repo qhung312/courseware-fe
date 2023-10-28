@@ -51,7 +51,7 @@ export type Question = {
   }[];
   shuffleOptions?: boolean;
   answerKeys?: number[];
-  answerField: string;
+  answerField?: string;
   matchCase?: boolean;
   maximumError?: number;
 

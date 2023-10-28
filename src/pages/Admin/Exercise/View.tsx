@@ -7,7 +7,7 @@ import { Page, Wrapper } from '../../../layout';
 // import ChapterService from '../../../service/chapter.service';
 // import QuestionTemplateService from '../../../service/questionTemplate.service';
 // import SubjectService from '../../../service/subject.service';
-import { QuestionTemplate } from '../../../types';
+import { Question, QuestionType } from '../../../types';
 
 interface ExerciseProps {
   name: string;
@@ -73,7 +73,7 @@ const demoExercise: ExerciseProps = {
   },
 };
 
-const demoQuestion: QuestionTemplate[] = [
+const demoQuestion: Question[] = [
   {
     _id: '1',
     name: 'Câu hỏi 1',
@@ -107,7 +107,8 @@ const demoQuestion: QuestionTemplate[] = [
       lastUpdatedAt: 0,
       deletedAt: 0,
     },
-    subQuestions: [],
+    explanation: '',
+    type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
     createdAt: 0,
     createdBy: 'Demo',
     lastUpdatedAt: 0,
@@ -118,6 +119,8 @@ const demoQuestion: QuestionTemplate[] = [
     name: 'Câu hỏi 2',
     description: 'Câu hỏi 2',
     code: '1 + 2 = ?',
+    explanation: '',
+    type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
     subject: {
       _id: '1234',
       name: 'Giải tích 2',
@@ -146,7 +149,6 @@ const demoQuestion: QuestionTemplate[] = [
       lastUpdatedAt: 0,
       deletedAt: 0,
     },
-    subQuestions: [],
     createdAt: 0,
     createdBy: 'Demo',
     lastUpdatedAt: 0,
@@ -156,7 +158,7 @@ const demoQuestion: QuestionTemplate[] = [
 
 const ViewExercisePage = () => {
   const [exercise] = useState<ExerciseProps>(demoExercise);
-  const [potentialQuestions] = useState<QuestionTemplate[]>(demoQuestion);
+  const [potentialQuestions] = useState<Question[]>(demoQuestion);
 
   return (
     <Page>
