@@ -8,9 +8,9 @@ import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
-import QuestionTemplateService from '../../../service/questionTemplate.service';
+import QuestionTemplateService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
-import { QuestionTemplate } from '../../../types';
+import { Question } from '../../../types';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -24,7 +24,7 @@ const QuestionListPage = () => {
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
-  const [questionTemplates, setQuestionTemplates] = useState<QuestionTemplate[]>([]);
+  const [questionTemplates, setQuestionTemplates] = useState<Question[]>([]);
   const [totalCount, setTotalCount] = useState(1);
   const [page, setPage] = useState(1);
 

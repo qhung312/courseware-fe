@@ -1,10 +1,10 @@
 import { useWindowDimensions } from '../../hooks';
-import { Quiz } from '../../types';
+import { QuizSession } from '../../types';
 
 import Desktop from './Desktop';
 import Mobile from './Mobile';
 
-const QuestionBoard: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
+const QuestionBoard: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
   const { width } = useWindowDimensions();
 
   if (width < 768) {

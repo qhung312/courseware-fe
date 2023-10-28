@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import { useState } from 'react';
 
-import { Quiz } from '../../types';
+import { QuizSession } from '../../types';
 import Icon from '../Icon';
 
-const Mobile: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
+const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [page, setPage] = useState(1);
 
-  const maxPage = Math.ceil(quiz.questions[0].subQuestions.length / 40);
+  const maxPage = Math.ceil(quiz.questions.length / 40);
 
   return (
     <div
@@ -29,46 +29,38 @@ const Mobile: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
       <div className='flex flex-col items-start justify-between space-y-4 p-4'>
         <h2 className='text-xl font-medium'>Danh sách câu hỏi</h2>
         <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
-          {quiz.questions.map((question) =>
-            question.subQuestions.map((subQuestion, index) => (
-              <div
-                key={subQuestion._id}
-                className={`flex h-10 w-10 items-center justify-center ${
-                  subQuestion.isCorrect !== undefined
-                    ? subQuestion.isCorrect
-                      ? 'bg-[#49BBBD]'
-                      : 'bg-[#DB4437]'
-                    : _.some(
-                        [
-                          subQuestion.userAnswerKeys,
-                          subQuestion.userAnswerField,
-                          subQuestion.userAnswerKey,
-                        ],
-                        (v) => !_.isEmpty(v)
-                      ) || subQuestion.userAnswerKey !== undefined
-                    ? 'bg-[#4285F4]'
-                    : subQuestion.starred
-                    ? 'bg-[#FBCB43]'
-                    : 'border border-[#4285F4]/50 bg-transparent'
+          {quiz.questions.map((question, index) => (
+            <div
+              key={question._id}
+              className={`flex h-10 w-10 items-center justify-center ${
+                question.isCorrect !== undefined
+                  ? question.isCorrect
+                    ? 'bg-[#49BBBD]'
+                    : 'bg-[#DB4437]'
+                  : _.some(
+                      [question.userAnswerKeys, question.userAnswerField],
+                      (v) => !_.isEmpty(v)
+                    )
+                  ? 'bg-[#4285F4]'
+                  : question.starred
+                  ? 'bg-[#FBCB43]'
+                  : 'border border-[#4285F4]/50 bg-transparent'
+              }`}
+            >
+              <p
+                className={`text-center text-base font-semibold ${
+                  _.some(
+                    [question.userAnswerKeys, question.userAnswerField],
+                    (v) => !_.isEmpty(v)
+                  ) || question.starred
+                    ? 'text-white'
+                    : ''
                 }`}
               >
-                <p
-                  className={`text-center text-base font-semibold ${
-                    _.some(
-                      [subQuestion.userAnswerKeys, subQuestion.userAnswerField],
-                      (v) => !_.isEmpty(v)
-                    ) ||
-                    subQuestion.userAnswerKey !== undefined ||
-                    subQuestion.starred
-                      ? 'text-white'
-                      : ''
-                  }`}
-                >
-                  {index + 1}
-                </p>
-              </div>
-            ))
-          )}
+                {index + 1}
+              </p>
+            </div>
+          ))}
         </div>
         <div className='flex w-full flex-1 flex-row items-center justify-between'>
           <button type='button' className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'>

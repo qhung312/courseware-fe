@@ -14,25 +14,20 @@ const OngoingDetail: React.FC = () => {
   const [quiz, setQuiz] = useState(Quiz);
   const { width } = useWindowDimensions();
 
-  const handleAnswer = useCallback((question: ConcreteQuestion['subQuestions'][0]) => {
+  const handleAnswer = useCallback((question: ConcreteQuestion) => {
     setQuiz((prev) => {
       const newQuestions = prev.questions.map((q) => {
-        return {
-          ...q,
-          subQuestions: q.subQuestions.map((subQ) => {
-            if (subQ._id === question._id) {
-              return question;
-            }
-            return subQ;
-          }),
-        };
+        if (q._id === question._id) {
+          return question;
+        }
+        return q;
       });
       return { ...prev, questions: newQuestions };
     });
   }, []);
 
   return (
-    <Page title={`${quiz.fromTemplate.subject.name} - ${quiz.fromTemplate.chapter.name}`}>
+    <Page title={`${quiz.fromQuiz.subject.name} - ${quiz.fromQuiz.chapter.name}`}>
       {width < 768 ? (
         quiz.status === 'ONGOING' ? (
           <MobileOngoing quiz={quiz} handleAnswer={handleAnswer} />
