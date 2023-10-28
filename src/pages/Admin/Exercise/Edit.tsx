@@ -9,9 +9,9 @@ import { Page, Wrapper } from '../../../layout';
 // import ChapterService from '../../../service/chapter.service';
 // import QuestionTemplateService from '../../../service/questionTemplate.service';
 // import SubjectService from '../../../service/subject.service';
-import { QuestionTemplate } from '../../../types';
+import { Question, QuestionType } from '../../../types';
 
-type OptionWithQuestion = Option & { question: QuestionTemplate };
+type OptionWithQuestion = Option & { question: Question };
 
 interface ExerciseProps {
   name: string;
@@ -77,9 +77,10 @@ const demoExercise: ExerciseProps = {
   },
 };
 
-const demoQuestion: QuestionTemplate[] = [
+const demoQuestion: Question[] = [
   {
     _id: '1',
+    type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
     name: 'Câu hỏi 1',
     description: 'Câu hỏi 1',
     code: '1 + 1 = ?',
@@ -111,14 +112,15 @@ const demoQuestion: QuestionTemplate[] = [
       lastUpdatedAt: 0,
       deletedAt: 0,
     },
-    subQuestions: [],
     createdAt: 0,
+    explanation: ']',
     createdBy: 'Demo',
     lastUpdatedAt: 0,
     deletedAt: 0,
   },
   {
     _id: '2',
+    type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
     name: 'Câu hỏi 2',
     description: 'Câu hỏi 2',
     code: '1 + 2 = ?',
@@ -150,10 +152,10 @@ const demoQuestion: QuestionTemplate[] = [
       lastUpdatedAt: 0,
       deletedAt: 0,
     },
-    subQuestions: [],
     createdAt: 0,
     createdBy: 'Demo',
     lastUpdatedAt: 0,
+    explanation: ']',
     deletedAt: 0,
   },
 ];
@@ -170,13 +172,13 @@ const EditExercisePage = () => {
 
   // const [filterSubject, setFilterSubject] = useState('');
   // const [filterChapter, setFilterChapter] = useState('');
-  const [potentialQuestions, setPotentialQuestions] = useState<QuestionTemplate[]>(
+  const [potentialQuestions, setPotentialQuestions] = useState<Question[]>(
     demoQuestion.slice(0, 1)
   );
 
   // const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   // const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
-  const [questionOptions] = useState<QuestionTemplate[]>(demoQuestion);
+  const [questionOptions] = useState<Question[]>(demoQuestion);
   // const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) =>
@@ -536,7 +538,7 @@ const EditExercisePage = () => {
                           onClick={() => {
                             const newPotentialQuestions = JSON.parse(
                               JSON.stringify(potentialQuestions)
-                            ) as QuestionTemplate[];
+                            ) as Question[];
                             newPotentialQuestions.splice(index, 1);
                             setPotentialQuestions(newPotentialQuestions);
                           }}

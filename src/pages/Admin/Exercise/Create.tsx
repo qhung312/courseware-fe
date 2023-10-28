@@ -16,7 +16,7 @@ interface CountDown {
   seconds: number;
 }
 
-type OptionWithQuestion = Option & { question: QuestionTemplate };
+type OptionWithQuestion = Option & { question: Question };
 
 const CreateExercisePage = () => {
   const [name, setName] = useState('');
