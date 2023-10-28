@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
 import { Icon, Select } from '../../../components';
@@ -35,6 +37,10 @@ const MaterialEdit = () => {
         chapter === currentChapter &&
         _.trim(description) === currentDescription
     );
+  });
+
+  const handleOnSave = useDebounce((): void => {
+    toast.success('>>> hihi');
   });
 
   useEffect(() => {
@@ -162,6 +168,7 @@ const MaterialEdit = () => {
                   placeholder='Nhập chú thích đề thi'
                   rows={5}
                   onChange={({ target }) => {
+                    handleOnSave();
                     setDescription(target.value);
                   }}
                 />
@@ -198,6 +205,7 @@ const MaterialEdit = () => {
             </form>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );
