@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -50,20 +51,23 @@ const ExerciseListPage = () => {
 
   const fetchExercises = useDebounce(() => {
     setLoading(true);
-    QuizService.getAllPaginated({
-      name: filterName,
-      subject: filterSubject === '' ? undefined : filterSubject,
-      chapter: filterChapter === '' ? undefined : filterChapter,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    QuizService.getAllPaginated(
+      {
+        name: filterName,
+        subject: filterSubject === '' ? undefined : filterSubject,
+        chapter: filterChapter === '' ? undefined : filterChapter,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allExercises } = res.data.payload;
         setExercises(allExercises);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -82,7 +86,7 @@ const ExerciseListPage = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: filterSubject })
+    ChapterService.getAll({ subject: filterSubject }, true)
       .then((res) => {
         const { result: chapters } = res.data.payload;
         setFilterChapterOptions(
@@ -94,13 +98,13 @@ const ExerciseListPage = () => {
         setFilterChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [filterSubject]);
 
   useEffect(() => {
     // fetch subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -111,7 +115,7 @@ const ExerciseListPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -267,6 +271,7 @@ const ExerciseListPage = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );
