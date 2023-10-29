@@ -2,39 +2,52 @@ import { API_URL } from '../config';
 import { Quiz, Response } from '../types';
 import { axios } from '../utils/custom-axios';
 
-type GetAllQuizsProps = {
+type GetAllQuizArgument = {
   name?: string;
   subject?: string;
   chapter?: string;
 };
-
-const getAll = (query: GetAllQuizsProps) => {
-  const queryString = `${API_URL}quiz_template?pagination=false\
+type GetAllQuizResponse = {
+  total: number;
+  result: Quiz[];
+};
+const getAll = (query: GetAllQuizArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}quiz?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.chapter ? `&chapter=${query.chapter}` : ''}`;
 
-  return axios.get<Response<Quiz[], false>>(queryString);
+  return axios.get<Response<GetAllQuizResponse>>(queryString);
 };
 
-type GetPaginatedQuizsProps = {
+type GetAllQuizPaginatedArgument = {
   name?: string;
   subject?: string;
   chapter?: string;
   pageNumber?: number;
   pageSize?: number;
 };
-
-const getAllPaginated = (query: GetPaginatedQuizsProps) => {
-  const queryString = `${API_URL}quiz_template?pagination=true\
+type GetAllQuizPaginatedArgumentResponse = {
+  total: number;
+  pageCount: number;
+  result: Quiz[];
+};
+const getAllPaginated = (query: GetAllQuizPaginatedArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}quiz?pagination=true\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.chapter ? `&chapter=${query.chapter}` : ''}\
 ${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
 ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
 
-  return axios.get<Response<Quiz[], true>>(queryString);
+  return axios.get<Response<GetAllQuizPaginatedArgumentResponse>>(queryString);
 };
 
-const QuizTemplateService = { getAll, getAllPaginated };
+const getById = (id: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}quiz/${id}`;
+
+  return axios.get<Response<Quiz>>(queryString);
+};
+
+const QuizTemplateService = { getAll, getAllPaginated, getById };
 export default QuizTemplateService;
