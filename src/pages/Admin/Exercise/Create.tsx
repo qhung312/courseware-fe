@@ -6,7 +6,7 @@ import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
-import QuestionTemplateService from '../../../service/question.service';
+import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
 import { Question } from '../../../types';
 
@@ -99,7 +99,7 @@ const CreateExercisePage = () => {
   };
 
   const fetchQuestions = useDebounce(() => {
-    QuestionTemplateService.getAll({
+    QuestionService.getAll({
       subject: filterSubject === '' ? undefined : filterSubject,
       chapter: filterChapter === '' ? undefined : filterChapter,
     })

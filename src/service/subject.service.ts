@@ -43,6 +43,15 @@ const getById = (subjectId: string, admin = false) => {
   return axios.get<Response<Subject>>(queryString);
 };
 
-const SubjectService = { getAll, getAllPaginated, getById };
+const create = (name: string, description: string) => {
+  const queryString = `${API_URL}admin/subject/`;
+
+  return axios.post<Response<Subject>>(queryString, {
+    name,
+    description,
+  });
+};
+
+const SubjectService = { getAll, getAllPaginated, getById, create };
 
 export default SubjectService;

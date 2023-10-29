@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -41,19 +42,22 @@ const ChapterListPage = () => {
 
   const fetchChapters = useDebounce(() => {
     setLoading(true);
-    ChapterService.getAllPaginated({
-      name: filterName,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-      subject: filterSubject === '' ? undefined : filterSubject,
-    })
+    ChapterService.getAllPaginated(
+      {
+        name: filterName,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+        subject: filterSubject === '' ? undefined : filterSubject,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allChapters } = res.data.payload;
         setChapters(allChapters);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -65,7 +69,7 @@ const ChapterListPage = () => {
   }, [page, filterName, filterSubject, fetchChapters]);
 
   useEffect(() => {
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -78,7 +82,7 @@ const ChapterListPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -235,6 +239,7 @@ const ChapterListPage = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { Icon, Pagination } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -28,18 +29,22 @@ const SubjectList = () => {
 
   const fetchSubjects = useDebounce(() => {
     setLoading(true);
-    SubjectService.getAllPaginated({
-      name: filterName,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    SubjectService.getAllPaginated(
+      {
+        name: filterName,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allSubjects } = res.data.payload;
+        console.log(allSubjects[0].createdAt);
         setSubjects(allSubjects);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -116,10 +121,10 @@ const SubjectList = () => {
                             Tên
                           </th>
                           <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Môn
+                            Thời gian tạo
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Thời Gian Tạo
+                            Thời gian cập nhật
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             {''}
@@ -136,10 +141,12 @@ const SubjectList = () => {
                               {subject.name}
                             </td>
                             <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {subject?.name}
+                              {new Date(subject.createdAt).toLocaleString()}
                             </td>
                             <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {new Date(subject.createdAt).toLocaleDateString()}
+                              {subject.lastUpdatedAt !== undefined
+                                ? new Date(subject.lastUpdatedAt).toLocaleString()
+                                : undefined}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <button
@@ -186,6 +193,7 @@ const SubjectList = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

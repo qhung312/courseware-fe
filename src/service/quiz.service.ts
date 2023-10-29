@@ -49,5 +49,5 @@ const getById = (id: string, admin = false) => {
   return axios.get<Response<Quiz>>(queryString);
 };
 
-const QuizTemplateService = { getAll, getAllPaginated, getById };
-export default QuizTemplateService;
+const QuizService = { getAll, getAllPaginated, getById };
+export default QuizService;

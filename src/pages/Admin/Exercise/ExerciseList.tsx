@@ -8,7 +8,7 @@ import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
-import QuizTemplateService from '../../../service/quiz.service';
+import QuizService from '../../../service/quiz.service';
 import SubjectService from '../../../service/subject.service';
 import { Quiz } from '../../../types';
 
@@ -50,7 +50,7 @@ const ExerciseListPage = () => {
 
   const fetchExercises = useDebounce(() => {
     setLoading(true);
-    QuizTemplateService.getAllPaginated({
+    QuizService.getAllPaginated({
       name: filterName,
       subject: filterSubject === '' ? undefined : filterSubject,
       chapter: filterChapter === '' ? undefined : filterChapter,

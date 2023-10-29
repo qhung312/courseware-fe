@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { Page, Wrapper } from '../../../layout';
+import SubjectService from '../../../service/subject.service';
 
 const CreateSubjectPage = () => {
   const [name, setName] = useState('');
@@ -14,8 +16,16 @@ const CreateSubjectPage = () => {
     setDescription(event.target.value);
   };
 
-  const onCreateSubject = (_: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO
+  const onCreateSubject = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    SubjectService.create(name, description)
+      .then((_res) => {
+        toast.success('Tạo môn học thành công');
+        setName('');
+        setDescription('');
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
@@ -65,13 +75,18 @@ const CreateSubjectPage = () => {
                * Create button
                */}
               <div className='my-5 flex flex-row-reverse gap-x-8'>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={onCreateSubject}>
+                <button
+                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                  onClick={onCreateSubject}
+                  disabled={name.trim().length === 0}
+                >
                   <p className='text-white'>Tạo</p>
                 </button>
               </div>
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

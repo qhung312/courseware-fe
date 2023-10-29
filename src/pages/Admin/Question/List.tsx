@@ -2,13 +2,14 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
-import QuestionTemplateService from '../../../service/question.service';
+import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
 import { Question } from '../../../types';
 
@@ -51,20 +52,23 @@ const QuestionListPage = () => {
 
   const fetchQuestionTemplates = useDebounce(() => {
     setLoading(true);
-    QuestionTemplateService.getAllPaginated({
-      name: filterName,
-      subject: filterSubject === '' ? undefined : filterSubject,
-      chapter: filterChapter === '' ? undefined : filterChapter,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    QuestionService.getAllPaginated(
+      {
+        name: filterName,
+        subject: filterSubject === '' ? undefined : filterSubject,
+        chapter: filterChapter === '' ? undefined : filterChapter,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allQuestionTemplates } = res.data.payload;
         setQuestionTemplates(allQuestionTemplates);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -77,7 +81,7 @@ const QuestionListPage = () => {
 
   useEffect(() => {
     // fetch all subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -88,7 +92,7 @@ const QuestionListPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -100,7 +104,7 @@ const QuestionListPage = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: filterSubject })
+    ChapterService.getAll({ subject: filterSubject }, true)
       .then((res) => {
         const { result: allChapters } = res.data.payload;
         setFilterChapterOptions(
@@ -113,7 +117,7 @@ const QuestionListPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [filterSubject]);
 
@@ -269,6 +273,7 @@ const QuestionListPage = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

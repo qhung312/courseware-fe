@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -32,20 +33,23 @@ const MaterialList = () => {
 
   const fetchMaterial = useDebounce(() => {
     setLoading(true);
-    MaterialService.getAllPaginated({
-      name: filterName,
-      subject: filterSubject === '' ? undefined : filterSubject,
-      chapter: filterChapter === '' ? undefined : filterChapter,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    MaterialService.getAllPaginated(
+      {
+        name: filterName,
+        subject: filterSubject === '' ? undefined : filterSubject,
+        chapter: filterChapter === '' ? undefined : filterChapter,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allMaterials } = res.data.payload;
         setMaterials(allMaterials);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -58,7 +62,7 @@ const MaterialList = () => {
 
   useEffect(() => {
     // fetch subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -69,7 +73,7 @@ const MaterialList = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -269,6 +273,7 @@ const MaterialList = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

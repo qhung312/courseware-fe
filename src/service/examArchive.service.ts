@@ -62,11 +62,16 @@ const getById = (examId: string, admin = false) => {
   return axios.get<Response<ExamArchive>>(queryString);
 };
 
+const create = (data: FormData) => {
+  return axios.post<Response<ExamArchive>>(`${API_URL}admin/previous_exam`, data);
+};
+
 const ExamArchiveService = {
   getAll,
   getAllPaginated,
   download,
   getById,
+  create,
 };
 
 export default ExamArchiveService;

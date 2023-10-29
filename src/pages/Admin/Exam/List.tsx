@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -48,21 +49,24 @@ const ExamList = () => {
 
   const fetchExamArchive = useDebounce(() => {
     setLoading(true);
-    ExamArchiveService.getAllPaginated({
-      name: filterName,
-      subject: filterSubject === '' ? undefined : filterSubject,
-      semester: filterSemester === '' ? undefined : filterSemester,
-      type: filterExamType === '' ? undefined : filterExamType,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    ExamArchiveService.getAllPaginated(
+      {
+        name: filterName,
+        subject: filterSubject === '' ? undefined : filterSubject,
+        semester: filterSemester === '' ? undefined : filterSemester,
+        type: filterExamType === '' ? undefined : filterExamType,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allExamArchives } = res.data.payload;
         setExamArchives(allExamArchives);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -75,7 +79,7 @@ const ExamList = () => {
 
   useEffect(() => {
     // fetch all subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -86,7 +90,7 @@ const ExamList = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -282,6 +286,7 @@ const ExamList = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

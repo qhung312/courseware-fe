@@ -1,12 +1,15 @@
-import _ from 'lodash';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
+// eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
 
 import './index.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
+import ExamArchiveService from '../../../service/examArchive.service';
 import SubjectService from '../../../service/subject.service';
 import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
@@ -22,13 +25,12 @@ const ExamCreate = () => {
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
   const fileUploaderRef = useRef<FilePond>(null);
-  const submitDisabled = _.some([name, subject, type, semester], _.isEmpty);
-
-  console.log(uploadedFiles);
+  const submitDisabled =
+    name === '' || subject === '' || type === '' || semester === '' || uploadedFiles.length === 0;
 
   useEffect(() => {
     // fetch subject on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setSubjectOptions(
@@ -44,6 +46,32 @@ const ExamCreate = () => {
         console.error(err);
       });
   }, []);
+
+  const createExamArchive = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('', uploadedFiles[0]);
+    formData.append('subject', subject);
+    formData.append('type', type);
+    formData.append('semester', semester);
+
+    ExamArchiveService.create(formData)
+      .then((_) => {
+        toast.success('Tạo đề thi thành công');
+        setName('');
+        setSubject('');
+        setType('');
+        setSemester('');
+        setDescription('');
+        setUploadedFiles([]);
+        fileUploaderRef.current?.removeFiles();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
   return (
     <Page>
@@ -153,9 +181,7 @@ const ExamCreate = () => {
                 <button
                   type='submit'
                   disabled={submitDisabled}
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
+                  onClick={createExamArchive}
                   className={`flex items-center rounded-lg px-6 py-1
                   transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
                     submitDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
@@ -184,6 +210,7 @@ const ExamCreate = () => {
             </form>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

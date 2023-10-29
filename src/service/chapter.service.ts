@@ -46,6 +46,16 @@ const getById = (id: string, admin = false) => {
   return axios.get<Response<Chapter>>(queryString);
 };
 
-const ChapterService = { getAll, getAllPaginated, getById };
+const create = (name: string, subject: string, description: string) => {
+  const queryString = `${API_URL}admin/chapter/`;
+
+  return axios.post<Response<Chapter>>(queryString, {
+    name,
+    subject,
+    description,
+  });
+};
+
+const ChapterService = { getAll, getAllPaginated, getById, create };
 
 export default ChapterService;

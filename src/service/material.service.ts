@@ -58,10 +58,15 @@ const getById = (materialId: string, admin = false) => {
   return axios.get<Response<Material>>(queryString);
 };
 
+const create = (data: FormData) => {
+  return axios.post<Response<Material>>(`${API_URL}admin/material`, data);
+};
+
 const MaterialService = {
   getAll,
   getAllPaginated,
   download,
   getById,
+  create,
 };
 export default MaterialService;
