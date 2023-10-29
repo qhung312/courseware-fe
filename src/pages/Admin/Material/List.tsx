@@ -244,10 +244,7 @@ const MaterialList = () => {
                                 />
                               </button>
                               <button
-                                onClick={async () => {
-                                  await MaterialService.deleteById(material._id);
-                                  setMaterials(materials.filter((m) => m._id !== material._id));
-                                }}
+                                onClick={() => console.log('delete')}
                                 className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
                               >
                                 <Icon.Delete
