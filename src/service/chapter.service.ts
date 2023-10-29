@@ -12,7 +12,7 @@ type GetAllChapterResponse = {
   result: Chapter[];
 };
 const getAll = (query: GetAllChapterArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter/pagination=false\
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}`;
 
@@ -31,7 +31,7 @@ type GetAllChapterPaginatedResponse = {
   result: Chapter[];
 };
 const getAllPaginated = (query: GetAllChapterPaginatedArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter/pagination=true\
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter?pagination=true\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
