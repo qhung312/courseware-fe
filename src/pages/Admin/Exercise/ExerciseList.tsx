@@ -59,6 +59,7 @@ const ExerciseListPage = () => {
     })
       .then((res) => {
         const { total, result: allExercises } = res.data.payload;
+        console.log('>>> exercise: ', allExercises);
         setExercises(allExercises);
         setTotalCount(total);
       })

@@ -31,7 +31,7 @@ type GetAllChapterPaginatedResponse = {
   result: Chapter[];
 };
 const getAllPaginated = (query: GetAllChapterPaginatedArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter/pagination=true\
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter?pagination=true\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
@@ -46,6 +46,13 @@ const getById = (id: string, admin = false) => {
   return axios.get<Response<Chapter>>(queryString);
 };
 
-const ChapterService = { getAll, getAllPaginated, getById };
+const edit = (id: string, admin = false, name = '', description = '') => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter/${id}`;
+  const queryBody = { name, description };
+
+  return axios.patch<Response<Chapter>>(queryString, queryBody);
+};
+
+const ChapterService = { getAll, getAllPaginated, getById, edit };
 
 export default ChapterService;
