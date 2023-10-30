@@ -258,7 +258,7 @@ const QuestionListPage = () => {
                             </td>
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <Link
-                                to={`/admin/questions/view/${index}`}
+                                to={`/admin/questions/view/${question._id}`}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
                               >
                                 <Icon.ViewIcon
@@ -267,7 +267,7 @@ const QuestionListPage = () => {
                                 />
                               </Link>
                               <Link
-                                to={`/admin/questions/edit/${index}`}
+                                to={`/admin/questions/edit/${question._id}`}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
                               >
                                 <Icon.Edit
