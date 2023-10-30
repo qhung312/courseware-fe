@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
 import { Icon, Select } from '../../../components';
@@ -61,6 +63,10 @@ const ExamEdit = () => {
         console.error(err);
       });
   }, []);
+
+  const handleOnSave = useDebounce((): void => {
+    toast.success('>>> hihi');
+  });
 
   return (
     <Page>
@@ -165,13 +171,14 @@ const ExamEdit = () => {
                   disabled={canSave}
                   onClick={(e) => {
                     e.preventDefault();
+                    handleOnSave();
                   }}
                   className={`flex items-center rounded-lg px-6 py-1
                   transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
                     canSave ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
                   }`}
                 >
-                  <p className='font-medium text-white'>Lưu</p>
+                  <p className='font-medium text-white'>Lưu thay đổi</p>
                 </button>
                 <button
                   type='button'
@@ -192,6 +199,7 @@ const ExamEdit = () => {
             </form>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

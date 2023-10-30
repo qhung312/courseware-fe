@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -28,6 +30,10 @@ const ChapterEdit = () => {
         subject === currentSubject &&
         _.trim(description) === currentDescription
     );
+  });
+
+  const handleOnSave = useDebounce((): void => {
+    toast.success('>>> hihi');
   });
 
   useEffect(() => {
@@ -130,6 +136,7 @@ const ChapterEdit = () => {
                   disabled={canSave}
                   onClick={(e) => {
                     e.preventDefault();
+                    handleOnSave();
                   }}
                   className={`flex items-center rounded-lg px-6 py-1
                   transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
@@ -155,6 +162,7 @@ const ChapterEdit = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );
