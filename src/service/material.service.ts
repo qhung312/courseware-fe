@@ -29,6 +29,12 @@ type GetAllMaterialPaginatedArgument = {
   pageNumber?: number;
   pageSize?: number;
 };
+type EditArgument = {
+  name?: string;
+  subject?: string;
+  chapter?: string;
+  description?: string;
+};
 type GetAllMaterialPaginatedReturnType = {
   total: number;
   pageSize: number;
@@ -58,10 +64,18 @@ const getById = (materialId: string, admin = false) => {
   return axios.get<Response<Material>>(queryString);
 };
 
+const edit = (materialId: string, queryBody: EditArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}material/${materialId}`;
+  console.log(queryBody);
+
+  return axios.patch<Response<Material>>(queryString, queryBody);
+};
+
 const MaterialService = {
   getAll,
   getAllPaginated,
   download,
   getById,
+  edit,
 };
 export default MaterialService;
