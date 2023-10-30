@@ -13,6 +13,7 @@ import './index.css';
 import { Markdown } from '..';
 import { QuestionType, type ConcreteQuestion } from '../../types/question';
 import { QuizStatus } from '../../types/quiz';
+import { MULTIPLE_CHOICE_LABELS } from '../../utils/helper';
 import Icon from '../Icon';
 
 type InputAnswerProps = {
@@ -38,7 +39,6 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
     setSingleValueAnswer,
     setMultipleValueAnswer,
   } = helpers;
-  const optionLabels = ['A', 'B', 'C', 'D'];
 
   const optimizedSetMultipleValueAnswer = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +106,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
                   <span className='-ml-[100%] h-full text-xs md:text-base'>
-                    {optionLabels[index]}
+                    {MULTIPLE_CHOICE_LABELS[index]}
                   </span>
                 </span>
               </div>

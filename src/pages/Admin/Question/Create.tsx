@@ -13,6 +13,7 @@ import SubjectService from '../../../service/subject.service';
 
 import './index.css';
 import { ConcreteQuestion, QuestionType, QuizStatus } from '../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const CreateQuestionPage = () => {
   const [name, setName] = useState('');
@@ -336,7 +337,7 @@ const CreateQuestionPage = () => {
                             <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
                             <p className='text-base font-semibold text-[#666]'>
                               Đáp án đúng:{' '}
-                              {['A', 'B', 'C', 'D', 'E', 'F'].at(
+                              {MULTIPLE_CHOICE_LABELS.at(
                                 preview.options?.findIndex(
                                   (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
                                 ) || 0
