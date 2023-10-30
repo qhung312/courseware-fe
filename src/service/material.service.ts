@@ -70,6 +70,13 @@ const edit = (materialId: string, queryBody: EditArgument, admin = false) => {
 
   return axios.patch<Response<Material>>(queryString, queryBody);
 };
+const create = (data: FormData) => {
+  return axios.post<Response<Material>>(`${API_URL}admin/material`, data);
+};
+
+const deleteById = (materialId: string) => {
+  return axios.delete(`${API_URL}admin/material/${materialId}`);
+};
 
 const MaterialService = {
   getAll,
@@ -77,5 +84,7 @@ const MaterialService = {
   download,
   getById,
   edit,
+  create,
+  deleteById,
 };
 export default MaterialService;

@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
+// eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
 
 import './index.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
+import MaterialService from '../../../service/material.service';
 import SubjectService from '../../../service/subject.service';
 
 const MaterialCreate = () => {
@@ -20,9 +24,8 @@ const MaterialCreate = () => {
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
 
   const fileUploaderRef = useRef<FilePond>(null);
-  const submitDisabled = name === '' || subject === '' || chapter === '';
-
-  console.log(uploadedFiles);
+  const submitDisabled =
+    name === '' || subject === '' || chapter === '' || uploadedFiles.length === 0;
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
@@ -32,7 +35,7 @@ const MaterialCreate = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: subject })
+    ChapterService.getAll({ subject: subject }, true)
       .then((res) => {
         const { result: chapters } = res.data.payload;
         setChapterOptions(
@@ -44,13 +47,13 @@ const MaterialCreate = () => {
         setChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [subject]);
 
   useEffect(() => {
     // fetch subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setSubjectOptions(
@@ -61,14 +64,33 @@ const MaterialCreate = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
   const createMaterial = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    // TODO
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('subject', subject);
+    formData.append('chapter', chapter);
+    formData.append('description', description);
+    formData.append('', uploadedFiles[0]);
+
+    MaterialService.create(formData)
+      .then((_) => {
+        toast.success('Tạo tài liệu thành công');
+        setName('');
+        setSubject('');
+        setChapter('');
+        setDescription('');
+        setUploadedFiles([]);
+        fileUploaderRef.current?.removeFiles();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
@@ -192,6 +214,7 @@ const MaterialCreate = () => {
             </form>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

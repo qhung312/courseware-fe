@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { Icon, Pagination } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import SubjectService from '../../../service/subject.service';
@@ -21,6 +23,27 @@ const SubjectList = () => {
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
+  const subjectToDelete = React.useRef<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  console.log(subjectToDelete.current);
+
+  const onDeleteSubject = () => {
+    const subjectId = subjectToDelete.current;
+    if (subjectId !== null) {
+      SubjectService.deleteById(subjectId)
+        .then((_res) => {
+          toast.success('Xóa môn thành công');
+          setPage(1);
+          fetchSubjects();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+    subjectToDelete.current = null;
+  };
+
   const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
     setPage(1);
@@ -28,18 +51,22 @@ const SubjectList = () => {
 
   const fetchSubjects = useDebounce(() => {
     setLoading(true);
-    SubjectService.getAllPaginated({
-      name: filterName,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    SubjectService.getAllPaginated(
+      {
+        name: filterName,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allSubjects } = res.data.payload;
+        console.log(allSubjects[0].createdAt);
         setSubjects(allSubjects);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -52,6 +79,12 @@ const SubjectList = () => {
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa môn này?'
+        onDelete={onDeleteSubject}
+        show={deleteModal}
+        onClose={() => setDeleteModal(false)}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -76,18 +109,6 @@ const SubjectList = () => {
                   />
                 </div>
               </div>
-              {/* <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                  Tên
-                </p>
-                <p className='flex flex-[1.5] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
-                  Thời gian tạo
-                </p>
-                <p className='flex flex-[1.5] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
-                  Thời gian cập nhật
-                </p>
-                <div className='flex flex-1' />
-              </div> */}
 
               {loading ? (
                 <>
@@ -116,10 +137,10 @@ const SubjectList = () => {
                             Tên
                           </th>
                           <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Môn
+                            Thời gian tạo
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
-                            Thời Gian Tạo
+                            Thời gian cập nhật
                           </th>
                           <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                             {''}
@@ -136,10 +157,12 @@ const SubjectList = () => {
                               {subject.name}
                             </td>
                             <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {subject?.name}
+                              {new Date(subject.createdAt).toLocaleString()}
                             </td>
                             <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {new Date(subject.createdAt).toLocaleDateString()}
+                              {subject.lastUpdatedAt !== undefined
+                                ? new Date(subject.lastUpdatedAt).toLocaleString()
+                                : undefined}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <button
@@ -147,7 +170,7 @@ const SubjectList = () => {
                                 onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
                                 className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
                               >
-                                <Icon.Edit
+                                <Icon.ViewIcon
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
@@ -162,7 +185,13 @@ const SubjectList = () => {
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
                               </button>
-                              <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
+                              <button
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                onClick={() => {
+                                  subjectToDelete.current = subject._id;
+                                  setDeleteModal(true);
+                                }}
+                              >
                                 <Icon.Delete
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
@@ -186,6 +215,7 @@ const SubjectList = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

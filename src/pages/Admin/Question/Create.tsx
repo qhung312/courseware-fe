@@ -1,12 +1,19 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Select } from '../../../components';
+import { Icon, Markdown, QuestionCard, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
+// eslint-disable-next-line import/order
+import QuestionService from '../../../service/question.service';
+// eslint-disable-next-line import/order
 import SubjectService from '../../../service/subject.service';
+
 import './index.css';
+import { ConcreteQuestion, QuestionType, QuizStatus } from '../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const CreateQuestionPage = () => {
   const [name, setName] = useState('');
@@ -22,7 +29,9 @@ const CreateQuestionPage = () => {
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
 
-  console.log(chapter);
+  const [preview, setPreview] = useState<ConcreteQuestion | null>(null);
+
+  const createDisabled = name.trim().length === 0 || subject === '' || chapter === '';
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
@@ -32,7 +41,7 @@ const CreateQuestionPage = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: subject })
+    ChapterService.getAll({ subject: subject }, true)
       .then((res) => {
         const { result: chapters } = res.data.payload;
         setChapterOptions(
@@ -44,13 +53,13 @@ const CreateQuestionPage = () => {
         setChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [subject]);
 
   useEffect(() => {
     // fetch subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setSubjectOptions(
@@ -61,7 +70,7 @@ const CreateQuestionPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -103,11 +112,57 @@ const CreateQuestionPage = () => {
     setShuffleOptions(!shuffleOptions);
 
   const previewQuestion = (_: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO
+    QuestionService.preview({
+      code,
+      type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
+      description,
+
+      options: options,
+      answerKeys: [answerKey],
+      shuffleOptions,
+      explanation,
+    })
+      .then((res) => {
+        const question = res.data.payload;
+        question.isCorrect = true;
+        setPreview(question);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
-  const createQuestion = (_: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO
+  const createQuestion = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    QuestionService.create({
+      name,
+      code,
+      subject,
+      chapter,
+      type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
+
+      description: description,
+      options: options,
+      answerKeys: [answerKey],
+      shuffleOptions,
+
+      explanation,
+    })
+      .then((_res) => {
+        toast.success('Tạo câu hỏi thành công');
+        setName('');
+        setSubject('');
+        setChapter('');
+        setDescription('');
+        setCode('');
+        setOptions(['']);
+        setAnswerKey(0);
+        setShuffleOptions(false);
+        setExplanation('');
+        setPreview(null);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
@@ -267,17 +322,53 @@ const CreateQuestionPage = () => {
                   onChange={onInputExplanation}
                 />
               </div>
+              {preview !== null && (
+                <div className='flex flex-col gap-y-1'>
+                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                    Xem trước câu hỏi
+                  </p>
+                  <div className='flex flex-col gap-y-4'>
+                    <QuestionCard question={preview} status={QuizStatus.ENDED} questionNumber={1} />
+                    <div className='flex h-full w-full flex-row gap-x-4'>
+                      <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+                        <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
+                        <div className='flex flex-col items-start justify-center gap-y-1'>
+                          <div className='flex flex-row items-center gap-x-2'>
+                            <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
+                            <p className='text-base font-semibold text-[#666]'>
+                              Đáp án đúng:{' '}
+                              {MULTIPLE_CHOICE_LABELS.at(
+                                preview.options?.findIndex(
+                                  (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
+                                ) || 0
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                        <span className='my-4 border-t border-[#666]' />
+                        <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+                        <Markdown>{preview.explanation}</Markdown>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className='mt-4 flex flex-row-reverse gap-x-8'>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={previewQuestion}>
+                <button
+                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                  disabled={createDisabled}
+                  onClick={createQuestion}
+                >
                   <p className='text-white'>Tạo</p>
                 </button>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createQuestion}>
+                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={previewQuestion}>
                   <p className='text-white'>Xem trước</p>
                 </button>
               </div>
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

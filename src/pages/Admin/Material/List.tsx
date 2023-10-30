@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -30,22 +32,44 @@ const MaterialList = () => {
 
   const tableRef = useRef<HTMLDivElement>(null);
 
+  const materialToDelete = useRef<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDeleteMaterial = () => {
+    const materialId = materialToDelete.current;
+    if (materialId !== null) {
+      MaterialService.deleteById(materialId)
+        .then((_res) => {
+          toast.success('Xóa tài liệu thành công');
+          setPage(1);
+          fetchMaterial();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+    materialToDelete.current = null;
+  };
+
   const fetchMaterial = useDebounce(() => {
     setLoading(true);
-    MaterialService.getAllPaginated({
-      name: filterName,
-      subject: filterSubject === '' ? undefined : filterSubject,
-      chapter: filterChapter === '' ? undefined : filterChapter,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-    })
+    MaterialService.getAllPaginated(
+      {
+        name: filterName,
+        subject: filterSubject === '' ? undefined : filterSubject,
+        chapter: filterChapter === '' ? undefined : filterChapter,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allMaterials } = res.data.payload;
         setMaterials(allMaterials);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -58,7 +82,7 @@ const MaterialList = () => {
 
   useEffect(() => {
     // fetch subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -69,7 +93,7 @@ const MaterialList = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -103,6 +127,12 @@ const MaterialList = () => {
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa tài liệu này?'
+        onClose={() => setDeleteModal(false)}
+        onDelete={onDeleteMaterial}
+        show={deleteModal}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -228,7 +258,7 @@ const MaterialList = () => {
                                 onClick={() => navigate(`/admin/material/view/${material._id}`)}
                                 className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
                               >
-                                <Icon.Edit
+                                <Icon.ViewIcon
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
@@ -244,7 +274,10 @@ const MaterialList = () => {
                                 />
                               </button>
                               <button
-                                onClick={() => console.log('delete')}
+                                onClick={() => {
+                                  materialToDelete.current = material._id;
+                                  setDeleteModal(true);
+                                }}
                                 className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
                               >
                                 <Icon.Delete
@@ -269,6 +302,7 @@ const MaterialList = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

@@ -1,5 +1,5 @@
 import { API_URL } from '../config';
-import { Question, Response } from '../types';
+import { ConcreteQuestion, Question, QuestionType, Response } from '../types';
 import { axios } from '../utils/custom-axios';
 
 type GetAllQuestionArgument = {
@@ -49,6 +49,44 @@ const getById = (questionId: string, admin = false) => {
   return axios.get<Response<Question>>(queryString);
 };
 
-const QuestionTemplateService = { getAll, getAllPaginated, getById };
+type PreviewQuestionArgument = {
+  code: string;
+  type: QuestionType;
+  description: string;
 
-export default QuestionTemplateService;
+  options?: string[];
+  answerKeys?: number[];
+  shuffleOptions?: boolean;
+
+  explanation: string;
+};
+const preview = (arg: PreviewQuestionArgument) => {
+  const queryString = `${API_URL}admin/question/preview`;
+  return axios.post<Response<ConcreteQuestion>>(queryString, arg);
+};
+
+type CreateQuestionArgument = {
+  name: string;
+  code: string;
+  subject: string;
+  chapter: string;
+  type: QuestionType;
+
+  description: string;
+  options?: string[];
+  answerKeys?: number[];
+  shuffleOptions?: boolean;
+
+  explanation: string;
+};
+const create = (arg: CreateQuestionArgument) => {
+  return axios.post<Response<Question>>(`${API_URL}admin/question`, arg);
+};
+
+const deleteById = (questionId: string) => {
+  return axios.delete<Response<Question>>(`${API_URL}admin/question/${questionId}`);
+};
+
+const QuestionService = { getAll, getAllPaginated, getById, preview, create, deleteById };
+
+export default QuestionService;

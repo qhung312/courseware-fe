@@ -49,5 +49,22 @@ const getById = (id: string, admin = false) => {
   return axios.get<Response<Quiz>>(queryString);
 };
 
-const QuizTemplateService = { getAll, getAllPaginated, getById };
-export default QuizTemplateService;
+type CreateQuizArgument = {
+  name: string;
+  description: string;
+  subject: string;
+  chapter: string;
+  duration: number;
+  potentialQuestions: string[];
+  sampleSize: number;
+};
+const create = (data: CreateQuizArgument) => {
+  return axios.post<Response<Quiz>>(`${API_URL}admin/quiz`, data);
+};
+
+const deleteById = (id: string) => {
+  return axios.delete<Response<Quiz>>(`${API_URL}admin/quiz/${id}`);
+};
+
+const QuizService = { getAll, getAllPaginated, getById, create, deleteById };
+export default QuizService;
