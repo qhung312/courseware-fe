@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -29,6 +30,25 @@ const ExamList = () => {
   const [page, setPage] = useState(1);
 
   const tableRef = useRef<HTMLDivElement>(null);
+
+  const examArchiveToDelete = useRef<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDeleteExamArchive = () => {
+    const examArchiveId = examArchiveToDelete.current;
+    if (examArchiveId !== null) {
+      ExamArchiveService.deleteById(examArchiveId)
+        .then((_res) => {
+          toast.success('Xóa đề thi thành công');
+          setPage(1);
+          fetchExamArchive();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+    examArchiveToDelete.current = null;
+  };
 
   useEffect(() => {
     const handleWheeling = (e: WheelEvent) => {
@@ -96,6 +116,12 @@ const ExamList = () => {
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa đề thi này?'
+        onClose={() => setDeleteModal(false)}
+        show={deleteModal}
+        onDelete={() => onDeleteExamArchive()}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -247,7 +273,7 @@ const ExamList = () => {
                                 onClick={() => navigate(`/admin/exam-archive/view/${exam._id}`)}
                                 className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
                               >
-                                <Icon.Edit
+                                <Icon.ViewIcon
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
@@ -262,7 +288,13 @@ const ExamList = () => {
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
                               </button>
-                              <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
+                              <button
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                onClick={() => {
+                                  examArchiveToDelete.current = exam._id;
+                                  setDeleteModal(true);
+                                }}
+                              >
                                 <Icon.Delete
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'

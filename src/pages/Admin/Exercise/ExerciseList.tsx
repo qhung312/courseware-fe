@@ -5,6 +5,7 @@ import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -29,6 +30,25 @@ const ExerciseListPage = () => {
   const [page, setPage] = useState(1);
 
   const tableRef = React.useRef<HTMLDivElement>(null);
+
+  const exerciseToDelete = React.useRef<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDeleteExercise = () => {
+    const exerciseId = exerciseToDelete.current;
+    if (exerciseId !== null) {
+      QuizService.deleteById(exerciseId)
+        .then((_res) => {
+          toast.success('Xóa bài tập rèn luyện thành công');
+          setPage(1);
+          fetchExercises();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+    exerciseToDelete.current = null;
+  };
 
   const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
@@ -121,6 +141,12 @@ const ExerciseListPage = () => {
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa bài tập rèn luyện này?'
+        show={deleteModal}
+        onClose={() => setDeleteModal(false)}
+        onDelete={onDeleteExercise}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -231,10 +257,10 @@ const ExerciseListPage = () => {
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <Link
                                 to={`/admin/exercises/view/${exercise._id}`}
-                                className='flex items-center justify-center rounded-full bg-[#CCCCCC] p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
                               >
                                 <Icon.ViewIcon
-                                  fill='#252641'
+                                  fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
                               </Link>
@@ -247,7 +273,13 @@ const ExerciseListPage = () => {
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
                               </Link>
-                              <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
+                              <button
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                onClick={() => {
+                                  exerciseToDelete.current = exercise._id;
+                                  setDeleteModal(true);
+                                }}
+                              >
                                 <Icon.Delete
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'

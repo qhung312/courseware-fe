@@ -62,11 +62,16 @@ const create = (data: FormData) => {
   return axios.post<Response<Material>>(`${API_URL}admin/material`, data);
 };
 
+const deleteById = (materialId: string) => {
+  return axios.delete(`${API_URL}admin/material/${materialId}`);
+};
+
 const MaterialService = {
   getAll,
   getAllPaginated,
   download,
   getById,
   create,
+  deleteById,
 };
 export default MaterialService;

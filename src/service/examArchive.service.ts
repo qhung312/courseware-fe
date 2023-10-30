@@ -66,12 +66,17 @@ const create = (data: FormData) => {
   return axios.post<Response<ExamArchive>>(`${API_URL}admin/previous_exam`, data);
 };
 
+const deleteById = (examId: string) => {
+  return axios.delete<Response<ExamArchive>>(`${API_URL}admin/previous_exam/${examId}`);
+};
+
 const ExamArchiveService = {
   getAll,
   getAllPaginated,
   download,
   getById,
   create,
+  deleteById,
 };
 
 export default ExamArchiveService;

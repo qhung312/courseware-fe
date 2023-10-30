@@ -83,6 +83,10 @@ const create = (arg: CreateQuestionArgument) => {
   return axios.post<Response<Question>>(`${API_URL}admin/question`, arg);
 };
 
-const QuestionService = { getAll, getAllPaginated, getById, preview, create };
+const deleteById = (questionId: string) => {
+  return axios.delete<Response<Question>>(`${API_URL}admin/question/${questionId}`);
+};
+
+const QuestionService = { getAll, getAllPaginated, getById, preview, create, deleteById };
 
 export default QuestionService;

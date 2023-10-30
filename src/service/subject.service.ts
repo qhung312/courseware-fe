@@ -52,6 +52,10 @@ const create = (name: string, description: string) => {
   });
 };
 
-const SubjectService = { getAll, getAllPaginated, getById, create };
+const deleteById = (subjectId: string) => {
+  return axios.delete<Response<Subject>>(`${API_URL}admin/subject/${subjectId}`);
+};
+
+const SubjectService = { getAll, getAllPaginated, getById, create, deleteById };
 
 export default SubjectService;

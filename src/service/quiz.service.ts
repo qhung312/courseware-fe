@@ -62,5 +62,9 @@ const create = (data: CreateQuizArgument) => {
   return axios.post<Response<Quiz>>(`${API_URL}admin/quiz`, data);
 };
 
-const QuizService = { getAll, getAllPaginated, getById, create };
+const deleteById = (id: string) => {
+  return axios.delete<Response<Quiz>>(`${API_URL}admin/quiz/${id}`);
+};
+
+const QuizService = { getAll, getAllPaginated, getById, create, deleteById };
 export default QuizService;

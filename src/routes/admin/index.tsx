@@ -213,7 +213,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <MaterialList />
+                  <SubjectList />
                 </Suspense>
               }
             />

@@ -5,6 +5,7 @@ import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -31,6 +32,25 @@ const QuestionListPage = () => {
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
+  const questionToDelete = React.useRef<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDeleteQuestion = () => {
+    const questionId = questionToDelete.current;
+    if (questionId !== null) {
+      QuestionService.deleteById(questionId)
+        .then((_res) => {
+          toast.success('Xóa câu hỏi thành công');
+          setPage(1);
+          fetchQuestions();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+    questionToDelete.current = null;
+  };
+
   const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
     setPage(1);
@@ -50,7 +70,7 @@ const QuestionListPage = () => {
     }
   };
 
-  const fetchQuestionTemplates = useDebounce(() => {
+  const fetchQuestions = useDebounce(() => {
     setLoading(true);
     QuestionService.getAllPaginated(
       {
@@ -76,8 +96,8 @@ const QuestionListPage = () => {
   });
 
   useEffect(() => {
-    fetchQuestionTemplates();
-  }, [page, filterName, filterSubject, filterChapter, fetchQuestionTemplates]);
+    fetchQuestions();
+  }, [page, filterName, filterSubject, filterChapter, fetchQuestions]);
 
   useEffect(() => {
     // fetch all subjects on first load
@@ -123,6 +143,12 @@ const QuestionListPage = () => {
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa câu hỏi này?'
+        show={deleteModal}
+        onClose={() => setDeleteModal(false)}
+        onDelete={onDeleteQuestion}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -233,10 +259,10 @@ const QuestionListPage = () => {
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <Link
                                 to={`/admin/questions/view/${index}`}
-                                className='flex items-center justify-center rounded-full bg-[#CCCCCC] p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
                               >
                                 <Icon.ViewIcon
-                                  fill='#252641'
+                                  fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
                               </Link>
@@ -249,7 +275,13 @@ const QuestionListPage = () => {
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
                               </Link>
-                              <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
+                              <button
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                onClick={() => {
+                                  questionToDelete.current = question._id;
+                                  setDeleteModal(true);
+                                }}
+                              >
                                 <Icon.Delete
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'

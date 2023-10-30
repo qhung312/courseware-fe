@@ -56,6 +56,10 @@ const create = (name: string, subject: string, description: string) => {
   });
 };
 
-const ChapterService = { getAll, getAllPaginated, getById, create };
+const deleteById = (id: string) => {
+  return axios.delete<Response<Chapter>>(`${API_URL}admin/chapter/${id}`);
+};
+
+const ChapterService = { getAll, getAllPaginated, getById, create, deleteById };
 
 export default ChapterService;
