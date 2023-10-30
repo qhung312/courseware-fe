@@ -21,8 +21,8 @@ const MaterialEdit = () => {
   const id = params?.id ?? '';
 
   const [name, setName] = useState('');
-  const [subject, setSubject] = useState<Option>();
-  const [chapter, setChapter] = useState<Option>();
+  const [subject, setSubject] = useState('');
+  const [chapter, setChapter] = useState('');
   const [description, setDescription] = useState('');
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
@@ -50,8 +50,8 @@ const MaterialEdit = () => {
     if (material) {
       setCanSave(
         name === material.name &&
-          subject?.value === material.subject._id &&
-          chapter?.value === material.chapter._id &&
+          subject === material.subject._id &&
+          chapter === (material.chapter?._id ?? '') &&
           _.trim(description) === material.description
       );
     }
@@ -61,18 +61,20 @@ const MaterialEdit = () => {
     const queryBody = {
       name,
       description,
-      subject: subject?.value ?? '',
-      chapter: chapter?.value ?? '',
+      subject,
+      chapter,
     };
     MaterialService.edit(name, queryBody, true)
       .then(() => {
         toast.success('Edit successfully');
-        fetchData();
       })
       .catch((err) => {
         console.error(err);
         console.log('query body: ', queryBody);
         toast.error('Error. Please try again');
+      })
+      .finally(() => {
+        fetchData();
       });
   });
 
@@ -84,14 +86,8 @@ const MaterialEdit = () => {
     if (material) {
       setName(material.name);
       setDescription(material.description);
-      setChapter({
-        label: material.chapter?.name,
-        value: material.chapter?._id,
-      });
-      setSubject({
-        label: material.subject?.name,
-        value: material.subject?._id,
-      });
+      setChapter(material?.chapter?._id ?? '');
+      setSubject(material?.subject?._id ?? '');
     }
   }, [material]);
 
@@ -99,11 +95,11 @@ const MaterialEdit = () => {
     // update options for chapter when the selected subject changes
     if (!subject) {
       setChapterOptions([]);
-      setChapter(undefined);
+      setChapter('');
       return;
     }
 
-    ChapterService.getAll({ subject: subject.value })
+    ChapterService.getAll({ subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
         const formattedData = chapters.map((chap) => ({
@@ -112,7 +108,7 @@ const MaterialEdit = () => {
         }));
         console.log('formattedData', formattedData);
         setChapterOptions(formattedData);
-        setChapter(undefined);
+        setChapter('');
       })
       .catch((err) => {
         console.error(err);
@@ -202,11 +198,11 @@ const MaterialEdit = () => {
                     <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
                     <Select
                       options={subjectOptions}
-                      value={subjectOptions.find((x) => x.value === subject?.value) ?? null}
+                      value={subjectOptions.find((x) => x.value === subject) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           console.log('subject', v);
-                          setSubject(v);
+                          setSubject(v.value);
                           console.log('subject choosing: ', subject);
                         }
                       }}
@@ -217,10 +213,10 @@ const MaterialEdit = () => {
                     <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chương</p>
                     <Select
                       options={chapterOptions}
-                      value={chapterOptions.find((x) => x.value === chapter?.value) ?? null}
+                      value={chapterOptions.find((x) => x.value === chapter) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
-                          setChapter(v);
+                          setChapter(v.value);
                         }
                       }}
                       placeholder='Chọn chương'
@@ -241,7 +237,6 @@ const MaterialEdit = () => {
                     placeholder='Nhập chú thích đề thi'
                     rows={8}
                     onChange={({ target }) => {
-                      handleOnSave();
                       setDescription(target.value);
                     }}
                   />

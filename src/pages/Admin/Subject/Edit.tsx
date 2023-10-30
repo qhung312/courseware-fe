@@ -55,12 +55,11 @@ const SubjectEdit = () => {
     setLoading(true);
     SubjectService.edit(id, true, name, description)
       .then((res) => {
-        toast.success('Edit successfully');
+        toast.success('Chỉnh sửa thành công');
         setSubject(res.data.payload);
       })
       .catch((err) => {
-        toast.error('Error. Please try again');
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => setLoading(false));
   };

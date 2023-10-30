@@ -79,6 +79,18 @@ type CreateQuestionArgument = {
 
   explanation: string;
 };
+type EditArgument = {
+  name: string;
+  subject: string;
+  chapter: string;
+  description: string;
+  code: string;
+  options?: string[];
+  answerKeys?: number[];
+  shuffleOptions?: boolean;
+
+  explanation: string;
+};
 const create = (arg: CreateQuestionArgument) => {
   return axios.post<Response<Question>>(`${API_URL}admin/question`, arg);
 };
@@ -87,6 +99,12 @@ const deleteById = (questionId: string) => {
   return axios.delete<Response<Question>>(`${API_URL}admin/question/${questionId}`);
 };
 
-const QuestionService = { getAll, getAllPaginated, getById, preview, create, deleteById };
+const edit = (questionId: string, data: EditArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}question/${questionId}`;
+
+  return axios.patch<Response<Question>>(queryString, data);
+};
+
+const QuestionService = { getAll, getAllPaginated, getById, preview, create, deleteById, edit };
 
 export default QuestionService;

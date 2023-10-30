@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,33 +29,7 @@ const ChapterEdit = () => {
     }
   });
 
-  const handleOnSave = useDebounce((): void => {
-    setLoading(true);
-    ChapterService.edit(id, true, name, description)
-      .then((res) => {
-        toast.success('Edit successfully');
-        console.log('data: ', res.data.payload);
-        setChapter(res.data.payload);
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error('Error. Please try again');
-      })
-      .finally(() => setLoading(false));
-  });
-
-  useEffect(() => {
-    if (chapter) {
-      setName(chapter.name);
-      setDescription(chapter.description);
-    }
-  }, [chapter]);
-
-  useEffect(() => {
-    setSave();
-  }, [chapter, description, name, setSave]);
-
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     ChapterService.getById(id, true)
       .then((res) => setChapter(res.data.payload))
@@ -65,6 +39,35 @@ const ChapterEdit = () => {
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  const handleOnSave = useDebounce((): void => {
+    ChapterService.edit(id, true, name, description)
+      .then(() => {
+        toast.success('Edit successfully');
+        fetchData();
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error(err.response.data.message);
+      });
+  });
+
+  useEffect(() => {
+    if (chapter) {
+      setName(chapter.name);
+      setDescription(chapter.description);
+    }
+  }, [chapter]);
+
+  // re-render save button
+  useEffect(() => {
+    setSave();
+  }, [chapter, description, name, setSave]);
+
+  //fetch initial data
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <Page>

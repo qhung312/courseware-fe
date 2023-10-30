@@ -115,12 +115,15 @@ const ExamView = () => {
                       Chú thích
                     </p>
                   </label>
-                  <div
+                  <textarea
+                    id='exam-description'
+                    value={examArchive?.description}
+                    placeholder='Không có chú thích'
+                    rows={5}
                     className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs
                   font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  >
-                    Không có chú thích nào cả
-                  </div>
+                    disabled
+                  />
                 </div>
               </form>
               <div className='my-4 flex w-full justify-end'>
