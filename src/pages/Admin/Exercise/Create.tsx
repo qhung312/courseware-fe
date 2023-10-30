@@ -1,12 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
-import QuestionTemplateService from '../../../service/question.service';
+import QuestionService from '../../../service/question.service';
+import QuizService from '../../../service/quiz.service';
 import SubjectService from '../../../service/subject.service';
 import { Question } from '../../../types';
 
@@ -28,7 +30,7 @@ const CreateExercisePage = () => {
     minutes: 0,
     seconds: 0,
   });
-  const [sampleSize, setSampleSize] = useState('');
+  const [sampleSize, setSampleSize] = useState(0);
   const [description, setDescription] = useState('');
 
   const [filterSubject, setFilterSubject] = useState('');
@@ -39,6 +41,13 @@ const CreateExercisePage = () => {
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
   const [questionOptions, setQuestionOptions] = useState<Question[]>([]);
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
+
+  const createDisabled =
+    name.trim().length === 0 ||
+    subject === '' ||
+    chapter === '' ||
+    potentialQuestions.length === 0 ||
+    sampleSize === 0;
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => setName(event.target.value);
 
@@ -64,7 +73,7 @@ const CreateExercisePage = () => {
     setDuration({ ...duration, seconds: parseInt(event.target.value) });
 
   const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
-    setSampleSize(event.target.value);
+    setSampleSize(parseInt(event.target.value));
 
   const onInputDescription = (event: ChangeEvent<HTMLTextAreaElement>) =>
     setDescription(event.target.value);
@@ -77,7 +86,7 @@ const CreateExercisePage = () => {
       if (!duplicate) {
         setPotentialQuestions([...potentialQuestions, (value as OptionWithQuestion).question]);
       } else {
-        console.error(`This question has already been added`);
+        toast.error('Câu hỏi đã được thêm');
       }
     }
   };
@@ -94,21 +103,47 @@ const CreateExercisePage = () => {
     }
   };
 
-  const createExercise = (_: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO
+  const createExercise = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    QuizService.create({
+      name,
+      description,
+      subject,
+      chapter,
+      duration: (duration.hours * 3600 + duration.minutes * 60 + duration.seconds) * 1000,
+      potentialQuestions: potentialQuestions.map((question) => question._id),
+      sampleSize: sampleSize,
+    })
+      .then((_res) => {
+        toast.success('Tạo bài tập rèn luyện thành công');
+        setName('');
+        setSubject('');
+        setChapter('');
+        setDuration({ hours: 0, minutes: 0, seconds: 0 });
+        setSampleSize(0);
+        setDescription('');
+        setPotentialQuestions([]);
+
+        setSubjectOptions([]);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   const fetchQuestions = useDebounce(() => {
-    QuestionTemplateService.getAll({
-      subject: filterSubject === '' ? undefined : filterSubject,
-      chapter: filterChapter === '' ? undefined : filterChapter,
-    })
+    QuestionService.getAll(
+      {
+        subject: filterSubject === '' ? undefined : filterSubject,
+        chapter: filterChapter === '' ? undefined : filterChapter,
+      },
+      true
+    )
       .then((res) => {
         const { result: allQuestions } = res.data.payload;
         setQuestionOptions(allQuestions);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   });
 
@@ -117,7 +152,7 @@ const CreateExercisePage = () => {
   }, [filterSubject, filterChapter, fetchQuestions]);
 
   useEffect(() => {
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setSubjectOptions(
@@ -130,7 +165,7 @@ const CreateExercisePage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -142,7 +177,7 @@ const CreateExercisePage = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: subject })
+    ChapterService.getAll({ subject: subject }, true)
       .then((res) => {
         const { result: chapters } = res.data.payload;
         setChapterOptions(
@@ -154,7 +189,7 @@ const CreateExercisePage = () => {
         setChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [subject]);
 
@@ -166,7 +201,7 @@ const CreateExercisePage = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: filterSubject })
+    ChapterService.getAll({ subject: filterSubject }, true)
       .then((res) => {
         const { result: allFilterChapters } = res.data.payload;
         setFilterChapterOptions(
@@ -178,9 +213,13 @@ const CreateExercisePage = () => {
         setFilterChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [filterSubject]);
+
+  useEffect(() => {
+    setSampleSize(Math.min(sampleSize, potentialQuestions.length));
+  }, [potentialQuestions, sampleSize]);
 
   return (
     <Page>
@@ -255,9 +294,12 @@ const CreateExercisePage = () => {
                 <div className='flex flex-col'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
                   <input
-                    className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    className='flex w-full rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                     value={sampleSize}
+                    type='number'
                     onChange={onInputSampleSize}
+                    min={0}
+                    max={potentialQuestions.length}
                   />
                 </div>
               </div>
@@ -379,13 +421,18 @@ const CreateExercisePage = () => {
                 </div>
               </div>
               <div className='my-5 flex flex-row-reverse gap-x-8'>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createExercise}>
+                <button
+                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                  onClick={createExercise}
+                  disabled={createDisabled}
+                >
                   <p className='text-white'>Tạo</p>
                 </button>
               </div>
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

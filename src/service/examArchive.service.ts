@@ -14,8 +14,8 @@ type GetAllExamArchiveReturnType = {
   total: number;
   result: ExamArchive[];
 };
-const getAll = (query: GetAllExamArchiveArgument) => {
-  const queryString = `${API_URL}previous-exam?pagination=false\
+const getAll = (query: GetAllExamArchiveArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}/previous_exam?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.semester ? `&semester=${query.semester}` : ''}\
@@ -38,8 +38,8 @@ type GetAllExamArchivePaginatedReturnType = {
   pageSize: number;
   result: ExamArchive[];
 };
-const getAllPaginated = (query: GetAllExamArchivePaginatedArgument) => {
-  const queryString = `${API_URL}previous-exam?pagination=true\
+const getAllPaginated = (query: GetAllExamArchivePaginatedArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam?pagination=true\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.semester ? `&semester=${query.semester}` : ''}\
@@ -50,28 +50,33 @@ ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
   return axios.get<Response<GetAllExamArchivePaginatedReturnType>>(queryString);
 };
 
-const create = () => axios.post<Response<ExamArchive>>(`${API_URL}previous-exam/`);
+const download = (examId: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}/download`;
 
-const edit = (examId: string) =>
-  axios.patch<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
+  return axios.get<Response<ExamArchive>>(queryString);
+};
 
-const deleteById = (examId: string) =>
-  axios.delete<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
+const getById = (examId: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
 
-const download = (examId: string) =>
-  axios.get<Response<ExamArchive>>(`${API_URL}previous-exam/download/${examId}`);
+  return axios.get<Response<ExamArchive>>(queryString);
+};
 
-const getById = (examId: string) =>
-  axios.get<Response<ExamArchive>>(`${API_URL}previous-exam/${examId}`);
+const create = (data: FormData) => {
+  return axios.post<Response<ExamArchive>>(`${API_URL}admin/previous_exam`, data);
+};
+
+const deleteById = (examId: string) => {
+  return axios.delete<Response<ExamArchive>>(`${API_URL}admin/previous_exam/${examId}`);
+};
 
 const ExamArchiveService = {
   getAll,
   getAllPaginated,
-  create,
-  edit,
-  deleteById,
   download,
   getById,
+  create,
+  deleteById,
 };
 
 export default ExamArchiveService;

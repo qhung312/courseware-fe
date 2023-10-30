@@ -2,8 +2,10 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Pagination, Select } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -27,6 +29,25 @@ const ChapterListPage = () => {
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
+  const chapterToDelete = React.useRef<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDeleteChapter = () => {
+    const chapterId = chapterToDelete.current;
+    if (chapterId !== null) {
+      ChapterService.deleteById(chapterId)
+        .then(() => {
+          toast.success('Xóa chương thành công');
+          setPage(1);
+          fetchChapters();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+    chapterToDelete.current = null;
+  };
+
   const onInputFilterName = (event: ChangeEvent<HTMLInputElement>) => {
     setFilterName(event.target.value);
     setPage(1);
@@ -41,19 +62,22 @@ const ChapterListPage = () => {
 
   const fetchChapters = useDebounce(() => {
     setLoading(true);
-    ChapterService.getAllPaginated({
-      name: filterName,
-      pageNumber: page,
-      pageSize: ITEMS_PER_PAGE,
-      subject: filterSubject === '' ? undefined : filterSubject,
-    })
+    ChapterService.getAllPaginated(
+      {
+        name: filterName,
+        pageNumber: page,
+        pageSize: ITEMS_PER_PAGE,
+        subject: filterSubject === '' ? undefined : filterSubject,
+      },
+      true
+    )
       .then((res) => {
         const { total, result: allChapters } = res.data.payload;
         setChapters(allChapters);
         setTotalCount(total);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -65,7 +89,7 @@ const ChapterListPage = () => {
   }, [page, filterName, filterSubject, fetchChapters]);
 
   useEffect(() => {
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setFilterSubjectOptions(
@@ -78,12 +102,18 @@ const ChapterListPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa chương này?'
+        onClose={() => setDeleteModal(false)}
+        show={deleteModal}
+        onDelete={() => onDeleteChapter()}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -196,7 +226,7 @@ const ChapterListPage = () => {
                                 onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
                                 className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
                               >
-                                <Icon.Edit
+                                <Icon.ViewIcon
                                   fill='white'
                                   className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
                                 />
@@ -211,7 +241,13 @@ const ChapterListPage = () => {
                                   className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
                                 />
                               </button>
-                              <button className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'>
+                              <button
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                onClick={() => {
+                                  chapterToDelete.current = chapter._id;
+                                  setDeleteModal(true);
+                                }}
+                              >
                                 <Icon.Delete
                                   fill='white'
                                   className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
@@ -235,6 +271,7 @@ const ChapterListPage = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

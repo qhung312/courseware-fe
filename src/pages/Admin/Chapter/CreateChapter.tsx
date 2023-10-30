@@ -1,9 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
+import ChapterService from '../../../service/chapter.service';
 import SubjectService from '../../../service/subject.service';
 
 const CreateChapterPage = () => {
@@ -21,7 +23,18 @@ const CreateChapterPage = () => {
     setDescription(event.target.value);
   };
 
-  const createChapter = (_: React.MouseEvent<HTMLButtonElement>) => {};
+  const createChapter = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    ChapterService.create(name, subject, description)
+      .then((_res) => {
+        toast.success('Tạo chương mới thành công');
+        setName('');
+        setSubject('');
+        setDescription('');
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
   const onSelectSubject = (event: SingleValue<Option>) => {
     if (event !== null) {
@@ -31,7 +44,7 @@ const CreateChapterPage = () => {
 
   useEffect(() => {
     // fetch subjects on first load
-    SubjectService.getAll({})
+    SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
         setSubjectOptions(
@@ -44,7 +57,7 @@ const CreateChapterPage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -104,13 +117,18 @@ const CreateChapterPage = () => {
                * Create button
                */}
               <div className='my-5 flex flex-row-reverse gap-x-8'>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createChapter}>
+                <button
+                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                  disabled={name.trim().length === 0 || subject === ''}
+                  onClick={createChapter}
+                >
                   <p className='text-white'>Tạo</p>
                 </button>
               </div>
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

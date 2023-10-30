@@ -1,41 +1,92 @@
 import { API_URL } from '../config';
-import { Question, Response } from '../types';
+import { ConcreteQuestion, Question, QuestionType, Response } from '../types';
 import { axios } from '../utils/custom-axios';
 
-type GetAllQuestionsProps = {
+type GetAllQuestionArgument = {
   name?: string;
   subject?: string;
   chapter?: string;
 };
-
-const getAll = (query: GetAllQuestionsProps) => {
-  const queryString = `${API_URL}question_template?pagination=false\
+type GetAllQuestionResponse = {
+  total: number;
+  result: Question[];
+};
+const getAll = (query: GetAllQuestionArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}question?pagination=false\
 ${query.name ? `&name=${encodeURIComponent(query.name)}` : ''}\
 ${query.subject ? `&subject=${encodeURIComponent(query.subject)}` : ''}\
 ${query.chapter ? `&chapter=${encodeURIComponent(query.chapter)}` : ''}`;
 
-  return axios.get<Response<Question[], false>>(queryString);
+  return axios.get<Response<GetAllQuestionResponse>>(queryString);
 };
 
-type GetPaginatedQuestionsProps = {
+type GetAllQuestionPaginatedArgument = {
   name?: string;
   subject?: string;
   chapter?: string;
   pageNumber?: number;
   pageSize?: number;
 };
-
-const getAllPaginated = (query: GetPaginatedQuestionsProps) => {
-  const queryString = `${API_URL}question_template?pagination=true\
+type GetAllQuestionPaginatedResponse = {
+  total: number;
+  pageCount: number;
+  result: Question[];
+};
+const getAllPaginated = (query: GetAllQuestionPaginatedArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}question?pagination=true\
 ${query.name ? `&name=${encodeURIComponent(query.name)}` : ''}\
 ${query.subject ? `&subject=${encodeURIComponent(query.subject)}` : ''}\
 ${query.chapter ? `&chapter=${encodeURIComponent(query.chapter)}` : ''}\
 ${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
 ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
 
-  return axios.get<Response<Question[], true>>(queryString);
+  return axios.get<Response<GetAllQuestionPaginatedResponse>>(queryString);
 };
 
-const QuestionTemplateService = { getAll, getAllPaginated };
+const getById = (questionId: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}question/${questionId}`;
 
-export default QuestionTemplateService;
+  return axios.get<Response<Question>>(queryString);
+};
+
+type PreviewQuestionArgument = {
+  code: string;
+  type: QuestionType;
+  description: string;
+
+  options?: string[];
+  answerKeys?: number[];
+  shuffleOptions?: boolean;
+
+  explanation: string;
+};
+const preview = (arg: PreviewQuestionArgument) => {
+  const queryString = `${API_URL}admin/question/preview`;
+  return axios.post<Response<ConcreteQuestion>>(queryString, arg);
+};
+
+type CreateQuestionArgument = {
+  name: string;
+  code: string;
+  subject: string;
+  chapter: string;
+  type: QuestionType;
+
+  description: string;
+  options?: string[];
+  answerKeys?: number[];
+  shuffleOptions?: boolean;
+
+  explanation: string;
+};
+const create = (arg: CreateQuestionArgument) => {
+  return axios.post<Response<Question>>(`${API_URL}admin/question`, arg);
+};
+
+const deleteById = (questionId: string) => {
+  return axios.delete<Response<Question>>(`${API_URL}admin/question/${questionId}`);
+};
+
+const QuestionService = { getAll, getAllPaginated, getById, preview, create, deleteById };
+
+export default QuestionService;

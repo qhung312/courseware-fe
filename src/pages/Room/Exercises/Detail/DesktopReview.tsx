@@ -3,6 +3,7 @@ import { Fragment, useCallback, useState } from 'react';
 
 import { Icon, Markdown, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { ConcreteQuestion, QuizSession } from '../../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../../utils/helper';
 
 const DesktopReview: React.FC<{
   quiz: QuizSession;
@@ -36,14 +37,12 @@ const DesktopReview: React.FC<{
   }, []);
 
   const extractAnswer = useCallback((question: ConcreteQuestion) => {
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
-
     switch (question.type) {
       case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
         return `${
           question.answerField === undefined
             ? 'Không trả lời'
-            : optionLabels[
+            : MULTIPLE_CHOICE_LABELS[
                 _.findIndex(
                   question.options,
                   (option) => option.key === Number(question.answerField)

@@ -15,8 +15,8 @@ type GetAllSubjectPaginatedReturnType = {
   pageSize: number;
   result: Subject[];
 };
-const getAllPaginated = (query: GetAllSubjectPaginatedArgument) => {
-  const queryString = `${API_URL}subject?pagination=true\
+const getAllPaginated = (query: GetAllSubjectPaginatedArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}subject?pagination=true\
 ${query.name ? `&name=${encodeURIComponent(query.name)}` : ''}\
 ${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
 ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
@@ -31,29 +31,31 @@ type GetAllSubjectReturnType = {
   total: number;
   result: Subject[];
 };
-const getAll = (query: GetAllSubjectArgument) => {
-  const queryString = `${API_URL}subject?pagination=false\
+const getAll = (query: GetAllSubjectArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}subject?pagination=false\
 ${query.name ? `&name=${encodeURIComponent(query.name)}` : ''}`;
   return axios.get<Response<GetAllSubjectReturnType>>(queryString);
 };
 
-type CreateSubjectArgument = {
-  name: string;
-  description: string;
+const getById = (subjectId: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}subject/${subjectId}`;
+
+  return axios.get<Response<Subject>>(queryString);
 };
-const create = (arg: CreateSubjectArgument) =>
-  axios.post<Response<Subject>>(`${API_URL}subject`, arg);
 
-type EditSubjectArgument = {
-  name?: string;
-  description?: string;
+const create = (name: string, description: string) => {
+  const queryString = `${API_URL}admin/subject/`;
+
+  return axios.post<Response<Subject>>(queryString, {
+    name,
+    description,
+  });
 };
-const edit = (subjectId: string, update: EditSubjectArgument) =>
-  axios.patch<Response<Subject>>(`${API_URL}subject/${subjectId}`, update);
 
-const deleteById = (subjectId: string) =>
-  axios.delete<Response<Subject>>(`${API_URL}subject/${subjectId}`);
+const deleteById = (subjectId: string) => {
+  return axios.delete<Response<Subject>>(`${API_URL}admin/subject/${subjectId}`);
+};
 
-const SubjectService = { create, edit, getAll, getAllPaginated, deleteById };
+const SubjectService = { getAll, getAllPaginated, getById, create, deleteById };
 
 export default SubjectService;

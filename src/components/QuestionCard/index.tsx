@@ -13,6 +13,7 @@ import './index.css';
 import { Markdown } from '..';
 import { QuestionType, type ConcreteQuestion } from '../../types/question';
 import { QuizStatus } from '../../types/quiz';
+import { MULTIPLE_CHOICE_LABELS } from '../../utils/helper';
 import Icon from '../Icon';
 
 type InputAnswerProps = {
@@ -38,7 +39,6 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
     setSingleValueAnswer,
     setMultipleValueAnswer,
   } = helpers;
-  const optionLabels = ['A', 'B', 'C', 'D'];
 
   const optimizedSetMultipleValueAnswer = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,12 +106,12 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
                   <span className='-ml-[100%] h-full text-xs md:text-base'>
-                    {optionLabels[index]}
+                    {MULTIPLE_CHOICE_LABELS[index]}
                   </span>
                 </span>
               </div>
               <label htmlFor={`question-${question._id}-answer-${option.key}`}>
-                <p className='text-xs md:text-base'>{option.description}</p>
+                <Markdown className='text-xs md:text-base'>{option.description}</Markdown>
               </label>
             </div>
           ))}
@@ -224,7 +224,7 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
 
   return (
     <div
-      className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4 
+      className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4
       md:bg-[#9DCCFF]/20 3xl:space-y-6'
     >
       <div className='flex w-full flex-row items-center justify-between gap-x-6'>

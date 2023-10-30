@@ -1,5 +1,7 @@
 import type { GetPaginationOptions } from '../types/request';
 
+export const MULTIPLE_CHOICE_LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
 export function test() {
   return null;
 }

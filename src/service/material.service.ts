@@ -13,8 +13,8 @@ type GetAllMaterialReturnType = {
   total: number;
   result: Material[];
 };
-const getAll = (query: GetAllMaterialArgument) => {
-  const queryString = `${API_URL}material?pagination=false\
+const getAll = (query: GetAllMaterialArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}material?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}
 ${query.subject ? `&subject=${query.subject}` : ''}
 ${query.chapter ? `&chapter=${query.chapter}` : ''}`;
@@ -35,8 +35,8 @@ type GetAllMaterialPaginatedReturnType = {
   pageCount: number;
   result: Material[];
 };
-const getAllPaginated = (query: GetAllMaterialPaginatedArgument) => {
-  const queryString = `${API_URL}material?pagination=true\
+const getAllPaginated = (query: GetAllMaterialPaginatedArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}material?pagination=true\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.chapter ? `&chapter=${query.chapter}` : ''}\
@@ -46,27 +46,32 @@ ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
   return axios.get<Response<GetAllMaterialPaginatedReturnType>>(queryString);
 };
 
-const create = () => axios.post<Response<Material>>(`${API_URL}material`);
+const download = (materialId: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}material/${materialId}/download`;
 
-const edit = (materialId: string) =>
-  axios.patch<Response<Material>>(`${API_URL}material/${materialId}`);
+  return axios.get(queryString, { responseType: 'blob' });
+};
 
-const deleteById = (materialId: string) =>
-  axios.delete<Response<Material>>(`${API_URL}material/${materialId}`);
+const getById = (materialId: string, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}material/${materialId}`;
 
-const download = (materialId: string) =>
-  axios.get<Response<Material>>(`${API_URL}material/download/${materialId}`);
+  return axios.get<Response<Material>>(queryString);
+};
 
-const getById = (materialId: string) =>
-  axios.get<Response<Material>>(`${API_URL}material/${materialId}`);
+const create = (data: FormData) => {
+  return axios.post<Response<Material>>(`${API_URL}admin/material`, data);
+};
+
+const deleteById = (materialId: string) => {
+  return axios.delete(`${API_URL}admin/material/${materialId}`);
+};
 
 const MaterialService = {
   getAll,
   getAllPaginated,
-  create,
-  edit,
-  deleteById,
   download,
   getById,
+  create,
+  deleteById,
 };
 export default MaterialService;
