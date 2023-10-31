@@ -191,7 +191,7 @@ const ViewExercisePage = () => {
                   </div>
                   <div className='my-5 flex flex-row-reverse gap-x-8'>
                     <Link
-                      to={`/admin/exercises/edit/0`}
+                      to={`/admin/exercises/edit/${id}`}
                       className='flex h-9 w-36 items-center justify-center rounded-lg bg-[#4285F4] px-4 hover:bg-[#4285F4]/[.8]'
                     >
                       <p className='text-white'>Chỉnh sửa</p>
