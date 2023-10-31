@@ -25,7 +25,7 @@ const ChapterEdit = () => {
 
   const setSave = useDebounce(() => {
     if (chapter) {
-      setCanSave(name === chapter.name && _.trim(description) === chapter.description);
+      setCanSave(name !== chapter.name || _.trim(description) !== chapter.description);
     }
   });
 
@@ -159,14 +159,14 @@ const ChapterEdit = () => {
                 <div className='flex w-full flex-row items-center justify-center gap-x-4'>
                   <button
                     type='submit'
-                    disabled={canSave}
+                    disabled={!canSave}
                     onClick={(e) => {
                       e.preventDefault();
                       handleOnSave();
                     }}
                     className={`flex items-center rounded-lg px-6 py-1
                   transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                    canSave ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                    canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
                   }`}
                   >
                     <p className='font-medium text-white'>Lưu thay đổi</p>

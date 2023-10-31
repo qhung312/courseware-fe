@@ -1,18 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon } from '../../../components';
+import { Icon, Markdown, QuestionCard } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 import './index.css';
 import QuestionService from '../../../service/question.service';
-import { Question } from '../../../types';
+import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const ViewQuestionPage = () => {
   const [question, setQuestion] = useState<Question>();
   const params = useParams();
   const id = params?.questionid ?? '';
   const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState<ConcreteQuestion | null>(null);
+
+  const previewQuestion = (_: React.MouseEvent<HTMLButtonElement>) => {
+    QuestionService.preview({
+      code: question?.code ?? '',
+      type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
+      description: question?.description ?? '',
+
+      options: question?.options?.map((option) => option.description) ?? [],
+      answerKeys: question?.answerKeys,
+      shuffleOptions: question?.shuffleOptions,
+      explanation: question?.explanation ?? '',
+    })
+      .then((res) => {
+        const questionPreview = res.data.payload;
+        questionPreview.isCorrect = true;
+        setPreview(questionPreview);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -185,6 +209,41 @@ const ViewQuestionPage = () => {
                     placeholder={'Câu hỏi này chưa có giải thích'}
                   />
                 </div>
+                {preview !== null && (
+                  <div className='flex flex-col gap-y-1'>
+                    <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                      Xem trước câu hỏi
+                    </p>
+                    <div className='flex flex-col gap-y-4'>
+                      <QuestionCard
+                        question={preview}
+                        status={QuizStatus.ENDED}
+                        questionNumber={1}
+                      />
+                      <div className='flex h-full w-full flex-row gap-x-4'>
+                        <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+                          <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
+                          <div className='flex flex-col items-start justify-center gap-y-1'>
+                            <div className='flex flex-row items-center gap-x-2'>
+                              <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
+                              <p className='text-base font-semibold text-[#666]'>
+                                Đáp án đúng:{' '}
+                                {MULTIPLE_CHOICE_LABELS.at(
+                                  preview.options?.findIndex(
+                                    (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
+                                  ) || 0
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                          <span className='my-4 border-t border-[#666]' />
+                          <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+                          <Markdown>{preview.explanation}</Markdown>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>
                   <Link
                     to={`/admin/questions/edit/${id}`}
@@ -192,7 +251,10 @@ const ViewQuestionPage = () => {
                   >
                     <p className='text-white'>Chỉnh sửa</p>
                   </Link>
-                  <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'>
+                  <button
+                    className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                    onClick={previewQuestion}
+                  >
                     <p className='text-white'>Xem trước</p>
                   </button>
                 </div>
@@ -200,6 +262,7 @@ const ViewQuestionPage = () => {
             )}
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

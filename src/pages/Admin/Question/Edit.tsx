@@ -1,9 +1,10 @@
+import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Select } from '../../../components';
+import { Icon, Markdown, QuestionCard, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -11,7 +12,8 @@ import './index.css';
 import ChapterService from '../../../service/chapter.service';
 import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
-import { Question } from '../../../types';
+import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const EditQuestionPage = () => {
   const params = useParams();
@@ -32,6 +34,8 @@ const EditQuestionPage = () => {
   const [explanation, setExplanation] = useState('');
 
   const [loading, setLoading] = useState(false);
+  const [canSave, setCanSave] = useState(false);
+  const [preview, setPreview] = useState<ConcreteQuestion | null>(null);
 
   const fetchData = useCallback(() => {
     setLoading(true);
@@ -70,6 +74,55 @@ const EditQuestionPage = () => {
       .finally(() => fetchData());
   });
 
+  const handleOnSetSave = useDebounce(() => {
+    if (question) {
+      const data1 = {
+        name,
+        chapter,
+        subject,
+        description,
+        code,
+        options,
+        answerKeys: [answerKey],
+        shuffleOptions,
+        explanation,
+      };
+      const data2 = {
+        name: question.name,
+        chapter: question?.chapter?._id ?? '',
+        subject: question?.subject?._id ?? '',
+        description: question.description,
+        code: question.code,
+        options: question?.options?.map((option) => option.description) ?? [],
+        answerKeys: question.answerKeys,
+        shuffleOptions: question.shuffleOptions,
+        explanation: question.explanation,
+      };
+      setCanSave(!_.isEqual(data1, data2) && chapter !== '');
+    }
+  });
+
+  const previewQuestion = () => {
+    QuestionService.preview({
+      code,
+      type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
+      description,
+
+      options: options,
+      answerKeys: [answerKey],
+      shuffleOptions,
+      explanation,
+    })
+      .then((res) => {
+        const questionPreview = res.data.payload;
+        questionPreview.isCorrect = true;
+        setPreview(questionPreview);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -103,7 +156,6 @@ const EditQuestionPage = () => {
           value: chap._id,
           label: chap.name,
         }));
-        console.log('formattedData', formattedData);
         setChapterOptions(formattedData);
         setChapter('');
       })
@@ -129,6 +181,21 @@ const EditQuestionPage = () => {
         console.error(err);
       });
   }, []);
+
+  useEffect(() => {
+    handleOnSetSave();
+  }, [
+    name,
+    subject,
+    chapter,
+    description,
+    code,
+    options,
+    shuffleOptions,
+    explanation,
+    handleOnSetSave,
+    question,
+  ]);
 
   return (
     <Page>
@@ -296,7 +363,7 @@ const EditQuestionPage = () => {
                     <div className='flex flex-row items-center gap-x-4'>
                       <p className='flex text-base lg:text-lg 3xl:text-xl'>Đáp án đúng:</p>
                       <Select
-                        options={options.map((_, index) => ({
+                        options={options.map((option, index) => ({
                           value: index.toString(),
                           label: (index + 1).toString(),
                         }))}
@@ -338,15 +405,57 @@ const EditQuestionPage = () => {
                     onChange={({ target }) => setExplanation(target.value)}
                   />
                 </div>
+                {preview !== null && (
+                  <div className='flex flex-col gap-y-1'>
+                    <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                      Xem trước câu hỏi
+                    </p>
+                    <div className='flex flex-col gap-y-4'>
+                      <QuestionCard
+                        question={preview}
+                        status={QuizStatus.ENDED}
+                        questionNumber={1}
+                      />
+                      <div className='flex h-full w-full flex-row gap-x-4'>
+                        <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+                          <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
+                          <div className='flex flex-col items-start justify-center gap-y-1'>
+                            <div className='flex flex-row items-center gap-x-2'>
+                              <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
+                              <p className='text-base font-semibold text-[#666]'>
+                                Đáp án đúng:{' '}
+                                {MULTIPLE_CHOICE_LABELS.at(
+                                  preview.options?.findIndex(
+                                    (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
+                                  ) || 0
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                          <span className='my-4 border-t border-[#666]' />
+                          <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+                          <Markdown>{preview.explanation}</Markdown>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>
                   <button
-                    className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
-                    onClick={() => {
-                      console.log(`Save`);
-                      handleOnSave();
-                    }}
+                    className={`flex items-center rounded-lg px-6 py-1
+                      transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
+                        canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
+                      }`}
+                    disabled={!canSave}
+                    onClick={() => handleOnSave()}
                   >
-                    <p className='text-white'>Lưu thay đôi</p>
+                    <p className='text-white'>Lưu thay đổi</p>
+                  </button>
+                  <button
+                    className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                    onClick={() => previewQuestion()}
+                  >
+                    <p className='text-white'>Xem trước</p>
                   </button>
                 </div>
               </main>
