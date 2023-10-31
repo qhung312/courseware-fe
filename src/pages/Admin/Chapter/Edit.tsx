@@ -35,7 +35,7 @@ const ChapterEdit = () => {
       .then((res) => setChapter(res.data.payload))
       .catch((err) => {
         console.log(err);
-        toast.error('Loading page fail, please reset page and check your netword');
+        toast.error(err.response.data.message);
       })
       .finally(() => setLoading(false));
   }, [id]);
