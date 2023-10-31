@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Markdown, QuestionCard } from '../../../components';
@@ -11,6 +11,7 @@ import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../t
 import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const ViewQuestionPage = () => {
+  const navigate = useNavigate();
   const [question, setQuestion] = useState<Question>();
   const params = useParams();
   const id = params?.questionid ?? '';
@@ -62,6 +63,14 @@ const ViewQuestionPage = () => {
           </p>
         </div>
         <div className='w-full p-4'>
+          <button
+            type='button'
+            onClick={() => navigate(-1)}
+            className='mb-2 flex items-center hover:underline'
+          >
+            <Icon.Chevron className='h-5 -rotate-90 fill-black' />
+            <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
+          </button>
           <div className='w-full rounded-lg bg-white p-4 pb-8 lg:p-6 3xl:p-8'>
             {loading ? (
               <>
@@ -82,13 +91,6 @@ const ViewQuestionPage = () => {
               </>
             ) : (
               <main className='flex flex-col gap-y-4'>
-                <Link
-                  to='/admin/questions/manage'
-                  className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:text-[18px] 3xl:text-2xl'
-                >
-                  <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
-                  Quay lại
-                </Link>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'

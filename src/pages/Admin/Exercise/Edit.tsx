@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -28,6 +28,7 @@ interface CountDown {
 }
 
 const EditExercisePage = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const id = params?.exerciseid ?? '';
   const [exercise, setExercise] = useState<Quiz>();
@@ -262,15 +263,16 @@ const EditExercisePage = () => {
           </p>
         </div>
         <div className='w-full p-4'>
+          <button
+            type='button'
+            onClick={() => navigate(-1)}
+            className='mb-2 flex items-center hover:underline'
+          >
+            <Icon.Chevron className='h-5 -rotate-90 fill-black' />
+            <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
+          </button>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex flex-col gap-y-4'>
-              <Link
-                to='/admin/exercises/manage'
-                className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:text-[18px] 3xl:text-2xl'
-              >
-                <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
-                Quay lại
-              </Link>
               {loading ? (
                 <>
                   <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
