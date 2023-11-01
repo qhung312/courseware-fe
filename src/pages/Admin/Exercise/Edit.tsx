@@ -58,7 +58,7 @@ const EditExercisePage = () => {
 
   const getCountDown = (time: number): CountDown => {
     time = Math.ceil(time / 1000);
-    const second = time % 3600;
+    const second = time % 60;
     const minute = Math.floor(time / 60) % 60;
     const hour = Math.floor(time / 3600);
     return { second, minute, hour };

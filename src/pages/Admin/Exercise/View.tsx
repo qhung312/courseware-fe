@@ -11,16 +11,6 @@ import { Page, Wrapper } from '../../../layout';
 import QuizTemplateService from '../../../service/quiz.service';
 import { Quiz } from '../../../types';
 
-const timeLimit = (duration: number): string => {
-  const time = Math.floor(duration / 1000);
-  const hour: number = Math.floor(time / 3600);
-  const minute: number = Math.floor((time - hour * 3600) / 60);
-  const second: number = time % 60;
-  return `${hour >= 10 ? hour : `0${hour}`}:${minute >= 10 ? minute : `0${minute}`}:${
-    second >= 10 ? second : `0${second}`
-  }`;
-};
-
 const ViewExercisePage = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -110,12 +100,26 @@ const ViewExercisePage = () => {
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
                         Thời gian làm bài (hh:mm:ss)
                       </p>
-                      <input
-                        className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                        value={timeLimit(exercises?.duration ?? 0)}
-                        placeholder={'00:00:00'}
-                        disabled
-                      />
+                      <div className='flex justify-around'>
+                        <input
+                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          value={Math.floor((exercises?.duration ?? 0) / 3600000)}
+                          type='number'
+                          disabled
+                        />
+                        <input
+                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          value={Math.floor((exercises?.duration ?? 0) / 60000) % 60}
+                          type='number'
+                          disabled
+                        />
+                        <input
+                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          value={Math.floor((exercises?.duration ?? 0) / 1000) % 60}
+                          type='number'
+                          disabled
+                        />
+                      </div>
                     </div>
                     <div className='flex flex-col'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
