@@ -259,7 +259,7 @@ const QuestionListPage = () => {
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <Link
                                 to={`/admin/questions/view/${question._id}`}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.ViewIcon
                                   fill='white'
@@ -268,7 +268,7 @@ const QuestionListPage = () => {
                               </Link>
                               <Link
                                 to={`/admin/questions/edit/${question._id}`}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -276,7 +276,7 @@ const QuestionListPage = () => {
                                 />
                               </Link>
                               <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#4285F4]'
                                 onClick={() => {
                                   questionToDelete.current = question._id;
                                   setDeleteModal(true);

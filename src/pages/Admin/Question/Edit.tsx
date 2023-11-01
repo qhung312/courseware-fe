@@ -343,7 +343,7 @@ const EditQuestionPage = () => {
                           />
                           {options.length > 1 && (
                             <button
-                              className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                              className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                               onClick={() => {
                                 const newOptions = JSON.parse(JSON.stringify(options)) as string[];
                                 newOptions.splice(index, 1);
@@ -444,7 +444,7 @@ const EditQuestionPage = () => {
                 )}
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>
                   <button
-                    className={`flex items-center rounded-lg px-6 py-1
+                    className={`items-center rounded-lg px-6 py-1
                       transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
                         canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
                       }`}
@@ -454,8 +454,8 @@ const EditQuestionPage = () => {
                     <p className='text-white'>Lưu thay đổi</p>
                   </button>
                   <button
-                    className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
-                    onClick={() => previewQuestion()}
+                    className={`items-center rounded-lg bg-[#4285F4]/80 px-6 py-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
+                    onClick={previewQuestion}
                   >
                     <p className='text-white'>Xem trước</p>
                   </button>

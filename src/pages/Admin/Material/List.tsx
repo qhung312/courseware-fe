@@ -256,7 +256,7 @@ const MaterialList = () => {
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/material/view/${material._id}`)}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.ViewIcon
                                   fill='white'
@@ -266,7 +266,7 @@ const MaterialList = () => {
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/material/edit/${material._id}`)}
-                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -278,7 +278,7 @@ const MaterialList = () => {
                                   materialToDelete.current = material._id;
                                   setDeleteModal(true);
                                 }}
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                               >
                                 <Icon.Delete
                                   fill='white'

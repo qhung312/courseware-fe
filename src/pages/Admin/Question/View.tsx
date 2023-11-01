@@ -249,12 +249,12 @@ const ViewQuestionPage = () => {
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>
                   <Link
                     to={`/admin/questions/edit/${id}`}
-                    className='flex h-9 w-36 items-center justify-center rounded-lg bg-[#4285F4] px-4'
+                    className='items-center rounded-lg bg-[#4285F4]/80 px-6 py-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   >
                     <p className='text-white'>Chỉnh sửa</p>
                   </Link>
                   <button
-                    className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                    className='items-center rounded-lg bg-[#4285F4]/80 px-6 py-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                     onClick={previewQuestion}
                   >
                     <p className='text-white'>Xem trước</p>
