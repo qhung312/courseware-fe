@@ -249,7 +249,7 @@ const MaterialList = () => {
                             <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {material.subject?.name}
                             </td>
-                            <td className='flex flex-[2.5] items-center justify-center text-xs font-medium lg:text-sm 3xl:text-base'>
+                            <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {material.chapter?.name}
                             </td>
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
