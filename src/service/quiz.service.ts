@@ -58,6 +58,15 @@ type CreateQuizArgument = {
   potentialQuestions: string[];
   sampleSize: number;
 };
+type EditArgument = {
+  name: string;
+  description: string;
+  subject: string;
+  chapter: string;
+  duration: number;
+  potentialQuestions: string[];
+  sampleSize: number;
+};
 const create = (data: CreateQuizArgument) => {
   return axios.post<Response<Quiz>>(`${API_URL}admin/quiz`, data);
 };
@@ -66,5 +75,11 @@ const deleteById = (id: string) => {
   return axios.delete<Response<Quiz>>(`${API_URL}admin/quiz/${id}`);
 };
 
-const QuizService = { getAll, getAllPaginated, getById, create, deleteById };
+const edit = (id: string, data: EditArgument) => {
+  const bodyQuery = `${API_URL}admin/quiz/${id}`;
+
+  return axios.patch<Response<Quiz>>(bodyQuery, data);
+};
+
+const QuizService = { getAll, getAllPaginated, getById, create, deleteById, edit };
 export default QuizService;

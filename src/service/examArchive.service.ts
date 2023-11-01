@@ -10,6 +10,13 @@ type GetAllExamArchiveArgument = {
   semester?: string;
   type?: string;
 };
+type EditArgument = {
+  name?: string;
+  subject?: string;
+  semester?: string;
+  type?: string;
+  description?: string;
+};
 type GetAllExamArchiveReturnType = {
   total: number;
   result: ExamArchive[];
@@ -70,6 +77,13 @@ const deleteById = (examId: string) => {
   return axios.delete<Response<ExamArchive>>(`${API_URL}admin/previous_exam/${examId}`);
 };
 
+const edit = (examId: string, data: EditArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
+  console.log(data);
+
+  return axios.patch<Response<ExamArchive>>(queryString, data);
+};
+
 const ExamArchiveService = {
   getAll,
   getAllPaginated,
@@ -77,6 +91,7 @@ const ExamArchiveService = {
   getById,
   create,
   deleteById,
+  edit,
 };
 
 export default ExamArchiveService;

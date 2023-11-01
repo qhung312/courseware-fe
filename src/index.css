@@ -155,3 +155,15 @@ code {
 .recharts-wrapper {
   margin-left: -20px;
 }
+
+* {
+  --toastify-color-info: #4285f4;
+  --toastify-color-success: #0f9d58;
+  --toastify-color-warning: #f4b400;
+  --toastify-color-error: #db4437;
+
+  --toastify-icon-color-info: #4285f4;
+  --toastify-icon-color-success: #0f9d58;
+  --toastify-icon-color-warning: #f4b400;
+  --toastify-icon-color-error: #db4437;
+}

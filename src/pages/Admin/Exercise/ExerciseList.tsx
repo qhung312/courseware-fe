@@ -83,6 +83,7 @@ const ExerciseListPage = () => {
     )
       .then((res) => {
         const { total, result: allExercises } = res.data.payload;
+        console.log('>>> exercise: ', allExercises);
         setExercises(allExercises);
         setTotalCount(total);
       })
@@ -257,7 +258,7 @@ const ExerciseListPage = () => {
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <Link
                                 to={`/admin/exercises/view/${exercise._id}`}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.ViewIcon
                                   fill='white'
@@ -266,7 +267,7 @@ const ExerciseListPage = () => {
                               </Link>
                               <Link
                                 to={`/admin/exercises/edit/${exercise._id}`}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -274,7 +275,7 @@ const ExerciseListPage = () => {
                                 />
                               </Link>
                               <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                                 onClick={() => {
                                   exerciseToDelete.current = exercise._id;
                                   setDeleteModal(true);

@@ -1,13 +1,35 @@
+import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import './index.css';
 import { Icon } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
-// import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
+import ExamArchiveService from '../../../service/examArchive.service';
+import { EXAM_TYPE_OPTIONS, ExamArchive, SEMESTER_OPTIONS } from '../../../types';
 
 const ExamView = () => {
   const params = useParams();
+  const id = params?.id ?? '';
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [examArchive, setExamArchive] = useState<ExamArchive>();
+
+  useEffect(() => {
+    setLoading(true);
+    ExamArchiveService.getById(id, true)
+      .then((res) => {
+        const result = res.data.payload;
+        console.log(result);
+        setExamArchive(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
 
   return (
     <Page>
@@ -22,69 +44,101 @@ const ExamView = () => {
             <Icon.Chevron className='h-5 -rotate-90 fill-black' />
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </Link>
-          <div
-            className='h-full w-full rounded-lg bg-white px-8 py-2
+          {loading ? (
+            <>
+              <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
+              </p>
+              <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                {
+                  <Skeleton
+                    count={10}
+                    className='my-2 box-content lg:my-4 3xl:my-6'
+                    width={'100%'}
+                    height={40}
+                    baseColor='#9DCCFF'
+                  />
+                }
+              </p>
+            </>
+          ) : (
+            <div
+              className='h-full w-full rounded-lg bg-white px-8 py-2
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-6'
-          >
-            <form className='flex flex-col gap-y-6'>
-              <div className='flex w-full flex-col items-start justify-center'>
-                <label className='mb-2 w-full' htmlFor='exam-name'>
-                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                    Tên đề thi
-                  </p>
-                </label>
-                <div
-                  id='exam-name'
-                  className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
+            >
+              <form className='flex flex-col gap-y-6'>
+                <div className='flex w-full flex-col items-start justify-center'>
+                  <label className='mb-2 w-full' htmlFor='exam-name'>
+                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
+                      Tên đề thi
+                    </p>
+                  </label>
+                  <div
+                    id='exam-name'
+                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
                   lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                >
-                  {params.id}
-                </div>
-              </div>
-              <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
-                <div className='flex w-full flex-1 flex-col'>
-                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
-                  <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                    <span>Giải tích 1</span>
+                  >
+                    {examArchive?.name}
                   </div>
                 </div>
-                <div className='flex w-full flex-1 flex-col'>
-                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Kì thi</p>
-                  <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                    <span>Thi giữa kì</span>
+                <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
+                  <div className='flex w-full flex-1 flex-col'>
+                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
+                    <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                      <span>{examArchive?.subject.name}</span>
+                    </div>
+                  </div>
+                  <div className='flex w-full flex-1 flex-col'>
+                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Kì thi</p>
+                    <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                      <span>
+                        {examArchive?.type
+                          ? EXAM_TYPE_OPTIONS.find((x) => x.value === examArchive?.type)?.label
+                          : 'Không có thông tin'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className='flex w-full flex-1 flex-col'>
+                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Học kì</p>
+                    <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                      <span>
+                        {examArchive?.semester
+                          ? SEMESTER_OPTIONS.find((x) => x.value === examArchive?.semester)?.label
+                          : 'Không có thông tin'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div className='flex w-full flex-1 flex-col'>
-                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Học kì</p>
-                  <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                    <span>Học kì 221</span>
-                  </div>
-                </div>
-              </div>
-              <div className='flex w-full flex-col items-start justify-center'>
-                <label className='mb-2 w-full' htmlFor='exam-description'>
-                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chú thích</p>
-                </label>
-                <div
-                  className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs
+                <div className='flex w-full flex-col items-start justify-center'>
+                  <label className='mb-2 w-full' htmlFor='exam-description'>
+                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
+                      Chú thích
+                    </p>
+                  </label>
+                  <textarea
+                    id='exam-description'
+                    value={examArchive?.description}
+                    placeholder='Không có chú thích'
+                    rows={5}
+                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs
                   font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                >
-                  Không có chú thích nào cả
+                    disabled
+                  />
                 </div>
+              </form>
+              <div className='my-4 flex w-full justify-end'>
+                <button
+                  type='button'
+                  onClick={() => navigate(`/admin/exam-archive/edit/${params.id}`)}
+                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                >
+                  <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                    Chỉnh sửa
+                  </p>
+                </button>
               </div>
-            </form>
-            <div className='my-4 flex w-full justify-end'>
-              <button
-                type='button'
-                onClick={() => navigate(`/admin/exam-archive/edit/${params.id}`)}
-                className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
-              >
-                <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                  Chỉnh sửa
-                </p>
-              </button>
             </div>
-          </div>
+          )}
         </div>
       </Wrapper>
     </Page>

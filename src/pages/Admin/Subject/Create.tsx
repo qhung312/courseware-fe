@@ -8,6 +8,8 @@ const CreateSubjectPage = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  const createDisabled = name.trim().length === 0;
+
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -76,9 +78,11 @@ const CreateSubjectPage = () => {
                */}
               <div className='my-5 flex flex-row-reverse gap-x-8'>
                 <button
-                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                  className={`flex items-center rounded-lg transition-all duration-200 ${
+                    createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                  } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
                   onClick={onCreateSubject}
-                  disabled={name.trim().length === 0}
+                  disabled={createDisabled}
                 >
                   <p className='text-white'>Tạo</p>
                 </button>

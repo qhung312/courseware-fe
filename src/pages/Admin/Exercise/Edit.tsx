@@ -1,224 +1,245 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import _ from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SingleValue } from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 // import { useDebounce } from '../../../hooks';
+import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 // import ChapterService from '../../../service/chapter.service';
 // import QuestionTemplateService from '../../../service/questionTemplate.service';
 // import SubjectService from '../../../service/subject.service';
-import { Question, QuestionType } from '../../../types';
+import ChapterService from '../../../service/chapter.service';
+import QuestionService from '../../../service/question.service';
+import QuizService from '../../../service/quiz.service';
+import SubjectService from '../../../service/subject.service';
+import { Question, Quiz } from '../../../types';
 
 type OptionWithQuestion = Option & { question: Question };
 
-interface ExerciseProps {
-  name: string;
-  subject: string;
-  chapter: string;
-  duration: {
-    hours: number;
-    minutes: number;
-    seconds: number;
-  };
-  sampleSize: string;
-  description: string;
-  question: {
-    filterSubject: string;
-    filterChapter: string;
-  };
+interface CountDown {
+  hour: number;
+  minute: number;
+  second: number;
 }
 
-const SUBJECTS = [
-  {
-    value: '123',
-    label: 'Giải tích 1',
-  },
-  {
-    value: '1234',
-    label: 'Giải tích 2',
-  },
-  {
-    value: '789',
-    label: 'Giải tích 3',
-  },
-];
-
-const CHAPTERS = [
-  {
-    value: '111',
-    label: 'Đạo hàm hàm số',
-  },
-  {
-    value: '112',
-    label: 'Tích phân',
-  },
-  {
-    value: '113',
-    label: 'abc',
-  },
-];
-
-const demoExercise: ExerciseProps = {
-  name: 'Bài tập 1',
-  subject: '123',
-  chapter: '111',
-  duration: {
-    hours: 0,
-    minutes: 30,
-    seconds: 0,
-  },
-  sampleSize: '10',
-  description: 'Bài tập 1',
-  question: {
-    filterSubject: '123',
-    filterChapter: '111',
-  },
-};
-
-const demoQuestion: Question[] = [
-  {
-    _id: '1',
-    type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
-    name: 'Câu hỏi 1',
-    description: 'Câu hỏi 1',
-    code: '1 + 1 = ?',
-    subject: {
-      _id: '123',
-      name: 'Giải tích 1',
-      description: 'Giải tích 1',
-      createdBy: 'Demo',
-      createdAt: 0,
-      lastUpdatedAt: 0,
-      deletedAt: 0,
-    },
-    chapter: {
-      _id: '111',
-      name: 'Đạo hàm hàm số',
-      subject: {
-        _id: '123',
-        name: 'Giải tích 1',
-        description: 'Giải tích 1',
-        createdBy: 'Demo',
-        createdAt: 0,
-        lastUpdatedAt: 0,
-        deletedAt: 0,
-      },
-      description: 'Đạo hàm hàm số',
-
-      createdBy: 'Demo',
-      createdAt: 0,
-      lastUpdatedAt: 0,
-      deletedAt: 0,
-    },
-    createdAt: 0,
-    explanation: ']',
-    createdBy: 'Demo',
-    lastUpdatedAt: 0,
-    deletedAt: 0,
-  },
-  {
-    _id: '2',
-    type: QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER,
-    name: 'Câu hỏi 2',
-    description: 'Câu hỏi 2',
-    code: '1 + 2 = ?',
-    subject: {
-      _id: '1234',
-      name: 'Giải tích 2',
-      description: 'Giải tích 2',
-      createdBy: 'Demo',
-      createdAt: 0,
-      lastUpdatedAt: 0,
-      deletedAt: 0,
-    },
-    chapter: {
-      _id: '112',
-      name: 'Tích phân',
-      subject: {
-        _id: '1234',
-        name: 'Giải tích 2',
-        description: 'Giải tích 2',
-        createdBy: 'Demo',
-        createdAt: 0,
-        lastUpdatedAt: 0,
-        deletedAt: 0,
-      },
-      description: 'Tích phân',
-
-      createdBy: 'Demo',
-      createdAt: 0,
-      lastUpdatedAt: 0,
-      deletedAt: 0,
-    },
-    createdAt: 0,
-    createdBy: 'Demo',
-    lastUpdatedAt: 0,
-    explanation: ']',
-    deletedAt: 0,
-  },
-];
-
 const EditExercisePage = () => {
-  const [exercise, setExercise] = useState<ExerciseProps>(demoExercise);
-  // const [name, setName] = useState('');
-  // const [subject, setSubject] = useState('');
-  // const [chapter, setChapter] = useState('');
+  const navigate = useNavigate();
+  const params = useParams();
+  const id = params?.exerciseid ?? '';
+  const [exercise, setExercise] = useState<Quiz>();
+  const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [chapter, setChapter] = useState('');
 
-  // const [duration, setDuration] = useState('');
-  // const [sampleSize, setSampleSize] = useState('');
-  // const [description, setDescription] = useState('');
+  const [duration, setDuration] = useState<CountDown>({
+    hour: 0,
+    minute: 0,
+    second: 0,
+  });
+  const [sampleSize, setSampleSize] = useState(0);
+  const [description, setDescription] = useState('');
+  const [potentialQuestions, setPotentialQuestions] = useState<Question[]>([]);
 
-  // const [filterSubject, setFilterSubject] = useState('');
-  // const [filterChapter, setFilterChapter] = useState('');
-  const [potentialQuestions, setPotentialQuestions] = useState<Question[]>(
-    demoQuestion.slice(0, 1)
-  );
+  const [filterSubject, setFilterSubject] = useState('');
+  const [filterChapter, setFilterChapter] = useState('');
 
-  // const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
-  // const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
-  const [questionOptions] = useState<Question[]>(demoQuestion);
-  // const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
+  const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
+  const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
+  const [questionOptions, setQuestionOptions] = useState<Question[]>([]);
+  const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
-  const onInputName = (event: ChangeEvent<HTMLInputElement>) =>
-    setExercise({ ...exercise, name: event.target.value });
+  const [loading, setLoading] = useState(false);
+  const [canSave, setCanSave] = useState(false);
 
-  const onSelectSubject = (event: SingleValue<Option>) => {
-    if (event !== null) {
-      setExercise({ ...exercise, subject: event.value });
-    }
+  const getCountDown = (time: number): CountDown => {
+    time = Math.ceil(time / 1000);
+    const second = time % 60;
+    const minute = Math.floor(time / 60) % 60;
+    const hour = Math.floor(time / 3600);
+    return { second, minute, hour };
   };
 
-  const onSelectChapter = (event: SingleValue<Option>) => {
-    if (event !== null) {
-      setExercise({ ...exercise, chapter: event.value });
-    }
+  const getTime = (countDown: CountDown): number => {
+    const { hour, minute, second } = countDown;
+    return 1000 * (hour * 3600 + minute * 60 + second);
   };
 
-  const onInputDurationHours = (event: ChangeEvent<HTMLInputElement>) =>
-    setExercise({
-      ...exercise,
-      duration: { ...exercise.duration, hours: parseInt(event.target.value) },
-    });
+  const fetchQuestions = useDebounce(() => {
+    setLoading(true);
+    QuestionService.getAll(
+      {
+        subject: filterSubject === '' ? undefined : filterSubject,
+        chapter: filterChapter === '' ? undefined : filterChapter,
+      },
+      true
+    )
+      .then((res) => {
+        const { result: allQuestions } = res.data.payload;
+        setQuestionOptions(allQuestions);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => setLoading(false));
+  });
 
-  const onInputDurationMinutes = (event: ChangeEvent<HTMLInputElement>) =>
-    setExercise({
-      ...exercise,
-      duration: { ...exercise.duration, minutes: parseInt(event.target.value) },
-    });
+  const fetchData = useCallback(() => {
+    setLoading(true);
+    QuizService.getById(id, true)
+      .then((res) => {
+        setExercise(res.data.payload);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
 
-  const onInputDurationSeconds = (event: ChangeEvent<HTMLInputElement>) =>
-    setExercise({
-      ...exercise,
-      duration: { ...exercise.duration, seconds: parseInt(event.target.value) },
-    });
+  const handleOnSetSave = useDebounce(() => {
+    if (exercise) {
+      const data1 = {
+        name,
+        subject,
+        chapter,
+        duration: getTime(duration),
+        sampleSize,
+        potentialQuestions: potentialQuestions,
+        description,
+      };
+      const data2 = {
+        name: exercise.name,
+        subject: exercise?.subject?._id ?? '',
+        chapter: exercise?.chapter?._id ?? '',
+        duration: exercise.duration,
+        sampleSize: exercise.sampleSize,
+        potentialQuestions: exercise.potentialQuestions,
+        description: exercise.description,
+      };
+      setCanSave(!_.isEqual(data1, data2));
+    }
+  });
 
-  const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
-    setExercise({ ...exercise, sampleSize: event.target.value });
+  const handleOnSave = useDebounce(() => {
+    const data = {
+      name,
+      subject,
+      chapter,
+      duration: getTime(duration),
+      sampleSize,
+      potentialQuestions: potentialQuestions.map((question) => question._id),
+      description,
+    };
 
-  const onInputDescription = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setExercise({ ...exercise, description: event.target.value });
+    QuizService.edit(id, data)
+      .then(() => toast.success('Chỉnh sửa thành công'))
+      .catch((err) => toast.error(err.response.data.message))
+      .finally(() => fetchData);
+  });
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [filterSubject, filterChapter, fetchQuestions]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  useEffect((): void => {
+    handleOnSetSave();
+  }, [
+    name,
+    subject,
+    chapter,
+    duration,
+    sampleSize,
+    potentialQuestions,
+    description,
+    exercise,
+    handleOnSetSave,
+  ]);
+
+  useEffect(() => {
+    if (exercise) {
+      setName(exercise.name);
+      setChapter(exercise.chapter._id);
+      setSubject(exercise.subject._id);
+      setDescription(exercise.description);
+      setDuration(getCountDown(exercise.duration));
+      setSampleSize(exercise?.sampleSize ?? 0);
+      setPotentialQuestions(exercise?.potentialQuestions ?? []);
+    }
+  }, [exercise]);
+
+  useEffect(() => {
+    SubjectService.getAll({})
+      .then((res) => {
+        const { result: allSubjects } = res.data.payload;
+        setSubjectOptions(
+          allSubjects.map((sub) => {
+            return {
+              value: sub._id,
+              label: sub.name,
+            };
+          })
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    // update options for chapter when the selected subject changes
+    if (subject === '') {
+      setChapterOptions([]);
+      setChapter('');
+      return;
+    }
+
+    ChapterService.getAll({ subject: subject })
+      .then((res) => {
+        const { result: chapters } = res.data.payload;
+        setChapterOptions(
+          chapters.map((chap) => ({
+            value: chap._id,
+            label: chap.name,
+          }))
+        );
+        setChapter('');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [subject]);
+
+  useEffect(() => {
+    // update options for filter chapter when filter subject changes
+    if (filterSubject === '') {
+      setFilterChapterOptions([]);
+      setFilterChapter('');
+      return;
+    }
+
+    ChapterService.getAll({ subject: filterSubject })
+      .then((res) => {
+        const { result: allFilterChapters } = res.data.payload;
+        setFilterChapterOptions(
+          allFilterChapters.map((chap) => ({
+            value: chap._id,
+            label: chap.name,
+          }))
+        );
+        setFilterChapter('');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [filterSubject]);
 
   const onSelectAddQuestion = (value: SingleValue<Option>) => {
     if (value !== null) {
@@ -228,110 +249,10 @@ const EditExercisePage = () => {
       if (!duplicate) {
         setPotentialQuestions([...potentialQuestions, (value as OptionWithQuestion).question]);
       } else {
-        console.error(`This question has already been added`);
+        toast.error('Câu hỏi đã được thêm');
       }
     }
   };
-
-  const onSelectFilterSubject = (event: SingleValue<Option>) => {
-    if (event !== null) {
-      setExercise({ ...exercise, question: { ...exercise.question, filterSubject: event.value } });
-    }
-  };
-
-  const onSelectFilterChapter = (event: SingleValue<Option>) => {
-    if (event !== null) {
-      setExercise({ ...exercise, question: { ...exercise.question, filterChapter: event.value } });
-    }
-  };
-
-  const createExercise = (_: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO
-  };
-
-  // const fetchQuestions = useDebounce(() => {
-  //   QuestionTemplateService.getAll({
-  //     subject: filterSubject === '' ? undefined : filterSubject,
-  //     chapter: filterChapter === '' ? undefined : filterChapter,
-  //   })
-  //     .then((res) => {
-  //       const { result: allQuestions } = res.data.payload;
-  //       setQuestionOptions(allQuestions);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // });
-
-  // useEffect(() => {
-  //   fetchQuestions();
-  // }, [filterSubject, filterChapter, fetchQuestions]);
-
-  // useEffect(() => {
-  //   SubjectService.getAll({})
-  //     .then((res) => {
-  //       const { result: allSubjects } = res.data.payload;
-  //       setSubjectOptions(
-  //         allSubjects.map((sub) => {
-  //           return {
-  //             value: sub._id,
-  //             label: sub.name,
-  //           };
-  //         })
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   update options for chapter when the selected subject changes
-  //   if (subject === '') {
-  //     setChapterOptions([]);
-  //     setChapter('');
-  //     return;
-  //   }
-
-  //   ChapterService.getAll({ subject: subject })
-  //     .then((res) => {
-  //       const { result: chapters } = res.data.payload;
-  //       setChapterOptions(
-  //         chapters.map((chap) => ({
-  //           value: chap._id,
-  //           label: chap.name,
-  //         }))
-  //       );
-  //       setChapter('');
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, [subject]);
-
-  // useEffect(() => {
-  //   update options for filter chapter when filter subject changes
-  //   if (filterSubject === '') {
-  //     setFilterChapterOptions([]);
-  //     setFilterChapter('');
-  //     return;
-  //   }
-
-  //   ChapterService.getAll({ subject: filterSubject })
-  //     .then((res) => {
-  //       const { result: allFilterChapters } = res.data.payload;
-  //       setFilterChapterOptions(
-  //         allFilterChapters.map((chap) => ({
-  //           value: chap._id,
-  //           label: chap.name,
-  //         }))
-  //       );
-  //       setFilterChapter('');
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, [filterSubject]);
 
   return (
     <Page>
@@ -342,225 +263,277 @@ const EditExercisePage = () => {
           </p>
         </div>
         <div className='w-full p-4'>
+          <button
+            type='button'
+            onClick={() => navigate(-1)}
+            className='mb-2 flex items-center hover:underline'
+          >
+            <Icon.Chevron className='h-5 -rotate-90 fill-black' />
+            <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
+          </button>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
             <main className='flex flex-col gap-y-4'>
-              <Link
-                to='/admin/exercises/manage'
-                className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:text-[18px] 3xl:text-2xl'
-              >
-                <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
-                Quay lại
-              </Link>
-              <div className='flex flex-col gap-y-1'>
-                <label
-                  className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
-                  htmlFor='question_name'
-                >
-                  Tên
-                </label>
-                <input
-                  id='question_name'
-                  className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  value={exercise.name}
-                  placeholder={exercise.name}
-                  onChange={onInputName}
-                />
-              </div>
-              <div className='flex flex-row gap-x-8'>
-                <div className='flex w-full flex-col gap-y-1'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
-                  <Select
-                    options={SUBJECTS}
-                    placeholder='Chọn môn'
-                    value={SUBJECTS.find((x) => x.value === exercise.subject) ?? null}
-                    onChange={onSelectSubject}
-                  />
-                </div>
-                <div className='flex w-full flex-col gap-y-1'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
-                  <Select
-                    options={CHAPTERS}
-                    placeholder='Chọn chương'
-                    className='w-80'
-                    value={CHAPTERS.find((x) => x.value === exercise.chapter) ?? null}
-                    onChange={onSelectChapter}
-                  />
-                </div>
-                <div className='flex flex-col'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
-                    Thời gian làm bài (hh:mm:ss)
+              {loading ? (
+                <>
+                  <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                    <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
                   </p>
-                  <div className='flex justify-around'>
-                    <input
-                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={exercise.duration.hours}
-                      type='number'
-                      onChange={onInputDurationHours}
-                    />
-                    <input
-                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={exercise.duration.minutes}
-                      type='number'
-                      onChange={onInputDurationMinutes}
-                    />
-                    <input
-                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={exercise.duration.seconds}
-                      type='number'
-                      onChange={onInputDurationSeconds}
-                    />
-                  </div>
-                </div>
-                <div className='flex flex-col'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
-                  <input
-                    className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={exercise.sampleSize}
-                    placeholder={exercise.sampleSize}
-                    onChange={onInputSampleSize}
-                  />
-                </div>
-              </div>
-              <div className='flex flex-col gap-y-1'>
-                <label
-                  className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
-                  htmlFor='description'
-                >
-                  Chú thích
-                </label>
-                <textarea
-                  id='description'
-                  rows={10}
-                  className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  value={exercise.description}
-                  placeholder={exercise.description}
-                  onChange={onInputDescription}
-                />
-              </div>
-              <div className='flex flex-col gap-y-8'>
-                <div className='flex flex-row items-center gap-x-8'>
-                  <label
-                    className='flex text-base lg:text-lg 3xl:text-xl'
-                    htmlFor='search_question'
-                  >
-                    Các câu hỏi có thể ra
-                  </label>
-                  <div className='flex flex-[2] flex-row items-center gap-x-8'>
-                    <Select
-                      options={questionOptions.map((question) => {
-                        return {
-                          value: question._id,
-                          label: question.name,
-                          question: question,
-                        } as OptionWithQuestion;
-                      })}
-                      placeholder='Chọn câu hỏi'
-                      value={null}
-                      onChange={onSelectAddQuestion}
-                    />
-                    <Select
-                      options={SUBJECTS}
-                      placeholder='Chọn môn'
-                      value={
-                        SUBJECTS.find((x) => x.value === exercise.question.filterSubject) ?? null
-                      }
-                      onChange={onSelectFilterSubject}
-                    />
-                    <Select
-                      options={CHAPTERS}
-                      placeholder='Chọn chương'
-                      value={
-                        CHAPTERS.find((x) => x.value === exercise.question.filterChapter) ?? null
-                      }
-                      onChange={onSelectFilterChapter}
-                    />
-                    <button
-                      className={`flex flex-[0.5] ${
-                        exercise.question.filterSubject !== '' ||
-                        exercise.question.filterChapter !== ''
-                          ? 'opacity-1'
-                          : 'opacity-0'
-                      }`}
-                      disabled={
-                        exercise.question.filterSubject === '' &&
-                        exercise.question.filterChapter === ''
-                      }
-                      onClick={() => {
-                        // setFilterSubject('');
-                        // setFilterChapter('');
-                        setExercise({
-                          ...exercise,
-                          question: { filterSubject: '', filterChapter: '' },
-                        });
-                      }}
+                  <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                    {
+                      <Skeleton
+                        count={10}
+                        className='my-2 box-content lg:my-4 3xl:my-6'
+                        width={'100%'}
+                        height={40}
+                        baseColor='#9DCCFF'
+                      />
+                    }
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className='flex flex-col gap-y-1'>
+                    <label
+                      className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
+                      htmlFor='question_name'
                     >
-                      <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                    <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
                       Tên
-                    </p>
-                    <p className='flex flex-[2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
-                      Môn
-                    </p>
-                    <p className='flex flex-[1.2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
-                      Chương
-                    </p>
-                    <p className='flex flex-[1.5] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
-                      Thời gian tạo
-                    </p>
-                    <div className='flex flex-1' />
+                    </label>
+                    <input
+                      id='question_name'
+                      className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      value={name}
+                      placeholder={'Nhập tên bài tập'}
+                      onChange={({ target }) => setName(target.value)}
+                    />
                   </div>
-                  {potentialQuestions.map((question, index) => (
-                    <div
-                      key={question._id}
-                      className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60
-                      px-6 py-2 lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
+                  <div className='flex flex-row gap-x-8'>
+                    <div className='flex w-full flex-col gap-y-1'>
+                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
+                      <Select
+                        options={subjectOptions}
+                        placeholder='Chọn môn'
+                        value={subjectOptions.find((x) => x.value === subject) ?? null}
+                        onChange={(v) => {
+                          if (v !== null) {
+                            setSubject(v.value);
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className='flex w-full flex-col gap-y-1'>
+                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
+                      <Select
+                        options={chapterOptions}
+                        placeholder='Chọn chương'
+                        className='w-80'
+                        value={chapterOptions.find((x) => x.value === chapter) ?? null}
+                        onChange={(v) => {
+                          if (v !== null) {
+                            setChapter(v.value);
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className='flex flex-col'>
+                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                        Thời gian làm bài (hh:mm:ss)
+                      </p>
+                      <div className='flex justify-around'>
+                        <input
+                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          value={duration.hour}
+                          type='number'
+                          onChange={({ target }) => {
+                            const time = parseInt(target.value);
+                            setDuration({
+                              ...duration,
+                              hour: time === 24 ? 0 : time === -1 ? 23 : time,
+                            });
+                          }}
+                        />
+                        <input
+                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          value={duration.minute}
+                          type='number'
+                          onChange={({ target }) => {
+                            const time = parseInt(target.value);
+                            setDuration({
+                              ...duration,
+                              minute: time === 60 ? 0 : time === -1 ? 59 : time,
+                            });
+                          }}
+                        />
+                        <input
+                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          value={duration.second}
+                          type='number'
+                          onChange={({ target }) => {
+                            const time = parseInt(target.value);
+                            setDuration({
+                              ...duration,
+                              second: time === 60 ? 0 : time === -1 ? 59 : time,
+                            });
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className='flex flex-col'>
+                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
+                      <input
+                        className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                        value={sampleSize}
+                        placeholder={'Chọn số câu hỏi'}
+                        onChange={({ target }) => setSampleSize(parseInt(target.value))}
+                      />
+                    </div>
+                  </div>
+                  <div className='flex flex-col gap-y-1'>
+                    <label
+                      className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
+                      htmlFor='description'
                     >
-                      <p className='flex flex-[2.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                        {question.name}
-                      </p>
-                      <p className='flex flex-[2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                        {question?.subject?.name}
-                      </p>
-                      <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                        {question?.chapter?.name}
-                      </p>
-                      <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                        {new Date(question.createdAt).toLocaleString()}
-                      </p>
-                      <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
+                      Chú thích
+                    </label>
+                    <textarea
+                      id='description'
+                      rows={10}
+                      className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      value={description}
+                      placeholder={'Nhập chú thích cho bài tập'}
+                      onChange={({ target }) => setDescription(target.value)}
+                    />
+                  </div>
+                  <div className='flex flex-col gap-y-8'>
+                    <div className='flex flex-row items-center gap-x-8'>
+                      <label
+                        className='flex text-base lg:text-lg 3xl:text-xl'
+                        htmlFor='search_question'
+                      >
+                        Các câu hỏi có thể ra
+                      </label>
+                      <div className='flex flex-[2] flex-row items-center gap-x-8'>
+                        <Select
+                          options={questionOptions.map((question) => {
+                            return {
+                              value: question._id,
+                              label: question.name,
+                              question: question,
+                            } as OptionWithQuestion;
+                          })}
+                          placeholder='Chọn câu hỏi'
+                          value={null}
+                          onChange={onSelectAddQuestion}
+                        />
+                        <Select
+                          options={subjectOptions}
+                          placeholder='Chọn môn'
+                          value={subjectOptions.find((x) => x.value === filterSubject) ?? null}
+                          onChange={(v) => {
+                            if (v !== null) {
+                              setFilterSubject(v.value);
+                            }
+                          }}
+                        />
+                        <Select
+                          options={filterChapterOptions}
+                          placeholder='Chọn chương'
+                          value={
+                            filterChapterOptions.find((x) => x.value === filterChapter) ?? null
+                          }
+                          onChange={(v) => {
+                            if (v !== null) {
+                              setFilterChapter(v.value);
+                            }
+                          }}
+                        />
                         <button
-                          className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                          className={`flex flex-[0.5] ${
+                            filterSubject !== '' || filterChapter !== '' ? 'opacity-1' : 'opacity-0'
+                          }`}
+                          disabled={filterSubject !== '' && filterChapter !== ''}
                           onClick={() => {
-                            const newPotentialQuestions = JSON.parse(
-                              JSON.stringify(potentialQuestions)
-                            ) as Question[];
-                            newPotentialQuestions.splice(index, 1);
-                            setPotentialQuestions(newPotentialQuestions);
+                            setFilterSubject('');
+                            setFilterChapter('');
                           }}
                         >
-                          <Icon.Delete
-                            fill='white'
-                            className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                          />
+                          <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
                         </button>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className='my-5 flex flex-row-reverse gap-x-8'>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={createExercise}>
-                  <p className='text-white'>Lưu thay đổi</p>
-                </button>
-              </div>
+                    <div>
+                      <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
+                        <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          Tên
+                        </p>
+                        <p className='flex flex-[2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                          Môn
+                        </p>
+                        <p className='flex flex-[1.2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                          Chương
+                        </p>
+                        <p className='flex flex-[1.5] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                          Thời gian tạo
+                        </p>
+                        <div className='flex flex-1' />
+                      </div>
+                      {potentialQuestions.map((question, index) => (
+                        <div
+                          key={question._id}
+                          className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60
+                      px-6 py-2 lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
+                        >
+                          <p className='flex flex-[2.5] text-xs font-medium lg:text-sm 3xl:text-base'>
+                            {question.name}
+                          </p>
+                          <p className='flex flex-[2] text-xs font-medium lg:text-sm 3xl:text-base'>
+                            {question?.subject?.name}
+                          </p>
+                          <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
+                            {question?.chapter?.name}
+                          </p>
+                          <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
+                            {new Date(question.createdAt).toLocaleString()}
+                          </p>
+                          <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
+                            <button
+                              className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
+                              onClick={() => {
+                                const newPotentialQuestions = JSON.parse(
+                                  JSON.stringify(potentialQuestions)
+                                ) as Question[];
+                                newPotentialQuestions.splice(index, 1);
+                                setPotentialQuestions(newPotentialQuestions);
+                              }}
+                            >
+                              <Icon.Delete
+                                fill='white'
+                                className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                              />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className='my-5 flex flex-row-reverse gap-x-8'>
+                    <button
+                      className={`flex items-center rounded-lg px-6 py-1
+                      transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
+                        canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
+                      }`}
+                      disabled={!canSave}
+                      onClick={() => handleOnSave()}
+                    >
+                      <p className='text-white'>Lưu thay đổi</p>
+                    </button>
+                  </div>
+                </>
+              )}
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

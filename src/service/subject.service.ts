@@ -43,6 +43,14 @@ const getById = (subjectId: string, admin = false) => {
   return axios.get<Response<Subject>>(queryString);
 };
 
+const edit = (subjectId: string, admin = false, name = '', description = '') => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}subject/${subjectId}`;
+  const bodyQuery = { name, description };
+
+  return axios.patch<Response<Subject>>(queryString, bodyQuery);
+};
+
+// const SubjectService = { getAll, getAllPaginated, getById, edit };
 const create = (name: string, description: string) => {
   const queryString = `${API_URL}admin/subject/`;
 
@@ -56,6 +64,6 @@ const deleteById = (subjectId: string) => {
   return axios.delete<Response<Subject>>(`${API_URL}admin/subject/${subjectId}`);
 };
 
-const SubjectService = { getAll, getAllPaginated, getById, create, deleteById };
+const SubjectService = { getAll, getAllPaginated, getById, create, deleteById, edit };
 
 export default SubjectService;

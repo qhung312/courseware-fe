@@ -46,6 +46,14 @@ const getById = (id: string, admin = false) => {
   return axios.get<Response<Chapter>>(queryString);
 };
 
+const edit = (id: string, admin = false, name = '', description = '') => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}chapter/${id}`;
+  const queryBody = { name, description };
+
+  return axios.patch<Response<Chapter>>(queryString, queryBody);
+};
+
+// const ChapterService = { getAll, getAllPaginated, getById, edit };
 const create = (name: string, subject: string, description: string) => {
   const queryString = `${API_URL}admin/chapter/`;
 
@@ -60,6 +68,6 @@ const deleteById = (id: string) => {
   return axios.delete<Response<Chapter>>(`${API_URL}admin/chapter/${id}`);
 };
 
-const ChapterService = { getAll, getAllPaginated, getById, create, deleteById };
+const ChapterService = { getAll, getAllPaginated, getById, create, deleteById, edit };
 
 export default ChapterService;

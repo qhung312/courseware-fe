@@ -240,7 +240,10 @@ const CreateQuestionPage = () => {
               <div className='flex flex-col gap-y-8'>
                 <div className='flex flex-row items-center gap-x-8'>
                   <p className='flex text-base lg:text-lg 3xl:text-xl'>Lựa chọn</p>
-                  <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={onAddOption}>
+                  <button
+                    className='h-9 w-36 rounded-lg bg-[#4285F4]/80 px-4 hover:bg-[#4285F4]'
+                    onClick={onAddOption}
+                  >
                     <p className='text-white'>Thêm lựa chọn</p>
                   </button>
                 </div>
@@ -263,7 +266,7 @@ const CreateQuestionPage = () => {
                         />
                         {options.length > 1 && (
                           <button
-                            className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                            className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                             onClick={() => {
                               const newOptions = JSON.parse(JSON.stringify(options)) as string[];
                               newOptions.splice(index, 1);
@@ -355,13 +358,18 @@ const CreateQuestionPage = () => {
               )}
               <div className='mt-4 flex flex-row-reverse gap-x-8'>
                 <button
-                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
+                  className={`items-center rounded-lg transition-all duration-200 ${
+                    createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                  } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
                   disabled={createDisabled}
                   onClick={createQuestion}
                 >
                   <p className='text-white'>Tạo</p>
                 </button>
-                <button className='h-9 w-36 rounded-lg bg-[#4285F4] px-4' onClick={previewQuestion}>
+                <button
+                  className={`items-center rounded-lg bg-[#4285F4]/80 px-6 py-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
+                  onClick={previewQuestion}
+                >
                   <p className='text-white'>Xem trước</p>
                 </button>
               </div>

@@ -271,7 +271,7 @@ const ExamList = () => {
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/exam-archive/view/${exam._id}`)}
-                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 2xl:flex'
+                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
                               >
                                 <Icon.ViewIcon
                                   fill='white'
@@ -281,7 +281,7 @@ const ExamList = () => {
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/exam-archive/edit/${exam._id}`)}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2'
+                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -289,7 +289,7 @@ const ExamList = () => {
                                 />
                               </button>
                               <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                                className='hidden items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437] 2xl:flex'
                                 onClick={() => {
                                   examArchiveToDelete.current = exam._id;
                                   setDeleteModal(true);
