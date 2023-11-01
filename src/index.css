@@ -167,3 +167,7 @@ code {
   --toastify-icon-color-warning: #f4b400;
   --toastify-icon-color-error: #db4437;
 }
+
+.markdown > * {
+  all: revert
+}
