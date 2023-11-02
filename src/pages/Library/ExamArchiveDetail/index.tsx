@@ -75,7 +75,7 @@ const ExamArchiveDetailPage: React.FC = () => {
           </Link>
 
           {/* PDF */}
-          <PDF url={`${API_URL}/previous-exams/${params.pdfId}/download`} />
+          <PDF url={`${API_URL}previous-exams/${params.pdfId}/download`} />
         </div>
       </Wrapper>
     </Page>
