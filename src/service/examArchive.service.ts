@@ -60,7 +60,7 @@ ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
 const download = (examId: string, admin = false) => {
   const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}/download`;
 
-  return axios.get<Response<ExamArchive>>(queryString);
+  return axios.get(queryString, { responseType: 'blob' });
 };
 
 const getById = (examId: string, admin = false) => {
