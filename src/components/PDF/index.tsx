@@ -8,6 +8,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pd
 const options = {
   cMapUrl: 'cmaps/',
   cMapPacked: true,
+  httpHeaders: {
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem('token') || '')}`,
+  },
 };
 
 interface PDFProps {
