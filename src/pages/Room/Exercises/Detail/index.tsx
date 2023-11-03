@@ -6,9 +6,7 @@ import { Page } from '../../../../layout';
 import { ConcreteQuestion } from '../../../../types';
 
 import DesktopOngoing from './DesktopOngoing';
-import DesktopReview from './DesktopReview';
 import MobileOngoing from './MobileOngoing';
-import MobileReview from './MobileReview';
 
 const OngoingDetail: React.FC = () => {
   const [quiz, setQuiz] = useState(Quiz);
@@ -29,15 +27,9 @@ const OngoingDetail: React.FC = () => {
   return (
     <Page title={`${quiz.fromQuiz.subject.name} - ${quiz.fromQuiz.chapter.name}`}>
       {width < 768 ? (
-        quiz.status === 'ONGOING' ? (
-          <MobileOngoing quiz={quiz} handleAnswer={handleAnswer} />
-        ) : (
-          <MobileReview quiz={quiz} />
-        )
-      ) : quiz.status === 'ONGOING' ? (
-        <DesktopOngoing quiz={quiz} handleAnswer={handleAnswer} />
+        <MobileOngoing quiz={quiz} handleAnswer={handleAnswer} />
       ) : (
-        <DesktopReview quiz={quiz} />
+        <DesktopOngoing quiz={quiz} handleAnswer={handleAnswer} />
       )}
     </Page>
   );
