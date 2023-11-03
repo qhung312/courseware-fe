@@ -115,7 +115,7 @@ const Main: React.FC = () => {
                       </div>
                     </div>
                     <Link
-                      to={`/room/exercises/${params.subjectId}/quiz/${index}`}
+                      to={`/room/exercises/${params.subjectId}/review/quiz/${index}`}
                       className='hidden rounded-lg bg-[#4285F4]/80 px-5 py-4 hover:bg-[#4285F4]
                       md:flex md:px-3 md:py-2 lg:px-5 lg:py-3 3xl:px-7 3xl:py-4'
                     >

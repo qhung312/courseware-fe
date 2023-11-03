@@ -143,6 +143,14 @@ const UserRoute = () => {
               </Suspense>
             }
           />
+          <Route
+            path='exercises/:subjectId/review/quiz/:quizId'
+            element={
+              <Suspense fallback={<Loading />}>
+                <ExercisesPage />
+              </Suspense>
+            }
+          />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

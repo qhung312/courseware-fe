@@ -5,7 +5,7 @@ import { QuizSession } from '../../types';
 import Icon from '../Icon';
 
 const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
