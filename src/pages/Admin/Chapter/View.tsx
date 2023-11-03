@@ -116,7 +116,7 @@ const ChapterView = () => {
                   <button
                     type='button'
                     onClick={() => navigate(`/admin/chapter/edit/${params.id}`)}
-                    className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                    className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
                   >
                     <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                       Chỉnh sửa

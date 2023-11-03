@@ -15,6 +15,8 @@ const CreateChapterPage = () => {
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
+  const createDisabled = name.trim().length === 0 || subject === '';
+
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -118,8 +120,10 @@ const CreateChapterPage = () => {
                */}
               <div className='my-5 flex flex-row-reverse gap-x-8'>
                 <button
-                  className='h-9 w-36 rounded-lg bg-[#4285F4] px-4'
-                  disabled={name.trim().length === 0 || subject === ''}
+                  className={`flex items-center rounded-lg transition-all duration-200 ${
+                    createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                  } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
+                  disabled={createDisabled}
                   onClick={createChapter}
                 >
                   <p className='text-white'>Tạo</p>

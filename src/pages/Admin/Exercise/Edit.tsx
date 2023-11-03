@@ -497,7 +497,7 @@ const EditExercisePage = () => {
                           </p>
                           <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
                             <button
-                              className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2'
+                              className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                               onClick={() => {
                                 const newPotentialQuestions = JSON.parse(
                                   JSON.stringify(potentialQuestions)
