@@ -262,8 +262,8 @@ const Statistic = () => {
             </nav>
           </div>
         </div>
+        <Footer />
       </main>
-      <Footer />
     </Page>
   );
 };

@@ -15,6 +15,7 @@ interface Option {
 const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: Option) => {
   const user = useBoundStore.use.user();
   const [photo, setPhoto] = useState<string>(user?.picture || '');
+  console.log(option);
 
   return (
     <div className='padding flex flex-col items-center bg-[#E3F2FD] pt-10 pb-4 md:relative md:pb-0 md:pt-0'>
@@ -71,8 +72,10 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
               : 'bg-[#BBBBBB]/50 text-[#696969] hover:bg-[#9DCCFF]'
           } py-3 text-center font-medium md:text-[16px] 3xl:text-xl`}
         >
-          <p className='hidden lg:block'>Thông tin cá nhân</p>
-          <p className='lg:hidden'>Thông tin</p>
+          <p className={`hidden lg:block ${option === 1 ? 'text-white' : 'text-[#696969]'}`}>
+            Thông tin cá nhân
+          </p>
+          <p className={`lg:hidden ${option === 1 ? 'text-white' : 'text-[#696969]'}`}>Thông tin</p>
         </Link>
         <Link
           to='/profile/history'
@@ -82,8 +85,10 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
               : 'bg-[#BBBBBB]/50 text-[#696969] hover:bg-[#9DCCFF]'
           } py-3 text-center font-medium md:text-[16px] 3xl:text-xl`}
         >
-          <p className='hidden lg:block'>Lịch sử hoạt động</p>
-          <p className='lg:hidden'>Lịch sử</p>
+          <p className={`hidden lg:block ${option === 2 ? 'text-white' : 'text-[#696969]'}`}>
+            Lịch sử hoạt động
+          </p>
+          <p className={`lg:hidden ${option === 2 ? 'text-white' : 'text-[#696969]'}`}>Lịch sử</p>
         </Link>
         <Link
           to='/profile/statistic'

@@ -169,5 +169,5 @@ code {
 }
 
 .markdown > * {
-  all: revert
+  all: revert;
 }

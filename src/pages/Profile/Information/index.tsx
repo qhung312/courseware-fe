@@ -2,7 +2,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a lo
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Footer, Loading } from '../../../components';
+import { Footer } from '../../../components';
 import Icon from '../../../components/Icon';
 import ProfileOption from '../../../components/ProfileOption';
 import { useThrottle } from '../../../hooks';
@@ -17,7 +17,6 @@ const UserInformation = () => {
   const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<User>(user);
   const [updatedName, setUpdatedName] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const onLibraryClick = () => {
     setIsGenderOpen(!isGenderOpen);
@@ -30,7 +29,6 @@ const UserInformation = () => {
     .split('T')[0];
 
   const updateProfile = () => {
-    setLoading(true);
     console.log(userProfile);
     UserService.editUserProfile(userProfile)
       .then((res) => {
@@ -43,13 +41,8 @@ const UserInformation = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
-
-  if (loading) return <Loading />;
 
   return (
     <Page title='Thông tin người dùng - Xem và cập nhật thông tin'>
@@ -386,8 +379,8 @@ const UserInformation = () => {
             )}
           </div>
         </div>
+        <Footer />
       </main>
-      <Footer />
       <ToastContainer position='bottom-right' />
     </Page>
   );

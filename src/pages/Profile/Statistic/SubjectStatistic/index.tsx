@@ -174,8 +174,8 @@ const SubjectStatistic = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </main>
-      <Footer />
     </Page>
   );
 };
