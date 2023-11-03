@@ -122,7 +122,7 @@ const ActivityHistory = () => {
       </div>
       <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
-        <ProfileOption option={2} />
+        <ProfileOption option={2} editAvatar={false} setAvatar={() => {}} updatedName='' />
         <div className='bg-white px-5 pt-4 pb-[64px] lg:flex lg:gap-x-[2%] lg:pt-10'>
           <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl lg:hidden'>
             Nhật ký hoạt động

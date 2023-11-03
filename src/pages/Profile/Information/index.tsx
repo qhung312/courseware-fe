@@ -1,40 +1,23 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
-import { Footer } from '../../../components';
+import { Footer, Loading } from '../../../components';
 import Icon from '../../../components/Icon';
 import ProfileOption from '../../../components/ProfileOption';
-import SuccessSnackbar from '../../../components/Snackbar/SuccessSnackbar';
 import { useThrottle } from '../../../hooks';
 import { Page } from '../../../layout';
-
-interface UserInformationProps {
-  lastname: string;
-  firstname: string;
-  studentId: string;
-  major: string;
-  birthday: string;
-  gender: string;
-  email: string;
-  phone: string;
-}
-
-const demoUserProfile: UserInformationProps = {
-  lastname: 'Nguyễn Văn',
-  firstname: 'Aaaaaa',
-  studentId: '215xxxx',
-  major: 'Khoa học máy tính',
-  birthday: '2003-01-09',
-  gender: 'Nam',
-  email: 'abcxyz@gmail.com',
-  phone: '0122345xx',
-};
+import UserService from '../../../service/user.service';
+import useBoundStore from '../../../store';
+import { User } from '../../../types';
 
 const UserInformation = () => {
+  const user = useBoundStore.use.user();
   const [isEditMode, setIsEditMode] = useState(false);
   const [isGenderOpen, setIsGenderOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserInformationProps>(demoUserProfile);
-  const [successSnackbar, setSuccessSnackbar] = useState(false);
+  const [userProfile, setUserProfile] = useState<User>(user);
+  const [updatedName, setUpdatedName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onLibraryClick = () => {
     setIsGenderOpen(!isGenderOpen);
@@ -42,19 +25,55 @@ const UserInformation = () => {
 
   const throttledLibraryClick = useThrottle(onLibraryClick);
 
+  const formattedDate = new Date(userProfile?.dateOfBirth || '000000000')
+    .toISOString()
+    .split('T')[0];
+
+  const updateProfile = () => {
+    setLoading(true);
+    console.log(userProfile);
+    UserService.editUserProfile(userProfile)
+      .then((res) => {
+        toast.success('Cập nhật thông tin thành công');
+        setUserProfile(res.data.payload);
+        setUpdatedName(
+          (userProfile?.familyAndMiddleName || '') + ' ' + (userProfile?.givenName || '')
+        );
+        setIsEditMode(false);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  if (loading) return <Loading />;
+
   return (
     <Page title='Thông tin người dùng - Xem và cập nhật thông tin'>
-      <div className='fixed bottom-4 right-4 z-[60]'>
-        <SuccessSnackbar showSnackbar={successSnackbar} setShow={() => setSuccessSnackbar(false)} />
-      </div>
       <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
-        <ProfileOption option={1} />
+        <ProfileOption
+          option={1}
+          editAvatar={isEditMode}
+          setAvatar={(avatar: string) => {
+            setUserProfile({ ...userProfile, picture: avatar });
+          }}
+          updatedName={updatedName}
+        />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:rounded-[20px] md:px-10 md:pt-10 lg:px-[120px] xl:px-[240px] 2xl:px-[360px] 3xl:px-[460px]'>
           <div className='md:rounded-[20px] md:px-5 md:py-8 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:px-8 xl:px-10'>
-            <h1 className='text-2xl font-semibold text-[#2252641] 3xl:text-[28px]'>
-              Thông tin của Nguyễn Văn A
-            </h1>
+            {updatedName ? (
+              <h1 className='text-2xl font-semibold text-[#2252641] 3xl:text-[28px]'>
+                Thông tin của {updatedName}
+              </h1>
+            ) : (
+              <h1 className='text-2xl font-semibold text-[#2252641] 3xl:text-[28px]'>
+                Thông tin của {user?.familyAndMiddleName || ''} {user?.givenName || 'người dùng'}
+              </h1>
+            )}
             {isEditMode ? (
               <p className='mb-8 mt-2 text-xl font-semibold text-[#4285f4]/[.7] 3xl:text-2xl'>
                 Cập nhật thông tin
@@ -81,9 +100,11 @@ const UserInformation = () => {
                   id='lastname&middlename'
                   name='lastname&middlename'
                   disabled={!isEditMode}
-                  placeholder={userProfile.lastname}
-                  value={userProfile.lastname}
-                  onChange={(e) => setUserProfile({ ...userProfile, lastname: e.target.value })}
+                  placeholder={userProfile.familyAndMiddleName}
+                  value={userProfile.familyAndMiddleName}
+                  onChange={(e) =>
+                    setUserProfile({ ...userProfile, familyAndMiddleName: e.target.value })
+                  }
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -103,9 +124,9 @@ const UserInformation = () => {
                   id='firstname'
                   name='firstname'
                   disabled={!isEditMode}
-                  placeholder={userProfile.firstname}
-                  value={userProfile.firstname}
-                  onChange={(e) => setUserProfile({ ...userProfile, firstname: e.target.value })}
+                  placeholder={userProfile.givenName}
+                  value={userProfile.givenName}
+                  onChange={(e) => setUserProfile({ ...userProfile, givenName: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -169,9 +190,13 @@ const UserInformation = () => {
                   id='birthday'
                   name='birthday'
                   disabled={!isEditMode}
-                  placeholder={userProfile.birthday}
-                  value={userProfile.birthday}
-                  onChange={(e) => setUserProfile({ ...userProfile, birthday: e.target.value })}
+                  value={formattedDate}
+                  onChange={(e) =>
+                    setUserProfile({
+                      ...userProfile,
+                      dateOfBirth: new Date(e.target.value).getTime(),
+                    })
+                  }
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -194,7 +219,13 @@ const UserInformation = () => {
                       onClick={throttledLibraryClick}
                     >
                       <p className='text-xl text-[#252641] transition-colors duration-300 ease-linear'>
-                        {userProfile.gender}
+                        {userProfile?.gender === 'MALE'
+                          ? 'Nam'
+                          : userProfile?.gender === 'FEMALE'
+                          ? 'Nữ'
+                          : userProfile?.gender === 'OTHER'
+                          ? 'Khác'
+                          : 'Chọn giới tính'}
                       </p>
                       <Icon.ChevronUp
                         fillOpacity={0.87}
@@ -218,10 +249,10 @@ const UserInformation = () => {
                     >
                       <div
                         className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userProfile.gender === 'Nam' && 'bg-[#E3F2FD]'
+                          userProfile.gender === 'MALE' && 'bg-[#E3F2FD]'
                         }`}
                         onClick={() => {
-                          setUserProfile({ ...userProfile, gender: 'Nam' });
+                          setUserProfile({ ...userProfile, gender: 'MALE' });
                           throttledLibraryClick();
                         }}
                       >
@@ -231,10 +262,10 @@ const UserInformation = () => {
                       </div>
                       <div
                         className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userProfile.gender === 'Nữ' && 'bg-[#E3F2FD]'
+                          userProfile.gender === 'FEMALE' && 'bg-[#E3F2FD]'
                         }`}
                         onClick={() => {
-                          setUserProfile({ ...userProfile, gender: 'Nữ' });
+                          setUserProfile({ ...userProfile, gender: 'FEMALE' });
                           throttledLibraryClick();
                         }}
                       >
@@ -244,10 +275,10 @@ const UserInformation = () => {
                       </div>
                       <div
                         className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userProfile.gender === 'Khác' && 'bg-[#E3F2FD]'
+                          userProfile.gender === 'OTHER' && 'bg-[#E3F2FD]'
                         }`}
                         onClick={() => {
-                          setUserProfile({ ...userProfile, gender: 'Khácu4' });
+                          setUserProfile({ ...userProfile, gender: 'OTHER' });
                           throttledLibraryClick();
                         }}
                       >
@@ -258,15 +289,35 @@ const UserInformation = () => {
                     </nav>
                   </div>
                 ) : (
-                  <div
+                  <input
+                    type='string'
+                    id='gender'
+                    name='gender'
+                    disabled
+                    placeholder={
+                      userProfile?.gender === 'MALE'
+                        ? 'Nam'
+                        : userProfile?.gender === 'FEMALE'
+                        ? 'Nữ'
+                        : userProfile?.gender === 'OTHER'
+                        ? 'Khác'
+                        : ''
+                    }
+                    value={
+                      userProfile?.gender === 'MALE'
+                        ? 'Nam'
+                        : userProfile?.gender === 'FEMALE'
+                        ? 'Nữ'
+                        : userProfile?.gender === 'OTHER'
+                        ? 'Khác'
+                        : ''
+                    }
                     className={`black-placeholder mt-2 w-[60%] rounded-[10px] md:w-[28%] ${
                       isEditMode
                         ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                         : 'bg-[#D9D9D9]'
                     } p-4 text-xl text-[#252641]`}
-                  >
-                    {demoUserProfile.gender}
-                  </div>
+                  />
                 )}
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -280,7 +331,7 @@ const UserInformation = () => {
                   type='email'
                   id='email'
                   name='email'
-                  disabled={!isEditMode}
+                  disabled
                   placeholder={userProfile.email}
                   value={userProfile.email}
                   onChange={(e) => setUserProfile({ ...userProfile, email: e.target.value })}
@@ -303,9 +354,9 @@ const UserInformation = () => {
                   id='phone'
                   name='phone'
                   disabled={!isEditMode}
-                  placeholder={userProfile.phone}
-                  value={userProfile.phone}
-                  onChange={(e) => setUserProfile({ ...userProfile, phone: e.target.value })}
+                  placeholder={userProfile.phoneNumber}
+                  value={userProfile.phoneNumber}
+                  onChange={(e) => setUserProfile({ ...userProfile, phoneNumber: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
@@ -315,20 +366,29 @@ const UserInformation = () => {
               </div>
             </form>
             {isEditMode && (
-              <button
-                onClick={() => {
-                  setIsEditMode(false);
-                  setSuccessSnackbar(true);
-                }}
-                className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-3 px-6 text-xl font-semibold text-white hover:bg-[#4285f4]/[.7]'
-              >
-                Cập nhật
-              </button>
+              <div className='flex gap-x-2'>
+                <button
+                  onClick={updateProfile}
+                  className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-3 px-6 text-xl font-semibold text-white hover:bg-[#4285f4]/[.7]'
+                >
+                  Cập nhật
+                </button>
+                <button
+                  onClick={() => {
+                    setIsEditMode(false);
+                    setUserProfile(user);
+                  }}
+                  className='mt-8 w-fit rounded-[12px] bg-[#db4437] py-3 px-6 text-xl font-semibold text-white hover:bg-[#db4437]/[.7]'
+                >
+                  Hủy
+                </button>
+              </div>
             )}
           </div>
         </div>
       </main>
       <Footer />
+      <ToastContainer position='bottom-right' />
     </Page>
   );
 };

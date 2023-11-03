@@ -53,8 +53,13 @@ export type User = {
   googleId: string;
   accessLevels: AccessLevel[];
   isManager: boolean;
-  name: string;
+  familyAndMiddleName: string;
+  givenName: string;
   picture: string;
   dateOfBirth: number;
   email: string;
+  studentId: string;
+  major: string;
+  phoneNumber: string;
+  gender: string;
 };

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserProfileBanner from '../../assets/images/UserProfile.png';
@@ -6,10 +7,14 @@ import Icon from '../Icon';
 
 interface Option {
   option: number;
+  editAvatar: boolean;
+  updatedName: string;
+  setAvatar: { (avatar: string): void };
 }
 
-const ProfileOption = ({ option }: Option) => {
+const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: Option) => {
   const user = useBoundStore.use.user();
+  const [photo, setPhoto] = useState<string>(user?.picture || '');
 
   return (
     <div className='padding flex flex-col items-center bg-[#E3F2FD] pt-10 pb-4 md:relative md:pb-0 md:pt-0'>
@@ -21,17 +26,41 @@ const ProfileOption = ({ option }: Option) => {
           <div className='flex h-[180px] w-[180px] items-center justify-center rounded-full bg-white md:h-[160px] md:w-[160px] lg:h-[180px] lg:w-[180px] 3xl:h-[220px] 3xl:w-[220px]'>
             <img
               alt='User avatar'
-              src={user?.picture || require('../../assets/images/AvatarPic.png')}
+              src={photo}
               className='h-[180px] w-[180px] rounded-full bg-slate-600 md:h-[140px] md:w-[140px] lg:h-[160px] lg:w-[160px] 3xl:h-[200px] 3xl:w-[200px]'
             />
           </div>
-          <button className='absolute bottom-0 right-6 h-8 w-[32px] rounded-full bg-[#4285f4] xl:h-10 xl:w-10'>
-            <Icon.Camera className='m-auto xl:h-8 xl:w-8' />
-          </button>
+          {editAvatar && (
+            <label
+              htmlFor='upload-avatar'
+              className='absolute bottom-0 right-6 flex h-8 w-[32px] cursor-pointer items-center justify-center rounded-full bg-[#4285f4] xl:h-10 xl:w-10'
+            >
+              <Icon.Camera className='m-auto xl:h-8 xl:w-8' />
+              <input
+                type='file'
+                id='upload-avatar'
+                accept='image/png, image/jpeg, image/jpg'
+                className='absolute -z-10 opacity-0'
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    setAvatar(URL.createObjectURL(e.target.files[0]));
+                    setPhoto(URL.createObjectURL(e.target.files[0]));
+                  }
+                }}
+              />
+            </label>
+          )}
         </div>
-        <p className='mt-3 text-center text-[28px] font-medium text-black md:text-[20px] lg:text-[24px] 2xl:text-2xl'>
-          Nguyễn Văn A
-        </p>
+        {updatedName && (
+          <p className='mt-3 text-center text-[28px] font-medium text-black md:text-[20px] lg:text-[24px] 2xl:text-2xl'>
+            {updatedName}
+          </p>
+        )}
+        {(user?.givenName || user?.familyAndMiddleName) && !updatedName && (
+          <p className='mt-3 text-center text-[28px] font-medium text-black md:text-[20px] lg:text-[24px] 2xl:text-2xl'>
+            {user?.familyAndMiddleName || ''} {user?.givenName || ''}
+          </p>
+        )}
       </div>
       <div className='mt-8 grid w-full max-w-[496px] grid-cols-3 gap-x-2 px-5 md:mt-0 md:flex md:max-w-full md:justify-end md:bg-[#E3F2FD] md:py-5 md:pr-10 xl:justify-center'>
         <Link
