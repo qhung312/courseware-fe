@@ -57,7 +57,7 @@ const UserInformation = () => {
         {/* Banner */}
         <ProfileOption
           option={1}
-          editAvatar={isEditMode}
+          editAvatar={false}
           setAvatar={(avatar: string) => {
             setUserProfile({ ...userProfile, picture: avatar });
           }}
