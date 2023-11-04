@@ -1,38 +1,39 @@
-import { useCallback, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
-import Quiz from '../../../../data/exercises';
+import { Loading } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
-import { ConcreteQuestion } from '../../../../types';
+import QuizSessionService from '../../../../service/quizSession.service';
 
 import DesktopOngoing from './DesktopOngoing';
 import MobileOngoing from './MobileOngoing';
 
-const OngoingDetail: React.FC = () => {
-  const [quiz, setQuiz] = useState(Quiz);
+const Detail: React.FC = () => {
+  const params = useParams();
+  const { data: quiz, isLoading } = useQuery({
+    queryKey: ['quiz', params.quizId, params.sessionId],
+    queryFn: async () => {
+      const { data } = await QuizSessionService.getById(params.sessionId as string);
+      return data.payload;
+    },
+    staleTime: Infinity,
+  });
   const { width } = useWindowDimensions();
 
-  const handleAnswer = useCallback((question: ConcreteQuestion) => {
-    setQuiz((prev) => {
-      const newQuestions = prev.questions.map((q) => {
-        if (q._id === question._id) {
-          return question;
-        }
-        return q;
-      });
-      return { ...prev, questions: newQuestions };
-    });
-  }, []);
+  if (isLoading || !quiz) {
+    return (
+      <Page title='Loading...'>
+        <Loading />
+      </Page>
+    );
+  }
 
   return (
-    <Page title={`${quiz.fromQuiz.subject.name} - ${quiz.fromQuiz.chapter.name}`}>
-      {width < 768 ? (
-        <MobileOngoing quiz={quiz} handleAnswer={handleAnswer} />
-      ) : (
-        <DesktopOngoing quiz={quiz} handleAnswer={handleAnswer} />
-      )}
+    <Page title={`${quiz?.fromQuiz.subject.name} - ${quiz?.fromQuiz.chapter.name}`}>
+      {width < 768 ? <MobileOngoing quiz={quiz} /> : <DesktopOngoing quiz={quiz} />}
     </Page>
   );
 };
 
-export default OngoingDetail;
+export default Detail;

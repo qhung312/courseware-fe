@@ -1,17 +1,12 @@
-import _ from 'lodash';
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import _, { debounce } from 'lodash';
+import { ChangeEvent, Dispatch, SetStateAction, memo, useCallback, useState } from 'react';
 import './index.css';
+import { useParams } from 'react-router-dom';
+
 import { Markdown } from '..';
-import { QuestionType, type ConcreteQuestion } from '../../types/question';
+import QuizSessionService from '../../service/quizSession.service';
+import { QuestionType, type ConcreteQuestion, UserAnswer } from '../../types/question';
 import { QuizStatus } from '../../types/quiz';
 import { MULTIPLE_CHOICE_LABELS } from '../../utils/helper';
 import Icon from '../Icon';
@@ -21,46 +16,55 @@ type InputAnswerProps = {
   question: ConcreteQuestion;
   helpers: {
     stringAnswer: string;
-    singleValueAnswer: number;
-    multipleValueAnswer: number[];
-    setQuestion?: (question: ConcreteQuestion) => void;
+    numberAnswer: number[];
     setStringAnswer: Dispatch<SetStateAction<string>>;
-    setSingleValueAnswer: Dispatch<SetStateAction<number>>;
-    setMultipleValueAnswer: Dispatch<SetStateAction<number[]>>;
+    setNumberAnswer: Dispatch<SetStateAction<number[]>>;
   };
 };
 
 const InputAnswer = memo(function Component({ status, question, helpers }: InputAnswerProps) {
-  const {
-    stringAnswer,
-    singleValueAnswer,
-    multipleValueAnswer,
-    setQuestion,
-    setSingleValueAnswer,
-    setMultipleValueAnswer,
-  } = helpers;
+  const { stringAnswer, numberAnswer, setNumberAnswer } = helpers;
+  const params = useParams();
+  const queryClient = useQueryClient();
+
+  const answerMutation = useMutation({
+    mutationFn: async ({
+      sessionId,
+      questionId,
+      answer,
+    }: {
+      sessionId: string;
+      questionId: string;
+      answer: UserAnswer;
+    }) => {
+      const { data } = await QuizSessionService.saveAnswer(sessionId, questionId, answer);
+      return data.payload;
+    },
+    onSuccess: async (_data, variables) => {
+      await queryClient.invalidateQueries(['quiz', params.quizId, variables.sessionId]);
+    },
+  });
 
   const optimizedSetMultipleValueAnswer = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setQuestion &&
-        setQuestion({
-          ...question,
-          userAnswerKeys:
-            question.userAnswerKeys !== undefined
-              ? _.includes(question.userAnswerKeys, Number(e.target.value))
-                ? question.userAnswerKeys.length > 1
-                  ? _.without(question.userAnswerKeys, Number(e.target.value))
-                  : undefined
-                : _.concat(question.userAnswerKeys, Number(e.target.value))
-              : [Number(e.target.value)],
-        });
-      setMultipleValueAnswer((prevState) =>
+      setNumberAnswer((prevState) =>
         _.includes(prevState, Number(e.target.value))
           ? _.without(prevState, Number(e.target.value))
           : _.concat(prevState, Number(e.target.value))
       );
+      answerMutation.mutate({
+        sessionId: params.sessionId as string,
+        questionId: String(question.questionId),
+        answer: {
+          answerKeys: _.includes(numberAnswer, Number(e.target.value))
+            ? numberAnswer.length === 1
+              ? undefined
+              : _.without(numberAnswer, Number(e.target.value))
+            : _.concat(numberAnswer, Number(e.target.value)),
+        },
+      });
     },
-    [setMultipleValueAnswer, setQuestion, question]
+    [setNumberAnswer, numberAnswer, answerMutation, params.sessionId, question.questionId]
   );
 
   switch (question.type) {
@@ -69,39 +73,46 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
         <div className='flex h-fit flex-col flex-wrap items-start justify-center gap-y-4'>
           {question.options?.map((option, index) => (
             <div
-              key={`question-${index + 1}-answer-${option.key}`}
+              key={`question-${question.questionId}-answer-${option.key}`}
               className='relative flex flex-row flex-nowrap items-center justify-center gap-x-2'
             >
               <div className='relative flex items-center'>
                 <input
-                  id={`question-${question._id}-answer-${option.key}`}
+                  id={`question-${question.questionId}-answer-${option.key}`}
                   onChange={() => {
-                    setSingleValueAnswer(option.key);
-                    setQuestion &&
-                      setQuestion({
-                        ...question,
-                        userAnswerField: option.key,
-                      });
+                    setNumberAnswer([option.key]);
+                    debounce(
+                      () =>
+                        answerMutation.mutate({
+                          sessionId: params.sessionId as string,
+                          questionId: String(question.questionId),
+                          answer: {
+                            answerKeys: [option.key],
+                          },
+                        }),
+                      1000
+                    )();
                   }}
                   disabled={status !== QuizStatus.ONGOING}
                   className={`${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
-                      : question.isCorrect === undefined || question.userAnswerField === undefined
-                      ? 'checked:bg-transparent'
-                      : (question.isCorrect && Number(question.userAnswerField) === option.key) ||
-                        Number(question.answerField) === option.key
+                      : question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
-                      : 'checked:bg-[#DB4437]'
+                      : question.userAnswerKeys?.includes(option.key)
+                      ? 'checked:bg-[#DB4437]'
+                      : ''
                   }`}
                   style={{ borderRadius: '9999px' }}
                   type='checkbox'
-                  name={`question-${question._id}`}
+                  name={`question-${question.questionId}`}
                   value={option.key}
                   multiple={status === QuizStatus.ENDED}
                   checked={
-                    singleValueAnswer === option.key ||
-                    (status === QuizStatus.ENDED && Number(question.answerField) === option.key)
+                    numberAnswer[0] === option.key ||
+                    (status === QuizStatus.ENDED &&
+                      question.answerKeys &&
+                      question.answerKeys[0] === option.key)
                   }
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
@@ -110,7 +121,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   </span>
                 </span>
               </div>
-              <label htmlFor={`question-${question._id}-answer-${option.key}`}>
+              <label htmlFor={`question-${question.questionId}-answer-${option.key}`}>
                 <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
               </label>
             </div>
@@ -122,46 +133,43 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
         <div className='flex flex-col flex-wrap items-start justify-center gap-y-4'>
           {question.options?.map((option) => (
             <div
-              key={`question-${question._id}-answer-${option.key}`}
+              key={`question-${question.questionId}-answer-${option.key}`}
               className='relative flex flex-row flex-nowrap items-center justify-center gap-x-2'
             >
               <div className='relative flex items-center'>
                 <input
-                  id={`question-${question._id}-answer-${option.key}`}
+                  id={`question-${question.questionId}-answer-${option.key}`}
                   className={`${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
-                      : question.isCorrect === undefined || question.userAnswerKeys === undefined
-                      ? ''
-                      : (question.isCorrect && question.userAnswerKeys.includes(option.key)) ||
-                        question.answerKeys?.includes(option.key)
+                      : question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
-                      : 'checked:bg-[#DB4437]'
+                      : question.userAnswerKeys?.includes(option.key)
+                      ? 'checked:bg-[#DB4437]'
+                      : ''
                   }`}
                   disabled={status !== QuizStatus.ONGOING}
                   onChange={optimizedSetMultipleValueAnswer}
-                  name={`question-${question._id}`}
+                  name={`question-${question.questionId}`}
                   type='checkbox'
                   multiple
                   value={option.key}
                   checked={
-                    multipleValueAnswer.includes(option.key) ||
+                    numberAnswer.includes(option.key) ||
                     (status === QuizStatus.ENDED && question.answerKeys?.includes(option.key))
                   }
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
                   <span className='-ml-[100%] h-full text-xs md:text-base'>
-                    {question.isCorrect === undefined ? null : (question.isCorrect &&
-                        question.userAnswerKeys?.includes(option.key)) ||
-                      question.answerKeys?.includes(option.key) ? (
+                    {question.answerKeys?.includes(option.key) ? (
                       <Icon.Checkmark className='h-4 w-auto md:h-6' />
-                    ) : (
+                    ) : question.userAnswerKeys?.includes(option.key) ? (
                       <Icon.XMark className='h-4 w-auto md:h-6' />
-                    )}
+                    ) : null}
                   </span>
                 </span>
               </div>
-              <label htmlFor={`question-${question._id}-answer-${option.key}`}>
+              <label htmlFor={`question-${question.questionId}-answer-${option.key}`}>
                 <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
               </label>
             </div>
@@ -171,14 +179,14 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
     case QuestionType.TEXT:
       return (
         <div
-          key={`question-${question._id}`}
+          key={`question-${question.questionId}-answer-field`}
           className='relative flex flex-row flex-nowrap items-center justify-center gap-x-2'
         >
-          <label htmlFor={`question-${question._id}`}>
+          <label htmlFor={`question-${question.questionId}-answer-field`}>
             <p className='text-base font-semibold'>Trả lời: </p>
           </label>
           <input
-            id={`question-${question._id}`}
+            id={`question-${question.questionId}-answer-field`}
             type='text'
             disabled={status !== QuizStatus.ONGOING}
             placeholder='Nhập câu trả lời'
@@ -195,32 +203,16 @@ type Props = {
   question: ConcreteQuestion;
   status: QuizStatus;
   questionNumber: number;
-  handleChange?: (question: ConcreteQuestion) => void;
 };
 
-const QuestionCard = ({ question, status, questionNumber, handleChange }: Props) => {
+const QuestionCard = ({ question, status, questionNumber }: Props) => {
   const [starred, setStarred] = useState(question.starred);
   const [stringAnswer, setStringAnswer] = useState<string>(
     String(question.userAnswerField || question.answerField)
   );
-  const [singleValueAnswer, setSingleValueAnswer] = useState<number>(
-    Number(question.userAnswerField) || Number(question.userAnswerField) || -1
-  );
-  const [multipleValueAnswer, setMultipleValueAnswer] = useState<number[]>(
+  const [numberAnswer, setNumberAnswer] = useState<number[]>(
     question.userAnswerKeys || question.answerKeys || []
   );
-
-  useEffect(() => {
-    if (stringAnswer !== '' || singleValueAnswer !== -1 || multipleValueAnswer.length !== 0) {
-      setStarred(false);
-      handleChange &&
-        handleChange({
-          ...question,
-          starred: false,
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stringAnswer, singleValueAnswer, multipleValueAnswer, handleChange]);
 
   return (
     <div
@@ -254,16 +246,6 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
             type='button'
             onClick={() => {
               setStarred(true);
-              setStringAnswer('');
-              setSingleValueAnswer(-1);
-              setMultipleValueAnswer([]);
-              handleChange &&
-                handleChange({
-                  ...question,
-                  starred: true,
-                  userAnswerField: undefined,
-                  userAnswerKeys: undefined,
-                });
             }}
             disabled={status === QuizStatus.ENDED || starred}
             className={`absolute transition-all duration-300 ${starred ? '-z-10 opacity-0' : ''}`}
@@ -274,7 +256,6 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
             type='button'
             onClick={() => {
               setStarred(false);
-              handleChange && handleChange({ ...question, starred: false });
             }}
             disabled={status === QuizStatus.ENDED || !starred}
             className={`relative transition-all duration-300 ${starred ? '' : '-z-10 opacity-0'}`}
@@ -297,12 +278,9 @@ const QuestionCard = ({ question, status, questionNumber, handleChange }: Props)
           question={question}
           helpers={{
             stringAnswer,
-            singleValueAnswer,
-            multipleValueAnswer,
-            setQuestion: handleChange,
-            setSingleValueAnswer,
+            numberAnswer,
             setStringAnswer,
-            setMultipleValueAnswer,
+            setNumberAnswer,
           }}
         />
       </div>

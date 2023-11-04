@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { chunk } from 'lodash';
 import { Fragment, useCallback, useState } from 'react';
 
 import { Icon, Markdown, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
@@ -7,21 +7,26 @@ import { MULTIPLE_CHOICE_LABELS } from '../../../../utils/helper';
 
 const DesktopReview: React.FC<{
   quiz: QuizSession;
-}> = ({ quiz }) => {
+}> = (props) => {
+  const [quiz] = useState<QuizSession>(props.quiz);
   const [page, setPage] = useState(1);
+  console.log(quiz);
+
+  const pageSize = 4;
+
+  const currentSet = Array.from({ length: 4 }, (_a, index) => (page - 1) * pageSize + index);
+  const [questionChunks] = useState(chunk(quiz.questions, 4));
 
   const extractUserAnswer = useCallback((question: ConcreteQuestion) => {
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
-
     switch (question.type) {
       case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
         return `${
-          question.userAnswerField === undefined
+          question.userAnswerKeys === undefined
             ? 'Không trả lời'
-            : optionLabels[
+            : MULTIPLE_CHOICE_LABELS[
                 _.findIndex(
                   question.options,
-                  (option) => option.key === Number(question.userAnswerField)
+                  (option) => !!question.userAnswerKeys?.includes(option.key)
                 )
               ]
         }`;
@@ -40,12 +45,12 @@ const DesktopReview: React.FC<{
     switch (question.type) {
       case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
         return `${
-          question.answerField === undefined
+          question.answerKeys === undefined
             ? 'Không trả lời'
             : MULTIPLE_CHOICE_LABELS[
                 _.findIndex(
                   question.options,
-                  (option) => option.key === Number(question.answerField)
+                  (option) => !!question.answerKeys?.includes(option.key)
                 )
               ]
         }`;
@@ -98,9 +103,13 @@ const DesktopReview: React.FC<{
           </div>
 
           <div className='flex flex-col space-y-4'>
-            {quiz.questions.map((question, index) => (
-              <Fragment key={question._id}>
-                <QuestionCard question={question} status={quiz.status} questionNumber={index + 1} />
+            {questionChunks[page - 1]?.map((question, index) => (
+              <Fragment key={`desktop-question-${question.questionId}-review`}>
+                <QuestionCard
+                  question={question}
+                  status={quiz.status}
+                  questionNumber={(page - 1) * pageSize + index + 1}
+                />
                 <div className='flex h-full w-full flex-row gap-x-4'>
                   <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
                     <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
@@ -136,7 +145,7 @@ const DesktopReview: React.FC<{
           <Pagination totalCount={2} pageSize={2} currentPage={page} onPageChange={setPage} />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} />
+      <QuestionBoard quiz={quiz} currentSet={currentSet} />
     </main>
   );
 };

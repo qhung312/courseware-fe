@@ -1,14 +1,19 @@
-import _ from 'lodash';
+import _, { chunk } from 'lodash';
 import { useState } from 'react';
 
 import { QuizSession } from '../../types';
 import Icon from '../Icon';
 
-const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
+const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
+  quiz,
+  submit,
+  currentSet,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
+  const questionChunks = chunk(quiz.questions, 40);
 
   return (
     <div
@@ -29,23 +34,23 @@ const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
       <div className='flex flex-col items-start justify-between space-y-4 p-4'>
         <h2 className='text-xl font-medium'>Danh sách câu hỏi</h2>
         <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
-          {quiz.questions.map((question, index) => (
+          {questionChunks[page - 1]?.map((question, index) => (
             <div
-              key={question._id}
+              key={`mobile-${question.questionId}-list-${quiz._id}`}
               className={`flex h-10 w-10 items-center justify-center ${
                 question.isCorrect !== undefined
                   ? question.isCorrect
                     ? 'bg-[#49BBBD]'
                     : 'bg-[#DB4437]'
+                  : question.starred
+                  ? 'bg-[#FBCB43]'
                   : _.some(
                       [question.userAnswerKeys, question.userAnswerField],
                       (v) => !_.isEmpty(v)
                     )
                   ? 'bg-[#4285F4]'
-                  : question.starred
-                  ? 'bg-[#FBCB43]'
                   : 'border border-[#4285F4]/50 bg-transparent'
-              }`}
+              } ${currentSet.includes(index) ? 'border-3 border-[#FBCB43]' : ''}`}
             >
               <p
                 className={`text-center text-base font-semibold ${
@@ -57,13 +62,17 @@ const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
                     : ''
                 }`}
               >
-                {index + 1}
+                {(page - 1) * 40 + index + 1}
               </p>
             </div>
           ))}
         </div>
         <div className='flex w-full flex-1 flex-row items-center justify-between'>
-          <button type='button' className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'>
+          <button
+            onClick={submit}
+            type='button'
+            className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'
+          >
             <p className='text-base font-semibold text-white'>
               Hoàn thành {quiz.status === 'ENDED' ? 'xem lại' : 'bài làm'}
             </p>

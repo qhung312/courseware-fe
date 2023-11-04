@@ -14,7 +14,7 @@ export type UserAnswer = {
 };
 
 export type ConcreteQuestion = {
-  _id: string;
+  questionId: number;
   type: QuestionType;
   description: string;
   options?: {

@@ -136,7 +136,7 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='exercises/:subjectId/quiz/:quizId'
+            path='exercises/:subjectId/quiz/:quizId/session/:sessionId'
             element={
               <Suspense fallback={<Loading />}>
                 <ExercisesPage />
@@ -144,7 +144,7 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='exercises/:subjectId/review/quiz/:quizId'
+            path='exercises/:subjectId/quiz/:quizId/review/session/:sessionId'
             element={
               <Suspense fallback={<Loading />}>
                 <ExercisesPage />

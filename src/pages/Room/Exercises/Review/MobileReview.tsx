@@ -1,24 +1,28 @@
-import _ from 'lodash';
+import _, { chunk } from 'lodash';
 import { Fragment, useCallback, useState } from 'react';
 
 import { Icon, Markdown, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { ConcreteQuestion, QuizSession } from '../../../../types';
 
 const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
+  const pageSize = 4;
   const [page, setPage] = useState(1);
 
+  const currentSet = Array.from({ length: 4 }, (_a, index) => (page - 1) * pageSize + index);
+  const [questionChunks] = useState(chunk(quiz.questions, 4));
+
   const extractUserAnswer = useCallback((question: ConcreteQuestion) => {
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
+    const MULTIPLE_CHOICE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     switch (question.type) {
       case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
         return `${
-          question.userAnswerField === undefined
+          question.userAnswerKeys === undefined
             ? 'Không trả lời'
-            : optionLabels[
+            : MULTIPLE_CHOICE_LABELS[
                 _.findIndex(
                   question.options,
-                  (option) => option.key === Number(question.userAnswerField)
+                  (option) => !!question.userAnswerKeys?.includes(option.key)
                 )
               ]
         }`;
@@ -34,17 +38,17 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
   }, []);
 
   const extractAnswer = useCallback((question: ConcreteQuestion) => {
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
+    const MULTIPLE_CHOICE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     switch (question.type) {
       case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
         return `${
-          question.userAnswerField === undefined
+          question.answerKeys === undefined
             ? 'Không trả lời'
-            : optionLabels[
+            : MULTIPLE_CHOICE_LABELS[
                 _.findIndex(
                   question.options,
-                  (option) => option.key === Number(question.userAnswerField)
+                  (option) => !!question.answerKeys?.includes(option.key)
                 )
               ]
         }`;
@@ -85,9 +89,13 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
           </div>
 
           <div className='flex flex-col space-y-4'>
-            {quiz.questions.map((question, index) => (
-              <Fragment key={question._id}>
-                <QuestionCard question={question} status={quiz.status} questionNumber={index + 1} />
+            {questionChunks[page - 1]?.map((question, index) => (
+              <Fragment key={`mobile-question-${question.questionId}-review`}>
+                <QuestionCard
+                  question={question}
+                  status={quiz.status}
+                  questionNumber={(page - 1) * pageSize + index + 1}
+                />
                 <div className='flex h-full w-full flex-col gap-y-4'>
                   <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
                     <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
@@ -120,10 +128,15 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
               </Fragment>
             ))}
           </div>
-          <Pagination totalCount={100} pageSize={2} currentPage={page} onPageChange={setPage} />
+          <Pagination
+            totalCount={quiz.questions.length}
+            pageSize={pageSize}
+            currentPage={page}
+            onPageChange={setPage}
+          />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} />
+      <QuestionBoard quiz={quiz} currentSet={currentSet} />
     </div>
   );
 };

@@ -43,7 +43,6 @@ const Main: React.FC = () => {
         }))
       : [],
   });
-  console.log(sessionQueriesResult);
 
   const sessionMutation = useMutation({
     mutationFn: QuizSessionService.create,
@@ -170,11 +169,14 @@ const Main: React.FC = () => {
                           sessionQueriesResult[index]?.data === null
                             ? sessionMutation.mutate(quiz._id, {
                                 onSuccess: ({ data }, variables) => {
-                                  navigate(`/room/exercises/${variables}/quiz/${data.payload._id}`);
+                                  navigate(
+                                    `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
+                                  );
+                                  localStorage.removeItem(`quiz-${quiz._id}-starList`);
                                 },
                               })
                             : navigate(
-                                `/room/exercises/${quiz._id}/quiz/${sessionQueriesResult[index]?.data?._id}`
+                                `/room/exercises/${subject?._id}/quiz/${quiz._id}/session/${sessionQueriesResult[index]?.data?._id}`
                               );
                         }}
                       >
@@ -197,15 +199,17 @@ const Main: React.FC = () => {
                     <button
                       className='flex w-fit rounded-lg bg-[#4285F4]/80 px-5 py-2 hover:bg-[#4285F4] md:hidden'
                       onClick={() => {
-                        console.log(sessionQueriesResult);
                         sessionQueriesResult[index]?.data === null
                           ? sessionMutation.mutate(quiz._id, {
                               onSuccess: ({ data }, variables) => {
-                                navigate(`/room/exercises/${variables}/quiz/${data.payload._id}`);
+                                navigate(
+                                  `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
+                                );
+                                localStorage.removeItem(`quiz-${quiz._id}-starList`);
                               },
                             })
                           : navigate(
-                              `/room/exercises/${quiz._id}/quiz/${sessionQueriesResult[index]?.data?._id}`
+                              `/room/exercises/${subject?._id}/quiz/${quiz._id}/session/${sessionQueriesResult[index]?.data?._id}`
                             );
                       }}
                     >

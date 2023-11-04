@@ -33,6 +33,7 @@ export type QuizSession = {
   startedAt: number;
   endedAt?: number;
   standardizedScore?: number;
+  timeLeft: number;
 
   fromQuiz: Quiz;
   questions: ConcreteQuestion[];
