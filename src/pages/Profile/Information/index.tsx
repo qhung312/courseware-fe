@@ -24,7 +24,7 @@ const UserInformation = () => {
 
   const throttledLibraryClick = useThrottle(onLibraryClick);
 
-  const formattedDate = new Date(userProfile?.dateOfBirth || '000000000')
+  const formattedDate = new Date(userProfile?.dateOfBirth || '2000-01-01')
     .toISOString()
     .split('T')[0];
 

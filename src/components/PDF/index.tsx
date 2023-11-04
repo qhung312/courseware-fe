@@ -9,7 +9,7 @@ const options = {
   cMapUrl: 'cmaps/',
   cMapPacked: true,
   httpHeaders: {
-    Authorization: `Bearer ${JSON.parse(localStorage.getItem('token') || '')}`,
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem('token') || '{}')}`,
   },
 };
 
