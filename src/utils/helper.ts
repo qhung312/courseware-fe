@@ -82,3 +82,19 @@ export function generateQuery({ page, pageSize, ...rest }: GenerateQueryProps) {
     ? `?${filterUrl}${page ? `&page=${page}` : ''}${pageSize ? `&pageSize=${pageSize}` : ''}`
     : `?${filterUrl}&pagination=false`;
 }
+
+export function parseDuration(duration: number) {
+  const hours = Math.floor(duration / 3600000);
+  const minutes = Math.floor((duration % 360000) / 60000);
+  const seconds = Math.floor((duration % 60000) / 1000);
+
+  if (hours > 0) {
+    return `${hours} giờ ${minutes < 10 ? `0${minutes}` : minutes} phút ${
+      seconds < 10 ? `0${seconds}` : seconds
+    } giây`;
+  } else if (minutes > 0) {
+    return `${minutes} phút ${seconds < 10 ? `0${seconds}` : seconds} giây`;
+  }
+
+  return `${seconds} giây`;
+}
