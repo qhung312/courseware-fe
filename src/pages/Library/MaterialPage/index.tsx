@@ -89,13 +89,8 @@ const MaterialPage: React.FC = () => {
 
       <Wrapper className='flex flex-1 flex-col'>
         {/* Banner */}
-        <div className='hidden w-full bg-[#4285F4] px-5 py-5 text-white md:flex md:h-[88px] md:flex-col md:justify-between lg:h-[108px] lg:px-9 lg:py-6 xl:h-[132px] xl:px-10 xl:py-7 2xl:h-[164px] 2xl:px-11 2xl:py-8'>
-          <h1 className='text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl 3xl:text-[44px]'>
-            Thư viện tài liệu
-          </h1>
-          <p className='text-sm xl:text-base 2xl:text-lg'>
-            Lorem ipsum dolor sit amet, consectetur adi
-          </p>
+        <div className='hidden w-full bg-[#4285F4] px-6 py-2 text-white md:flex md:flex-col md:justify-between lg:px-7 lg:py-3 3xl:px-8 3xl:py-4'>
+          <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>Thư viện tài liệu</h1>
         </div>
 
         <div className='mb-6 flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
@@ -112,13 +107,7 @@ const MaterialPage: React.FC = () => {
             <h3 className='max-w-xs text-2xl font-semibold'>
               {subject?.name || <Skeleton baseColor='#9DCCFF' />}
             </h3>
-            <p className='text-[#696984]'>
-              {subject ? (
-                'Lorem ipsum dolor sit amet, consectetur adi'
-              ) : (
-                <Skeleton baseColor='#9DCCFF' />
-              )}
-            </p>
+            <p className='text-[#696984]'>{subject?.description ?? ''}</p>
           </div>
 
           {/* Chapters */}
@@ -145,9 +134,7 @@ const MaterialPage: React.FC = () => {
                   window.location.origin + `/library/material/${subject?._id}/pdf/${material._id}`
                 }
                 subTitle={''}
-                description={
-                  'Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do eiusmodeiusmodadipiscing elit, sed do eiusmodL'
-                }
+                description={material?.description ?? 'Không có chú thích'}
               />
             ))}
           </div>

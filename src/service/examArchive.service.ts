@@ -22,7 +22,7 @@ type GetAllExamArchiveReturnType = {
   result: ExamArchive[];
 };
 const getAll = (query: GetAllExamArchiveArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}/previous_exam?pagination=false\
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.semester ? `&semester=${query.semester}` : ''}\

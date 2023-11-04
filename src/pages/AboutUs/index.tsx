@@ -12,7 +12,7 @@ import { Container, Page } from '../../layout';
 const AboutUsPage = () => {
   return (
     <Page title='Về chúng tôi'>
-      <main className='w-full md:px-[48px]'>
+      <main className='with-nav-height w-full overflow-y-auto md:px-[48px]'>
         {/* Banner */}
         <Container className='relative flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
           <div className='z-[4] lg:absolute lg:text-white'>
