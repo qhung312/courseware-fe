@@ -1,4 +1,4 @@
-import _, { chunk } from 'lodash';
+import _, { chunk, debounce } from 'lodash';
 import { useState } from 'react';
 
 import { QuizSession } from '../../types';
@@ -69,7 +69,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
         </div>
         <div className='flex w-full flex-1 flex-row items-center justify-between'>
           <button
-            onClick={submit}
+            onClick={debounce(submit, 1000)}
             type='button'
             className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'
           >

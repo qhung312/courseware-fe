@@ -1,4 +1,4 @@
-import _, { chunk } from 'lodash';
+import _, { chunk, debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import Countdown from 'react-countdown';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -128,7 +128,7 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
           </div>
           <div className='flex w-full flex-row items-center justify-between gap-x-4 gap-y-4'>
             <button
-              onClick={submit}
+              onClick={debounce(submit, 1000)}
               type='button'
               className='flex-2 flex w-fit rounded-lg bg-[#49CCCF] p-2'
             >

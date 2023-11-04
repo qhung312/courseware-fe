@@ -52,17 +52,21 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
           ? _.without(prevState, Number(e.target.value))
           : _.concat(prevState, Number(e.target.value))
       );
-      answerMutation.mutate({
-        sessionId: params.sessionId as string,
-        questionId: String(question.questionId),
-        answer: {
-          answerKeys: _.includes(numberAnswer, Number(e.target.value))
-            ? numberAnswer.length === 1
-              ? undefined
-              : _.without(numberAnswer, Number(e.target.value))
-            : _.concat(numberAnswer, Number(e.target.value)),
-        },
-      });
+      debounce(
+        () =>
+          answerMutation.mutate({
+            sessionId: params.sessionId as string,
+            questionId: String(question.questionId),
+            answer: {
+              answerKeys: _.includes(numberAnswer, Number(e.target.value))
+                ? numberAnswer.length === 1
+                  ? undefined
+                  : _.without(numberAnswer, Number(e.target.value))
+                : _.concat(numberAnswer, Number(e.target.value)),
+            },
+          }),
+        500
+      )();
     },
     [setNumberAnswer, numberAnswer, answerMutation, params.sessionId, question.questionId]
   );
@@ -90,7 +94,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                             answerKeys: [option.key],
                           },
                         }),
-                      1000
+                      500
                     )();
                   }}
                   disabled={status !== QuizStatus.ONGOING}
