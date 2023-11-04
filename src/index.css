@@ -170,4 +170,5 @@ code {
 
 .markdown > * {
   all: revert;
+  margin: 0;
 }

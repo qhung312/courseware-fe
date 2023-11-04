@@ -66,7 +66,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
   switch (question.type) {
     case QuestionType.MULTIPLE_CHOICE_SINGLE_ANSWER:
       return (
-        <div className='flex flex-col flex-wrap items-start justify-center gap-y-4'>
+        <div className='flex h-fit flex-col flex-wrap items-start justify-center gap-y-4'>
           {question.options?.map((option, index) => (
             <div
               key={`question-${index + 1}-answer-${option.key}`}
@@ -111,7 +111,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 </span>
               </div>
               <label htmlFor={`question-${question._id}-answer-${option.key}`}>
-                <Markdown className='text-xs md:text-base'>{option.description}</Markdown>
+                <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
               </label>
             </div>
           ))}
@@ -162,7 +162,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 </span>
               </div>
               <label htmlFor={`question-${question._id}-answer-${option.key}`}>
-                <p className='text-xs md:text-base'>{option.description}</p>
+                <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
               </label>
             </div>
           ))}

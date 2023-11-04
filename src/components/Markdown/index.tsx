@@ -6,11 +6,11 @@ import remarkMath from 'remark-math';
 
 import 'katex/dist/katex.min.css'; // `rehype-katex` does not import the CSS for you
 
-const Markdown = ({ children, ...rest }: ReactMarkdownOptions) => {
+const Markdown = ({ children, className, ...rest }: ReactMarkdownOptions) => {
   return (
     <ReactMarkdown
       {...rest}
-      className='markdown'
+      className={`markdown ${className}`}
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[rehypeKatex]}
     >
