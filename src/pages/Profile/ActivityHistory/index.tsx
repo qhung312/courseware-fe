@@ -11,7 +11,7 @@ import CopyIcon from '../../../components/CopyIcon';
 import Icon from '../../../components/Icon';
 import DeleteModal from '../../../components/Modal/DeleteModal';
 import ProfileOption from '../../../components/ProfileOption';
-import DeleteSnackbar from '../../../components/Snackbar/DeleteSnackbar';
+import { API_URL } from '../../../config';
 import { useThrottle, useDebounce } from '../../../hooks';
 import { Page } from '../../../layout';
 import UserService, { ActivityReturnType } from '../../../service/user.service';
@@ -21,8 +21,10 @@ const ActivityHistory = () => {
   const user = useBoundStore.use.user();
   const [page, setPage] = useState(1);
   const [filterOption, setFilterOption] = useState(0);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteSnackbar, setDeleteSnackbar] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({
+    show: false,
+    deleteId: '',
+  });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState<ActivityReturnType[]>([]);
@@ -113,7 +115,6 @@ const ActivityHistory = () => {
         const { results: allActivities } = res.data.payload;
         setActivities(allActivities);
         setChunks(_.chunk(allActivities, 5));
-        console.log('here', allActivities);
         if (activityType === '') countTotal(allActivities);
       })
       .catch((err) => {
@@ -123,6 +124,17 @@ const ActivityHistory = () => {
         setLoading(false);
       });
   });
+
+  const deleteActivity = (activityId: string) => {
+    UserService.deleteUserActivity(activityId)
+      .then(() => {
+        toast.success('Xóa hoạt động thành công');
+        fetchActivities();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
   useEffect(() => {
     fetchActivities();
@@ -142,14 +154,14 @@ const ActivityHistory = () => {
       <DeleteModal
         text='Hoạt động này sẽ bị xóa khỏi lịch sử hoạt động của bạn'
         onClose={() => {
-          setDeleteModal(false);
+          setDeleteModal({
+            show: false,
+            deleteId: '',
+          });
         }}
-        onDelete={() => setDeleteSnackbar(true)}
-        show={deleteModal}
+        onDelete={() => deleteActivity(deleteModal.deleteId)}
+        show={deleteModal.show}
       />
-      <div className='fixed bottom-4 right-4 z-[60]'>
-        <DeleteSnackbar showSnackbar={deleteSnackbar} setShow={() => setDeleteSnackbar(false)} />
-      </div>
       <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
         <ProfileOption option={2} editAvatar={false} setAvatar={() => {}} updatedName='' />
@@ -371,7 +383,15 @@ const ActivityHistory = () => {
               {chunks[page - 1]?.map((activity, index) => (
                 <div className='mt-4' key={index}>
                   <Link
-                    to={'/'}
+                    to={
+                      activity.type === 'VIEW_MATERIAL'
+                        ? `/library/material/${activity?.materialId?.subject?._id}/pdf/${activity?.materialId?._id}`
+                        : activity.type === 'VIEW_PREVIOUS_EXAM'
+                        ? `/exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
+                        : activity.type === 'START_QUIZ_SESSION'
+                        ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?._id}`
+                        : '/'
+                    }
                     className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
                   >
                     <p className='text-xl text-[rgba(45,52,54,0.7)]'>
@@ -382,7 +402,7 @@ const ActivityHistory = () => {
                         ? user?.familyAndMiddleName +
                           ' ' +
                           user?.givenName +
-                          ' đã tham gia thi thử' +
+                          ' đã tham gia Thi thử' +
                           (activity?.previousExamId?.type === 'FINAL_EXAM'
                             ? ' Cuối kì '
                             : ' Giữa kì ') +
@@ -396,6 +416,12 @@ const ActivityHistory = () => {
                           activity?.materialId?.name +
                           ' môn ' +
                           activity?.materialId?.subject?.name
+                        : activity.type === 'START_QUIZ_SESSION'
+                        ? user?.familyAndMiddleName +
+                          ' ' +
+                          user?.givenName +
+                          ' đã bắt đầu làm Bài tập rèn luyện môn ' +
+                          activity?.quizSessionId?.fromQuiz?.subject?.name
                         : ''}
                     </h2>
                     <div className='mt-3 flex items-center'>
@@ -405,6 +431,8 @@ const ActivityHistory = () => {
                           ? 'Học kì ' + activity?.previousExamId?.semester.slice(9, 12)
                           : activity.type === 'VIEW_MATERIAL'
                           ? activity?.materialId?.subject?.name
+                          : activity.type === 'START_QUIZ_SESSION'
+                          ? activity?.quizSessionId?.fromQuiz?.chapter?.name
                           : ''}
                       </p>
                     </div>
@@ -412,10 +440,25 @@ const ActivityHistory = () => {
                       className='ml-auto flex w-fit justify-end'
                       onClick={(e) => e.preventDefault()}
                     >
-                      <CopyIcon copyContent={'/'} />
+                      <CopyIcon
+                        copyContent={
+                          activity.type === 'VIEW_MATERIAL'
+                            ? `${API_URL}library/material/${activity?.materialId?.subject?._id}/pdf/${activity?.materialId?._id}`
+                            : activity.type === 'VIEW_PREVIOUS_EXAM'
+                            ? `${API_URL}exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
+                            : activity.type === 'START_QUIZ_SESSION'
+                            ? `${API_URL}room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?._id}`
+                            : API_URL
+                        }
+                      />
                       <button
                         className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437] hover:bg-[#DB4437]/[.8]'
-                        onClick={() => setDeleteModal(true)}
+                        onClick={() =>
+                          setDeleteModal({
+                            show: true,
+                            deleteId: activity._id,
+                          })
+                        }
                       >
                         <Icon.Delete fill='white' className='h-4 w-4' />
                       </button>

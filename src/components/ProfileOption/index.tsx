@@ -15,7 +15,6 @@ interface Option {
 const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: Option) => {
   const user = useBoundStore.use.user();
   const [photo, setPhoto] = useState<string>(user?.picture || '');
-  console.log(option);
 
   return (
     <div className='padding flex flex-col items-center bg-[#E3F2FD] pt-10 pb-4 md:relative md:pb-0 md:pt-0'>

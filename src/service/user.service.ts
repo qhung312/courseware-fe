@@ -26,6 +26,22 @@ export type ActivityReturnType = {
     semester: string;
     type: string;
   };
+  quizSessionId: {
+    _id: string;
+    status: string;
+    fromQuiz: {
+      _id: string;
+      name: string;
+      subject: {
+        _id: string;
+        name: string;
+      };
+      chapter: {
+        _id: string;
+        name: string;
+      };
+    };
+  };
   createdAt: number;
 };
 
@@ -38,7 +54,6 @@ const getUserProfile = () => axios.get<Response<User>>(`${API_URL}me`);
 
 const editUserProfile = (profile: User) => {
   const queryString = `${API_URL}me`;
-  console.log(profile);
 
   return axios.patch<Response<User>>(queryString, profile);
 };
@@ -46,10 +61,13 @@ const editUserProfile = (profile: User) => {
 const getUserActivity = (activityType: string) => {
   const queryString = `${API_URL}me/activity?pagination=false\
 ${activityType ? `&type=${activityType}` : ''}`;
-  console.log(queryString);
+
   return axios.get<Response<GetAllActivityReturnType>>(queryString);
 };
 
-const UserService = { getUserProfile, editUserProfile, getUserActivity };
+const deleteUserActivity = (activityId: string) =>
+  axios.delete(`${API_URL}me/activity/${activityId}`);
+
+const UserService = { getUserProfile, editUserProfile, getUserActivity, deleteUserActivity };
 
 export default UserService;
