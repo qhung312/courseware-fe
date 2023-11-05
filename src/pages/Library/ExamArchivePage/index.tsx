@@ -88,10 +88,10 @@ const ExamArchivePage: React.FC = () => {
       <Wrapper className='flex flex-1 flex-col'>
         {/* Banner */}
         <div className='hidden w-full bg-[#4285F4] px-6 py-2 text-white md:flex md:flex-col md:justify-between lg:px-7 lg:py-3 3xl:px-8 3xl:py-4'>
-          <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>Thư viện tài liệu</h1>
+          <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>Thư viện đề thi</h1>
         </div>
 
-        <div className='mb-6 flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
+        <div className='mb-6 flex-1 space-y-5 px-5 py-2 md:space-y-6 md:py-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:py-3 2xl:space-y-8 2xl:px-11 2xl:py-4'>
           <Link
             to='/library/exam-archive'
             className='flex items-center space-x-2 hover:underline md:hidden'
@@ -101,7 +101,7 @@ const ExamArchivePage: React.FC = () => {
           </Link>
 
           {/* Introduction */}
-          <div className='mt-0 space-y-2'>
+          {/* <div className='mt-0 space-y-2'>
             <h3 className='max-w-xs text-2xl font-semibold'>
               {subject?.name || <Skeleton baseColor='#9DCCFF' />}
             </h3>
@@ -111,13 +111,10 @@ const ExamArchivePage: React.FC = () => {
               placeholder=''
               disabled
             />
-          </div>
+          </div> */}
 
           {/* Chapters */}
           <div className='space-y-2 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7'>
-            <h1 className='text-2xl font-semibold'>
-              {subject ? 'Nội dung môn học' : <Skeleton baseColor='#9DCCFF' />}
-            </h1>
             {/* Skeleton Loading */}
             {!examArchives && <PageSkeleton />}
 
@@ -125,7 +122,7 @@ const ExamArchivePage: React.FC = () => {
             {examArchives?.length === 0 && (
               <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
                 <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
-                <p className='w-full text-center'>Không tìm thấy tài liệu</p>
+                <p className='w-full text-center'>Không tìm thấy đề thi</p>
               </div>
             )}
             {examArchives?.map((exam) => (

@@ -60,7 +60,7 @@ const MaterialPage: React.FC = () => {
       <Page title='Tài liệu'>
         <LibraryAside
           title='Thư viện tài liệu'
-          subTitle='Đề thi các môn học'
+          subTitle='Tài liệu các môn học'
           description='Lorem ipsum dolor sit amet, consectetur adi'
           baseRoute='/library/material'
         />
@@ -82,7 +82,7 @@ const MaterialPage: React.FC = () => {
     <Page title={`Tài liệu ${subject?.name}`}>
       <LibraryAside
         title='Thư viện tài liệu'
-        subTitle='Đề thi các môn học'
+        subTitle='Tài liệu các môn học'
         description='Lorem ipsum dolor sit amet, consectetur adi'
         baseRoute='/library/material'
       />
@@ -93,7 +93,7 @@ const MaterialPage: React.FC = () => {
           <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>Thư viện tài liệu</h1>
         </div>
 
-        <div className='mb-6 flex-1 space-y-5 px-5 pt-5 md:space-y-6 md:pt-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:pt-10 2xl:space-y-8 2xl:px-11 2xl:pt-11'>
+        <div className='mb-6 flex-1 space-y-5 px-5 py-2 md:space-y-6 md:py-0 lg:px-9 lg:pt-8 xl:space-y-7 xl:px-10 xl:py-3 2xl:space-y-8 2xl:px-11 2xl:py-4'>
           <Link
             to='/library/material'
             className='flex items-center space-x-2 hover:underline md:hidden'
@@ -102,19 +102,8 @@ const MaterialPage: React.FC = () => {
             <p className='w-[100px]'>Quay lại</p>
           </Link>
 
-          {/* Introduction */}
-          <div className='mt-0 space-y-2'>
-            <h3 className='max-w-xs text-2xl font-semibold'>
-              {subject?.name || <Skeleton baseColor='#9DCCFF' />}
-            </h3>
-            <p className='text-[#696984]'>{subject?.description ?? ''}</p>
-          </div>
-
           {/* Chapters */}
           <div className='space-y-2 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7'>
-            <h1 className='text-2xl font-semibold'>
-              {subject ? 'Nội dung môn học' : <Skeleton baseColor='#9DCCFF' />}
-            </h1>
             {/* Skeleton Loading */}
             {!materials && <PageSkeleton />}
 
