@@ -1,5 +1,7 @@
 import _, { chunk, debounce } from 'lodash';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
 
 import { QuizSession } from '../../types';
 import Icon from '../Icon';
@@ -9,8 +11,10 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
   submit,
   currentSet,
 }) => {
+  const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
+  const [starList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
   const questionChunks = chunk(quiz.questions, 40);
@@ -42,7 +46,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
                   ? question.isCorrect
                     ? 'bg-[#49BBBD]'
                     : 'bg-[#DB4437]'
-                  : question.starred
+                  : starList.includes((page - 1) * 40 + index + 1)
                   ? 'bg-[#FBCB43]'
                   : _.some(
                       [question.userAnswerKeys, question.userAnswerField],
@@ -50,7 +54,9 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
                     )
                   ? 'bg-[#4285F4]'
                   : 'border border-[#4285F4]/50 bg-transparent'
-              } ${currentSet.includes(index) ? 'border-3 border-[#FBCB43]' : ''}`}
+              } ${
+                currentSet.includes((page - 1) * 40 + index) ? 'border-[3px] border-[#FBCB43]' : ''
+              }`}
             >
               <p
                 className={`text-center text-base font-semibold ${

@@ -1,3 +1,7 @@
+import { reduce } from 'lodash';
+
+import { ConcreteQuestion } from '../types';
+
 import type { GetPaginationOptions } from '../types/request';
 
 export const MULTIPLE_CHOICE_LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -112,3 +116,36 @@ export function parseCountdown(duration: number) {
 
   return `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 }
+
+export const calculateProgress = (questions: ConcreteQuestion[]) => {
+  const current = reduce(
+    questions,
+    (acc, question) => {
+      if (question.userAnswerField !== undefined || question.userAnswerKeys !== undefined) {
+        return acc + 1;
+      }
+      return acc;
+    },
+    0
+  );
+
+  const totalCorrect = reduce(
+    questions,
+    (acc, question) => {
+      if (question.isCorrect === true) {
+        return acc + 1;
+      }
+
+      return acc;
+    },
+    0
+  );
+
+  return {
+    total: questions.length,
+    current,
+    totalCorrect,
+    percentage: Math.round((current / questions.length) * 100),
+    correctPercentage: Math.round((totalCorrect / questions.length) * 100),
+  };
+};

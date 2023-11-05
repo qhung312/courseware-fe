@@ -79,7 +79,6 @@ const deleteById = (examId: string) => {
 
 const edit = (examId: string, data: EditArgument, admin = false) => {
   const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
-  console.log(data);
 
   return axios.patch<Response<ExamArchive>>(queryString, data);
 };

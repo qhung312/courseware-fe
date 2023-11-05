@@ -3,6 +3,7 @@ import _, { debounce } from 'lodash';
 import { ChangeEvent, Dispatch, SetStateAction, memo, useCallback, useState } from 'react';
 import './index.css';
 import { useParams } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
 
 import { Markdown } from '..';
 import QuizSessionService from '../../service/quizSession.service';
@@ -84,6 +85,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 <input
                   id={`question-${question.questionId}-answer-${option.key}`}
                   onChange={() => {
+                    console.log('option', option.key);
                     setNumberAnswer([option.key]);
                     debounce(
                       () =>
@@ -210,13 +212,15 @@ type Props = {
 };
 
 const QuestionCard = ({ question, status, questionNumber }: Props) => {
-  const [starred, setStarred] = useState(question.starred);
+  const params = useParams();
   const [stringAnswer, setStringAnswer] = useState<string>(
     String(question.userAnswerField || question.answerField)
   );
   const [numberAnswer, setNumberAnswer] = useState<number[]>(
     question.userAnswerKeys || question.answerKeys || []
   );
+
+  const [starList, setStarList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
 
   return (
     <div
@@ -249,20 +253,24 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
           <button
             type='button'
             onClick={() => {
-              setStarred(true);
+              setStarList((prev) => prev.concat(questionNumber));
             }}
-            disabled={status === QuizStatus.ENDED || starred}
-            className={`absolute transition-all duration-300 ${starred ? '-z-10 opacity-0' : ''}`}
+            disabled={status === QuizStatus.ENDED || starList.includes(questionNumber)}
+            className={`absolute transition-all duration-300 ${
+              starList.includes(questionNumber) ? '-z-10 opacity-0' : ''
+            }`}
           >
             <Icon.StarDim className='h-6 w-auto' />
           </button>
           <button
             type='button'
             onClick={() => {
-              setStarred(false);
+              setStarList((prev) => prev.filter((star) => star !== questionNumber));
             }}
-            disabled={status === QuizStatus.ENDED || !starred}
-            className={`relative transition-all duration-300 ${starred ? '' : '-z-10 opacity-0'}`}
+            disabled={status === QuizStatus.ENDED || !starList.includes(questionNumber)}
+            className={`relative transition-all duration-300 ${
+              starList.includes(questionNumber) ? '' : '-z-10 opacity-0'
+            }`}
           >
             <Icon.StarLit className='h-6 w-auto' />
           </button>

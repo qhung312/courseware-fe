@@ -1,7 +1,8 @@
 import _, { chunk, debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import Countdown from 'react-countdown';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
 
 import { QuizSession } from '../../types';
 import { parseCountdown } from '../../utils/helper';
@@ -12,10 +13,10 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
   submit,
   currentSet,
 }) => {
-  const navigate = useNavigate();
   const params = useParams();
   const [page, setPage] = useState(1);
   const [timeLeft, setTimeLeft] = useState(Date.now() + quiz.timeLeft);
+  const [starList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
   const questionChunks = chunk(quiz.questions, 40);
@@ -74,11 +75,6 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                 onTick={(props) => {
                   setTimeLeft(Date.now() + props.total);
                 }}
-                onComplete={() =>
-                  navigate(
-                    `/room/exercises/${params.subjectId}/quiz/${params.quizId}/review/session/${params.sessionId}`
-                  )
-                }
                 renderer={(props) => (
                   <p className='text-[#4285F4]'>{parseCountdown(props.total)}</p>
                 )}
@@ -97,19 +93,23 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
               <div
                 key={`desktop-${question.questionId}-list-${quiz._id}`}
                 className={`flex h-10 w-10 items-center justify-center 3xl:h-[52px] 3xl:w-[52px] ${
-                  question.isCorrect !== undefined
+                  starList.includes((page - 1) * 40 + index + 1)
+                    ? 'bg-[#FBCB43]'
+                    : question.isCorrect !== undefined
                     ? question.isCorrect
                       ? 'bg-[#49BBBD]'
                       : 'bg-[#DB4437]'
-                    : question.starred
-                    ? 'bg-[#FBCB43]'
                     : _.some(
                         [question.userAnswerKeys, question.userAnswerField],
                         (v) => !_.isEmpty(v)
                       )
                     ? 'bg-[#4285F4]'
                     : 'border border-[#4285F4]/50 bg-transparent'
-                } ${currentSet.includes(index) ? 'border-3 border-[#FBCB43]' : ''}`}
+                } ${
+                  currentSet.includes((page - 1) * 40 + index)
+                    ? 'border-[3px] border-[#FBCB43]'
+                    : ''
+                }`}
               >
                 <p
                   className={`text-center text-base font-semibold ${

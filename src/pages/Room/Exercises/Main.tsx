@@ -172,7 +172,7 @@ const Main: React.FC = () => {
                                   navigate(
                                     `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
                                   );
-                                  localStorage.removeItem(`quiz-${quiz._id}-starList`);
+                                  localStorage.removeItem(`quiz-${variables}-starList`);
                                 },
                               })
                             : navigate(
@@ -205,7 +205,7 @@ const Main: React.FC = () => {
                                 navigate(
                                   `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
                                 );
-                                localStorage.removeItem(`quiz-${quiz._id}-starList`);
+                                localStorage.removeItem(`quiz-${variables}-starList`);
                               },
                             })
                           : navigate(

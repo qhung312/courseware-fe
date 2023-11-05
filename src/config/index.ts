@@ -1,5 +1,5 @@
-export const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT;
-export const API_URL = process.env.REACT_APP_API_URL;
+export const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT as string;
+export const API_URL = process.env.REACT_APP_API_URL as string;
 
 export const DEFAULT_TITLE = 'CLB Chúng ta cùng tiến';
 export const TITLE = 'CTCT';
