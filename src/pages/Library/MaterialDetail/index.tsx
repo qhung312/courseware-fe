@@ -22,6 +22,7 @@ const MaterialDetailPage: React.FC = () => {
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
+      console.log('Material id: ', params?.pdfId);
       MaterialService.getById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;
@@ -75,7 +76,7 @@ const MaterialDetailPage: React.FC = () => {
           </Link>
 
           {/* PDF */}
-          <PDF url={`${API_URL}/material/download/${params.pdfId}`} />
+          <PDF url={`${API_URL}material/${params.pdfId}/download`} />
         </div>
       </Wrapper>
     </Page>
