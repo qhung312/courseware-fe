@@ -70,7 +70,7 @@ const SubjectStatistic = () => {
     <Page title='Thông tin người dùng - Thống kê điểm số'>
       <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
-        <ProfileOption option={3} />
+        <ProfileOption option={3} editAvatar={false} setAvatar={() => {}} updatedName='' />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:pt-10 lg:px-[60px]'>
           <Link
             to='/profile/statistic'
@@ -174,8 +174,8 @@ const SubjectStatistic = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </main>
-      <Footer />
     </Page>
   );
 };
