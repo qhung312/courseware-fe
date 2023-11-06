@@ -266,7 +266,7 @@ const MaterialList = () => {
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/material/edit/${material._id}`)}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
                               >
                                 <Icon.Edit
                                   fill='white'
