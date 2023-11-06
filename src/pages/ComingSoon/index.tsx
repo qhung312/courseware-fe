@@ -6,12 +6,14 @@ import { Page } from '../../layout';
 const ComingSoon: FC = () => {
   return (
     <Page title='Coming soon...'>
-      <Lottie
-        animationData={require('../../assets/animations/ComingSoon.json')}
-        autoPlay
-        loop
-        className='m-20'
-      />
+      <div className='with-nav-height flex items-center justify-center px-20'>
+        <Lottie
+          animationData={require('../../assets/animations/ComingSoon.json')}
+          autoPlay
+          loop
+          className='md:w-[70vw]'
+        />
+      </div>
     </Page>
   );
 };
