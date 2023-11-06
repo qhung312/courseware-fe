@@ -41,8 +41,8 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
           {quiz.status === 'ENDED' ? (
             <>
               <div
-                className='flex flex-1 flex-row items-center gap-x-3 rounded-lg border border-[#49CCCF]
-              bg-white p-4 3xl:p-5'
+                className='flex flex-1 flex-row items-center gap-x-4 rounded-lg border border-[#49CCCF] bg-white
+              p-4 3xl:gap-x-5 3xl:p-5'
               >
                 <div className='flex flex-row items-center justify-center rounded-lg bg-[#49CCCF] p-2'>
                   <Icon.CorrectTotal className='h-8 w-auto' fill='white' fillOpacity={87} />
@@ -57,8 +57,8 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                 </div>
               </div>
               <div
-                className='flex flex-1 flex-row items-center gap-x-3 rounded-lg border border-[#49CCCF]
-              bg-white p-4 3xl:p-5'
+                className='flex flex-1 flex-row items-center gap-x-4 rounded-lg border border-[#49CCCF] bg-white
+              p-4 3xl:gap-x-5 3xl:p-5'
               >
                 <div className='flex flex-row items-center justify-center rounded-lg bg-[#5B72EE] p-2'>
                   <Icon.PieChart className='h-8 w-auto' fill='white' fillOpacity={87} />
@@ -82,7 +82,9 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                   setTimeLeft(Date.now() + props.total);
                 }}
                 renderer={(props) => (
-                  <p className='text-[#4285F4]'>{parseCountdown(props.total)}</p>
+                  <p className='text-base font-medium text-[#4285F4] lg:text-lg 3xl:text-2xl'>
+                    {parseCountdown(props.total)}
+                  </p>
                 )}
               />
             </>

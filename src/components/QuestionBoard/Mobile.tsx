@@ -118,7 +118,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
         </div>
         {quiz.status === 'ENDED' ? (
           <>
-            <div className='flex w-full flex-row items-center gap-x-6 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
+            <div className='flex w-full flex-row items-center gap-x-4 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
               <div className='flex h-16 w-16 flex-row items-center justify-center rounded-lg bg-[#49CCCF]/30'>
                 <Icon.CorrectTotal className='h-10 w-auto' fill='#49CCCF' />
               </div>
@@ -127,7 +127,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
                 <p className='text-xl font-bold text-[#666]'>{result.totalCorrect}</p>
               </div>
             </div>
-            <div className='flex w-full flex-row items-center gap-x-6 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
+            <div className='flex w-full flex-row items-center gap-x-4 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
               <div className='flex h-16 w-16 flex-row items-center justify-center rounded-lg bg-[#5B72EE]/30'>
                 <Icon.PieChart className='h-10 w-auto' fill='#5B72EE' />
               </div>

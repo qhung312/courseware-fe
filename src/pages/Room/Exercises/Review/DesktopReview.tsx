@@ -28,7 +28,7 @@ const DesktopReview: React.FC<{
       md:block lg:pr-[360px] xl:pr-[430px] 2xl:pr-[520px] 3xl:pr-[600px]'
     >
       <div className='flex min-h-full w-full flex-col items-start justify-start bg-white p-5 lg:p-8 3xl:p-20'>
-        <div className='flex w-full flex-col space-y-4 lg:space-y-5 3xl:space-y-6'>
+        <div className='flex w-full flex-col'>
           <h3 className='text-xl font-semibold text-[#666] lg:text-2xl 3xl:text-3xl'>
             {quiz.fromQuiz.subject.name}
           </h3>
@@ -49,7 +49,7 @@ const DesktopReview: React.FC<{
             </div>
           </div>
 
-          <div className='flex flex-row gap-x-4'>
+          <div className='mt-4 flex flex-row gap-x-4 lg:mt-6 3xl:mt-[60px]'>
             <div className='w-fit rounded-lg border-2 border-[#49BBDD]/30 p-3 lg:p-4 3xl:p-5'>
               <p className='text-sm font-medium lg:text-base 3xl:text-xl'>
                 Trang hiện tại:{' '}
@@ -66,7 +66,7 @@ const DesktopReview: React.FC<{
             </div>
           </div>
 
-          <div className='flex flex-col space-y-4'>
+          <div className='mt-5 mb-10 flex flex-col space-y-4 lg:mt-8 3xl:mt-20'>
             {questionChunks[page - 1]?.map((question, index) => (
               <QuestionCard
                 key={`desktop-question-${question.questionId}-review`}
