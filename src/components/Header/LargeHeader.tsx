@@ -73,9 +73,9 @@ const LargeHeader = () => {
         <div className='relative flex flex-row gap-x-[52px]'>
           <div className='relative flex flex-row items-center'>
             <input
-              className='w-[400px] rounded-[40px] border border-[#49BBBD] bg-inherit
-              py-[8px] pl-[20px] pr-[60px] 3xl:w-[500px] 3xl:py-[12px]
-              3xl:pl-[24px] 3xl:pr-[72px]'
+              className='w-[400px] rounded-lg border border-[#49BBBD] bg-inherit
+              py-1 pl-5 pr-[60px] text-sm 3xl:w-[500px]
+              3xl:py-3 3xl:pl-6 3xl:pr-[72px]'
             />
             <button
               type='button'
