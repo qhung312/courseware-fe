@@ -29,7 +29,6 @@ const Detail: React.FC = () => {
 
   useEffect(() => {
     const onEndQuizSession = async () => {
-      console.log('end quiz');
       await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
       navigate(
         `/room/exercises/${params.subjectId}/quiz/${params.quizId}/review/session/${params.sessionId}`

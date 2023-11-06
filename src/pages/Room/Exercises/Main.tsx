@@ -47,7 +47,6 @@ const Main: React.FC = () => {
   const sessionMutation = useMutation({
     mutationFn: QuizSessionService.create,
     onSuccess: (_data, variables) => {
-      console.log('onSuccess', _data, variables);
       queryClient.invalidateQueries({ queryKey: ['session', variables] });
     },
   });
@@ -144,7 +143,7 @@ const Main: React.FC = () => {
                         <div className='hidden flex-1 flex-row items-center gap-x-1 md:flex'>
                           <Icon.Exercise className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                           <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
-                            Chương {quiz.chapter.name}
+                            {quiz.chapter.name}
                           </p>
                         </div>
                         <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' />
@@ -156,8 +155,8 @@ const Main: React.FC = () => {
                         </div>
                         <div className='flex flex-1 flex-row items-center gap-x-1'>
                           <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
-                          <p className='text-xs text-[#666] lg:text-sm 3xl:text-base'>
-                            {quiz.sampleSize} câu
+                          <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
+                            {`${quiz.sampleSize} câu`}
                           </p>
                         </div>
                       </div>
@@ -165,7 +164,6 @@ const Main: React.FC = () => {
                         className='hidden rounded-lg bg-[#4285F4]/80 px-5 py-4 hover:bg-[#4285F4]
                         md:flex md:px-3 md:py-2 lg:px-5 lg:py-3 3xl:px-7 3xl:py-4'
                         onClick={() => {
-                          console.log(sessionQueriesResult);
                           sessionQueriesResult[index]?.data === null
                             ? sessionMutation.mutate(quiz._id, {
                                 onSuccess: ({ data }, variables) => {

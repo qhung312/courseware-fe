@@ -1,11 +1,11 @@
 import _, { chunk, debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
 import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { QuizSession } from '../../types';
-import { parseCountdown } from '../../utils/helper';
+import { calculateProgress, parseCountdown } from '../../utils/helper';
 import Icon from '../Icon';
 
 const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
@@ -20,6 +20,8 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
   const questionChunks = chunk(quiz.questions, 40);
+
+  const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
 
   useEffect(() => {
     setTimeLeft(Date.now() + quiz.timeLeft);
@@ -49,7 +51,9 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                   <p className='w-fit whitespace-nowrap text-base font-medium lg:text-lg 3xl:text-xl'>
                     Số câu trả lời đúng
                   </p>
-                  <p className='text-lg font-semibold text-[#666] lg:text-xl 3xl:text-2xl'>100</p>
+                  <p className='text-lg font-semibold text-[#666] lg:text-xl 3xl:text-2xl'>
+                    {result.totalCorrect}
+                  </p>
                 </div>
               </div>
               <div
@@ -63,7 +67,9 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                   <p className='w-fit whitespace-nowrap text-base font-medium lg:text-lg 3xl:text-xl'>
                     Tỉ lệ trả lời đúng
                   </p>
-                  <p className='text-lg font-semibold text-[#666] lg:text-xl 3xl:text-2xl'>30%</p>
+                  <p className='text-lg font-semibold text-[#666] lg:text-xl 3xl:text-2xl'>
+                    {result.correctPercentage}%
+                  </p>
                 </div>
               </div>
             </>
@@ -116,7 +122,7 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                     _.some(
                       [question.userAnswerKeys, question.userAnswerField],
                       (v) => !_.isEmpty(v)
-                    ) || question.starred
+                    ) || starList.includes((page - 1) * 40 + index + 1)
                       ? 'text-white'
                       : ''
                   }`}

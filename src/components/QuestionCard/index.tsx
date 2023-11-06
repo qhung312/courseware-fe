@@ -41,8 +41,8 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
       const { data } = await QuizSessionService.saveAnswer(sessionId, questionId, answer);
       return data.payload;
     },
-    onSuccess: async (_data, variables) => {
-      await queryClient.invalidateQueries(['quiz', params.quizId, variables.sessionId]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
     },
   });
 
@@ -85,7 +85,6 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 <input
                   id={`question-${question.questionId}-answer-${option.key}`}
                   onChange={() => {
-                    console.log('option', option.key);
                     setNumberAnswer([option.key]);
                     debounce(
                       () =>
@@ -121,11 +120,14 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                       question.answerKeys[0] === option.key)
                   }
                 />
-                <span className='absolute left-1/2 flex items-center justify-center'>
+                <label
+                  htmlFor={`question-${question.questionId}-answer-${option.key}`}
+                  className='absolute left-1/2 flex items-center justify-center'
+                >
                   <span className='-ml-[100%] h-full text-xs md:text-base'>
                     {MULTIPLE_CHOICE_LABELS[index]}
                   </span>
-                </span>
+                </label>
               </div>
               <label htmlFor={`question-${question.questionId}-answer-${option.key}`}>
                 <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
@@ -219,84 +221,207 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
   const [numberAnswer, setNumberAnswer] = useState<number[]>(
     question.userAnswerKeys || question.answerKeys || []
   );
-
+  const [note, setNote] = useState<string>(question.userNote || '');
   const [starList, setStarList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
 
+  const noteMutation = useMutation({
+    mutationFn: async ({
+      sessionId,
+      questionId,
+      body,
+    }: {
+      sessionId: string;
+      body: string;
+      questionId: string;
+    }) => {
+      const newNote = {
+        note: body,
+      };
+
+      await QuizSessionService.note(sessionId, questionId, newNote);
+    },
+  });
+  const debouncedNoteMutate = debounce(noteMutation.mutate, 1000);
+
+  const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setNote(event.target.value);
+  };
+
+  const extractUserAnswer = useCallback(() => {
+    switch (question.type) {
+      case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
+        return `${
+          question.userAnswerKeys === undefined
+            ? 'Không trả lời'
+            : MULTIPLE_CHOICE_LABELS[
+                _.findIndex(
+                  question.options,
+                  (option) => !!question.userAnswerKeys?.includes(option.key)
+                )
+              ]
+        }`;
+      case 'MULTIPLE_CHOICE_MULTIPLE_ANSWERS':
+        return `${
+          question.userAnswerKeys === undefined
+            ? 'Không trả lời'
+            : question.userAnswerKeys.join(', ')
+        }`;
+      default:
+        return 'Không trả lời';
+    }
+  }, [question]);
+
+  const extractAnswer = useCallback(() => {
+    switch (question.type) {
+      case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
+        return `${
+          question.answerKeys === undefined
+            ? 'Không trả lời'
+            : MULTIPLE_CHOICE_LABELS[
+                _.findIndex(
+                  question.options,
+                  (option) => !!question.answerKeys?.includes(option.key)
+                )
+              ]
+        }`;
+      case 'MULTIPLE_CHOICE_MULTIPLE_ANSWERS':
+        return `${
+          question.answerKeys === undefined ? 'Không trả lời' : question.answerKeys.join(', ')
+        }`;
+      default:
+        return 'Không trả lời';
+    }
+  }, [question]);
+
   return (
-    <div
-      className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4
-      md:bg-[#9DCCFF]/20 3xl:space-y-6'
-    >
-      <div className='flex w-full flex-row items-center justify-between gap-x-6'>
-        <div className='flex flex-row items-center gap-x-2'>
-          <div
-            className={`flex h-5 w-5 items-center justify-center rounded-full p-1 ${
-              status === QuizStatus.ENDED ? '' : 'hidden'
-            } ${
-              question.isCorrect === undefined
-                ? 'border border-[#49CCCF] bg-transparent'
-                : question.isCorrect
-                ? 'bg-[#49CCCF]'
-                : 'bg-[#DB4437]'
-            }`}
-          >
-            <Icon.XMark
-              className={`h-full w-full ${
-                question.isCorrect === undefined ? 'hidden' : question.isCorrect ? 'hidden' : ''
-              }`}
-            />
-          </div>
-          <p className='text-base font-semibold md:text-lg 3xl:text-xl'>Câu {questionNumber}</p>
-        </div>
-
-        <div className='relative flex flex-row items-center'>
-          <button
-            type='button'
-            onClick={() => {
-              setStarList((prev) => prev.concat(questionNumber));
-            }}
-            disabled={status === QuizStatus.ENDED || starList.includes(questionNumber)}
-            className={`absolute transition-all duration-300 ${
-              starList.includes(questionNumber) ? '-z-10 opacity-0' : ''
-            }`}
-          >
-            <Icon.StarDim className='h-6 w-auto' />
-          </button>
-          <button
-            type='button'
-            onClick={() => {
-              setStarList((prev) => prev.filter((star) => star !== questionNumber));
-            }}
-            disabled={status === QuizStatus.ENDED || !starList.includes(questionNumber)}
-            className={`relative transition-all duration-300 ${
-              starList.includes(questionNumber) ? '' : '-z-10 opacity-0'
-            }`}
-          >
-            <Icon.StarLit className='h-6 w-auto' />
-          </button>
-        </div>
-      </div>
-
-      <span className='hidden w-full border border-t-[#666] md:flex' />
-
+    <>
       <div
-        className='flex w-full flex-col items-start space-y-2 rounded-lg bg-[#9DCCFF]/20 p-2
+        className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4
+      md:bg-[#9DCCFF]/20 3xl:space-y-6'
+      >
+        <div className='flex w-full flex-row items-center justify-between gap-x-6'>
+          <div className='flex flex-row items-center gap-x-2'>
+            <div
+              className={`flex h-5 w-5 items-center justify-center rounded-full p-1 ${
+                status === QuizStatus.ENDED ? '' : 'hidden'
+              } ${
+                question.isCorrect === undefined
+                  ? 'border border-[#49CCCF] bg-transparent'
+                  : question.isCorrect
+                  ? 'bg-[#49CCCF]'
+                  : 'bg-[#DB4437]'
+              }`}
+            >
+              <Icon.XMark
+                className={`h-full w-full ${
+                  question.isCorrect === undefined ? 'hidden' : question.isCorrect ? 'hidden' : ''
+                }`}
+              />
+            </div>
+            <p className='text-base font-semibold md:text-lg 3xl:text-xl'>Câu {questionNumber}</p>
+          </div>
+
+          <div className='relative flex flex-row items-center'>
+            <button
+              type='button'
+              onClick={() => {
+                setStarList((prev) => prev.concat(questionNumber));
+              }}
+              disabled={status === QuizStatus.ENDED || starList.includes(questionNumber)}
+              className={`absolute transition-all duration-300 ${
+                starList.includes(questionNumber) ? '-z-10 opacity-0' : ''
+              }`}
+            >
+              <Icon.StarDim className='h-6 w-auto' />
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                setStarList((prev) => prev.filter((star) => star !== questionNumber));
+              }}
+              disabled={status === QuizStatus.ENDED || !starList.includes(questionNumber)}
+              className={`relative transition-all duration-300 ${
+                starList.includes(questionNumber) ? '' : '-z-10 opacity-0'
+              }`}
+            >
+              <Icon.StarLit className='h-6 w-auto' />
+            </button>
+          </div>
+        </div>
+
+        <span className='hidden w-full border border-t-[#666] md:flex' />
+
+        <div
+          className='flex w-full flex-col items-start space-y-2 rounded-lg bg-[#9DCCFF]/20 p-2
         md:bg-transparent md:p-0 lg:space-y-3
         3xl:space-y-6'
-      >
-        <Markdown>{question.description}</Markdown>
-        <InputAnswer
-          status={status}
-          question={question}
-          helpers={{
-            stringAnswer,
-            numberAnswer,
-            setStringAnswer,
-            setNumberAnswer,
-          }}
-        />
+        >
+          <Markdown>{question.description}</Markdown>
+          <InputAnswer
+            status={status}
+            question={question}
+            helpers={{
+              stringAnswer,
+              numberAnswer,
+              setStringAnswer,
+              setNumberAnswer,
+            }}
+          />
+        </div>
       </div>
-    </div>
+      {status === QuizStatus.ENDED && (
+        <div className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
+          <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+            <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
+            <div className='flex flex-col items-start justify-center gap-y-1'>
+              <div className='flex flex-row items-center gap-x-2'>
+                <Icon.UserAnswer className='h-5 w-auto' fill='#49BBBD' />
+                <p className='text-base font-semibold text-[#666]'>
+                  Đáp án bạn chọn: {extractUserAnswer()}
+                </p>
+              </div>
+              <div className='flex flex-row items-center gap-x-2'>
+                <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
+                <p className='text-base font-semibold text-[#666]'>
+                  Đáp án đúng: {extractAnswer()}
+                </p>
+              </div>
+            </div>
+            <span className='my-4 border-t border-[#666]' />
+            <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+            <Markdown>{question.explanation}</Markdown>
+          </div>
+          <form className='flex flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+            <div className='mb-2 flex flex-row items-center justify-between gap-x-2'>
+              <div className='flex flex-row items-center gap-x-2'>
+                <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
+                <h3 className='text-xl font-semibold'>Ghi chú</h3>
+              </div>
+
+              <button
+                type='submit'
+                onClick={(event) => {
+                  event.preventDefault();
+                  debouncedNoteMutate({
+                    body: note,
+                    sessionId: params.sessionId as string,
+                    questionId: String(question.questionId),
+                  });
+                }}
+              >
+                <p>Lưu</p>
+              </button>
+            </div>
+
+            <textarea
+              className='h-full w-full resize-none focus:outline-none'
+              value={note}
+              onChange={handleNoteChange}
+            />
+          </form>
+        </div>
+      )}
+    </>
   );
 };
 

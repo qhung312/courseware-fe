@@ -1,9 +1,9 @@
-import _, { chunk } from 'lodash';
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { chunk } from 'lodash';
+import { useEffect, useMemo, useState } from 'react';
 
-import { Icon, Markdown, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
-import { ConcreteQuestion, QuizSession } from '../../../../types';
-import { MULTIPLE_CHOICE_LABELS, calculateProgress, parseDuration } from '../../../../utils/helper';
+import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
+import { QuizSession } from '../../../../types';
+import { calculateProgress, parseDuration } from '../../../../utils/helper';
 
 const DesktopReview: React.FC<{
   quiz: QuizSession;
@@ -13,55 +13,13 @@ const DesktopReview: React.FC<{
   const pageSize = 4;
 
   const currentSet = Array.from({ length: 4 }, (_a, index) => (page - 1) * pageSize + index);
-  const [questionChunks] = useState(chunk(quiz.questions, 4));
+  const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
+
+  useEffect(() => {
+    setQuestionChunks(chunk(quiz.questions, 4));
+  }, [quiz]);
 
   const progress = useMemo(() => calculateProgress(quiz.questions), [quiz]);
-
-  const extractUserAnswer = useCallback((question: ConcreteQuestion) => {
-    switch (question.type) {
-      case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
-        return `${
-          question.userAnswerKeys === undefined
-            ? 'Không trả lời'
-            : MULTIPLE_CHOICE_LABELS[
-                _.findIndex(
-                  question.options,
-                  (option) => !!question.userAnswerKeys?.includes(option.key)
-                )
-              ]
-        }`;
-      case 'MULTIPLE_CHOICE_MULTIPLE_ANSWERS':
-        return `${
-          question.userAnswerKeys === undefined
-            ? 'Không trả lời'
-            : question.userAnswerKeys.join(', ')
-        }`;
-      default:
-        return 'Không trả lời';
-    }
-  }, []);
-
-  const extractAnswer = useCallback((question: ConcreteQuestion) => {
-    switch (question.type) {
-      case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
-        return `${
-          question.answerKeys === undefined
-            ? 'Không trả lời'
-            : MULTIPLE_CHOICE_LABELS[
-                _.findIndex(
-                  question.options,
-                  (option) => !!question.answerKeys?.includes(option.key)
-                )
-              ]
-        }`;
-      case 'MULTIPLE_CHOICE_MULTIPLE_ANSWERS':
-        return `${
-          question.answerKeys === undefined ? 'Không trả lời' : question.answerKeys.join(', ')
-        }`;
-      default:
-        return 'Không trả lời';
-    }
-  }, []);
 
   return (
     <main
@@ -110,42 +68,12 @@ const DesktopReview: React.FC<{
 
           <div className='flex flex-col space-y-4'>
             {questionChunks[page - 1]?.map((question, index) => (
-              <Fragment key={`desktop-question-${question.questionId}-review`}>
-                <QuestionCard
-                  question={question}
-                  status={quiz.status}
-                  questionNumber={(page - 1) * pageSize + index + 1}
-                />
-                <div className='flex h-full w-full flex-row gap-x-4'>
-                  <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
-                    <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
-                    <div className='flex flex-col items-start justify-center gap-y-1'>
-                      <div className='flex flex-row items-center gap-x-2'>
-                        <Icon.UserAnswer className='h-5 w-auto' fill='#49BBBD' />
-                        <p className='text-base font-semibold text-[#666]'>
-                          Đáp án bạn chọn: {extractUserAnswer(question)}
-                        </p>
-                      </div>
-                      <div className='flex flex-row items-center gap-x-2'>
-                        <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
-                        <p className='text-base font-semibold text-[#666]'>
-                          Đáp án đúng: {extractAnswer(question)}
-                        </p>
-                      </div>
-                    </div>
-                    <span className='my-4 border-t border-[#666]' />
-                    <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
-                    <Markdown>{question.explanation}</Markdown>
-                  </div>
-                  <div className='flex flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
-                    <div className='mb-2 flex flex-row items-center gap-x-2'>
-                      <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
-                      <h3 className='text-xl font-semibold'>Ghi chú</h3>
-                    </div>
-                    <textarea className='h-full w-full resize-none focus:outline-none' />
-                  </div>
-                </div>
-              </Fragment>
+              <QuestionCard
+                key={`desktop-question-${question.questionId}-review`}
+                question={question}
+                status={quiz.status}
+                questionNumber={(page - 1) * pageSize + index + 1}
+              />
             ))}
           </div>
           <Pagination

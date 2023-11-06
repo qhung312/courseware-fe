@@ -13,11 +13,11 @@ const Review: React.FC = () => {
   const params = useParams();
   const { data: quiz, isLoading } = useQuery({
     queryKey: ['quiz', params.quizId, params.sessionId],
-    staleTime: Infinity,
     queryFn: async () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
     },
+    refetchOnWindowFocus: true,
   });
   const { width } = useWindowDimensions();
 

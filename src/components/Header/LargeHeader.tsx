@@ -454,24 +454,6 @@ const LargeHeader = () => {
             </NavLink>
           </nav>
         </div>
-        <NavLink
-          to='/help'
-          end
-          className='flex h-[100%] items-center justify-start
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-        >
-          <p
-            className='whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-            style={{
-              color: pathname === '/help' ? '#FFFFFF' : '#5B5B5B',
-              backgroundColor: pathname === '/help' ? '#4285f4' : 'transparent',
-              borderRadius: '8px',
-            }}
-          >
-            Hỗ trợ
-          </p>
-        </NavLink>
         {isAuthenticated &&
         (user.isManager ||
           _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (

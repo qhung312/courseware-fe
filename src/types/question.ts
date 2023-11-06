@@ -23,7 +23,7 @@ export type ConcreteQuestion = {
   }[];
   answerKeys?: number[];
   answerField?: string | number;
-  starred: boolean;
+  userNote?: string;
 
   matchCase?: boolean;
   maximumError?: number;

@@ -1,9 +1,10 @@
 import _, { chunk, debounce } from 'lodash';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { QuizSession } from '../../types';
+import { calculateProgress } from '../../utils/helper';
 import Icon from '../Icon';
 
 const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
@@ -15,6 +16,8 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [starList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
+
+  const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
   const questionChunks = chunk(quiz.questions, 40);
@@ -63,7 +66,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
                   _.some(
                     [question.userAnswerKeys, question.userAnswerField],
                     (v) => !_.isEmpty(v)
-                  ) || question.starred
+                  ) || starList.includes((page - 1) * 40 + index + 1)
                     ? 'text-white'
                     : ''
                 }`}
@@ -121,7 +124,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
               </div>
               <div className='flex flex-col items-start gap-y-4'>
                 <p className='text-lg font-semibold'>Số câu trả lời đúng</p>
-                <p className='text-xl font-bold text-[#666]'>100</p>
+                <p className='text-xl font-bold text-[#666]'>{result.totalCorrect}</p>
               </div>
             </div>
             <div className='flex w-full flex-row items-center gap-x-6 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
@@ -130,7 +133,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
               </div>
               <div className='flex flex-col items-start gap-y-4'>
                 <p className='text-lg font-semibold'>Tỉ lệ trả lời đúng</p>
-                <p className='text-xl font-bold text-[#666]'>30%</p>
+                <p className='text-xl font-bold text-[#666]'>{result.correctPercentage}%</p>
               </div>
             </div>
           </>
