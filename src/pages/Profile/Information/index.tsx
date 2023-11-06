@@ -183,7 +183,7 @@ const UserInformation = () => {
                   id='birthday'
                   name='birthday'
                   disabled={!isEditMode}
-                  value={formattedDate}
+                  value={userProfile?.dateOfBirth ? formattedDate : ''}
                   onChange={(e) =>
                     setUserProfile({
                       ...userProfile,
