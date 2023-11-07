@@ -131,7 +131,7 @@ const Main: React.FC = () => {
                   <h4 className='mb-1 text-lg font-semibold md:mb-4 lg:mb-6 lg:text-xl 3xl:mb-8 3xl:text-2xl'>
                     {quiz.name}
                   </h4>
-                  <div className='flex flex-col gap-y-4 md:flex-col-reverse'>
+                  <div className='flex flex-col gap-y-4 md:flex-col-reverse lg:gap-y-6 3xl:gap-y-8'>
                     <div className='flex flex-row items-center justify-between'>
                       <div className='flex h-fit flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none lg:gap-x-4 3xl:gap-x-6'>
                         <div className='hidden flex-1 flex-row items-center gap-x-1 md:flex'>
