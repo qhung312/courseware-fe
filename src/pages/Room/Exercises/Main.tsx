@@ -134,7 +134,7 @@ const Main: React.FC = () => {
                   key={`${quiz.name}-${index}`}
                   className='flex flex-col rounded-lg bg-white p-4 lg:p-6 3xl:p-8'
                 >
-                  <h4 className='mb-2 text-lg font-semibold lg:text-xl 3xl:text-2xl'>
+                  <h4 className='mb-2 text-lg font-semibold md:mb-4 lg:text-xl 3xl:text-2xl'>
                     {quiz.name}
                   </h4>
                   <div className='flex flex-col gap-y-4 md:flex-col-reverse'>
