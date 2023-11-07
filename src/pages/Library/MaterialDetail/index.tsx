@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Icon } from '../../../components';
 import PDF from '../../../components/PDF';
@@ -15,13 +15,16 @@ import type { Material } from '../../../types/material';
 
 const MaterialDetailPage: React.FC = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const [material, setMaterial] = useState<Material | null>(null);
   const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const toggleAside = useBoundStore.use.toggleAside();
   const subjects = useBoundStore.use.subjects();
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
+      console.log('Material id: ', params?.pdfId);
       MaterialService.getById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;
@@ -66,16 +69,20 @@ const MaterialDetailPage: React.FC = () => {
         </div>
 
         <div className='my-6 w-full space-y-5 px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
-          <Link
-            to={`/library/material/${params.subjectId}`}
+          <button
+            type='button'
+            onClick={() => {
+              navigate(-1);
+              toggleAside();
+            }}
             className='flex items-center space-x-2 hover:underline'
           >
             <Icon.ChevronLeft className='max-w-2 min-w-2 min-h-3 max-h-3 fill-black' />
             <p className='w-[100px]'>Quay lại</p>
-          </Link>
+          </button>
 
           {/* PDF */}
-          <PDF url={`${API_URL}/material/download/${params.pdfId}`} />
+          <PDF url={`${API_URL}material/${params.pdfId}/download`} />
         </div>
       </Wrapper>
     </Page>

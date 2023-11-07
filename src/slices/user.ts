@@ -20,10 +20,15 @@ export const initialState: TUserState = {
   googleId: '',
   accessLevels: [],
   isManager: false,
-  name: '',
+  familyAndMiddleName: '',
+  givenName: '',
   picture: '',
   dateOfBirth: 0,
   email: '',
+  studentId: '',
+  major: '',
+  phoneNumber: '',
+  gender: '',
 };
 
 export const UserSlice: StateCreator<
@@ -42,10 +47,15 @@ export const UserSlice: StateCreator<
           googleId: data.payload?.googleId,
           accessLevels: data.payload?.accessLevels,
           isManager: data.payload?.isManager,
-          name: data.payload?.name,
+          familyAndMiddleName: data.payload?.familyAndMiddleName,
+          givenName: data.payload?.givenName,
           picture: data.payload?.picture,
           dateOfBirth: data.payload?.dateOfBirth,
           email: data.payload?.email,
+          studentId: data.payload?.studentId,
+          major: data.payload?.major,
+          phoneNumber: data.payload?.phoneNumber,
+          gender: data.payload?.gender,
         },
         isAuthenticated: true,
       }));

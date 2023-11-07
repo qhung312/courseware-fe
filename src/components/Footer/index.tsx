@@ -19,7 +19,7 @@ const Footer = () => {
                 </p>
               </div>
               <div className=''>
-                <Icon.LogoGDSC className='h-[3rem] w-[11rem] sm:h-[5rem] sm:w-[15rem] md:h-[7rem] md:w-[17rem] lg:h-[4rem] lg:w-[13rem] xl:h-[4.5rem] xl:w-[14.5rem] 2xl:h-[5rem] 2xl:w-[15rem]' />
+                <Icon.LogoFessior className='h-[3rem] w-[11rem] sm:h-[4rem] sm:w-[12rem] md:h-[5rem] md:w-[15rem] lg:h-[3rem] lg:w-[10rem] xl:h-[4rem] xl:w-[13rem] 2xl:h-[5rem] 2xl:w-[14rem]' />
               </div>
             </div>
           </div>
