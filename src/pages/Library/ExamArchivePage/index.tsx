@@ -59,7 +59,6 @@ const ExamArchivePage: React.FC = () => {
         <LibraryAside
           title='Thư viện tài liệu'
           subTitle='Đề thi các môn học'
-          description='Lorem ipsum dolor sit amet, consectetur adi'
           baseRoute='/library/exam-archive'
         />
 
@@ -81,7 +80,6 @@ const ExamArchivePage: React.FC = () => {
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Đề thi các môn học'
-        description='Lorem ipsum dolor sit amet, consectetur adi'
         baseRoute='/library/exam-archive'
       />
 
