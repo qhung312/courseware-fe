@@ -26,8 +26,6 @@ const SubjectList = () => {
   const subjectToDelete = React.useRef<string | null>(null);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  console.log(subjectToDelete.current);
-
   const onDeleteSubject = () => {
     const subjectId = subjectToDelete.current;
     if (subjectId !== null) {
@@ -61,7 +59,6 @@ const SubjectList = () => {
     )
       .then((res) => {
         const { total, result: allSubjects } = res.data.payload;
-        console.log(allSubjects[0].createdAt);
         setSubjects(allSubjects);
         setTotalCount(total);
       })

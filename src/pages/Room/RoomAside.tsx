@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import Skeleton from 'react-loading-skeleton';
 
 import { AsideLink, Icon } from '../../components';
-import subjects from '../../data/subjects';
 import { Aside } from '../../layout';
+import useBoundStore from '../../store';
 interface RoomAsideProps {
   title?: string;
   subTitle?: string;
@@ -11,25 +12,28 @@ interface RoomAsideProps {
 }
 
 const RoomAside: React.FC<RoomAsideProps> = ({ title, subTitle, description, baseRoute }) => {
-  // const { subjects } = useAppSelector((state: RootState) => state.library);
-
-  // const dispatch = useAppDispatch();
-
-  // useLayoutEffect(() => {
-  //   dispatch(getAllSubjects());
-  // }, [dispatch]);
+  const subjects = useBoundStore.use.subjects();
+  const getAllSubjects = useBoundStore.use.getAllSubjects();
+  const { isLoading } = useQuery({
+    queryKey: ['subjects', subjects],
+    queryFn: async () => {
+      await getAllSubjects();
+      return subjects;
+    },
+    staleTime: Infinity,
+  });
 
   return (
     <Aside title={title} subTitle={subTitle} description={description}>
       <div className='flex flex-col space-y-4'>
-        {subjects !== null ? (
-          subjects?.map((subj, index) => {
+        {!isLoading ? (
+          subjects?.map((subject, index) => {
             return (
               <AsideLink
-                to={`${baseRoute}/${index}`}
-                content={subj.title}
+                to={`${baseRoute}/${subject._id}`}
+                content={subject.name}
                 Icon={Icon.Exercise}
-                key={`${subj.title}-${index}`}
+                key={`${subject.description}-${index}`}
               />
             );
           })

@@ -1,15 +1,33 @@
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
-import Quiz from '../../../../data/exercises';
+import { Loading } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
+import QuizSessionService from '../../../../service/quizSession.service';
 
 import DesktopReview from './DesktopReview';
 import MobileReview from './MobileReview';
 
-const OngoingDetail: React.FC = () => {
-  const [quiz] = useState(Quiz);
+const Review: React.FC = () => {
+  const params = useParams();
+  const { data: quiz, isLoading } = useQuery({
+    queryKey: ['quiz', params.quizId, params.sessionId],
+    queryFn: async () => {
+      const { data } = await QuizSessionService.getById(params.sessionId as string);
+      return data.payload;
+    },
+    refetchOnWindowFocus: true,
+  });
   const { width } = useWindowDimensions();
+
+  if (isLoading || !quiz) {
+    return (
+      <Page title='Loading...'>
+        <Loading />
+      </Page>
+    );
+  }
 
   return (
     <Page title={`${quiz.fromQuiz.subject.name} - ${quiz.fromQuiz.chapter.name}`}>
@@ -18,4 +36,4 @@ const OngoingDetail: React.FC = () => {
   );
 };
 
-export default OngoingDetail;
+export default Review;

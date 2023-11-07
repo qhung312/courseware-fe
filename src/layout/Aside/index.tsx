@@ -78,11 +78,11 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
           id='collapse-button'
           type='button'
           onClick={toggleAside}
-          className='h-full w-full px-2 py-10'
+          className='px-1 py-6 lg:py-8 3xl:py-10'
         >
           <Icon.Chevron
             fill={'#5B5B5B'}
-            className={`h-full transition-all duration-300 ${
+            className={`h-4 w-auto transition-all duration-300 ${
               isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'
             }`}
           />

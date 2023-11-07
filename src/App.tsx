@@ -1,10 +1,12 @@
-import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Loading } from './components';
 import { ENVIRONMENT } from './config';
 import { AdministratorRoute, UserRoute } from './routes';
+import { socket } from './socket';
 import useBoundStore from './store';
+import { SocketEvent } from './types';
 
 const App = () => {
   const setToken = useBoundStore.use.setToken();
@@ -18,7 +20,7 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     console.log('Environment:', ENVIRONMENT);
 
     if (
@@ -40,6 +42,24 @@ const App = () => {
       navigate('/');
     }
   }, [queryToken, navigate]);
+
+  useEffect(() => {
+    const onConnect = () => {
+      console.log('Connected to server');
+    };
+
+    const onDisconnect = () => {
+      console.log('Disconnected from server');
+    };
+
+    socket.on(SocketEvent.CONNECT, onConnect);
+    socket.on(SocketEvent.DISCONNECT, onDisconnect);
+
+    return () => {
+      socket.off(SocketEvent.CONNECT, onConnect);
+      socket.off(SocketEvent.DISCONNECT, onDisconnect);
+    };
+  }, []);
 
   if (loading) return <Loading />;
   return (

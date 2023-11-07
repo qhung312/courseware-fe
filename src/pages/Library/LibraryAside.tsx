@@ -17,7 +17,6 @@ interface LibraryAsideProps {
 const LibraryAside: React.FC<LibraryAsideProps> = ({ title, subTitle, description, baseRoute }) => {
   const subjects = useBoundStore.use.subjects();
   const getAllSubjects = useBoundStore.use.getAllSubjects();
-  console.log(subjects);
 
   useLayoutEffect(() => {
     getAllSubjects();

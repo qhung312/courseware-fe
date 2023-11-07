@@ -1,14 +1,26 @@
-import _ from 'lodash';
-import { useState } from 'react';
+import _, { chunk, debounce } from 'lodash';
+import { useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
 
 import { QuizSession } from '../../types';
+import { calculateProgress } from '../../utils/helper';
 import Icon from '../Icon';
 
-const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
+const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
+  quiz,
+  submit,
+  currentSet,
+}) => {
+  const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
+  const [starList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
+
+  const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
 
   const maxPage = Math.ceil(quiz.questions.length / 40);
+  const questionChunks = chunk(quiz.questions, 40);
 
   return (
     <div
@@ -29,22 +41,24 @@ const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
       <div className='flex flex-col items-start justify-between space-y-4 p-4'>
         <h2 className='text-xl font-medium'>Danh sách câu hỏi</h2>
         <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
-          {quiz.questions.map((question, index) => (
+          {questionChunks[page - 1]?.map((question, index) => (
             <div
-              key={question._id}
+              key={`mobile-${question.questionId}-list-${quiz._id}`}
               className={`flex h-10 w-10 items-center justify-center ${
                 question.isCorrect !== undefined
                   ? question.isCorrect
                     ? 'bg-[#49BBBD]'
                     : 'bg-[#DB4437]'
+                  : starList.includes((page - 1) * 40 + index + 1)
+                  ? 'bg-[#FBCB43]'
                   : _.some(
                       [question.userAnswerKeys, question.userAnswerField],
                       (v) => !_.isEmpty(v)
                     )
                   ? 'bg-[#4285F4]'
-                  : question.starred
-                  ? 'bg-[#FBCB43]'
                   : 'border border-[#4285F4]/50 bg-transparent'
+              } ${
+                currentSet.includes((page - 1) * 40 + index) ? 'border-[3px] border-[#FBCB43]' : ''
               }`}
             >
               <p
@@ -52,18 +66,22 @@ const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
                   _.some(
                     [question.userAnswerKeys, question.userAnswerField],
                     (v) => !_.isEmpty(v)
-                  ) || question.starred
+                  ) || starList.includes((page - 1) * 40 + index + 1)
                     ? 'text-white'
                     : ''
                 }`}
               >
-                {index + 1}
+                {(page - 1) * 40 + index + 1}
               </p>
             </div>
           ))}
         </div>
         <div className='flex w-full flex-1 flex-row items-center justify-between'>
-          <button type='button' className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'>
+          <button
+            onClick={debounce(submit, 1000)}
+            type='button'
+            className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'
+          >
             <p className='text-base font-semibold text-white'>
               Hoàn thành {quiz.status === 'ENDED' ? 'xem lại' : 'bài làm'}
             </p>
@@ -106,7 +124,7 @@ const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
               </div>
               <div className='flex flex-col items-start gap-y-4'>
                 <p className='text-lg font-semibold'>Số câu trả lời đúng</p>
-                <p className='text-xl font-bold text-[#666]'>100</p>
+                <p className='text-xl font-bold text-[#666]'>{result.totalCorrect}</p>
               </div>
             </div>
             <div className='flex w-full flex-row items-center gap-x-6 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
@@ -115,7 +133,7 @@ const Mobile: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
               </div>
               <div className='flex flex-col items-start gap-y-4'>
                 <p className='text-lg font-semibold'>Tỉ lệ trả lời đúng</p>
-                <p className='text-xl font-bold text-[#666]'>30%</p>
+                <p className='text-xl font-bold text-[#666]'>{result.correctPercentage}%</p>
               </div>
             </div>
           </>

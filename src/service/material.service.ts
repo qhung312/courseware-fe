@@ -66,7 +66,6 @@ const getById = (materialId: string, admin = false) => {
 
 const edit = (materialId: string, queryBody: EditArgument, admin = false) => {
   const queryString = `${API_URL}${admin ? 'admin/' : ''}material/${materialId}`;
-  console.log(queryBody);
 
   return axios.patch<Response<Material>>(queryString, queryBody);
 };

@@ -14,7 +14,7 @@ export type UserAnswer = {
 };
 
 export type ConcreteQuestion = {
-  _id: string;
+  questionId: number;
   type: QuestionType;
   description: string;
   options?: {
@@ -23,7 +23,7 @@ export type ConcreteQuestion = {
   }[];
   answerKeys?: number[];
   answerField?: string | number;
-  starred: boolean;
+  userNote?: string;
 
   matchCase?: boolean;
   maximumError?: number;

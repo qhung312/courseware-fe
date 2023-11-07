@@ -1,61 +1,19 @@
-import _ from 'lodash';
-import { Fragment, useCallback, useState } from 'react';
+import { chunk } from 'lodash';
+import { useEffect, useState } from 'react';
 
-import { Icon, Markdown, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
-import { ConcreteQuestion, QuizSession } from '../../../../types';
+import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
+import { QuizSession } from '../../../../types';
 
 const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
+  const pageSize = 4;
   const [page, setPage] = useState(1);
 
-  const extractUserAnswer = useCallback((question: ConcreteQuestion) => {
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
+  const currentSet = Array.from({ length: 4 }, (_a, index) => (page - 1) * pageSize + index);
+  const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
 
-    switch (question.type) {
-      case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
-        return `${
-          question.userAnswerField === undefined
-            ? 'Không trả lời'
-            : optionLabels[
-                _.findIndex(
-                  question.options,
-                  (option) => option.key === Number(question.userAnswerField)
-                )
-              ]
-        }`;
-      case 'MULTIPLE_CHOICE_MULTIPLE_ANSWERS':
-        return `${
-          question.userAnswerKeys === undefined
-            ? 'Không trả lời'
-            : question.userAnswerKeys.join(', ')
-        }`;
-      default:
-        return 'Không trả lời';
-    }
-  }, []);
-
-  const extractAnswer = useCallback((question: ConcreteQuestion) => {
-    const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
-
-    switch (question.type) {
-      case 'MULTIPLE_CHOICE_SINGLE_ANSWER':
-        return `${
-          question.userAnswerField === undefined
-            ? 'Không trả lời'
-            : optionLabels[
-                _.findIndex(
-                  question.options,
-                  (option) => option.key === Number(question.userAnswerField)
-                )
-              ]
-        }`;
-      case 'MULTIPLE_CHOICE_MULTIPLE_ANSWERS':
-        return `${
-          question.answerKeys === undefined ? 'Không trả lời' : question.answerKeys.join(', ')
-        }`;
-      default:
-        return 'Không trả lời';
-    }
-  }, []);
+  useEffect(() => {
+    setQuestionChunks(chunk(quiz.questions, 4));
+  }, [quiz]);
 
   return (
     <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden md:hidden'>
@@ -85,45 +43,24 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
           </div>
 
           <div className='flex flex-col space-y-4'>
-            {quiz.questions.map((question, index) => (
-              <Fragment key={question._id}>
-                <QuestionCard question={question} status={quiz.status} questionNumber={index + 1} />
-                <div className='flex h-full w-full flex-col gap-y-4'>
-                  <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
-                    <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
-                    <div className='flex flex-col items-start justify-center gap-y-1'>
-                      <div className='flex flex-row items-center gap-x-2'>
-                        <Icon.UserAnswer className='h-5 w-auto' fill='#49BBBD' />
-                        <p className='text-base font-semibold text-[#666]'>
-                          Đáp án bạn chọn: {extractUserAnswer(question)}
-                        </p>
-                      </div>
-                      <div className='flex flex-row items-center gap-x-2'>
-                        <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
-                        <p className='text-base font-semibold text-[#666]'>
-                          Đáp án đúng: {extractAnswer(question)}
-                        </p>
-                      </div>
-                    </div>
-                    <span className='my-4 border-t border-[#666]' />
-                    <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
-                    <Markdown>{question.explanation}</Markdown>
-                  </div>
-                  <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
-                    <div className='mb-2 flex flex-row items-center gap-x-2'>
-                      <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
-                      <h3 className='text-xl font-semibold'>Ghi chú</h3>
-                    </div>
-                    <textarea className='h-full w-full resize-none focus:outline-none' />
-                  </div>
-                </div>
-              </Fragment>
+            {questionChunks[page - 1]?.map((question, index) => (
+              <QuestionCard
+                key={`mobile-question-${question.questionId}-review`}
+                question={question}
+                status={quiz.status}
+                questionNumber={(page - 1) * pageSize + index + 1}
+              />
             ))}
           </div>
-          <Pagination totalCount={100} pageSize={2} currentPage={page} onPageChange={setPage} />
+          <Pagination
+            totalCount={quiz.questions.length}
+            pageSize={pageSize}
+            currentPage={page}
+            onPageChange={setPage}
+          />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} />
+      <QuestionBoard quiz={quiz} currentSet={currentSet} />
     </div>
   );
 };

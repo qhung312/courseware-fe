@@ -478,23 +478,6 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            <NavLink
-              to='/help'
-              end
-              className='flex w-full flex-row items-center justify-start
-                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
-              style={({ isActive, isPending }) => ({
-                backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
-              })}
-              onClick={() => setTimeout(throttledOnClick, 1000)}
-            >
-              {({ isActive, isPending }) => (
-                <>
-                  <Icon.Help fill={isActive || isPending ? '#4285F4' : '#696969'} />
-                  <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>Hỗ trợ</p>
-                </>
-              )}
-            </NavLink>
             {!isAuthenticated && (
               <button
                 type='submit'

@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
+import ComingSoonPage from '../../pages/ComingSoon';
 import NotFoundPage from '../../pages/NotFound';
 import ActivityHistory from '../../pages/Profile/ActivityHistory';
 import UserInformation from '../../pages/Profile/Information';
@@ -136,7 +137,7 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='exercises/:subjectId/quiz/:quizId'
+            path='exercises/:subjectId/quiz/:quizId/session/:sessionId'
             element={
               <Suspense fallback={<Loading />}>
                 <ExercisesPage />
@@ -144,13 +145,14 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='exercises/:subjectId/review/quiz/:quizId'
+            path='exercises/:subjectId/quiz/:quizId/review/session/:sessionId'
             element={
               <Suspense fallback={<Loading />}>
                 <ExercisesPage />
               </Suspense>
             }
           />
+          <Route path='tests' element={<ComingSoonPage />} />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
