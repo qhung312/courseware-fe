@@ -29,6 +29,7 @@ import { ReactComponent as EducationHat } from '../../assets/svgs/EducationHatIc
 import { ReactComponent as EqualizerIcon } from '../../assets/svgs/EqualizerIcon.svg';
 import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/svgs/FacebookIcon.svg';
+import { ReactComponent as LogoFessior } from '../../assets/svgs/FessiorLogo.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/FilterIcon.svg';
 import { ReactComponent as Help } from '../../assets/svgs/HelpIcon.svg';
 import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
@@ -94,6 +95,7 @@ export default {
   LocationIcon,
   LogoCTCT,
   LogoGDSC,
+  LogoFessior,
   Exercise,
   PhoneIcon,
   List,

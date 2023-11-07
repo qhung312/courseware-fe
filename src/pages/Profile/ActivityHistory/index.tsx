@@ -1,109 +1,151 @@
 import _ from 'lodash';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
+import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { Footer } from '../../../components';
 import CopyIcon from '../../../components/CopyIcon';
 import Icon from '../../../components/Icon';
 import DeleteModal from '../../../components/Modal/DeleteModal';
 import ProfileOption from '../../../components/ProfileOption';
-import DeleteSnackbar from '../../../components/Snackbar/DeleteSnackbar';
-import { useThrottle } from '../../../hooks';
+import { API_URL } from '../../../config';
+import { useThrottle, useDebounce } from '../../../hooks';
 import { Page } from '../../../layout';
-
-type ActivityContent = {
-  date: string;
-  name: string;
-  chapter: string;
-  pageUrl: string;
-  type: number;
-};
-
-const demoData: ActivityContent[] = [
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Nguyễn Văn A đã truy cập Tài liệu học tập môn Giải tích 1',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 1,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Nguyễn Văn A đã bắt đầu làm Bài tập rèn luyện môn Giải tích 1',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 2,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Nguyễn Văn A đã tham gia Thi thử giữa kỳ môn Giải tích 1',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 3,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 1,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 1,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 3,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 3,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 1,
-  },
-  {
-    date: '00 thàng 00 năm 0000',
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    chapter: 'Chương 1: Đạo hàm hàm số',
-    pageUrl: '/',
-    type: 2,
-  },
-];
+import UserService, { ActivityReturnType } from '../../../service/user.service';
+import useBoundStore from '../../../store';
 
 const ActivityHistory = () => {
+  const user = useBoundStore.use.user();
   const [page, setPage] = useState(1);
-  const [chunks, setChunks] = useState(_.chunk(demoData, 5));
   const [filterOption, setFilterOption] = useState(0);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteSnackbar, setDeleteSnackbar] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({
+    show: false,
+    deleteId: '',
+  });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [activities, setActivities] = useState<ActivityReturnType[]>([]);
+  const [chunks, setChunks] = useState(_.chunk(activities || [], 5));
+  const [totalActivity, setTotalActivity] = useState({
+    viewMaterial: 0,
+    viewExercise: 0,
+    viewPreviousExam: 0,
+  });
+  const [lastUpdate, setLastUpdate] = useState({
+    viewMaterial: 'Chưa có hoạt động',
+    viewExercise: 'Chưa có hoạt động',
+    viewPreviousExam: 'Chưa có hoạt động',
+  });
 
   const onFilterClick = () => {
     setIsFilterOpen(!isFilterOpen);
   };
 
+  const epochToDateString = (epochTime: number): string => {
+    const date = new Date(epochTime);
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+
+    return `${day} tháng ${month} năm ${year}`;
+  };
+
+  const findLastUpdateTime = (epochTime: number) => {
+    if (epochTime === 0) return 'Chưa có hoạt động';
+    const now = new Date().getTime();
+    const lastDate = new Date(epochTime).getTime();
+
+    const timeleft = now - lastDate;
+
+    const days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+    if (days > 0) return `${days} ngày trước`;
+    const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    if (hours > 0) return `${hours} giờ trước`;
+    const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+    if (minutes > 0) return `${minutes} phút trước`;
+    const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+    if (seconds > 0) return `${seconds} giây trước`;
+
+    return '';
+  };
+
+  const countTotal = (myActivities: ActivityReturnType[]) => {
+    let material = 0,
+      exercise = 0,
+      previousExam = 0,
+      materialTime = 0,
+      exerciseTime = 0,
+      previousExamTime = 0;
+    myActivities.forEach((activity) => {
+      if (activity.type === 'VIEW_MATERIAL') {
+        material++;
+        if (activity.createdAt > materialTime) materialTime = activity.createdAt;
+      } else if (activity.type === 'START_QUIZ_SESSION') {
+        exercise++;
+        if (activity.createdAt > exerciseTime) exerciseTime = activity.createdAt;
+      } else if (activity.type === 'VIEW_PREVIOUS_EXAM') {
+        previousExam++;
+        if (activity.createdAt > previousExamTime) previousExamTime = activity.createdAt;
+      }
+    });
+    setTotalActivity({
+      viewMaterial: material,
+      viewExercise: exercise,
+      viewPreviousExam: previousExam,
+    });
+    setLastUpdate({
+      viewMaterial: findLastUpdateTime(materialTime),
+      viewExercise: findLastUpdateTime(exerciseTime),
+      viewPreviousExam: findLastUpdateTime(previousExamTime),
+    });
+  };
+
+  const fetchActivities = useDebounce(() => {
+    setLoading(true);
+    let activityType = '';
+    if (filterOption === 1) activityType = 'VIEW_MATERIAL';
+    else if (filterOption === 2) activityType = 'START_QUIZ_SESSION';
+    else if (filterOption === 3) activityType = 'VIEW_PREVIOUS_EXAM';
+    UserService.getUserActivity(activityType)
+      .then((res) => {
+        const { results: allActivities } = res.data.payload;
+        setActivities(allActivities);
+        setChunks(_.chunk(allActivities, 5));
+        if (activityType === '') countTotal(allActivities);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  });
+
+  const deleteActivity = (activityId: string) => {
+    UserService.deleteUserActivity(activityId)
+      .then(() => {
+        toast.success('Xóa hoạt động thành công');
+        fetchActivities();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
   useEffect(() => {
-    if (filterOption > 0) {
-      const filteredData = demoData.filter((activity) => activity.type === filterOption);
-      setChunks(_.chunk(filteredData, 5));
-    } else setChunks(_.chunk(demoData, 5));
-  }, [filterOption]);
+    fetchActivities();
+  }, [filterOption, fetchActivities]);
+
+  // useEffect(() => {
+  //   if (filterOption > 0) {
+  //     const filteredData = demoData.filter((activity) => activity.type === filterOption);
+  //     setChunks(_.chunk(filteredData, 5));
+  //   } else setChunks(_.chunk(demoData, 5));
+  // }, [filterOption]);
 
   const throttledLibraryClick = useThrottle(onFilterClick);
 
@@ -112,17 +154,17 @@ const ActivityHistory = () => {
       <DeleteModal
         text='Hoạt động này sẽ bị xóa khỏi lịch sử hoạt động của bạn'
         onClose={() => {
-          setDeleteModal(false);
+          setDeleteModal({
+            show: false,
+            deleteId: '',
+          });
         }}
-        onDelete={() => setDeleteSnackbar(true)}
-        show={deleteModal}
+        onDelete={() => deleteActivity(deleteModal.deleteId)}
+        show={deleteModal.show}
       />
-      <div className='fixed bottom-4 right-4 z-[60]'>
-        <DeleteSnackbar showSnackbar={deleteSnackbar} setShow={() => setDeleteSnackbar(false)} />
-      </div>
       <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
-        <ProfileOption option={2} />
+        <ProfileOption option={2} editAvatar={false} setAvatar={() => {}} updatedName='' />
         <div className='bg-white px-5 pt-4 pb-[64px] lg:flex lg:gap-x-[2%] lg:pt-10'>
           <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl lg:hidden'>
             Nhật ký hoạt động
@@ -186,7 +228,7 @@ const ActivityHistory = () => {
                     filterOption === 1 ? 'text-[#49BBBD]' : 'text-[#252641]'
                   }`}
                 >
-                  4 hoạt động
+                  {totalActivity.viewMaterial} hoạt động
                 </p>
               </button>
               <button
@@ -218,7 +260,7 @@ const ActivityHistory = () => {
                     filterOption === 2 ? 'text-[#49BBBD]' : 'text-[#252641]'
                   }`}
                 >
-                  10 hoạt động
+                  {totalActivity.viewExercise} hoạt động
                 </p>
               </button>
               <button
@@ -250,7 +292,7 @@ const ActivityHistory = () => {
                     filterOption === 3 ? 'text-[#49BBBD]' : 'text-[#252641]'
                   }`}
                 >
-                  22 hoạt động
+                  {totalActivity.viewPreviousExam} hoạt động
                 </p>
               </button>
             </nav>
@@ -278,10 +320,10 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Tài liệu học tập</h3>
               <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
-                  <Icon.Clock className='mr-1' />
-                  <p className='2xl:text-base'>1 giờ trước</p>
+                  <Icon.Clock className='mr-1 h-4 w-4' fill='#252641' />
+                  <p className='2xl:text-base'>{lastUpdate.viewMaterial}</p>
                 </div>
-                <p className='2xl:text-base'>4 hoạt động</p>
+                <p className='2xl:text-base'>{totalActivity.viewMaterial} hoạt động</p>
               </div>
             </button>
             <button
@@ -296,10 +338,10 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Bài tập rèn luyện</h3>
               <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
-                  <Icon.Clock className='mr-1' />
-                  <p className='2xl:text-base'>45 phút trước</p>
+                  <Icon.Clock className='mr-1 h-4 w-4' fill='#252641' />
+                  <p className='2xl:text-base'>{lastUpdate.viewExercise}</p>
                 </div>
-                <p className='2xl:text-base'>22 hoạt động</p>
+                <p className='2xl:text-base'>{totalActivity.viewExercise} hoạt động</p>
               </div>
             </button>
             <button
@@ -314,80 +356,165 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
               <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
-                  <Icon.Clock className='mr-1' />
-                  <p className='2xl:text-base'>45 phút trước</p>
+                  <Icon.Clock className='mr-1 h-4 w-4' fill='#252641' />
+                  <p className='2xl:text-base'>{lastUpdate.viewPreviousExam}</p>
                 </div>
-                <p className='2xl:text-base'>20 hoạt động</p>
+                <p className='2xl:text-base'>{totalActivity.viewPreviousExam} hoạt động</p>
               </div>
             </button>
           </div>
-          <div className='lg:mt-[-16px] lg:w-[69%]'>
-            {chunks[page - 1]?.map((activity, index) => (
-              <div className='mt-4' key={index}>
-                <Link
-                  to={activity.pageUrl}
-                  className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
-                >
-                  <p className='text-xl text-[rgba(45,52,54,0.7)]'>{activity.date}</p>
-                  <h2 className='mt-1 text-2xl text-[#2D3436]'>{activity.name}</h2>
-                  <div className='mt-3 flex items-center'>
-                    <Icon.OpenBook />
-                    <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
-                      {activity.chapter}
+          {loading && (
+            <>
+              <p className='w-full px-6 lg:w-[69%] lg:px-8 3xl:px-10'>
+                {
+                  <Skeleton
+                    count={10}
+                    className='my-2 box-content lg:my-4 3xl:my-6'
+                    width={'100%'}
+                    height={40}
+                    baseColor='#9DCCFF'
+                  />
+                }
+              </p>
+            </>
+          )}
+          {!loading && activities.length !== 0 && (
+            <div className='lg:mt-[-16px] lg:w-[69%]'>
+              {chunks[page - 1]?.map((activity, index) => (
+                <div className='mt-4' key={index}>
+                  <Link
+                    to={
+                      activity.type === 'VIEW_MATERIAL'
+                        ? `/library/material/${activity?.materialId?.subject?._id}/pdf/${activity?.materialId?._id}`
+                        : activity.type === 'VIEW_PREVIOUS_EXAM'
+                        ? `/exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
+                        : activity.type === 'START_QUIZ_SESSION'
+                        ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?._id}`
+                        : '/'
+                    }
+                    className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
+                  >
+                    <p className='text-xl text-[rgba(45,52,54,0.7)]'>
+                      {epochToDateString(activity.createdAt) || '00 thàng 00 năm 0000'}
                     </p>
-                  </div>
-                  <div
-                    className='ml-auto flex w-fit justify-end'
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <CopyIcon copyContent={activity.pageUrl} />
-                    <button
-                      className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437] hover:bg-[#DB4437]/[.8]'
-                      onClick={() => setDeleteModal(true)}
+                    <h2 className='mt-1 text-2xl text-[#2D3436]'>
+                      {activity.type === 'VIEW_PREVIOUS_EXAM'
+                        ? user?.familyAndMiddleName +
+                          ' ' +
+                          user?.givenName +
+                          ' đã tham gia Thi thử' +
+                          (activity?.previousExamId?.type === 'FINAL_EXAM'
+                            ? ' Cuối kì '
+                            : ' Giữa kì ') +
+                          'môn ' +
+                          activity?.previousExamId?.subject?.name
+                        : activity.type === 'VIEW_MATERIAL'
+                        ? user?.familyAndMiddleName +
+                          ' ' +
+                          user?.givenName +
+                          ' đã truy cập Tài liệu ' +
+                          activity?.materialId?.name +
+                          ' môn ' +
+                          activity?.materialId?.subject?.name
+                        : activity.type === 'START_QUIZ_SESSION'
+                        ? user?.familyAndMiddleName +
+                          ' ' +
+                          user?.givenName +
+                          ' đã bắt đầu làm Bài tập rèn luyện môn ' +
+                          activity?.quizSessionId?.fromQuiz?.subject?.name
+                        : ''}
+                    </h2>
+                    <div className='mt-3 flex items-center'>
+                      <Icon.OpenBook />
+                      <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
+                        {activity.type === 'VIEW_PREVIOUS_EXAM'
+                          ? 'Học kì ' + activity?.previousExamId?.semester.slice(9, 12)
+                          : activity.type === 'VIEW_MATERIAL'
+                          ? activity?.materialId?.subject?.name
+                          : activity.type === 'START_QUIZ_SESSION'
+                          ? activity?.quizSessionId?.fromQuiz?.chapter?.name
+                          : ''}
+                      </p>
+                    </div>
+                    <div
+                      className='ml-auto flex w-fit justify-end'
+                      onClick={(e) => e.preventDefault()}
                     >
-                      <Icon.Delete fill='white' className='h-4 w-4' />
-                    </button>
-                  </div>
-                </Link>
-              </div>
-            ))}
-            <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
-              <button
-                className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-              >
-                <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
-              </button>
-              {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
-                <button
-                  key={`page-${index}`}
-                  className={`aspect-square rounded-full p-2 ${
-                    index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
-                  }`}
-                  onClick={() => setPage(index)}
-                >
-                  <p
-                    className={`w-7 text-lg ${
-                      index === page ? 'font-semibold text-white' : 'font-medium'
-                    }`}
-                  >
-                    {index}
-                  </p>
-                </button>
+                      <CopyIcon
+                        copyContent={
+                          activity.type === 'VIEW_MATERIAL'
+                            ? `${API_URL}library/material/${activity?.materialId?.subject?._id}/pdf/${activity?.materialId?._id}`
+                            : activity.type === 'VIEW_PREVIOUS_EXAM'
+                            ? `${API_URL}exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
+                            : activity.type === 'START_QUIZ_SESSION'
+                            ? `${API_URL}room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?._id}`
+                            : API_URL
+                        }
+                      />
+                      <button
+                        className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437] hover:bg-[#DB4437]/[.8]'
+                        onClick={() =>
+                          setDeleteModal({
+                            show: true,
+                            deleteId: activity._id,
+                          })
+                        }
+                      >
+                        <Icon.Delete fill='white' className='h-4 w-4' />
+                      </button>
+                    </div>
+                  </Link>
+                </div>
               ))}
-              <button
-                className={`rounded-full p-2 ${page === chunks.length ? '' : 'hover:bg-black/20'}`}
-                disabled={page === chunks.length}
-                onClick={() => setPage(page + 1)}
-              >
-                <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
-              </button>
+              <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
+                <button
+                  className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
+                  disabled={page === 1}
+                  onClick={() => setPage(page - 1)}
+                >
+                  <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
+                </button>
+                {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
+                  <button
+                    key={`page-${index}`}
+                    className={`aspect-square rounded-full p-2 ${
+                      index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
+                    }`}
+                    onClick={() => setPage(index)}
+                  >
+                    <p
+                      className={`w-7 text-lg ${
+                        index === page ? 'font-semibold text-white' : 'font-medium'
+                      }`}
+                    >
+                      {index}
+                    </p>
+                  </button>
+                ))}
+                <button
+                  className={`rounded-full p-2 ${
+                    page === chunks.length ? '' : 'hover:bg-black/20'
+                  }`}
+                  disabled={page === chunks.length}
+                  onClick={() => setPage(page + 1)}
+                >
+                  <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
+          {!loading && activities.length === 0 && (
+            <div className='lg:mt-[-16px] lg:w-[69%]'>
+              <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                <p className='w-full text-center'>Hiện chưa có hoạt động nào</p>
+              </div>
+            </div>
+          )}
         </div>
+        <Footer />
       </main>
-      <Footer />
+      <ToastContainer position='bottom-right' />
     </Page>
   );
 };

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
 import './index.css';
-import { Icon } from '../../../components';
+import { ToastContainer, toast } from 'react-toastify';
+
+import { Icon, PDF } from '../../../components';
+import { API_URL } from '../../../config';
+import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ExamArchiveService from '../../../service/examArchive.service';
 import { EXAM_TYPE_OPTIONS, ExamArchive, SEMESTER_OPTIONS } from '../../../types';
@@ -14,6 +17,24 @@ const ExamView = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [examArchive, setExamArchive] = useState<ExamArchive>();
+
+  const handleOnDownload = useDebounce(() => {
+    ExamArchiveService.download(id, true)
+      .then((res) => {
+        console.log('response: ', res);
+        const url = window.URL.createObjectURL(new Blob([res?.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${examArchive?.name ?? 'ctct'}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -125,21 +146,35 @@ const ExamView = () => {
                     disabled
                   />
                 </div>
+                <div className='flex w-full flex-1 flex-col'>
+                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Đề Thi</p>
+                  <PDF url={`${API_URL}admin/previous_exam/${id}/download`} />
+                </div>
               </form>
-              <div className='my-4 flex w-full justify-end'>
+              <div className='my-4 flex flex-row-reverse gap-x-8'>
                 <button
                   type='button'
                   onClick={() => navigate(`/admin/exam-archive/edit/${params.id}`)}
                   className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
                 >
-                  <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                  <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                     Chỉnh sửa
+                  </p>
+                </button>
+                <button
+                  type='button'
+                  onClick={() => handleOnDownload()}
+                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                >
+                  <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
+                    Tải về
                   </p>
                 </button>
               </div>
             </div>
           )}
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

@@ -68,7 +68,7 @@ const Statistic = () => {
     <Page title='Thông tin người dùng - Thống kê điểm số'>
       <main className='with-nav-height w-full overflow-y-auto'>
         {/* Banner */}
-        <ProfileOption option={3} />
+        <ProfileOption option={3} editAvatar={false} setAvatar={() => {}} updatedName='' />
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:gap-x-[2%] md:pt-10 lg:px-[60px]'>
           <div className='absolute bottom-10 right-0 z-0 hidden h-[220px] w-[220px] rounded-[20px] bg-[#33EFA0] md:block lg:right-10' />
           <div className='absolute top-5 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block lg:left-10' />
@@ -262,8 +262,8 @@ const Statistic = () => {
             </nav>
           </div>
         </div>
+        <Footer />
       </main>
-      <Footer />
     </Page>
   );
 };

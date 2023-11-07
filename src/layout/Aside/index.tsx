@@ -44,9 +44,8 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
                 <h1 className='block text-2xl font-bold text-[#4285F4] transition duration-300 md:hidden'>
                   {title}
                 </h1>
-                <p className='block text-[#252641] transition duration-300 md:hidden'>
-                  {description}
-                </p>
+                {/* <p className='block text-[#252641] transition duration-300 md:hidden'> */}
+                <p className='hidden text-[#252641] transition duration-300'>{description}</p>
               </span>
             )}
 
