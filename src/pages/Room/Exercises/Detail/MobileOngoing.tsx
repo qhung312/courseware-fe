@@ -1,6 +1,7 @@
 import { chunk } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
+import { ToastContainer } from 'react-toastify';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { QuizSession } from '../../../../types';
@@ -8,7 +9,8 @@ import { calculateProgress, parseDuration } from '../../../../utils/helper';
 
 const MobileOngoing: React.FC<{
   quiz: QuizSession;
-}> = ({ quiz }) => {
+  handleSubmit: () => void;
+}> = ({ quiz, handleSubmit }) => {
   const pageSize = 4;
   const [page, setPage] = useState(1);
   const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
@@ -71,7 +73,8 @@ const MobileOngoing: React.FC<{
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} />
+      <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
+      <ToastContainer position='bottom-center' />
     </div>
   );
 };

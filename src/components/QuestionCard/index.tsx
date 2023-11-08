@@ -3,6 +3,7 @@ import _, { debounce } from 'lodash';
 import { ChangeEvent, Dispatch, SetStateAction, memo, useCallback, useState } from 'react';
 import './index.css';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Markdown } from '..';
@@ -42,7 +43,11 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
       return data.payload;
     },
     onSuccess: async () => {
+      toast.success('Đã lưu câu trả lời');
       await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
+    },
+    onError: () => {
+      toast.error('Lưu câu trả lời thất bại');
     },
   });
 
@@ -124,9 +129,9 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   htmlFor={`question-${question.questionId}-answer-${option.key}`}
                   className='absolute left-1/2 flex items-center justify-center'
                 >
-                  <span className='-ml-[100%] h-full text-xs md:text-base'>
+                  <p className='-ml-[100%] h-full text-xs md:text-sm'>
                     {MULTIPLE_CHOICE_LABELS[index]}
-                  </span>
+                  </p>
                 </label>
               </div>
               <label htmlFor={`question-${question.questionId}-answer-${option.key}`}>
@@ -222,6 +227,7 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
     question.userAnswerKeys || question.answerKeys || []
   );
   const [note, setNote] = useState<string>(question.userNote || '');
+  const [saved, setSaved] = useState<boolean>(true);
   const [starList, setStarList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
 
   const noteMutation = useMutation({
@@ -240,12 +246,27 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
 
       await QuizSessionService.note(sessionId, questionId, newNote);
     },
+    onSuccess: () => {
+      toast.success('Đã lưu ghi chú');
+    },
+    onError: () => {
+      setSaved(false);
+      toast.error('Lưu ghi chú thất bại');
+    },
   });
   const debouncedNoteMutate = debounce(noteMutation.mutate, 1000);
 
-  const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setNote(event.target.value);
-  };
+  const handleNoteChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      if (event.target.value === question.userNote) {
+        setSaved(true);
+      } else {
+        setSaved(false);
+      }
+      setNote(event.target.value);
+    },
+    [question.userNote]
+  );
 
   const extractUserAnswer = useCallback(() => {
     switch (question.type) {
@@ -400,8 +421,10 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
 
               <button
                 type='submit'
+                disabled={saved}
                 onClick={(event) => {
                   event.preventDefault();
+                  setSaved(true);
                   debouncedNoteMutate({
                     body: note,
                     sessionId: params.sessionId as string,
@@ -409,7 +432,7 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
                   });
                 }}
               >
-                <p>Lưu</p>
+                <p className={`${saved ? 'font-normal' : 'font-semibold text-[#4284F4]'}`}>Lưu</p>
               </button>
             </div>
 

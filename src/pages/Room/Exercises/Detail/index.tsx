@@ -1,6 +1,7 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Loading } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
@@ -21,11 +22,26 @@ const Detail: React.FC = () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
     },
-    staleTime: Infinity,
     refetchOnWindowFocus: true,
   });
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();
+
+  const submit = useMutation({
+    mutationFn: async () => {
+      await QuizSessionService.submit(params.sessionId as string);
+    },
+    onSuccess: async () => {
+      toast.success('Đã nộp bài!');
+      await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
+      navigate(
+        `/room/exercises/${params.subjectId}/quiz/${params.quizId}/review/session/${params.sessionId}`
+      );
+    },
+    onError: () => {
+      toast.error('Đã có lỗi trong lúc nộp bài!');
+    },
+  });
 
   useEffect(() => {
     const onEndQuizSession = async () => {
@@ -50,17 +66,17 @@ const Detail: React.FC = () => {
     }
   }, [quiz, navigate, params]);
 
-  if (isLoading || !quiz) {
-    return (
-      <Page title='Loading...'>
-        <Loading />
-      </Page>
-    );
+  if (isLoading || !quiz || submit.isLoading) {
+    return <Loading />;
   }
 
   return (
     <Page title={`${quiz?.fromQuiz.subject.name} - ${quiz?.fromQuiz.chapter.name}`}>
-      {width < 768 ? <MobileOngoing quiz={quiz} /> : <DesktopOngoing quiz={quiz} />}
+      {width < 768 ? (
+        <MobileOngoing quiz={quiz} handleSubmit={submit.mutate} />
+      ) : (
+        <DesktopOngoing quiz={quiz} handleSubmit={submit.mutate} />
+      )}
     </Page>
   );
 };

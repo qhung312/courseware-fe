@@ -1,5 +1,7 @@
 import { chunk } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { QuizSession } from '../../../../types';
@@ -9,6 +11,8 @@ const DesktopReview: React.FC<{
   quiz: QuizSession;
 }> = ({ quiz }) => {
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
+  const params = useParams();
 
   const pageSize = 4;
 
@@ -84,7 +88,12 @@ const DesktopReview: React.FC<{
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} />
+      <QuestionBoard
+        quiz={quiz}
+        currentSet={currentSet}
+        handleSubmit={() => navigate(`/room/exercises/${params.subjectId}`)}
+      />
+      <ToastContainer position='bottom-right' />
     </main>
   );
 };

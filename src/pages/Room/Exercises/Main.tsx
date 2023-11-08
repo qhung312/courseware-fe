@@ -2,6 +2,7 @@ import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/rea
 import { isEmpty } from 'lodash';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
@@ -47,7 +48,11 @@ const Main: React.FC = () => {
   const sessionMutation = useMutation({
     mutationFn: QuizSessionService.create,
     onSuccess: (_data, variables) => {
+      toast.success('Bắt đầu làm bài');
       queryClient.invalidateQueries({ queryKey: ['session', variables] });
+    },
+    onError: () => {
+      toast.error('Không thể bắt đầu làm bài');
     },
   });
 

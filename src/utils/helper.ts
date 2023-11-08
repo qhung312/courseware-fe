@@ -89,7 +89,7 @@ export function generateQuery({ page, pageSize, ...rest }: GenerateQueryProps) {
 
 export function parseDuration(duration: number) {
   const hours = Math.floor(duration / 3600000);
-  const minutes = Math.floor((duration % 360000) / 60000);
+  const minutes = Math.floor((duration % 3600000) / 60000);
   const seconds = Math.floor((duration % 60000) / 1000);
 
   if (hours > 0) {
@@ -105,7 +105,7 @@ export function parseDuration(duration: number) {
 
 export function parseCountdown(duration: number) {
   const hours = Math.floor(duration / 3600000);
-  const minutes = Math.floor((duration % 360000) / 60000);
+  const minutes = Math.floor((duration % 3600000) / 60000);
   const seconds = Math.floor((duration % 60000) / 1000);
 
   if (hours > 0) {

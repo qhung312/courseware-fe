@@ -1,4 +1,4 @@
-import _, { chunk, debounce } from 'lodash';
+import _, { chunk } from 'lodash';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
@@ -78,7 +78,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
         </div>
         <div className='flex w-full flex-1 flex-row items-center justify-between'>
           <button
-            onClick={debounce(submit, 1000)}
+            onClick={submit}
             type='button'
             className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'
           >
