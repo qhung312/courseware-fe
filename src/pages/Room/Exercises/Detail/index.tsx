@@ -22,7 +22,6 @@ const Detail: React.FC = () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
     },
-    refetchOnWindowFocus: true,
   });
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();

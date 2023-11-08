@@ -1,3 +1,7 @@
+label {
+  cursor: pointer;
+}
+
 input[type='radio'] {
   /* Add if not using autoprefixer */
   appearance: none;
@@ -52,9 +56,5 @@ input[type='radio']:checked ~ label,
 input[type='checkbox']:checked ~ label {
   color: white;
   font-weight: 500;
-  cursor: pointer;
-}
-
-label {
   cursor: pointer;
 }

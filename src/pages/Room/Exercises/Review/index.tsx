@@ -11,21 +11,16 @@ import MobileReview from './MobileReview';
 
 const Review: React.FC = () => {
   const params = useParams();
-  const {
-    data: quiz,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data: quiz, isLoading } = useQuery({
     queryKey: ['quiz', params.quizId, params.sessionId],
     queryFn: async () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
     },
-    refetchOnWindowFocus: true,
   });
   const { width } = useWindowDimensions();
 
-  if (isLoading || isFetching || !quiz) {
+  if (isLoading || !quiz) {
     return <Loading />;
   }
 

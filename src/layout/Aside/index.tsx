@@ -75,7 +75,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
         className={`fixed top-[50%] z-10 hidden rounded-r-lg border-y border-r border-[#CCC] bg-white md:block ${
           isAsideOpen
             ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
-            : 'translate-x-[-75%] hover:translate-x-0'
+            : 'translate-x-0'
         } transition-all duration-300`}
       >
         <button

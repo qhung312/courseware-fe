@@ -129,7 +129,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   htmlFor={`question-${question.questionId}-answer-${option.key}`}
                   className='absolute left-1/2 flex items-center justify-center'
                 >
-                  <p className='-ml-[100%] h-full text-xs md:text-sm'>
+                  <p className='-ml-[100%] h-full text-xs text-inherit md:text-sm'>
                     {MULTIPLE_CHOICE_LABELS[index]}
                   </p>
                 </label>
