@@ -1,4 +1,4 @@
-import _, { chunk, debounce } from 'lodash';
+import _, { chunk } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
 import { useParams } from 'react-router-dom';
@@ -26,6 +26,8 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
   useEffect(() => {
     setTimeLeft(Date.now() + quiz.timeLeft);
   }, [quiz]);
+
+  console.log(parseCountdown(quiz.timeLeft));
 
   return (
     <div
@@ -79,6 +81,7 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
               <Countdown
                 date={timeLeft}
                 onTick={(props) => {
+                  console.log(props.total);
                   setTimeLeft(Date.now() + props.total);
                 }}
                 renderer={(props) => (
@@ -134,9 +137,9 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
               </div>
             ))}
           </div>
-          <div className='flex w-full flex-row items-center justify-between gap-x-4 gap-y-4'>
+          <div className='flex w-full flex-row flex-wrap-reverse items-center justify-center gap-x-4 gap-y-4'>
             <button
-              onClick={debounce(submit, 1000)}
+              onClick={submit}
               type='button'
               className='flex-2 flex w-fit rounded-lg bg-[#49CCCF] p-2'
             >
@@ -144,35 +147,37 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                 Hoàn thành {quiz.status === 'ONGOING' ? 'bài làm' : 'xem lại'}
               </p>
             </button>
-            <ul className='flex flex-row items-center justify-center gap-x-4'>
-              <li className='flex h-fit w-fit'>
-                <button
-                  type='button'
-                  className={`flex h-10 w-10 items-center justify-center rounded-lg bg-[#49CCCF] ${
-                    page === 1 ? 'opacity-50' : ''
-                  }`}
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                >
-                  <Icon.Chevron className='h-7 w-7 -rotate-90 fill-white' />
-                </button>
-              </li>
-              <li className='flex h-fit w-fit'>
-                <p className='text-base font-semibold'>{page}</p>
-              </li>
-              <li className='flex h-fit w-fit'>
-                <button
-                  type='button'
-                  className={`flex h-10 w-10 items-center justify-center rounded-lg bg-[#49CCCF] ${
-                    page === maxPage ? 'opacity-50' : ''
-                  }`}
-                  disabled={page === maxPage}
-                  onClick={() => setPage(page + 1)}
-                >
-                  <Icon.Chevron className='h-7 w-7 rotate-90 fill-white' />
-                </button>
-              </li>
-            </ul>
+            {questionChunks.length > 1 && (
+              <ul className='flex flex-row items-center justify-center gap-x-4'>
+                <li className='flex h-fit w-fit'>
+                  <button
+                    type='button'
+                    className={`flex h-10 w-10 items-center justify-center rounded-lg bg-[#49CCCF] ${
+                      page === 1 ? 'opacity-50' : ''
+                    }`}
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                  >
+                    <Icon.Chevron className='h-7 w-7 -rotate-90 fill-white' />
+                  </button>
+                </li>
+                <li className='flex h-fit w-fit'>
+                  <p className='text-base font-semibold'>{page}</p>
+                </li>
+                <li className='flex h-fit w-fit'>
+                  <button
+                    type='button'
+                    className={`flex h-10 w-10 items-center justify-center rounded-lg bg-[#49CCCF] ${
+                      page === maxPage ? 'opacity-50' : ''
+                    }`}
+                    disabled={page === maxPage}
+                    onClick={() => setPage(page + 1)}
+                  >
+                    <Icon.Chevron className='h-7 w-7 rotate-90 fill-white' />
+                  </button>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { chunk, reduce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { QuizSession } from '../../../../types';
@@ -7,7 +8,8 @@ import { parseDuration } from '../../../../utils/helper';
 
 const DesktopOngoing: React.FC<{
   quiz: QuizSession;
-}> = ({ quiz }) => {
+  handleSubmit: () => void;
+}> = ({ quiz, handleSubmit }) => {
   const pageSize = 4;
 
   const [page, setPage] = useState(1);
@@ -101,7 +103,8 @@ const DesktopOngoing: React.FC<{
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} />
+      <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
+      <ToastContainer position='bottom-right' />
     </main>
   );
 };

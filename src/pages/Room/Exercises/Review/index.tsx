@@ -17,16 +17,11 @@ const Review: React.FC = () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
     },
-    refetchOnWindowFocus: true,
   });
   const { width } = useWindowDimensions();
 
   if (isLoading || !quiz) {
-    return (
-      <Page title='Loading...'>
-        <Loading />
-      </Page>
-    );
+    return <Loading />;
   }
 
   return (
