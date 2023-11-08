@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
 import { Chapter } from '../../../types';
-// import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
 const ChapterView = () => {
   const params = useParams();
@@ -24,7 +24,7 @@ const ChapterView = () => {
         setChapter(result);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -67,6 +67,7 @@ const ChapterView = () => {
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-8'
             >
               <main className='flex flex-col gap-y-4'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID Chương: {id}</p>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -127,6 +128,7 @@ const ChapterView = () => {
             </div>
           )}
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

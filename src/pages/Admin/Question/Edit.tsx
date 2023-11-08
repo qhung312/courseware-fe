@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Markdown, QuestionCard, Select } from '../../../components';
+import { Icon, QuestionCard, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -13,7 +13,6 @@ import ChapterService from '../../../service/chapter.service';
 import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
 import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
-import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const EditQuestionPage = () => {
   const navigate = useNavigate();
@@ -46,6 +45,7 @@ const EditQuestionPage = () => {
       })
       .catch((err) => {
         console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -70,6 +70,7 @@ const EditQuestionPage = () => {
         toast.success('Chỉnh sửa thành công');
       })
       .catch((err) => {
+        console.error(err);
         toast.error(err.response.data.message);
       })
       .finally(() => fetchData());
@@ -120,6 +121,7 @@ const EditQuestionPage = () => {
         setPreview(questionPreview);
       })
       .catch((err) => {
+        console.error(err);
         toast.error(err.response.data.message);
       });
   };
@@ -162,6 +164,7 @@ const EditQuestionPage = () => {
       })
       .catch((err) => {
         console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [subject]);
 
@@ -180,6 +183,7 @@ const EditQuestionPage = () => {
       })
       .catch((err) => {
         console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -235,6 +239,7 @@ const EditQuestionPage = () => {
               </>
             ) : (
               <main className='flex flex-col gap-y-4'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID câu hỏi: {id}</p>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -412,34 +417,7 @@ const EditQuestionPage = () => {
                     <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
                       Xem trước câu hỏi
                     </p>
-                    <div className='flex flex-col gap-y-4'>
-                      <QuestionCard
-                        question={preview}
-                        status={QuizStatus.ENDED}
-                        questionNumber={1}
-                      />
-                      <div className='flex h-full w-full flex-row gap-x-4'>
-                        <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
-                          <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
-                          <div className='flex flex-col items-start justify-center gap-y-1'>
-                            <div className='flex flex-row items-center gap-x-2'>
-                              <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
-                              <p className='text-base font-semibold text-[#666]'>
-                                Đáp án đúng:{' '}
-                                {MULTIPLE_CHOICE_LABELS.at(
-                                  preview.options?.findIndex(
-                                    (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
-                                  ) || 0
-                                )}
-                              </p>
-                            </div>
-                          </div>
-                          <span className='my-4 border-t border-[#666]' />
-                          <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
-                          <Markdown>{preview.explanation}</Markdown>
-                        </div>
-                      </div>
-                    </div>
+                    <QuestionCard question={preview} status={QuizStatus.ENDED} questionNumber={1} />
                   </div>
                 )}
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>
