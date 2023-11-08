@@ -26,10 +26,10 @@ const MobileOngoing: React.FC<{
   return (
     <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden md:hidden'>
       <div className='flex h-full w-full flex-col items-start justify-start bg-[#F2F2F2] p-5 md:hidden'>
-        <div className='flex w-full flex-col space-y-4'>
+        <div className='flex w-full flex-col'>
           <h1 className='text-2xl font-bold'>{quiz.fromQuiz.name}</h1>
           <h3 className='text-xl'>Môn: {quiz.fromQuiz.subject.name}</h3>
-          <div className='flex w-fit flex-row gap-x-2 rounded-lg border border-[#4285F4]/30 bg-white p-2'>
+          <div className='mt-2 flex w-fit flex-row gap-x-2 rounded-lg border border-[#4285F4]/30 bg-white p-2'>
             <div className='flex flex-row items-center gap-x-1'>
               <Icon.Clock className='h-4 w-auto' fill='#49BBBD' />
               <Countdown
@@ -47,13 +47,13 @@ const MobileOngoing: React.FC<{
             </div>
           </div>
 
-          <div className='w-fit rounded-lg bg-[#4285F4] p-3'>
+          <div className='mt-7 w-fit rounded-lg bg-[#4285F4] p-3'>
             <p className='text-sm text-white'>
               Trang: {page}/{questionChunks.length}
             </p>
           </div>
 
-          <div className='flex flex-col space-y-4'>
+          <div className='mt-5 mb-4 flex flex-col space-y-4'>
             {questionChunks[page - 1]?.map((question, index) => (
               <QuestionCard
                 key={`mobile-${question.questionId}-${quiz._id}`}

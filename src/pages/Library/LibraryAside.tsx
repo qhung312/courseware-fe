@@ -8,9 +8,9 @@ import useBoundStore from '../../store';
 import type { Subject } from '../../types/subject';
 
 interface LibraryAsideProps {
-  title: string;
-  subTitle: string;
-  description: string;
+  title?: string;
+  subTitle?: string;
+  description?: string;
   baseRoute: string;
 }
 

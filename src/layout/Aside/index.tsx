@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { Icon } from '../../components';
 import './index.css';
+import { useWindowDimensions } from '../../hooks';
 import useBoundStore from '../../store';
 
 interface AsideProps {
@@ -20,6 +21,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
   const { pathname } = useLocation();
   const pathTokens = pathname.split('/');
   const asideRef = useRef(null);
+  const { width } = useWindowDimensions();
 
   return (
     <>
@@ -34,16 +36,18 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
           !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
         } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex items-center justify-center p-5 3xl:p-12'>
+        <div className='flex items-center justify-center p-6 3xl:p-12'>
           <div className='h-full w-full space-y-6'>
             {/* Title */}
-            {title && (
+            {title && width < 768 && (
               <span>
                 <h1 className='block text-2xl font-bold text-[#4285F4] transition duration-300 md:hidden'>
                   {title}
                 </h1>
                 {/* <p className='block text-[#252641] transition duration-300 md:hidden'> */}
-                <p className='hidden text-[#252641] transition duration-300'>{description}</p>
+                {description && (
+                  <p className='hidden text-[#252641] transition duration-300'>{description}</p>
+                )}
               </span>
             )}
 

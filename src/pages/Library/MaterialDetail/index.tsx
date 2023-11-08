@@ -45,7 +45,6 @@ const MaterialDetailPage: React.FC = () => {
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'
-        description='Lorem ipsum dolor sit amet, consectetur adi'
         baseRoute='/library/material'
       />
 
