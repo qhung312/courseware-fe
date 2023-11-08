@@ -151,7 +151,8 @@ const SubjectList = () => {
                         {subjects.map((subject) => (
                           <tr
                             key={`material-${subject._id}`}
-                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                            onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
+                            className='flex w-full flex-1 cursor-pointer items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                           >
                             <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {subject.name}
@@ -165,7 +166,7 @@ const SubjectList = () => {
                                 : undefined}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button
+                              {/* <button
                                 type='button'
                                 onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
@@ -174,10 +175,13 @@ const SubjectList = () => {
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
-                              </button>
+                              </button> */}
                               <button
                                 type='button'
-                                onClick={() => navigate(`/admin/subject/edit/${subject._id}`)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/admin/subject/edit/${subject._id}`);
+                                }}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
@@ -187,7 +191,8 @@ const SubjectList = () => {
                               </button>
                               <button
                                 className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   subjectToDelete.current = subject._id;
                                   setDeleteModal(true);
                                 }}

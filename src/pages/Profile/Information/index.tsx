@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Footer } from '../../../components';
 import Icon from '../../../components/Icon';
 import ProfileOption from '../../../components/ProfileOption';
-import { useThrottle } from '../../../hooks';
 import { Page } from '../../../layout';
 import UserService from '../../../service/user.service';
 import useBoundStore from '../../../store';
@@ -14,15 +13,8 @@ import { User } from '../../../types';
 const UserInformation = () => {
   const user = useBoundStore.use.user();
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<User>(user);
   const [updatedName, setUpdatedName] = useState('');
-
-  const onLibraryClick = () => {
-    setIsGenderOpen(!isGenderOpen);
-  };
-
-  const throttledLibraryClick = useThrottle(onLibraryClick);
 
   const formattedDate = new Date(userProfile?.dateOfBirth || '2000-01-01')
     .toISOString()
@@ -74,10 +66,10 @@ const UserInformation = () => {
             ) : (
               <button
                 onClick={() => setIsEditMode(true)}
-                className='mt-3 mb-5 flex w-fit gap-x-1 rounded-[12px] bg-[#E3F2FD] px-3 py-2 hover:bg-[#9DCCFF]'
+                className='mt-3 mb-5 flex w-fit gap-x-[2px] rounded-[12px] bg-[#E3F2FD] px-3 py-2 hover:bg-[#9DCCFF]'
               >
-                <Icon.Pen fill='#252641' />
-                <p className='font-semibold text-[#252641] xl:text-xl'>Chỉnh sửa thông tin</p>
+                <Icon.Pen fill='#252641' className='h-5 w-5 3xl:h-6 3xl:w-6' />
+                <p className='text-base font-semibold text-[#252641] 3xl:text-xl'>Chỉnh sửa</p>
               </button>
             )}
             <form className='flex flex-col'>
@@ -204,114 +196,25 @@ const UserInformation = () => {
                 >
                   Giới tính
                 </label>
-                {isEditMode ? (
-                  <div className='relative mt-2 md:w-[70%]'>
-                    <button
-                      type='button'
-                      className='z-20 flex w-[60%] flex-row items-center justify-between rounded-[10px] border-[1px] border-[#D9D9D9] p-4 hover:border-[#4285f4] focus:border-[#4285f4] md:w-[40%]'
-                      onClick={throttledLibraryClick}
-                    >
-                      <p className='text-xl text-[#252641] transition-colors duration-300 ease-linear'>
-                        {userProfile?.gender === 'MALE'
-                          ? 'Nam'
-                          : userProfile?.gender === 'FEMALE'
-                          ? 'Nữ'
-                          : userProfile?.gender === 'OTHER'
-                          ? 'Khác'
-                          : 'Chọn giới tính'}
-                      </p>
-                      <Icon.ChevronUp
-                        fillOpacity={0.87}
-                        fill='#252641'
-                        className={`transform-all aspect-[10/7] h-auto w-3 duration-300 ${
-                          isGenderOpen ? 'rotate-0' : 'rotate-180'
-                        }`}
-                      />
-                    </button>
-                    <nav
-                      className='absolute z-10 mt-1 flex w-[60%] flex-col 
-                      items-center justify-center rounded-lg bg-[#FBFCFF]
-                      transition-all duration-300 md:w-[40%]'
-                      style={{
-                        transform: isGenderOpen ? 'translateY(0%)' : 'translateY(10%)',
-                        maxHeight: isGenderOpen ? '1000px' : '0px',
-                        opacity: isGenderOpen ? 1 : 0,
-                        overflow: 'hidden',
-                        boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
-                      }}
-                    >
-                      <div
-                        className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userProfile.gender === 'MALE' && 'bg-[#E3F2FD]'
-                        }`}
-                        onClick={() => {
-                          setUserProfile({ ...userProfile, gender: 'MALE' });
-                          throttledLibraryClick();
-                        }}
-                      >
-                        <p className='whitespace-nowrap bg-inherit text-base text-[#252641] lg:text-[18px]'>
-                          Nam
-                        </p>
-                      </div>
-                      <div
-                        className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userProfile.gender === 'FEMALE' && 'bg-[#E3F2FD]'
-                        }`}
-                        onClick={() => {
-                          setUserProfile({ ...userProfile, gender: 'FEMALE' });
-                          throttledLibraryClick();
-                        }}
-                      >
-                        <p className='whitespace-nowrap bg-inherit text-base text-[#252641] lg:text-[18px]'>
-                          Nữ
-                        </p>
-                      </div>
-                      <div
-                        className={`w-full px-4 py-1 text-start hover:bg-[#F2F2F2] ${
-                          userProfile.gender === 'OTHER' && 'bg-[#E3F2FD]'
-                        }`}
-                        onClick={() => {
-                          setUserProfile({ ...userProfile, gender: 'OTHER' });
-                          throttledLibraryClick();
-                        }}
-                      >
-                        <p className='whitespace-nowrap bg-inherit text-base text-[#252641] lg:text-[18px]'>
-                          Khác
-                        </p>
-                      </div>
-                    </nav>
-                  </div>
-                ) : (
-                  <input
-                    type='string'
-                    id='gender'
-                    name='gender'
-                    disabled
-                    placeholder={
-                      userProfile?.gender === 'MALE'
-                        ? 'Nam'
-                        : userProfile?.gender === 'FEMALE'
-                        ? 'Nữ'
-                        : userProfile?.gender === 'OTHER'
-                        ? 'Khác'
-                        : ''
-                    }
-                    value={
-                      userProfile?.gender === 'MALE'
-                        ? 'Nam'
-                        : userProfile?.gender === 'FEMALE'
-                        ? 'Nữ'
-                        : userProfile?.gender === 'OTHER'
-                        ? 'Khác'
-                        : ''
-                    }
-                    className={`black-placeholder mt-2 w-[60%] rounded-[10px] md:w-[28%] ${
-                      isEditMode
-                        ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
-                        : 'bg-[#D9D9D9]'
-                    } p-4 text-xl text-[#252641]`}
-                  />
-                )}
+                <select
+                  name='gender'
+                  id='gender'
+                  disabled={!isEditMode}
+                  value={userProfile?.gender}
+                  className={`black-placeholder mt-2 w-[60%] rounded-[10px] md:w-[28%] ${
+                    isEditMode
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      : 'bg-[#D9D9D9]'
+                  } p-4 text-xl text-[#252641] opacity-100`}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setUserProfile({ ...userProfile, gender: e.target.value });
+                  }}
+                >
+                  <option value='MALE'>{!userProfile?.gender ? 'Chọn giới tính' : 'Nam'}</option>
+                  <option value='FEMALE'>Nữ</option>
+                  <option value='OTHER'>Khác</option>
+                </select>
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
                 <label

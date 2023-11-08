@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -33,6 +33,7 @@ const ExerciseListPage = () => {
 
   const exerciseToDelete = React.useRef<string | null>(null);
   const [deleteModal, setDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   const onDeleteExercise = () => {
     const exerciseId = exerciseToDelete.current;
@@ -244,7 +245,8 @@ const ExerciseListPage = () => {
                         {exercises.map((exercise) => (
                           <tr
                             key={`material-${exercise._id}`}
-                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                            onClick={() => navigate(`/admin/exercises/view/${exercise._id}`)}
+                            className='flex w-full flex-1 cursor-pointer items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                           >
                             <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {exercise.name}
@@ -256,7 +258,7 @@ const ExerciseListPage = () => {
                               {exercise?.chapter?.name}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <Link
+                              {/* <Link
                                 to={`/admin/exercises/view/${exercise._id}`}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
@@ -264,9 +266,10 @@ const ExerciseListPage = () => {
                                   fill='white'
                                   className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
                                 />
-                              </Link>
+                              </Link> */}
                               <Link
                                 to={`/admin/exercises/edit/${exercise._id}`}
+                                onClick={(e) => e.stopPropagation()}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
@@ -276,7 +279,8 @@ const ExerciseListPage = () => {
                               </Link>
                               <button
                                 className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   exerciseToDelete.current = exercise._id;
                                   setDeleteModal(true);
                                 }}

@@ -18,9 +18,9 @@ const Footer = () => {
                   Đơn vị hợp tác
                 </p>
               </div>
-              <div className=''>
+              <a href='https://www.facebook.com/dscxhcmut'>
                 <Icon.LogoFessior className='h-[3rem] w-[11rem] sm:h-[4rem] sm:w-[12rem] md:h-[5rem] md:w-[15rem] lg:h-[3rem] lg:w-[10rem] xl:h-[4rem] xl:w-[13rem] 2xl:h-[5rem] 2xl:w-[14rem]' />
-              </div>
+              </a>
             </div>
           </div>
 
