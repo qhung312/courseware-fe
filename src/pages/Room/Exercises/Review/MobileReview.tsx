@@ -15,8 +15,7 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
   useEffect(() => {
     setQuestionChunks(chunk(quiz.questions, 4));
   }, [quiz]);
-  console.log(quiz);
-
+  
   return (
     <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden md:hidden'>
       <div className='flex w-full flex-col items-start justify-start bg-[#F2F2F2] p-5 md:hidden'>
