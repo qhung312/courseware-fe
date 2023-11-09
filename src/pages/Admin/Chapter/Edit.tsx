@@ -106,6 +106,7 @@ const ChapterEdit = () => {
               </>
             ) : (
               <main className='flex flex-col gap-y-4'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID Chương: {id}</p>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'

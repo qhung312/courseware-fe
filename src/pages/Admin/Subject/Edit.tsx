@@ -35,7 +35,7 @@ const SubjectEdit = () => {
       .then((res) => setSubject(res.data.payload))
       .catch((err) => {
         console.log(err);
-        toast.error('Loading page fail, please reset page and check your netword');
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -59,6 +59,7 @@ const SubjectEdit = () => {
         setSubject(res.data.payload);
       })
       .catch((err) => {
+        console.log(err);
         toast.error(err.response.data.message);
       })
       .finally(() => setLoading(false));
@@ -101,6 +102,7 @@ const SubjectEdit = () => {
               </>
             ) : (
               <main className='flex flex-col gap-y-4'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID môn học: {id}</p>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'

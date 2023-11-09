@@ -149,11 +149,10 @@ const ExamEdit = () => {
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-6'
             >
               <form className='flex flex-col gap-y-6'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID đề thi: {id}</p>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-name'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                      Tên đề thi
-                    </p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Tên đề thi</p>
                   </label>
                   <input
                     id='exam-name'
@@ -166,7 +165,7 @@ const ExamEdit = () => {
                 </div>
                 <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Môn</p>
                     <Select
                       options={subjectOptions}
                       value={subjectOptions.find((x) => x.value === subject) ?? null}
@@ -180,7 +179,7 @@ const ExamEdit = () => {
                     />
                   </div>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Kì thi</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Kì thi</p>
                     <Select
                       options={EXAM_TYPE_OPTIONS}
                       value={EXAM_TYPE_OPTIONS.find((x) => x.value === type) ?? null}
@@ -194,7 +193,7 @@ const ExamEdit = () => {
                     />
                   </div>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Học kì</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Học kì</p>
                     <Select
                       options={SEMESTER_OPTIONS}
                       value={SEMESTER_OPTIONS.find((x) => x.value === semester) ?? null}
@@ -210,9 +209,7 @@ const ExamEdit = () => {
                 </div>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-description'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                      Chú thích
-                    </p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Chú thích</p>
                   </label>
                   <textarea
                     id='exam-description'
