@@ -20,7 +20,6 @@ const HomePage = () => {
       const introduction = document.getElementById('homepage-introduction');
       if (width >= 1024 && section && introduction) {
         section.style.height = `${introduction.getBoundingClientRect().height}px`;
-        console.log(introduction.getBoundingClientRect().height);
       } else {
         section?.style.removeProperty('height');
       }
@@ -135,8 +134,8 @@ const HomePage = () => {
                 objectFit='cover'
               />
             </div>
-            <div className='flex w-full flex-row flex-wrap items-center justify-center gap-y-6 p-5'>
-              <h2 className='mr-auto whitespace-nowrap text-xl font-bold text-white lg:text-2xl 3xl:text-4xl'>
+            <div className='flex w-full flex-row flex-wrap items-center justify-around gap-y-6 p-5'>
+              <h2 className='whitespace-nowrap text-center text-xl font-bold text-white lg:text-2xl 3xl:text-4xl'>
                 "Không một ai bị bỏ lại phía sau"
               </h2>
               <div className='flex flex-col space-y-2 rounded-lg bg-white px-5 py-2 lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
