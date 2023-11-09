@@ -81,7 +81,7 @@ const MaterialDetailPage: React.FC = () => {
           </button>
 
           {/* PDF */}
-          <PDF url={`${API_URL}material/${params.pdfId}/download`} />
+          <PDF url={`${API_URL}material/${params.pdfId}/download`} title={material?.name} />
         </div>
       </Wrapper>
     </Page>

@@ -138,7 +138,7 @@ const MaterialView = () => {
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Tài liệu</p>
-                  <PDF url={`${API_URL}admin/material/${id}/download`} />
+                  <PDF url={`${API_URL}admin/material/${id}/download`} title={material?.name} />
                 </div>
               </form>
               <div className='my-4 flex flex-row-reverse gap-x-8'>
