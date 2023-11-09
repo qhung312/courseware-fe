@@ -33,9 +33,15 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName, ti
     setNumPages(nextNumPages);
   };
   const pdfWrapperRef = useRef<HTMLDivElement>(null);
-  const pageRefs = useRef<HTMLDivElement[]>([]);
+  const pageRefs = useRef<HTMLCanvasElement[]>([]);
+  // const [page, setPage] = useState(1);
 
+  // const handleOnScroll = useDebounce(({ pageNumber }: { pageNumber: string }) => {
+  //   setPage(parseInt(page));
+  //   console.log(page);
+  // });
   const onItemClick = ({ pageNumber }: { pageNumber: string }) => {
+    console.log('>>> page click: ', pageNumber);
     pageRefs.current[parseInt(pageNumber)].scrollIntoView();
   };
 
@@ -92,10 +98,15 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName, ti
           onLoadSuccess={onDocumentLoadSuccess}
           onItemClick={onItemClick}
         >
-          {isShowOutline && <Outline className='outline' onItemClick={onItemClick} />}
-          <div className='flex h-full w-full flex-col items-center gap-y-1 overflow-auto lg:gap-y-2 2xl:h-[1000px] 2xl:gap-y-3 '>
+          {isShowOutline && <Outline onItemClick={onItemClick} />}
+          <div className='flex h-full w-full flex-col items-center gap-y-1 overflow-auto lg:gap-y-2 2xl:h-[1000px] 2xl:gap-y-3'>
             {Array.from(new Array(numPages), (_el, index) => (
               <Page
+                canvasRef={(el) => {
+                  if (el) {
+                    pageRefs.current[index + 1] = el;
+                  }
+                }}
                 width={width * 0.8}
                 className={pageClassName}
                 loading={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
@@ -103,6 +114,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName, ti
                 pageNumber={index + 1}
                 renderTextLayer={true}
                 renderInteractiveForms={false}
+                renderMode='canvas'
                 renderAnnotationLayer={false}
                 scale={zoom}
               />
