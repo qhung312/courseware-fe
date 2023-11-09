@@ -53,7 +53,7 @@ const HomePage = () => {
     <Page>
       <main className='with-nav-height flex w-full flex-col items-center justify-start overflow-y-auto bg-inherit'>
         <div
-          className='container ml-0 mr-0 flex w-full flex-1 flex-col items-center justify-center space-y-10 px-4 py-10 md:px-5
+          className='ml-0 mr-0 flex w-full flex-1 flex-col items-center justify-center space-y-10 px-4 py-10 md:px-5
           lg:space-y-20 lg:py-[60px] lg:px-10 xl:px-[60px] xl:py-20 2xl:px-20 3xl:space-y-[100px] 3xl:px-[100px]'
         >
           <section
@@ -135,11 +135,11 @@ const HomePage = () => {
                 objectFit='cover'
               />
             </div>
-            <div className='flex w-full flex-row flex-wrap items-center justify-center gap-x-[300px] gap-y-6 p-5'>
-              <h2 className='whitespace-nowrap text-xl font-bold text-white lg:ml-5 lg:text-2xl 3xl:text-4xl'>
+            <div className='flex w-full flex-row flex-wrap items-center justify-center gap-y-6 p-5'>
+              <h2 className='mr-auto whitespace-nowrap text-xl font-bold text-white lg:text-2xl 3xl:text-4xl'>
                 "Không một ai bị bỏ lại phía sau"
               </h2>
-              <div className='flex flex-col space-y-2 rounded-lg bg-white lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
+              <div className='flex flex-col space-y-2 rounded-lg bg-white px-5 py-2 lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
                 <div className='flex flex-row flex-wrap items-center justify-center'>
                   <p className='text-center text-lg font-bold lg:text-2xl 3xl:text-3xl'>
                     Cộng đồng không ngừng&nbsp;
