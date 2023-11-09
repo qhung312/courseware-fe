@@ -29,4 +29,31 @@ const CarouselData = [
   },
 ];
 
-export { CarouselData };
+const EventsAndActivities = [
+  {
+    id: '1',
+    name: 'Gia sư áo xanh',
+    imgSrc: require('../assets/images/GSAX.jpg'),
+    imgPlaceholder: require('../assets/images/GSAX-placeholder.jpg'),
+  },
+  {
+    id: '2',
+    name: 'Lớp học ôn tập',
+    imgSrc: require('../assets/images/LHOT.png'),
+    imgPlaceholder: require('../assets/images/LHOT-placeholder.jpg'),
+  },
+  {
+    id: '3',
+    name: 'Sách cũ tri thức mới',
+    imgSrc: require('../assets/images/SCTTM.jpg'),
+    imgPlaceholder: require('../assets/images/SCTTM-placeholder.jpg'),
+  },
+  {
+    id: '4',
+    name: 'Tiếp sức tới trường',
+    imgSrc: require('../assets/images/TSTT.jpg'),
+    imgPlaceholder: require('../assets/images/TSTT-placeholder.jpg'),
+  },
+];
+
+export { CarouselData, EventsAndActivities };

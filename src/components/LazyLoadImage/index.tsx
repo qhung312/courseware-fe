@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
+import './index.css';
+
 interface LazyLoadImageProps {
   src: string;
   alt: string;
   containerClassName?: string;
   className?: string;
   placeHolderSrc: string;
-  objectFit?: 'none' | 'contain' | 'cover';
+  objectFit?: 'none' | 'contain' | 'cover' | 'fill' | 'scale-down';
 }
 
 const LazyLoadImage = ({
@@ -19,15 +21,16 @@ const LazyLoadImage = ({
 }: LazyLoadImageProps) => {
   const [loading, setLoading] = useState(true);
   return (
-    <div className={`relative ${containerClassName}`}>
+    <div className={`relative flex h-full flex-row ${containerClassName}`}>
       <img
         src={placeHolderSrc}
         alt={`${alt} placeholder`}
-        className={`absolute top-0 left-0 z-[3] h-full w-full ${className}`}
+        className={`full ${loading ? 'z-1' : '-z-10'} ${className}`}
         style={{
           objectFit,
           opacity: loading ? 1 : 0,
-          transition: 'all 0.5s ease',
+          transition: 'opacity 0.5s ease',
+          zIndex: loading ? 1 : -1,
         }}
       />
       <img
@@ -36,9 +39,13 @@ const LazyLoadImage = ({
         }}
         src={src}
         alt={alt}
-        className={className}
+        className={`full relative -ml-[100%] ${loading ? '-z-10' : 'z-1'} ${className}`}
         loading='lazy'
-        style={{ objectFit }}
+        style={{
+          objectFit,
+          opacity: loading ? 0 : 1,
+          transition: 'opacity 1s ease',
+        }}
       />
     </div>
   );

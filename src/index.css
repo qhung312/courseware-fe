@@ -140,15 +140,15 @@ code {
 
 @media (min-width: 768px) {
   .with-nav-height {
-    min-height: calc(100vh - 111px);
-    height: calc(100vh - 111px);
+    min-height: calc(100vh - 109px);
+    height: calc(100vh - 109px);
   }
 }
 
 @media (min-width: 1872px) {
   .with-nav-height {
-    min-height: calc(100vh - 149px);
-    height: calc(100vh - 149px);
+    min-height: calc(100vh - 151px);
+    height: calc(100vh - 151px);
   }
 }
 
