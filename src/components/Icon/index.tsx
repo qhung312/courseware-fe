@@ -36,6 +36,7 @@ import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
 import { ReactComponent as Introduction } from '../../assets/svgs/IntroductionIcon.svg';
 import { ReactComponent as Library } from '../../assets/svgs/LibraryIcon.svg';
 import { ReactComponent as List } from '../../assets/svgs/ListIcon.svg';
+import { ReactComponent as LiveHelpIcon } from '../../assets/svgs/LiveHelpIcon.svg';
 import { ReactComponent as LocationIcon } from '../../assets/svgs/LocationIcon.svg';
 import { ReactComponent as LogoCTCT } from '../../assets/svgs/LogoCTCT.svg';
 import { ReactComponent as LogoGDSC } from '../../assets/svgs/LogoGDSC.svg';
@@ -126,4 +127,5 @@ export default {
   XMark,
   Pen,
   YoutubeIcon,
+  LiveHelpIcon,
 };

@@ -270,7 +270,7 @@ const QuestionListPage = () => {
                                 />
                               </Link>
                               <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#4285F4]'
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                                 onClick={() => {
                                   questionToDelete.current = question._id;
                                   setDeleteModal(true);

@@ -226,9 +226,21 @@ const CreateQuestionPage = () => {
                 />
               </div>
               <div className='flex flex-col gap-y-1'>
-                <label className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl' htmlFor='code'>
-                  Biểu thức
-                </label>
+                <div className='flex flex-row items-center gap-x-4'>
+                  <label className='flex text-base lg:text-lg 3xl:text-xl' htmlFor='code'>
+                    Biểu thức
+                  </label>
+                  <a
+                    href='https://link.gdsc.app/CTCTQuestionWritingGuide'
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    <Icon.LiveHelpIcon
+                      fill='#666666'
+                      className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                    />
+                  </a>
+                </div>
                 <textarea
                   id='code'
                   rows={10}
