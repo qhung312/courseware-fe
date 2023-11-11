@@ -389,7 +389,7 @@ const ActivityHistory = () => {
                         : activity.type === 'VIEW_PREVIOUS_EXAM'
                         ? `/exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
                         : activity.type === 'START_QUIZ_SESSION'
-                        ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?._id}`
+                        ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?.fromQuiz._id}/review/session/${activity?.quizSessionId?._id}`
                         : '/'
                     }
                     className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'

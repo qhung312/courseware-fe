@@ -7,6 +7,8 @@ import { useThrottle } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
 
+import SearchBar from './SearchBar';
+
 const LargeHeader = () => {
   const { pathname } = useLocation();
   const libraryRef = useRef<HTMLDivElement>(null);
@@ -70,20 +72,28 @@ const LargeHeader = () => {
         <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
           <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]' />
         </NavLink>
-        <div className='relative flex flex-row gap-x-[52px]'>
-          <div className='relative flex flex-row items-center'>
-            <input
-              className='w-[400px] rounded-lg border border-[#49BBBD] bg-inherit
-              py-1 pl-5 pr-[60px] text-sm 3xl:w-[500px]
-              3xl:py-3 3xl:pl-6 3xl:pr-[72px]'
-            />
-            <button
-              type='button'
-              className='absolute right-[16px] w-[16px] 3xl:right-[24px] 3xl:w-[24px]'
-            >
-              <Icon.Search className='aspect-square h-auto w-[16px] 3xl:w-[24px]' />
-            </button>
-          </div>
+        <div className='relative flex flex-row items-center gap-x-[52px]'>
+          <SearchBar
+            options={[
+              {
+                label: 'Tài liệu',
+                value: '/library/material',
+              },
+              {
+                label: 'Đề thi',
+                value: '/library/exam-archive',
+              },
+              {
+                label: 'Bài tập rèn luyện',
+                value: '/room/exercises',
+              },
+              {
+                label: 'Thi thử',
+                value: '/room/tests',
+              },
+            ]}
+            value={{ label: '', value: '' }}
+          />
           {!isAuthenticated && (
             <button
               type='submit'

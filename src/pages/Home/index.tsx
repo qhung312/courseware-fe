@@ -42,7 +42,7 @@ const HomePage = () => {
 
         if (contentWidth < 700) {
           setEventsChunk(chunk(eventsData, 1));
-        } else if (contentWidth < 1400) {
+        } else if (contentWidth < 1300) {
           setEventsChunk(chunk(eventsData, 2));
         } else {
           setEventsChunk(chunk(eventsData, 3));
@@ -101,8 +101,10 @@ const HomePage = () => {
               <Carousel
                 showThumbs={false}
                 showStatus={false}
+                preventMovementUntilSwipeScrollTolerance={true}
+                swipeScrollTolerance={50}
+                swipeable
                 autoPlay
-                swipeable={false}
                 infiniteLoop
                 interval={10000}
                 transitionTime={1000}
@@ -183,50 +185,56 @@ const HomePage = () => {
                 </Link>
               </div>
             </div>
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-              showArrows={false}
-              autoPlay
-              infiniteLoop
-              interval={10000}
-              transitionTime={1000}
-              renderIndicator={CarouselIndicator}
-              stopOnHover
-              className='w-full'
-            >
-              {eventsChunk.map((events, index) => (
-                <div
-                  key={`chunks-${index}`}
-                  className='flex w-full flex-1 flex-row items-center justify-between pb-[30px] lg:pb-20 3xl:pb-[100px]'
-                >
-                  {events.map((event) => (
-                    <div
-                      key={event.id}
-                      className='relative mx-auto aspect-square h-auto w-[300px]  
-                      lg:w-[360px] xl:w-[400px] 3xl:w-[500px]'
-                    >
-                      <LazyLoadImage
-                        src={event.imgSrc}
-                        placeHolderSrc={event.imgPlaceholder}
-                        alt={event.name}
-                        containerClassName='z-0 brightness-75'
-                        className='rounded-lg'
-                        objectFit='cover'
-                      />
+            {eventsChunk.length !== 0 && (
+              <Carousel
+                showThumbs={false}
+                showStatus={false}
+                showArrows={false}
+                preventMovementUntilSwipeScrollTolerance={true}
+                swipeScrollTolerance={50}
+                swipeable
+                autoPlay
+                infiniteLoop
+                interval={5000}
+                transitionTime={1000}
+                renderIndicator={CarouselIndicator}
+                stopOnHover
+                className='w-full'
+              >
+                {eventsChunk.map((events, index) => (
+                  <div
+                    key={`chunks-${index}`}
+                    className='flex w-full flex-1 flex-row items-center justify-center pb-[30px] 
+                  md:justify-between lg:pb-20 3xl:pb-[100px]'
+                  >
+                    {events.map((event) => (
                       <div
-                        className='absolute bottom-2 left-2 rounded-lg bg-[#49BBBD] p-2 
-                        lg:left-5 lg:bottom-5 lg:p-3 3xl:p-4'
+                        key={event.id}
+                        className='relative aspect-square h-auto w-[300px]  
+                      lg:w-[360px] xl:w-[400px] 3xl:w-[500px]'
                       >
-                        <p className='text-base font-semibold text-white lg:text-2xl 3xl:text-3xl'>
-                          {event.name}
-                        </p>
+                        <LazyLoadImage
+                          src={event.imgSrc}
+                          placeHolderSrc={event.imgPlaceholder}
+                          alt={event.name}
+                          containerClassName='z-0 brightness-75'
+                          className='rounded-lg'
+                          objectFit='cover'
+                        />
+                        <div
+                          className='absolute bottom-2 left-2 rounded-lg bg-[#49BBBD] p-2 
+                        lg:left-5 lg:bottom-5 lg:p-3 3xl:p-4'
+                        >
+                          <p className='text-base font-semibold text-white lg:text-2xl 3xl:text-3xl'>
+                            {event.name}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </Carousel>
+                    ))}
+                  </div>
+                ))}
+              </Carousel>
+            )}
           </section>
           <section className='flex w-full flex-col items-start justify-start space-y-5 lg:space-y-10 3xl:space-y-[60px]'>
             <h2 className='whitespace-normal text-left text-lg font-semibold lg:text-2xl 3xl:text-3xl'>
@@ -237,6 +245,9 @@ const HomePage = () => {
               <Carousel
                 showThumbs={false}
                 showStatus={false}
+                preventMovementUntilSwipeScrollTolerance={true}
+                swipeScrollTolerance={50}
+                swipeable
                 autoPlay
                 emulateTouch
                 infiniteLoop
