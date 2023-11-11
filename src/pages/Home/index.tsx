@@ -14,6 +14,7 @@ import { Page } from '../../layout';
 const HomePage = () => {
   const { width } = useWindowDimensions();
   const [eventsChunk, setEventsChunk] = useState<Array<typeof eventsData>>([]);
+
   useEffect(() => {
     setTimeout(() => {
       const section = document.getElementById('homepage-section-1');
@@ -41,8 +42,10 @@ const HomePage = () => {
 
         if (contentWidth < 700) {
           setEventsChunk(chunk(eventsData, 1));
-        } else if (contentWidth < 1024) {
+        } else if (contentWidth < 1400) {
           setEventsChunk(chunk(eventsData, 2));
+        } else {
+          setEventsChunk(chunk(eventsData, 3));
         }
       }
     }, 200);
@@ -201,7 +204,7 @@ const HomePage = () => {
                     <div
                       key={event.id}
                       className='relative mx-auto aspect-square h-auto w-[300px]  
-                      lg:w-[360px] 2xl:w-[500px]'
+                      lg:w-[360px] xl:w-[400px] 3xl:w-[500px]'
                     >
                       <LazyLoadImage
                         src={event.imgSrc}
