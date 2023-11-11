@@ -93,7 +93,7 @@ const DesktopReview: React.FC<{
         currentSet={currentSet}
         handleSubmit={() => navigate(`/room/exercises/${params.subjectId}`)}
       />
-      <ToastContainer position='bottom-right' />
+      <ToastContainer position='bottom-right' draggable={false} />
     </main>
   );
 };

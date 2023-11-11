@@ -6,6 +6,7 @@ import { ReactComponent as LargeLogoCTCT } from '../../assets/svgs/LargeLogoCTCT
 import { useThrottle } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
+import LoginButton from '../LoginButton';
 
 import SearchBar from './SearchBar';
 
@@ -23,7 +24,6 @@ const LargeHeader = () => {
 
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
-  const loginWithGoogle = useBoundStore.use.loginWithGoogle();
   const logout = useBoundStore.use.logout();
 
   useEffect(() => {
@@ -67,12 +67,12 @@ const LargeHeader = () => {
     <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
         className='z-30 flex w-full flex-row items-center justify-between
-        bg-white px-[16px] py-[12px] 3xl:px-[32px] 3xl:py-[16px]'
+        bg-white px-[16px] py-[12px] md:gap-x-10 lg:gap-x-[30px] 3xl:gap-x-20 3xl:px-[32px] 3xl:py-[16px]'
       >
         <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
           <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]' />
         </NavLink>
-        <div className='relative flex flex-row items-center gap-x-[52px]'>
+        <div className='relative flex h-full flex-row items-center justify-between md:gap-x-10 lg:gap-x-8 3xl:gap-x-10'>
           <SearchBar
             options={[
               {
@@ -94,17 +94,7 @@ const LargeHeader = () => {
             ]}
             value={{ label: '', value: '' }}
           />
-          {!isAuthenticated && (
-            <button
-              type='submit'
-              className='inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] 
-              bg-[#4285F4] text-base text-white 
-              duration-300 ease-out hover:bg-[#2374FA]'
-              onClick={loginWithGoogle}
-            >
-              Đăng nhập
-            </button>
-          )}
+          {!isAuthenticated && <LoginButton />}
           {isAuthenticated && (
             <>
               <div ref={profileRef}>

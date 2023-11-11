@@ -44,6 +44,7 @@ const Detail: React.FC = () => {
 
   useEffect(() => {
     const onEndQuizSession = async () => {
+      toast.success('Đã kết thúc bài kiểm tra!');
       await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
       navigate(
         `/room/exercises/${params.subjectId}/quiz/${params.quizId}/review/session/${params.sessionId}`

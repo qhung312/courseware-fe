@@ -7,7 +7,9 @@ import Header from './Header';
 import Icon from './Icon';
 import LazyLoadImage from './LazyLoadImage';
 import Loading from './Loading';
+import LoginButton from './LoginButton';
 import Markdown from './Markdown';
+import FinishModal from './Modal/FinishModal';
 import Pagination from './Pagination';
 import PDF from './PDF';
 import QuestionBoard from './QuestionBoard';
@@ -24,8 +26,10 @@ export {
   Header,
   Icon,
   Markdown,
+  FinishModal,
   LazyLoadImage,
   Loading,
+  LoginButton,
   Pagination,
   QuestionBoard,
   QuestionCard,

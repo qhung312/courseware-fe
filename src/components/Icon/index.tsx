@@ -31,6 +31,7 @@ import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/svgs/FacebookIcon.svg';
 import { ReactComponent as LogoFessior } from '../../assets/svgs/FessiorLogo.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/FilterIcon.svg';
+import { ReactComponent as LogoGoogle } from '../../assets/svgs/GoogleIcon.svg';
 import { ReactComponent as Help } from '../../assets/svgs/HelpIcon.svg';
 import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
 import { ReactComponent as Introduction } from '../../assets/svgs/IntroductionIcon.svg';
@@ -98,6 +99,7 @@ export default {
   LocationIcon,
   LogoCTCT,
   LogoGDSC,
+  LogoGoogle,
   LogoFessior,
   Exercise,
   PhoneIcon,

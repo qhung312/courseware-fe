@@ -190,7 +190,7 @@ const Main: React.FC = () => {
                     </div>
                     <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
                       <p className='text-justify text-[#666]'>
-                        {isEmpty(quiz.description) ? 'No description' : quiz.description}
+                        {isEmpty(quiz.description) ? 'Không có chú thích' : quiz.description}
                       </p>
                     </div>
                     <button

@@ -72,7 +72,7 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
         currentSet={currentSet}
         handleSubmit={() => navigate(`/room/exercises/${params.subjectId}`)}
       />
-      <ToastContainer position='bottom-center' />
+      <ToastContainer position='bottom-center' draggable={false} />
     </div>
   );
 };

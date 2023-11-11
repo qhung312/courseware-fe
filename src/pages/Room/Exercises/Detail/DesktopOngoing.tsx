@@ -104,7 +104,7 @@ const DesktopOngoing: React.FC<{
         </div>
       </div>
       <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
-      <ToastContainer position='bottom-right' />
+      <ToastContainer position='bottom-right' draggable={false} />
     </main>
   );
 };

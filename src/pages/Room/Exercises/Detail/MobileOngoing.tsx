@@ -74,7 +74,7 @@ const MobileOngoing: React.FC<{
         </div>
       </div>
       <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
-      <ToastContainer position='bottom-center' />
+      <ToastContainer position='bottom-center' draggable={false} />
     </div>
   );
 };
