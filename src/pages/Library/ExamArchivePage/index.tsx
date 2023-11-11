@@ -132,7 +132,7 @@ const ExamArchivePage: React.FC = () => {
                   window.location.origin + `/library/exam-archive/${subject?._id}/pdf/${exam._id}`
                 }
                 subTitle={''}
-                description={exam?.description ?? 'Không có chú thích'}
+                description={exam?.description ? exam?.description : 'Không có chú thích'}
               />
             ))}
           </div>

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from 'react';
 
 type Callback = () => any;
 
-const useDebounce = (callback: Callback) => {
+const useDebounce = (callback: Callback, time: number = 600) => {
   const ref = useRef<Callback>();
 
   useEffect(() => {
@@ -15,8 +15,8 @@ const useDebounce = (callback: Callback) => {
       ref.current?.();
     };
 
-    return debounce(func, 600);
-  }, []);
+    return debounce(func, time);
+  }, [time]);
 
   return debouncedCallback;
 };

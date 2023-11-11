@@ -1,5 +1,4 @@
 import { useLayoutEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Icon } from '../../../components';
@@ -21,7 +20,6 @@ const ExamArchiveDetailPage: React.FC = () => {
   const isAsideOpen = useBoundStore.use.isAsideOpen();
   const toggleAside = useBoundStore.use.toggleAside();
 
-  const subjects = useBoundStore.use.subjects();
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
       ExamArchiveService.getById(params?.pdfId).then((res) => {
@@ -49,21 +47,10 @@ const ExamArchiveDetailPage: React.FC = () => {
 
       {/* Add space
         <div id='previous-exams-margin' /> */}
-      <Wrapper className={`flex w-full flex-col`} fullWidth>
+      <Wrapper className={`with-nav-height flex w-full flex-col overflow-auto`} fullWidth>
         {/* Banner */}
-        <div
-          className='hidden w-full bg-[#4285F4] px-5 py-5 text-white
-            md:flex md:h-[88px] md:flex-col md:justify-between
-            lg:h-[108px] lg:px-9 lg:py-6 xl:h-[132px] xl:px-10 xl:py-7 2xl:h-[164px] 2xl:px-11 2xl:py-8'
-        >
-          <h1 className='text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl 3xl:text-[44px]'>
-            {exam?.name}
-          </h1>
-          <h3>
-            {subjects?.find((subject) => subject._id === exam?.subject._id)?.name || (
-              <Skeleton baseColor='#9DCCFF' />
-            )}
-          </h3>
+        <div className='hidden w-full bg-[#4285F4] px-6 py-2 text-white md:flex md:flex-col md:justify-between lg:px-7 lg:py-3 3xl:px-8 3xl:py-4'>
+          <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>{exam?.name}</h1>
         </div>
 
         <div className='my-6 w-full space-y-5 px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>

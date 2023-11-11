@@ -4,9 +4,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import './index.css';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, PDF } from '../../../components';
+import { Icon } from '../../../components';
 // import { useDebounce } from '../../../hooks';
-import { API_URL } from '../../../config';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import MaterialService from '../../../service/material.service';
@@ -18,23 +17,31 @@ const MaterialView = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [material, setMaterial] = useState<Material>();
+  const [url, setUrl] = useState('');
 
-  const handleOnDownload = useDebounce(() => {
+  useEffect(() => {
     MaterialService.download(id, true)
       .then((res) => {
         console.log('response: ', res);
-        const url = window.URL.createObjectURL(new Blob([res?.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${material?.name ?? 'ctct'}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        const stringResult = window.URL.createObjectURL(res?.data);
+        setUrl(stringResult);
+        console.log('>>> string result:', stringResult);
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.response.data.message);
+        setUrl('');
       });
+  }, [id]);
+
+  const handleOnDownload = useDebounce(() => {
+    if (url) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${material?.name ?? 'ctct'}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
   });
 
   useEffect(() => {
@@ -136,8 +143,17 @@ const MaterialView = () => {
                   </div>
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
-                  <p className='w-full text-sm lg:text-base 3xl:text-xl'>Tài liệu</p>
-                  <PDF url={`${API_URL}admin/material/${id}/download`} />
+                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Tài liệu</p>
+                  {/* <PDF url={`${API_URL}admin/material/${id}/download`} title={material?.name} /> */}
+                  {url && (
+                    <embed
+                      src={url}
+                      type='application/pdf'
+                      title={material?.name}
+                      height={800}
+                      width='100%'
+                    />
+                  )}
                 </div>
               </form>
               <div className='my-4 flex flex-row-reverse gap-x-8'>

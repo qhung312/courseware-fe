@@ -62,6 +62,8 @@ import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.s
 import { ReactComponent as ViewIcon } from '../../assets/svgs/ViewIcon.svg';
 import { ReactComponent as XMark } from '../../assets/svgs/XMarkIcon.svg';
 import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg';
+import { ReactComponent as ZoomInIcon } from '../../assets/svgs/ZoomInIcon.svg';
+import { ReactComponent as ZoomOutIcon } from '../../assets/svgs/ZoomOutIcon.svg';
 
 export default {
   AboutUs,
@@ -127,5 +129,7 @@ export default {
   XMark,
   Pen,
   YoutubeIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
   LiveHelpIcon,
 };
