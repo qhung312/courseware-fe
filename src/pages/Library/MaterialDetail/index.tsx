@@ -18,6 +18,7 @@ const MaterialDetailPage: React.FC = () => {
 
   const [material, setMaterial] = useState<Material | null>(null);
   const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const toggleAside = useBoundStore.use.toggleAside();
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
@@ -58,6 +59,7 @@ const MaterialDetailPage: React.FC = () => {
             type='button'
             onClick={() => {
               navigate(-1);
+              toggleAside();
             }}
             className='flex items-center space-x-2 hover:underline'
           >

@@ -13,6 +13,7 @@ import PDF from './PDF';
 import QuestionBoard from './QuestionBoard';
 import QuestionCard from './QuestionCard';
 import Select from './Select';
+import UserSharingCard from './UserSharingCard';
 
 export {
   AsideLink,
@@ -30,4 +31,5 @@ export {
   QuestionCard,
   PDF,
   Select,
+  UserSharingCard,
 };

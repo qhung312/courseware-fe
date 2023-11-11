@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 import SubjectService from '../../../service/subject.service';
 import { Subject } from '../../../types';
-// import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
 const SubjectView = () => {
   const params = useParams();
@@ -25,6 +25,7 @@ const SubjectView = () => {
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -67,6 +68,7 @@ const SubjectView = () => {
               </>
             ) : (
               <main className='flex flex-col gap-y-4'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID môn học: {id}</p>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -118,6 +120,7 @@ const SubjectView = () => {
             )}
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

@@ -105,13 +105,13 @@ const LargeHeader = () => {
                   <img
                     alt='profile_pic'
                     src={user?.picture || require('../../assets/images/AvatarPic.png')}
-                    className='mr-[16px] h-[42px] w-[42px] rounded-[999px] border-2
-                  border-[#49BBBD] bg-[#979797] 3xl:mr-[24px] 3xl:h-[50px] 3xl:w-[50px]'
+                    className='mr-4 h-10 w-10 rounded-full border-2
+                    border-[#49BBBD] bg-white 3xl:mr-6 3xl:h-[52px] 3xl:w-[52px]'
                   />
                   <Icon.ChevronUp
                     fill={'#3b3b3b'}
                     fillOpacity={0.87}
-                    className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                    className={`transform-all aspect-[10/7] h-auto w-2 duration-300 ${
                       isProfileDrop ? 'rotate-0' : 'rotate-180'
                     }`}
                   />

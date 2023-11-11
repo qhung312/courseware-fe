@@ -83,7 +83,7 @@ const EditExercisePage = () => {
         setQuestionOptions(allQuestions);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => setLoading(false));
   });
@@ -95,7 +95,7 @@ const EditExercisePage = () => {
         setExercise(res.data.payload);
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => setLoading(false));
   }, [id]);
@@ -189,7 +189,7 @@ const EditExercisePage = () => {
         );
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, []);
 
@@ -213,7 +213,7 @@ const EditExercisePage = () => {
         setChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [subject]);
 
@@ -237,7 +237,7 @@ const EditExercisePage = () => {
         setFilterChapter('');
       })
       .catch((err) => {
-        console.error(err);
+        toast.error(err.response.data.message);
       });
   }, [filterSubject]);
 
@@ -292,6 +292,9 @@ const EditExercisePage = () => {
                 </>
               ) : (
                 <>
+                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                    ID bài tập rèn luyện: {id}
+                  </p>
                   <div className='flex flex-col gap-y-1'>
                     <label
                       className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -463,16 +466,16 @@ const EditExercisePage = () => {
                     </div>
                     <div>
                       <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                        <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2.5] text-base text-[#4285f4] lg:text-lg 3xl:text-xl'>
                           Tên
                         </p>
-                        <p className='flex flex-[2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Môn
                         </p>
-                        <p className='flex flex-[1.2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Chương
                         </p>
-                        <p className='flex flex-[1.5] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.5] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Thời gian tạo
                         </p>
                         <div className='flex flex-1' />

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './index.css';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 // import { useDebounce } from '../../../hooks';
@@ -53,7 +53,7 @@ const MaterialView = () => {
         setMaterial(result);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -96,11 +96,12 @@ const MaterialView = () => {
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-6'
             >
               <form className='flex flex-col gap-y-6'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                  ID tài liệu: {id}
+                </p>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-name'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                      Tên đề thi
-                    </p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Tên đề thi</p>
                   </label>
                   <div
                     id='exam-name'
@@ -112,13 +113,13 @@ const MaterialView = () => {
                 </div>
                 <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Môn</p>
                     <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                       <span>{material?.subject?.name}</span>
                     </div>
                   </div>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chương</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Chương</p>
                     <div
                       className={`flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs ${
                         material?.chapter?.name ? '' : 'text-[#5B5B5B]'
@@ -130,9 +131,7 @@ const MaterialView = () => {
                 </div>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-description'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                      Chú thích
-                    </p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Chú thích</p>
                   </label>
                   <div
                     className={`flex w-full rounded-lg border border-[#CCC] p-1 text-xs ${
