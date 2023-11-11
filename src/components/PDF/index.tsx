@@ -81,17 +81,19 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   }, [setIsShowTool, setTool]);
 
   useEffect(() => {
-    const closeOutline = (event: MouseEvent) => {
-      if (outlineRef.current && !outlineRef.current.contains(event.target as Node)) {
-        setIsShowOutline(false);
-      }
-    };
-    setTimeout(() => {
-      if (isShowOutline) {
-        document.addEventListener('click', closeOutline);
-      }
-    }, 0);
-    return () => window.removeEventListener('click', closeOutline);
+    if (isShowOutline) {
+      const closeOutline = (event: MouseEvent) => {
+        if (outlineRef.current && !outlineRef.current.contains(event.target as Node)) {
+          setIsShowOutline(false);
+        }
+      };
+      setTimeout(() => {
+        if (isShowOutline) {
+          window.addEventListener('click', closeOutline);
+        }
+      }, 0);
+      return () => window.removeEventListener('click', closeOutline);
+    }
   }, [isShowOutline]);
 
   useEffect(() => {
@@ -128,15 +130,13 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
           onLoadSuccess={onDocumentLoadSuccess}
           onItemClick={onItemClick}
         >
-          {isShowOutline && (
-            <div ref={outlineRef}>
-              <Outline
-                onItemClick={onItemClick}
-                className='with-nav-height'
-                onLoadSuccess={(outline) => console.log('>> outline: ', outline)}
-              />
-            </div>
-          )}
+          <div ref={outlineRef}>
+            <Outline
+              onItemClick={onItemClick}
+              className={`with-nav-height ${isShowOutline ? '' : 'hidden'}`}
+              onLoadSuccess={(outline) => console.log('>> outline: ', outline)}
+            />
+          </div>
           <div
             className={`fixed bottom-0 left-[50%] z-10 flex translate-x-[-50%] translate-y-[-50%] flex-row justify-center gap-x-2 rounded-lg bg-[#4D4D4D] p-2 transition-all duration-200 ${
               isShowTool || isMouseIn ? 'opacity-100' : 'opacity-0'
@@ -147,7 +147,9 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
             <button
               type='button'
               className='flex flex-1 items-center whitespace-nowrap rounded-lg p-1 text-white hover:bg-[#808080] lg:p-3 3xl:p-5'
-              onClick={() => setIsShowOutline(!isShowOutline)}
+              onClick={() => {
+                setIsShowOutline(!isShowOutline);
+              }}
             >
               {isShowOutline ? 'Ẩn' : 'Hiện'} mục lục
             </button>
