@@ -1,5 +1,8 @@
 .react-pdf__Outline {
-  height: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
   column-gap: 0.25rem;
   overflow: auto;
   background-color: #4d4d4d;
@@ -13,6 +16,10 @@
 
 .react-pdf__Outline ul li {
   margin-bottom: 0.5rem;
+}
+
+.react-pdf__Outline ul li ul li {
+  padding-left: 1rem;
 }
 
 .react-pdf__Outline a {

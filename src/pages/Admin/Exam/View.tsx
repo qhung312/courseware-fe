@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './index.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
-import { Icon, PDF } from '../../../components';
-import { API_URL } from '../../../config';
+import { Icon } from '../../../components';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ExamArchiveService from '../../../service/examArchive.service';
@@ -17,24 +16,31 @@ const ExamView = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [examArchive, setExamArchive] = useState<ExamArchive>();
+  const [url, setUrl] = useState('');
 
   const handleOnDownload = useDebounce(() => {
+    if (url) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${examArchive?.name ?? 'ctct'}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+  });
+
+  useEffect(() => {
     ExamArchiveService.download(id, true)
       .then((res) => {
         console.log('response: ', res);
-        const url = window.URL.createObjectURL(new Blob([res?.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${examArchive?.name ?? 'ctct'}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        const stringResult = window.URL.createObjectURL(res?.data);
+        setUrl(stringResult);
       })
       .catch((err) => {
-        console.log(err);
-        toast.error(err.message);
+        console.error(err);
+        setUrl('');
       });
-  });
+  }, [id]);
 
   useEffect(() => {
     setLoading(true);
@@ -148,10 +154,15 @@ const ExamView = () => {
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Đề Thi</p>
-                  <PDF
-                    url={`${API_URL}admin/previous_exam/${id}/download`}
-                    title={examArchive?.name}
-                  />
+                  {url && (
+                    <embed
+                      src={url}
+                      type='application/pdf'
+                      title={examArchive?.name}
+                      height={800}
+                      width='100%'
+                    />
+                  )}
                 </div>
               </form>
               <div className='my-4 flex flex-row-reverse gap-x-8'>
