@@ -8,6 +8,8 @@ import { useDebounce, useThrottle } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
 
+import SearchBar from './SearchBar';
+
 const MediumHeader = () => {
   const style: CSSProperties = {
     height: '32px',
@@ -107,13 +109,27 @@ const MediumHeader = () => {
           }}
         >
           <div className='relative flex w-full flex-row items-center justify-center'>
-            <input
-              className='w-full rounded-[40px] border border-[#49BBBD] 
-            bg-inherit px-[20px] py-[8px]'
+            <SearchBar
+              options={[
+                {
+                  label: 'Tài liệu',
+                  value: '/library/material',
+                },
+                {
+                  label: 'Đề thi',
+                  value: '/library/exam-archive',
+                },
+                {
+                  label: 'Bài tập rèn luyện',
+                  value: '/room/exercises',
+                },
+                {
+                  label: 'Thi thử',
+                  value: '/room/tests',
+                },
+              ]}
+              onChange={() => ({ label: '', value: '' })}
             />
-            <button type='button' className='absolute right-[20px] w-[20px]'>
-              <Icon.Search className='w-[20px]' />
-            </button>
           </div>
           <nav className='flex w-full flex-col items-center gap-y-[12px]'>
             <NavLink
