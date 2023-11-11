@@ -4,6 +4,12 @@ import { axios } from '../utils/custom-axios';
 import type { Response } from '../types/response';
 import type { User } from '../types/user';
 
+export type GetActivityProp = {
+  activityType: string;
+  pageSize?: number;
+  pageNumber?: number;
+};
+
 export type ActivityReturnType = {
   _id: string;
   type: string;
@@ -48,6 +54,11 @@ export type ActivityReturnType = {
 type GetAllActivityReturnType = {
   total: number;
   results: ActivityReturnType[];
+  count: {
+    VIEW_MATERIAL: number;
+    VIEW_PREVIOUS_EXAM: number;
+    START_QUIZ_SESSION: number;
+  };
 };
 
 const getUserProfile = () => axios.get<Response<User>>(`${API_URL}me`);
@@ -58,10 +69,10 @@ const editUserProfile = (profile: User) => {
   return axios.patch<Response<User>>(queryString, profile);
 };
 
-const getUserActivity = (activityType: string) => {
-  const queryString = `${API_URL}me/activity?pagination=false\
-${activityType ? `&type=${activityType}` : ''}`;
-
+const getUserActivity = (query: GetActivityProp) => {
+  const queryString = `${API_URL}me/activity?type=${query.activityType}\
+${query.pageSize ? `&pageSize=${query.pageSize}` : ''}\
+${query.pageNumber ? `&pageSize=${query.pageNumber}` : ''}`;
   return axios.get<Response<GetAllActivityReturnType>>(queryString);
 };
 
