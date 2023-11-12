@@ -16,15 +16,13 @@ const HomePage = () => {
   const [eventsChunk, setEventsChunk] = useState<Array<typeof eventsData>>([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      const section = document.getElementById('homepage-section-1');
-      const introduction = document.getElementById('homepage-introduction');
-      if (width >= 1024 && section && introduction) {
-        section.style.height = `${introduction.getBoundingClientRect().height + 60}px`;
-      } else {
-        section?.style.removeProperty('height');
-      }
-    }, 200);
+    const section = document.getElementById('homepage-section-1');
+    const introduction = document.getElementById('homepage-introduction');
+    if (width >= 1024 && section && introduction) {
+      section.style.height = `${introduction.getBoundingClientRect().height + 60}px`;
+    } else {
+      section?.style.removeProperty('height');
+    }
   }, [width]);
 
   useEffect(() => {
