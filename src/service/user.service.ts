@@ -61,6 +61,20 @@ type GetAllActivityReturnType = {
   };
 };
 
+export type GetAllSubjectStatisticReturnType = {
+  _id: string;
+  name: string;
+  total: number;
+  score: number;
+};
+
+interface StatisticsResponse {
+  success: boolean;
+  code: number;
+  message: string;
+  payload: GetAllSubjectStatisticReturnType[];
+}
+
 const getUserProfile = () => axios.get<Response<User>>(`${API_URL}me`);
 
 const editUserProfile = (profile: User) => {
@@ -79,6 +93,14 @@ ${query.pageNumber ? `&pageSize=${query.pageNumber}` : ''}`;
 const deleteUserActivity = (activityId: string) =>
   axios.delete(`${API_URL}me/activity/${activityId}`);
 
-const UserService = { getUserProfile, editUserProfile, getUserActivity, deleteUserActivity };
+const getAllSubjectStatistic = () => axios.get<StatisticsResponse>(`${API_URL}me/statistics/quiz/`);
+
+const UserService = {
+  getUserProfile,
+  editUserProfile,
+  getUserActivity,
+  deleteUserActivity,
+  getAllSubjectStatistic,
+};
 
 export default UserService;
