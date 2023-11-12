@@ -128,7 +128,7 @@ const MediumHeader = () => {
                   value: '/room/tests',
                 },
               ]}
-              onChange={() => ({ label: '', value: '' })}
+              value={{ label: '', value: '' }}
             />
           </div>
           <nav className='flex w-full flex-col items-center gap-y-[12px]'>

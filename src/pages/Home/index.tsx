@@ -99,10 +99,10 @@ const HomePage = () => {
                 showArrows={false}
                 renderIndicator={CarouselIndicator}
                 stopOnHover
-                className='ml-auto -mr-2 h-full min-w-full lg:w-[440px] lg:min-w-0 xl:w-[540px] 2xl:w-[640px] 3xl:w-[800px]'
+                className='-ml-2 -mr-2 h-full min-w-full'
               >
                 {data.map((item, index) => (
-                  <div className='relative h-full w-full px-2' key={item.id}>
+                  <div className='relative h-full w-full min-w-full px-2' key={item.id}>
                     <LazyLoadImage
                       src={item.imgSrc}
                       placeHolderSrc={item.imgPlaceholder}
@@ -128,14 +128,14 @@ const HomePage = () => {
                 objectFit='cover'
               />
             </div>
-            <div className='relative z-[3] flex w-full flex-row flex-wrap items-center justify-around gap-y-[60px] p-5'>
+            <div className='relative z-[3] flex w-full flex-row flex-wrap items-center justify-between gap-y-[60px] gap-x-10 p-5'>
               <h2
-                className='whitespace-nowrap text-center text-2xl 
-                font-semibold text-white md:font-bold lg:text-3xl 3xl:text-5xl'
+                className='flex-1 whitespace-nowrap text-center 
+                text-2xl font-semibold text-white md:font-bold lg:text-3xl 3xl:text-5xl'
               >
                 "Không Một Ai Bị Bỏ Lại Phía Sau"
               </h2>
-              <div className='flex flex-col space-y-2 rounded-lg bg-white px-5 py-2 lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
+              <div className='mx-auto flex flex-1 flex-col space-y-2 rounded-lg bg-white px-5 py-2 lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
                 <div className='flex flex-row flex-wrap items-center justify-center'>
                   <p className='text-center text-lg font-bold lg:text-2xl 3xl:text-3xl'>
                     Cộng đồng không ngừng&nbsp;
