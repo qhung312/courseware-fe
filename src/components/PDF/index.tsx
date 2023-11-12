@@ -81,16 +81,14 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   }, [setIsShowTool, setTool]);
 
   useEffect(() => {
+    const closeOutline = (event: MouseEvent) => {
+      if (outlineRef.current && !outlineRef.current.contains(event.target as Node)) {
+        setIsShowOutline(false);
+      }
+    };
     if (isShowOutline) {
-      const closeOutline = (event: MouseEvent) => {
-        if (outlineRef.current && !outlineRef.current.contains(event.target as Node)) {
-          setIsShowOutline(false);
-        }
-      };
       setTimeout(() => {
-        if (isShowOutline) {
-          window.addEventListener('click', closeOutline);
-        }
+        window.addEventListener('click', closeOutline);
       }, 0);
       return () => window.removeEventListener('click', closeOutline);
     }
@@ -116,7 +114,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   return (
     <div
       id='pdfWrapperRef'
-      className='flex w-full flex-col gap-y-1 text-xs font-medium text-white lg:text-sm 3xl:text-base'
+      className='flex w-full flex-col gap-y-1 text-base font-medium md:text-sm lg:text-base 2xl:text-xl'
       ref={pdfWrapperRef}
     >
       {width && (
@@ -130,7 +128,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
           onLoadSuccess={onDocumentLoadSuccess}
           onItemClick={onItemClick}
         >
-          <div ref={outlineRef}>
+          <div ref={outlineRef} className='text-sm md:text-xs lg:text-sm 2xl:text-base'>
             <Outline
               onItemClick={onItemClick}
               className={`with-nav-height ${isShowOutline ? '' : 'hidden'}`}
@@ -138,7 +136,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
             />
           </div>
           <div
-            className={`fixed bottom-0 left-[50%] z-10 flex translate-x-[-50%] translate-y-[-50%] flex-row justify-center gap-x-2 rounded-lg bg-[#4D4D4D] p-2 transition-all duration-200 ${
+            className={`fixed bottom-0 left-[50%] z-10 flex translate-x-[-50%] translate-y-[-50%] flex-row justify-center gap-x-2 rounded-lg border-[1px] border-[#0c0c0d] bg-[#38383d] p-2 text-[#d4d4d5] transition-all duration-200 hover:text-[#efeff0] ${
               isShowTool || isMouseIn ? 'opacity-100' : 'opacity-0'
             } xl:p-3`}
             onMouseEnter={() => handleOnMouseIn(true)}
@@ -146,7 +144,7 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
           >
             <button
               type='button'
-              className='flex flex-1 items-center whitespace-nowrap rounded-lg p-1 text-white hover:bg-[#808080] lg:p-3 3xl:p-5'
+              className='flex flex-1 items-center whitespace-nowrap rounded-lg p-3 text-[#d4d4d5] hover:bg-[#606063] md:p-1 lg:p-3 3xl:p-5'
               onClick={() => {
                 setIsShowOutline(!isShowOutline);
               }}
@@ -156,21 +154,27 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
             <button
               type='button'
               onClick={onZoomOut}
-              className='rounded-lg p-1 text-[16px] text-white hover:bg-[#808080] md:text-[18px] lg:p-3 lg:text-[20px] xl:text-[22px] 2xl:text-[24px] 3xl:p-5'
+              className='rounded-lg p-3 hover:bg-[#606063] md:p-1 lg:p-3 3xl:p-5'
               disabled={zoom < 0.4}
             >
-              <Icon.ZoomOutIcon fill='white' className='h-5 w-5 lg:h-6 lg:w-6 3xl:h-7 3xl:w-7' />
+              <Icon.ZoomOutIcon
+                fill='#c3c3c5'
+                className='h-7 w-7 md:h-5 md:w-5 lg:h-6 lg:w-6 3xl:h-7 3xl:w-7'
+              />
             </button>
-            <span className='flex flex-1 justify-center rounded-lg bg-[#808080] p-1 lg:p-3 3xl:p-5'>{`${Math.floor(
+            <span className='flex flex-1 items-center justify-center rounded-lg bg-[#4a4a4f] p-3 text-[#f9f9fa] md:p-1 lg:p-3 3xl:p-5'>{`${Math.floor(
               zoom * 100
             )}%`}</span>
             <button
               type='button'
               onClick={onZoomIn}
-              className='rounded-lg p-1 text-[16px] text-white hover:bg-[#808080] md:text-[18px] lg:p-3 lg:text-[20px] xl:text-[22px] 2xl:text-[24px] 3xl:p-5'
+              className='rounded-lg p-3 hover:bg-[#606063] md:p-1 lg:p-3 3xl:p-5'
               disabled={zoom > 2}
             >
-              <Icon.ZoomInIcon fill='white' className='h-5 w-5 lg:h-6 lg:w-6 3xl:h-7 3xl:w-7' />
+              <Icon.ZoomInIcon
+                fill='#c3c3c5'
+                className='h-7 w-7 md:h-5 md:w-5 lg:h-6 lg:w-6 3xl:h-7 3xl:w-7'
+              />
             </button>
           </div>
           <div className='flex w-full flex-col items-center gap-y-1 lg:gap-y-2 2xl:gap-y-3'>
