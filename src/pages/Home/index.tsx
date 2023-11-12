@@ -46,16 +46,19 @@ const HomePage = () => {
         >
           <section
             id='homepage-section-1'
-            className='flex w-full flex-col gap-y-5 lg:flex-row lg:space-x-5 3xl:space-x-10'
+            className='flex w-full flex-col gap-y-5 gap-x-10 lg:flex-row'
           >
             <div
               id='homepage-introduction'
-              className='flex h-fit w-full min-w-fit flex-1 flex-col items-start justify-start text-[#4D4D4D] lg:min-w-0'
+              className='flex h-fit w-full min-w-fit flex-1 flex-col items-start justify-start  text-[#4D4D4D] lg:min-w-0'
             >
-              <h1 className='text-center text-xl font-bold uppercase text-[#4285F4] lg:text-xl 3xl:text-[32px] 3xl:leading-9'>
+              <h1
+                className='text-center text-xl font-semibold uppercase leading-normal text-[#4285F4] md:text-2xl 
+                md:font-bold md:leading-normal xl:text-[32px] xl:leading-normal 3xl:leading-9'
+              >
                 Who We Are
               </h1>
-              <h2 className='mb-5 text-[28px] font-bold uppercase leading-8 md:normal-case	md:text-[#2F327D] lg:text-3xl 3xl:text-5xl'>
+              <h2 className='mb-5 text-[28px] font-bold uppercase leading-normal md:text-4xl md:font-semibold md:normal-case md:leading-normal md:text-[#2F327D] xl:text-5xl xl:leading-normal'>
                 Chúng ta cùng tiến
               </h2>
               <p
@@ -274,8 +277,8 @@ const HomePage = () => {
                 </div>
               </Carousel>
               <div className='relative h-fit w-full flex-1 xl:h-full'>
-                <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#4285F4]' />
-                <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[90px] rounded-lg bg-[#A0C3FF]' />
+                <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-top-3 lg:-left-3 lg:w-[90px] 3xl:-top-5 3xl:-left-5 3xl:w-[140px]' />
+                <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-bottom-3 lg:-right-3 lg:w-[90px] 3xl:-bottom-5 3xl:-right-5 3xl:w-[140px]' />
                 <img
                   src={require('../../assets/images/stubVideo.png')}
                   alt='video'

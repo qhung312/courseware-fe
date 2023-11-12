@@ -37,7 +37,7 @@ const SearchBar = ({ options, onChange, ...props }: Props<Option, false, GroupBa
       }}
       classNames={{
         container: () =>
-          'flex w-full flex-1 shrink-[2] md:w-[300px] lg:w-[400px] rounded-lg border border-[#CCC]',
+          'flex w-full flex-1 shrink-[2] md:w-[300px] lg:w-[400px] rounded-lg border border-[#CCC] cursor-text',
         control: () =>
           'flex flex-[2] rounded-lg items-center justify-center px-3 py-2 text-xs font-medium lg:text-sm 3xl:px-5 3xl:py-3 3xl:text-base',
         placeholder: () => 'hidden',
