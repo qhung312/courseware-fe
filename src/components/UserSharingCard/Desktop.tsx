@@ -8,7 +8,7 @@ const Desktop: FC<{
   sharing: string;
 }> = ({ name, profileImg, sharing }) => {
   return (
-    <div className='flex flex-col items-start justify-start'>
+    <div className='flex flex-col items-start justify-start rounded-2xl bg-white shadow-[0_4px_4px_0_rgba(47,50,125,0.1)] '>
       <div className='relative flex w-full flex-row items-start justify-start gap-y-1 rounded-t-2xl bg-[#E3F2FD] px-8 py-5'>
         <p className='ml-[144px] text-xl font-medium lg:text-2xl 3xl:text-3xl'>{name}</p>
       </div>
@@ -27,11 +27,11 @@ const Desktop: FC<{
           }}
         />
         <div className='mt-[60px] h-fit w-fit self-start'>
-          <Icon.OpenQuote className='h-auto w-5' />
+          <Icon.OpenQuote className='h-auto w-5 lg:w-8 3xl:w-[44px]' />
         </div>
-        <p className='text-justify text-base font-semibold'>{sharing}</p>
+        <p className='text-justify text-base font-semibold lg:text-xl 3xl:text-2xl'>{sharing}</p>
         <div className='h-fit w-fit self-end'>
-          <Icon.CloseQuote className='h-auto w-5' />
+          <Icon.CloseQuote className='h-auto w-5 lg:w-8 3xl:w-[44px]' />
         </div>
       </div>
     </div>

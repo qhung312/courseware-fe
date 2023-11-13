@@ -9,10 +9,9 @@ export type Option = {
 };
 
 const CustomOption = ({ children, ...props }: OptionProps<Option, false, GroupBase<Option>>) => {
-  console.log(props);
   return (
     <components.Option {...props}>
-      <Link to={`${props.data.value}`} className='flex h-full w-full'>
+      <Link to={`${props.data.value}`} className='flex h-full w-full p-2.5'>
         {children}
       </Link>
     </components.Option>
@@ -37,14 +36,15 @@ const SearchBar = ({ options, onChange, ...props }: Props<Option, false, GroupBa
         }),
       }}
       classNames={{
-        container: () => 'flex flex-1 w-full md:w-[400px] rounded-lg border border-[#49BBBD]',
+        container: () =>
+          'flex w-full flex-1 shrink-[2] md:w-[300px] lg:w-[400px] rounded-lg border border-[#CCC]',
         control: () =>
-          'flex flex-1 rounded-lg items-center justify-center px-3 py-2 text-xs font-medium lg:text-sm 3xl:px-5 3xl:py-3 3xl:text-base',
+          'flex flex-[2] rounded-lg hover:cursor-text items-center justify-center px-3 py-2 text-xs font-medium lg:text-sm 3xl:px-5 3xl:py-3 3xl:text-base',
         placeholder: () => 'hidden',
         menu: () => 'rounded-lg border border-[#CCC] p-2.5 my-2 z-[100] bg-white',
         valueContainer: () => 'flex flex-1',
         option: () =>
-          'text-sm font-normal w-full h-full hover:bg-[#F1F1F1] cursor-pointer p-2.5 rounded-lg',
+          'text-sm font-normal w-full h-full hover:bg-[#F1F1F1] cursor-pointer rounded-lg',
       }}
       components={{ Option: CustomOption }}
       {...props}

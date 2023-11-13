@@ -7,6 +7,7 @@ import { ReactComponent as MediumLogoCTCT } from '../../assets/svgs/MediumLogoCT
 import { useDebounce, useThrottle } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
+import LoginButton from '../LoginButton';
 
 import SearchBar from './SearchBar';
 
@@ -39,7 +40,6 @@ const MediumHeader = () => {
 
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
-  const loginWithGoogle = useBoundStore.use.loginWithGoogle();
   const logout = useBoundStore.use.logout();
 
   const onClick = () => {
@@ -128,7 +128,7 @@ const MediumHeader = () => {
                   value: '/room/tests',
                 },
               ]}
-              onChange={() => ({ label: '', value: '' })}
+              value={{ label: '', value: '' }}
             />
           </div>
           <nav className='flex w-full flex-col items-center gap-y-[12px]'>
@@ -494,16 +494,7 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            {!isAuthenticated && (
-              <button
-                type='submit'
-                className='inset-y-5 right-5 w-[144px] cursor-pointer gap-x-[16px] rounded-[12px] bg-[#4285F4] px-[20px] py-[16px] text-base text-white duration-300 ease-out hover:bg-[#2374FA]
-                '
-                onClick={loginWithGoogle}
-              >
-                Đăng nhập
-              </button>
-            )}
+            {!isAuthenticated && <LoginButton />}
             {isAuthenticated &&
             (user.isManager ||
               _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (

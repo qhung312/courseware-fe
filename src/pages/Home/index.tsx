@@ -16,37 +16,25 @@ const HomePage = () => {
   const [eventsChunk, setEventsChunk] = useState<Array<typeof eventsData>>([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      const section = document.getElementById('homepage-section-1');
-      const introduction = document.getElementById('homepage-introduction');
-      if (width >= 1024 && section && introduction) {
-        section.style.height = `${introduction.getBoundingClientRect().height}px`;
-      } else {
-        section?.style.removeProperty('height');
-      }
-    }, 200);
+    const section = document.getElementById('homepage-section-1');
+    const introduction = document.getElementById('homepage-introduction');
+    if (width >= 1024 && section && introduction) {
+      section.style.height = `${introduction.getBoundingClientRect().height + 60}px`;
+    } else {
+      section?.style.removeProperty('height');
+    }
   }, [width]);
 
   useEffect(() => {
     setTimeout(() => {
-      const section = document.getElementById('homepage-section-1');
-      if (section) {
-        const sectionStyle = window.getComputedStyle(section);
-
-        const contentWidth =
-          section.offsetWidth -
-          parseFloat(sectionStyle.paddingLeft) -
-          parseFloat(sectionStyle.paddingRight) -
-          parseFloat(sectionStyle.borderLeftWidth) -
-          parseFloat(sectionStyle.borderRightWidth);
-
-        if (contentWidth < 700) {
-          setEventsChunk(chunk(eventsData, 1));
-        } else if (contentWidth < 1300) {
-          setEventsChunk(chunk(eventsData, 2));
-        } else {
-          setEventsChunk(chunk(eventsData, 3));
-        }
+      if (width < 640) {
+        setEventsChunk(chunk(eventsData, 1));
+      } else if (width < 1024) {
+        setEventsChunk(chunk(eventsData, 2));
+      } else if (width < 2000) {
+        setEventsChunk(chunk(eventsData, 3));
+      } else {
+        setEventsChunk(chunk(eventsData, 4));
       }
     }, 200);
   }, [width]);
@@ -60,20 +48,23 @@ const HomePage = () => {
         >
           <section
             id='homepage-section-1'
-            className='flex w-full flex-col gap-y-5 lg:flex-row lg:space-x-5 3xl:space-x-10'
+            className='flex w-full flex-col gap-y-5 gap-x-10 lg:flex-row'
           >
             <div
               id='homepage-introduction'
-              className='flex h-fit w-full min-w-fit flex-1 flex-col items-start justify-start text-[#4D4D4D] lg:min-w-0'
+              className='flex h-fit w-full min-w-fit flex-1 flex-col items-start justify-start  text-[#4D4D4D] lg:min-w-0'
             >
-              <h1 className='text-center text-xl font-bold text-[#4285F4] lg:text-2xl 3xl:text-4xl'>
+              <h1
+                className='text-center text-xl font-semibold uppercase leading-normal text-[#4285F4] md:text-2xl 
+                md:font-bold md:leading-normal xl:text-[32px] xl:leading-normal 3xl:leading-9'
+              >
                 Who We Are
               </h1>
-              <h2 className='mb-5 text-2xl font-bold uppercase lg:text-3xl 3xl:text-5xl'>
+              <h2 className='mb-5 text-[28px] font-bold uppercase leading-normal md:text-4xl md:font-semibold md:normal-case md:leading-normal md:text-[#2F327D] xl:text-5xl xl:leading-normal'>
                 Chúng ta cùng tiến
               </h2>
               <p
-                className='text-justify text-base leading-loose 
+                className='text-justify text-base leading-loose text-[#696984]
                 lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'
               >
                 <p>
@@ -111,10 +102,10 @@ const HomePage = () => {
                 showArrows={false}
                 renderIndicator={CarouselIndicator}
                 stopOnHover
-                className='ml-auto mr-0 h-full min-w-full lg:w-[440px] lg:min-w-0 xl:w-[540px] 2xl:w-[640px] 3xl:w-[800px]'
+                className='-ml-2 -mr-2 h-full min-w-full'
               >
                 {data.map((item, index) => (
-                  <div className='relative h-full w-full' key={item.id}>
+                  <div className='relative h-full w-full min-w-full px-2' key={item.id}>
                     <LazyLoadImage
                       src={item.imgSrc}
                       placeHolderSrc={item.imgPlaceholder}
@@ -128,22 +119,26 @@ const HomePage = () => {
               </Carousel>
             </div>
           </section>
-          <section className='relative flex w-full overflow-hidden rounded-lg'>
-            <div className='absolute top-0 left-0 right-0 bottom-0 z-[-1] w-full'>
+          <section className='relative flex w-screen overflow-hidden md:w-full'>
+            <div className='absolute top-0 left-0 right-0 bottom-0 z-0 w-full'>
+              <div className='absolute z-[1] h-full w-full bg-[#4285F4]/70' />
               <LazyLoadImage
                 src={require('../../assets/images/Banner.jpg')}
                 alt='banner'
                 placeHolderSrc={require('../../assets/images/Banner-placeholder.jpg')}
                 containerClassName='w-full'
-                className='h-full w-full brightness-50'
+                className='mt-[-22%] h-auto'
                 objectFit='cover'
               />
             </div>
-            <div className='flex w-full flex-row flex-wrap items-center justify-around gap-y-6 p-5'>
-              <h2 className='whitespace-nowrap text-center text-xl font-bold text-white lg:text-2xl 3xl:text-4xl'>
-                "Không một ai bị bỏ lại phía sau"
+            <div className='relative z-[3] flex w-full flex-row flex-wrap items-center justify-between gap-y-[60px] gap-x-10 p-5'>
+              <h2
+                className='flex-1 whitespace-nowrap text-center 
+                text-2xl font-semibold text-white md:font-bold lg:text-3xl 3xl:text-5xl'
+              >
+                "Không Một Ai Bị Bỏ Lại Phía Sau"
               </h2>
-              <div className='flex flex-col space-y-2 rounded-lg bg-white px-5 py-2 lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
+              <div className='mx-auto flex flex-1 flex-col space-y-2 rounded-lg bg-white px-5 py-2 lg:px-10 lg:py-3 3xl:px-[60px] 3xl:py-4'>
                 <div className='flex flex-row flex-wrap items-center justify-center'>
                   <p className='text-center text-lg font-bold lg:text-2xl 3xl:text-3xl'>
                     Cộng đồng không ngừng&nbsp;
@@ -155,16 +150,20 @@ const HomePage = () => {
                 </div>
                 <div className='flex flex-row items-center justify-center gap-x-6'>
                   <div className='flex flex-col items-center justify-center'>
-                    <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] lg:text-2xl 3xl:text-4xl'>
-                      30 000+
+                    <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] md:text-2xl lg:text-3xl 3xl:text-4xl'>
+                      30000+
                     </p>
-                    <p className='whitespace-nowrap text-base lg:text-xl 3xl:text-3xl'>sinh viên</p>
+                    <p className='whitespace-nowrap text-base font-bold md:text-xl lg:text-2xl 3xl:text-3xl'>
+                      Sinh viên
+                    </p>
                   </div>
                   <div className='flex flex-col items-center justify-center'>
-                    <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] lg:text-2xl 3xl:text-4xl'>
+                    <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] md:text-2xl lg:text-3xl 3xl:text-4xl'>
                       7
                     </p>
-                    <p className='whitespace-nowrap text-base lg:text-xl 3xl:text-3xl'>môn học</p>
+                    <p className='whitespace-nowrap text-base font-bold md:text-xl lg:text-2xl 3xl:text-3xl'>
+                      Môn học
+                    </p>
                   </div>
                 </div>
               </div>
@@ -179,7 +178,7 @@ const HomePage = () => {
               </h2>
               <div className='flex flex-col items-end justify-end gap-y-[8px]'>
                 <Link to='/about-us/activities' className='flex flex-row items-center'>
-                  <p className='text-center text-xs font-medium text-[#4285F4] underline lg:text-base 3xl:text-xl'>
+                  <p className='text-center text-xs font-bold text-[#4285F4] underline lg:text-base 3xl:text-xl'>
                     Xem tất cả
                   </p>
                 </Link>
@@ -199,19 +198,19 @@ const HomePage = () => {
                 transitionTime={1000}
                 renderIndicator={CarouselIndicator}
                 stopOnHover
-                className='w-full'
+                className='-mx-5 w-[calc(100%+40px)]'
               >
                 {eventsChunk.map((events, index) => (
                   <div
                     key={`chunks-${index}`}
-                    className='flex w-full flex-1 flex-row items-center justify-center pb-[30px] 
-                  md:justify-between lg:pb-20 3xl:pb-[100px]'
+                    className='flex w-full flex-1 flex-row items-center 
+                    justify-start gap-x-6 px-5 pb-10 lg:pb-20 3xl:pb-[100px]'
                   >
                     {events.map((event) => (
                       <div
                         key={event.id}
-                        className='relative aspect-square h-auto w-[300px]  
-                      lg:w-[360px] xl:w-[400px] 3xl:w-[500px]'
+                        className='relative aspect-square h-auto w-full'
+                        style={{ flex: `${events.length / eventsChunk[0]?.length}` }}
                       >
                         <LazyLoadImage
                           src={event.imgSrc}
@@ -241,7 +240,7 @@ const HomePage = () => {
               <span className='text-[#4285F4]'>Lắng nghe</span> và{' '}
               <span className='text-[#4285F4]'>chia sẻ</span>
             </h2>
-            <div className='flex w-full flex-row flex-wrap items-center justify-center gap-y-10 gap-x-6 lg:gap-x-10 3xl:gap-x-20'>
+            <div className='flex w-full flex-row flex-wrap items-start justify-center gap-y-10 gap-x-6 lg:gap-x-10 3xl:gap-x-20'>
               <Carousel
                 showThumbs={false}
                 showStatus={false}
@@ -256,9 +255,9 @@ const HomePage = () => {
                 renderIndicator={CarouselIndicator}
                 showArrows={false}
                 stopOnHover={false}
-                className='w-full md:w-[48%] md:flex-[0.9] xl:w-[53%] xl:flex-[1.1]'
+                className='-mx-2 w-full md:w-[48%] md:flex-[0.9] xl:w-[53%] xl:flex-[1.1]'
               >
-                <div className='w-full pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
+                <div className='w-full px-2 pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
                   <UserSharingCard
                     name='Nguyễn Văn A'
                     profileImg={require('../../assets/images/AvatarPic.png')}
@@ -268,7 +267,7 @@ const HomePage = () => {
                     sed do eiusmod tempos Lorem ipsum dolor sitame'
                   />
                 </div>
-                <div className='w-full pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
+                <div className='w-full px-2 pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
                   <UserSharingCard
                     name='Nguyễn Văn A'
                     profileImg={require('../../assets/images/AvatarPic.png')}
@@ -280,8 +279,8 @@ const HomePage = () => {
                 </div>
               </Carousel>
               <div className='relative h-fit w-full flex-1 xl:h-full'>
-                <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#4285F4]' />
-                <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[90px] rounded-lg bg-[#A0C3FF]' />
+                <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-top-3 lg:-left-3 lg:w-[90px] 3xl:-top-5 3xl:-left-5 3xl:w-[140px]' />
+                <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-bottom-3 lg:-right-3 lg:w-[90px] 3xl:-bottom-5 3xl:-right-5 3xl:w-[140px]' />
                 <img
                   src={require('../../assets/images/stubVideo.png')}
                   alt='video'
