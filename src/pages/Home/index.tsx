@@ -31,8 +31,10 @@ const HomePage = () => {
         setEventsChunk(chunk(eventsData, 1));
       } else if (width < 1024) {
         setEventsChunk(chunk(eventsData, 2));
-      } else {
+      } else if (width < 2000) {
         setEventsChunk(chunk(eventsData, 3));
+      } else {
+        setEventsChunk(chunk(eventsData, 4));
       }
     }, 200);
   }, [width]);
@@ -196,19 +198,19 @@ const HomePage = () => {
                 transitionTime={1000}
                 renderIndicator={CarouselIndicator}
                 stopOnHover
-                className='w-full'
+                className='-mx-5 w-[calc(100%+40px)]'
               >
                 {eventsChunk.map((events, index) => (
                   <div
                     key={`chunks-${index}`}
-                    className='flex w-full flex-1 flex-row items-center justify-center 
-                    gap-x-6 pb-10 lg:pb-20 3xl:pb-[100px]'
+                    className='flex w-full flex-1 flex-row items-center 
+                    justify-start gap-x-6 px-5 pb-10 lg:pb-20 3xl:pb-[100px]'
                   >
                     {events.map((event) => (
                       <div
                         key={event.id}
-                        className='relative aspect-square h-auto w-[300px] md:w-[360px]  
-                        lg:w-[360px] xl:w-[400px] 3xl:w-[500px]'
+                        className='relative aspect-square h-auto w-full'
+                        style={{ flex: `${events.length / eventsChunk[0]?.length}` }}
                       >
                         <LazyLoadImage
                           src={event.imgSrc}
