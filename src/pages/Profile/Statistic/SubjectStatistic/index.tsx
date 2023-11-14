@@ -175,7 +175,7 @@ const SubjectStatistic = () => {
                   <div className='flex justify-between'>
                     <p className='font-medium text-[#252641]'>{test?.fromQuiz?.name || 'Quiz'}</p>
                     <Link
-                      to={'/'}
+                      to={`/room/exercises/${test?.fromQuiz?.subject?._id}/quiz/${test?._id}/review/session/${test?._id}`}
                       className='font-semibold text-[#252641] underline hover:text-[#4285f4]'
                     >
                       Xem lại
@@ -215,7 +215,7 @@ const SubjectStatistic = () => {
                       </p>
                     </div>
                     <Link
-                      to={'/'}
+                      to={`/room/exercises/${test?.fromQuiz?.subject?._id}/quiz/${test?._id}/review/session/${test?._id}`}
                       className='font-semibold text-[#252641] underline hover:text-[#4285f4] lg:text-[18px] 3xl:text-2xl'
                     >
                       Xem lại
