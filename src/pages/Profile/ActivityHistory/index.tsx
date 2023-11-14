@@ -321,9 +321,9 @@ const ActivityHistory = () => {
                             activity?.materialId?._id || ''
                           }`
                         : activity.type === 'VIEW_PREVIOUS_EXAM'
-                        ? `/exam-archive/${activity?.previousExamId?.subject?._id || ''}/pdf/${
-                            activity?.previousExamId?._id || ''
-                          }`
+                        ? `/library/exam-archive/${
+                            activity?.previousExamId?.subject?._id || ''
+                          }/pdf/${activity?.previousExamId?._id || ''}`
                         : activity.type === 'START_QUIZ_SESSION'
                         ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?.fromQuiz._id}/review/session/${activity?.quizSessionId?._id}`
                         : '/'
