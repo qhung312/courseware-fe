@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
@@ -28,16 +27,11 @@ const ActivityHistory = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState<ActivityReturnType[]>([]);
-  const [chunks, setChunks] = useState(_.chunk(activities || [], 5));
   const [totalActivity, setTotalActivity] = useState({
+    currentTotal: 0,
     viewMaterial: 0,
     viewExercise: 0,
     viewPreviousExam: 0,
-  });
-  const [lastUpdate, setLastUpdate] = useState({
-    viewMaterial: 'Chưa có hoạt động',
-    viewExercise: 'Chưa có hoạt động',
-    viewPreviousExam: 'Chưa có hoạt động',
   });
 
   const onFilterClick = () => {
@@ -50,72 +44,28 @@ const ActivityHistory = () => {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString();
+    const hour = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
 
-    return `${day} tháng ${month} năm ${year}`;
-  };
-
-  const findLastUpdateTime = (epochTime: number) => {
-    if (epochTime === 0) return 'Chưa có hoạt động';
-    const now = new Date().getTime();
-    const lastDate = new Date(epochTime).getTime();
-
-    const timeleft = now - lastDate;
-
-    const days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-    if (days > 0) return `${days} ngày trước`;
-    const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    if (hours > 0) return `${hours} giờ trước`;
-    const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-    if (minutes > 0) return `${minutes} phút trước`;
-    const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-    if (seconds > 0) return `${seconds} giây trước`;
-
-    return '';
-  };
-
-  const countTotal = (myActivities: ActivityReturnType[]) => {
-    let material = 0,
-      exercise = 0,
-      previousExam = 0,
-      materialTime = 0,
-      exerciseTime = 0,
-      previousExamTime = 0;
-    myActivities.forEach((activity) => {
-      if (activity.type === 'VIEW_MATERIAL') {
-        material++;
-        if (activity.createdAt > materialTime) materialTime = activity.createdAt;
-      } else if (activity.type === 'START_QUIZ_SESSION') {
-        exercise++;
-        if (activity.createdAt > exerciseTime) exerciseTime = activity.createdAt;
-      } else if (activity.type === 'VIEW_PREVIOUS_EXAM') {
-        previousExam++;
-        if (activity.createdAt > previousExamTime) previousExamTime = activity.createdAt;
-      }
-    });
-    setTotalActivity({
-      viewMaterial: material,
-      viewExercise: exercise,
-      viewPreviousExam: previousExam,
-    });
-    setLastUpdate({
-      viewMaterial: findLastUpdateTime(materialTime),
-      viewExercise: findLastUpdateTime(exerciseTime),
-      viewPreviousExam: findLastUpdateTime(previousExamTime),
-    });
+    return `${hour} giờ ${minutes} phút, ${day} tháng ${month} năm ${year}`;
   };
 
   const fetchActivities = useDebounce(() => {
     setLoading(true);
-    let activityType = '';
-    if (filterOption === 1) activityType = 'VIEW_MATERIAL';
-    else if (filterOption === 2) activityType = 'START_QUIZ_SESSION';
-    else if (filterOption === 3) activityType = 'VIEW_PREVIOUS_EXAM';
-    UserService.getUserActivity(activityType)
+    let type = '';
+    if (filterOption === 1) type = 'VIEW_MATERIAL';
+    else if (filterOption === 2) type = 'START_QUIZ_SESSION';
+    else if (filterOption === 3) type = 'VIEW_PREVIOUS_EXAM';
+    UserService.getUserActivity({ activityType: type, pageSize: 5, pageNumber: page })
       .then((res) => {
-        const { results: allActivities } = res.data.payload;
+        const { results: allActivities, count, total } = res.data.payload;
         setActivities(allActivities);
-        setChunks(_.chunk(allActivities, 5));
-        if (activityType === '') countTotal(allActivities);
+        setTotalActivity({
+          currentTotal: total,
+          viewMaterial: count?.VIEW_MATERIAL,
+          viewExercise: count?.START_QUIZ_SESSION,
+          viewPreviousExam: count?.VIEW_PREVIOUS_EXAM,
+        });
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -138,14 +88,7 @@ const ActivityHistory = () => {
 
   useEffect(() => {
     fetchActivities();
-  }, [filterOption, fetchActivities]);
-
-  // useEffect(() => {
-  //   if (filterOption > 0) {
-  //     const filteredData = demoData.filter((activity) => activity.type === filterOption);
-  //     setChunks(_.chunk(filteredData, 5));
-  //   } else setChunks(_.chunk(demoData, 5));
-  // }, [filterOption]);
+  }, [filterOption, fetchActivities, page]);
 
   const throttledLibraryClick = useThrottle(onFilterClick);
 
@@ -284,7 +227,7 @@ const ActivityHistory = () => {
                       filterOption === 3 ? 'text-[#49BBBD]' : 'text-[#252641]'
                     }`}
                   >
-                    Thi thử
+                    Đề thi
                   </p>
                 </div>
                 <p
@@ -309,7 +252,7 @@ const ActivityHistory = () => {
             </div>
             <div className='mt-6 mb-5 h-[1px] w-full bg-[#696984]' />
             <button
-              className={`flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
+              className={`flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 1 && 'bg-[#9DCCFF]/[.3]'
               }`}
               onClick={() => {
@@ -318,16 +261,17 @@ const ActivityHistory = () => {
               }}
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Tài liệu học tập</h3>
-              <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
+              <p className='2xl:text-base'>{totalActivity.viewMaterial} hoạt động</p>
+              {/* <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
                 <div className='flex items-center'>
                   <Icon.Clock className='mr-1 h-4 w-4' fill='#252641' />
                   <p className='2xl:text-base'>{lastUpdate.viewMaterial}</p>
                 </div>
-                <p className='2xl:text-base'>{totalActivity.viewMaterial} hoạt động</p>
-              </div>
+                
+              </div> */}
             </button>
             <button
-              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
+              className={`mt-3 flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 2 && 'bg-[#9DCCFF]/[.3]'
               }`}
               onClick={() => {
@@ -336,16 +280,10 @@ const ActivityHistory = () => {
               }}
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Bài tập rèn luyện</h3>
-              <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
-                <div className='flex items-center'>
-                  <Icon.Clock className='mr-1 h-4 w-4' fill='#252641' />
-                  <p className='2xl:text-base'>{lastUpdate.viewExercise}</p>
-                </div>
-                <p className='2xl:text-base'>{totalActivity.viewExercise} hoạt động</p>
-              </div>
+              <p className='2xl:text-base'>{totalActivity.viewExercise} hoạt động</p>
             </button>
             <button
-              className={`mt-3 flex w-full flex-col items-start rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
+              className={`mt-3 flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 3 && 'bg-[#9DCCFF]/[.3]'
               }`}
               onClick={() => {
@@ -353,14 +291,8 @@ const ActivityHistory = () => {
                 else setFilterOption(3);
               }}
             >
-              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
-              <div className='flex w-full items-center justify-between text-[12px] text-[#252641]/[.8]'>
-                <div className='flex items-center'>
-                  <Icon.Clock className='mr-1 h-4 w-4' fill='#252641' />
-                  <p className='2xl:text-base'>{lastUpdate.viewPreviousExam}</p>
-                </div>
-                <p className='2xl:text-base'>{totalActivity.viewPreviousExam} hoạt động</p>
-              </div>
+              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Đề thi</h3>
+              <p className='2xl:text-base'>{totalActivity.viewPreviousExam} hoạt động</p>
             </button>
           </div>
           {loading && (
@@ -380,14 +312,18 @@ const ActivityHistory = () => {
           )}
           {!loading && activities.length !== 0 && (
             <div className='lg:mt-[-16px] lg:w-[69%]'>
-              {chunks[page - 1]?.map((activity, index) => (
+              {activities.map((activity, index) => (
                 <div className='mt-4' key={index}>
                   <Link
                     to={
                       activity.type === 'VIEW_MATERIAL'
-                        ? `/library/material/${activity?.materialId?.subject?._id}/pdf/${activity?.materialId?._id}`
+                        ? `/library/material/${activity?.materialId?.subject?._id || ''}/pdf/${
+                            activity?.materialId?._id || ''
+                          }`
                         : activity.type === 'VIEW_PREVIOUS_EXAM'
-                        ? `/exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
+                        ? `/exam-archive/${activity?.previousExamId?.subject?._id || ''}/pdf/${
+                            activity?.previousExamId?._id || ''
+                          }`
                         : activity.type === 'START_QUIZ_SESSION'
                         ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?.fromQuiz._id}/review/session/${activity?.quizSessionId?._id}`
                         : '/'
@@ -395,44 +331,49 @@ const ActivityHistory = () => {
                     className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
                   >
                     <p className='text-xl text-[rgba(45,52,54,0.7)]'>
-                      {epochToDateString(activity.createdAt) || '00 thàng 00 năm 0000'}
+                      {activity.createdAt
+                        ? epochToDateString(activity.createdAt)
+                        : '00 thàng 00 năm 0000'}
                     </p>
                     <h2 className='mt-1 text-2xl text-[#2D3436]'>
                       {activity.type === 'VIEW_PREVIOUS_EXAM'
-                        ? user?.familyAndMiddleName +
+                        ? (user?.familyAndMiddleName || '') +
                           ' ' +
-                          user?.givenName +
-                          ' đã tham gia Thi thử' +
+                          (user?.givenName || '') +
+                          ' đã truy cập đề thi' +
                           (activity?.previousExamId?.type === 'FINAL_EXAM'
                             ? ' Cuối kì '
                             : ' Giữa kì ') +
                           'môn ' +
-                          activity?.previousExamId?.subject?.name
+                          (activity?.previousExamId?.subject?.name || '')
                         : activity.type === 'VIEW_MATERIAL'
-                        ? user?.familyAndMiddleName +
+                        ? (user?.familyAndMiddleName || '') +
                           ' ' +
-                          user?.givenName +
+                          (user?.givenName || '') +
                           ' đã truy cập Tài liệu ' +
-                          activity?.materialId?.name +
+                          (activity?.materialId?.name || '') +
                           ' môn ' +
-                          activity?.materialId?.subject?.name
+                          (activity?.materialId?.subject?.name || '')
                         : activity.type === 'START_QUIZ_SESSION'
-                        ? user?.familyAndMiddleName +
+                        ? (user?.familyAndMiddleName || '') +
                           ' ' +
-                          user?.givenName +
+                          (user?.givenName || '') +
                           ' đã bắt đầu làm Bài tập rèn luyện môn ' +
-                          activity?.quizSessionId?.fromQuiz?.subject?.name
+                          (activity?.quizSessionId?.fromQuiz?.subject?.name || '')
                         : ''}
                     </h2>
                     <div className='mt-3 flex items-center'>
                       <Icon.OpenBook />
                       <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
                         {activity.type === 'VIEW_PREVIOUS_EXAM'
-                          ? 'Học kì ' + activity?.previousExamId?.semester.slice(9, 12)
+                          ? 'Học kì ' +
+                            (activity?.previousExamId?.semester
+                              ? activity?.previousExamId?.semester.slice(9, 12)
+                              : '')
                           : activity.type === 'VIEW_MATERIAL'
-                          ? activity?.materialId?.subject?.name
+                          ? activity?.materialId?.subject?.name || ''
                           : activity.type === 'START_QUIZ_SESSION'
-                          ? activity?.quizSessionId?.fromQuiz?.chapter?.name
+                          ? activity?.quizSessionId?.fromQuiz?.chapter?.name || ''
                           : ''}
                       </p>
                     </div>
@@ -443,11 +384,17 @@ const ActivityHistory = () => {
                       <CopyIcon
                         copyContent={
                           activity.type === 'VIEW_MATERIAL'
-                            ? `${API_URL}library/material/${activity?.materialId?.subject?._id}/pdf/${activity?.materialId?._id}`
+                            ? `${API_URL}library/material/${
+                                activity?.materialId?.subject?._id || ''
+                              }/pdf/${activity?.materialId?._id || ''}`
                             : activity.type === 'VIEW_PREVIOUS_EXAM'
-                            ? `${API_URL}exam-archive/${activity?.previousExamId?.subject?._id}/pdf/${activity?.previousExamId?._id}`
+                            ? `${API_URL}exam-archive/${
+                                activity?.previousExamId?.subject?._id || ''
+                              }/pdf/${activity?.previousExamId?._id || ''}`
                             : activity.type === 'START_QUIZ_SESSION'
-                            ? `${API_URL}room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?._id}`
+                            ? `${API_URL}room/exercises/${
+                                activity?.quizSessionId?.fromQuiz?.subject?._id || ''
+                              }/quiz/${activity?.quizSessionId?._id || ''}`
                             : API_URL
                         }
                       />
@@ -474,7 +421,10 @@ const ActivityHistory = () => {
                 >
                   <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
                 </button>
-                {Array.from({ length: chunks.length }, (_e, index) => index + 1).map((index) => (
+                {Array.from(
+                  { length: Math.ceil(totalActivity.currentTotal / 5) },
+                  (_e, index) => index + 1
+                ).map((index) => (
                   <button
                     key={`page-${index}`}
                     className={`aspect-square rounded-full p-2 ${
@@ -493,9 +443,9 @@ const ActivityHistory = () => {
                 ))}
                 <button
                   className={`rounded-full p-2 ${
-                    page === chunks.length ? '' : 'hover:bg-black/20'
+                    page === Math.ceil(totalActivity.currentTotal / 5) ? '' : 'hover:bg-black/20'
                   }`}
-                  disabled={page === chunks.length}
+                  disabled={page === Math.ceil(totalActivity.currentTotal / 5)}
                   onClick={() => setPage(page + 1)}
                 >
                   <Icon.Chevron fill='#5B5B5B' className='rotate-90' />

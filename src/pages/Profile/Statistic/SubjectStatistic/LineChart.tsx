@@ -9,43 +9,18 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const data = [
-  {
-    name: '01/07',
-    Điểm: 5.47,
-  },
-  {
-    name: '02/07',
-    Điểm: 6.78,
-  },
-  {
-    name: '03/07',
-    Điểm: 9.67,
-  },
-  {
-    name: '04/07',
-    Điểm: 7.88,
-  },
-  {
-    name: '05/07',
-    Điểm: 10.0,
-  },
-  {
-    name: '06/07',
-    Điểm: 3.67,
-  },
-  {
-    name: '07/07',
-    Điểm: 8.45,
-  },
-];
+import { ChartData } from '.';
 
-const RenderLineChart = () => {
+type RenderLineChartProps = {
+  data: ChartData[];
+};
+
+const RenderLineChart: React.FC<RenderLineChartProps> = ({ data }) => {
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <LineChart width={500} height={300} data={data}>
         <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='name' />
+        <XAxis dataKey='dateString' />
         <YAxis />
         <Tooltip />
         <Legend />
