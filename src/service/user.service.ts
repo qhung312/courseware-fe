@@ -68,12 +68,51 @@ export type GetAllSubjectStatisticReturnType = {
   score: number;
 };
 
+export type SubjectQuizHistoryReturnType = {
+  _id: string;
+  userId: string;
+  status: string;
+  duration: number;
+  startedAt: number;
+  standardizedScore: number;
+  fromQuiz: {
+    _id: string;
+    name: string;
+    description: string;
+    subject: {
+      _id: string;
+      name: string;
+      description: string;
+    };
+    chapter: {
+      _id: string;
+      name: string;
+      subject: string;
+      description: string;
+    };
+    duration: number;
+    sampleSize: number;
+  };
+  endedAt: number;
+};
+
 interface StatisticsResponse {
   success: boolean;
   code: number;
   message: string;
   payload: GetAllSubjectStatisticReturnType[];
 }
+
+interface GetAllQuizHistoryReturnType {
+  total: number;
+  result: SubjectQuizHistoryReturnType[];
+}
+
+export type GetAllQuizHistoryProps = {
+  subjectId: string;
+  startAt: string;
+  endAt: string;
+};
 
 const getUserProfile = () => axios.get<Response<User>>(`${API_URL}me`);
 
@@ -95,12 +134,23 @@ const deleteUserActivity = (activityId: string) =>
 
 const getAllSubjectStatistic = () => axios.get<StatisticsResponse>(`${API_URL}me/statistics/quiz/`);
 
+const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
+  const queryString = `${API_URL}quiz_session?pagination=false&status=ENDED&subject=${
+    query.subjectId
+  }${query.startAt ? `&endedAtMin=${query.startAt}` : ''}${
+    query.endAt ? `&endedAtMax=${query.endAt}` : ''
+  }`;
+  console.log(queryString);
+  return axios.get<Response<GetAllQuizHistoryReturnType>>(queryString);
+};
+
 const UserService = {
   getUserProfile,
   editUserProfile,
   getUserActivity,
   deleteUserActivity,
   getAllSubjectStatistic,
+  getAllSubjectQuizHistory,
 };
 
 export default UserService;
