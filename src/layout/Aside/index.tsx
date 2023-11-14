@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { Icon } from '../../components';
 import './index.css';
+import { useWindowDimensions } from '../../hooks';
 import useBoundStore from '../../store';
 
 interface AsideProps {
@@ -20,6 +21,7 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
   const { pathname } = useLocation();
   const pathTokens = pathname.split('/');
   const asideRef = useRef(null);
+  const { width } = useWindowDimensions();
 
   return (
     <>
@@ -34,17 +36,18 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
           !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
         } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex items-center justify-center p-5 3xl:p-12'>
+        <div className='flex items-center justify-center p-6 3xl:p-12'>
           <div className='h-full w-full space-y-6'>
             {/* Title */}
-            {title && (
+            {title && width < 768 && (
               <span>
                 <h1 className='block text-2xl font-bold text-[#4285F4] transition duration-300 md:hidden'>
                   {title}
                 </h1>
-                <p className='block text-[#252641] transition duration-300 md:hidden'>
-                  {description}
-                </p>
+                {/* <p className='block text-[#252641] transition duration-300 md:hidden'> */}
+                {description && (
+                  <p className='hidden text-[#252641] transition duration-300'>{description}</p>
+                )}
               </span>
             )}
 
@@ -72,18 +75,18 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
         className={`fixed top-[50%] z-10 hidden rounded-r-lg border-y border-r border-[#CCC] bg-white md:block ${
           isAsideOpen
             ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
-            : 'translate-x-[-75%] hover:translate-x-0'
+            : 'translate-x-0'
         } transition-all duration-300`}
       >
         <button
           id='collapse-button'
           type='button'
           onClick={toggleAside}
-          className='h-full w-full px-2 py-10'
+          className='px-1 py-6 lg:py-8 3xl:py-10'
         >
           <Icon.Chevron
             fill={'#5B5B5B'}
-            className={`h-full transition-all duration-300 ${
+            className={`h-4 w-auto transition-all duration-300 ${
               isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'
             }`}
           />

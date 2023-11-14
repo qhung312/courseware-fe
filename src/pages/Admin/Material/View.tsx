@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
 import './index.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 import { Icon } from '../../../components';
 // import { useDebounce } from '../../../hooks';
+import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import MaterialService from '../../../service/material.service';
 import { Material } from '../../../types';
@@ -15,6 +17,32 @@ const MaterialView = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [material, setMaterial] = useState<Material>();
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    MaterialService.download(id, true)
+      .then((res) => {
+        console.log('response: ', res);
+        const stringResult = window.URL.createObjectURL(res?.data);
+        setUrl(stringResult);
+        console.log('>>> string result:', stringResult);
+      })
+      .catch((err) => {
+        console.log(err);
+        setUrl('');
+      });
+  }, [id]);
+
+  const handleOnDownload = useDebounce(() => {
+    if (url) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${material?.name ?? 'ctct'}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -25,7 +53,7 @@ const MaterialView = () => {
         setMaterial(result);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -68,11 +96,12 @@ const MaterialView = () => {
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-6'
             >
               <form className='flex flex-col gap-y-6'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                  ID tài liệu: {id}
+                </p>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-name'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                      Tên đề thi
-                    </p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Tên đề thi</p>
                   </label>
                   <div
                     id='exam-name'
@@ -84,13 +113,13 @@ const MaterialView = () => {
                 </div>
                 <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Môn</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Môn</p>
                     <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                       <span>{material?.subject?.name}</span>
                     </div>
                   </div>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chương</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Chương</p>
                     <div
                       className={`flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs ${
                         material?.chapter?.name ? '' : 'text-[#5B5B5B]'
@@ -102,9 +131,7 @@ const MaterialView = () => {
                 </div>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-description'>
-                    <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                      Chú thích
-                    </p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Chú thích</p>
                   </label>
                   <div
                     className={`flex w-full rounded-lg border border-[#CCC] p-1 text-xs ${
@@ -115,21 +142,44 @@ const MaterialView = () => {
                     {material?.description ? material.description : 'Không có chú thích'}
                   </div>
                 </div>
+                <div className='flex w-full flex-1 flex-col'>
+                  <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Tài liệu</p>
+                  {/* <PDF url={`${API_URL}admin/material/${id}/download`} title={material?.name} /> */}
+                  {url && (
+                    <embed
+                      src={url}
+                      type='application/pdf'
+                      title={material?.name}
+                      height={800}
+                      width='100%'
+                    />
+                  )}
+                </div>
               </form>
-              <div className='my-4 flex w-full justify-end'>
+              <div className='my-4 flex flex-row-reverse gap-x-8'>
                 <button
                   type='button'
                   onClick={() => navigate(`/admin/material/edit/${params.id}`)}
                   className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
                 >
-                  <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                  <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                     Chỉnh sửa
+                  </p>
+                </button>
+                <button
+                  type='button'
+                  onClick={() => handleOnDownload()}
+                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                >
+                  <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
+                    Tải về
                   </p>
                 </button>
               </div>
             </div>
           )}
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

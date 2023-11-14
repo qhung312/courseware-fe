@@ -22,7 +22,7 @@ type GetAllExamArchiveReturnType = {
   result: ExamArchive[];
 };
 const getAll = (query: GetAllExamArchiveArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}/previous_exam?pagination=false\
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.semester ? `&semester=${query.semester}` : ''}\
@@ -60,7 +60,7 @@ ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
 const download = (examId: string, admin = false) => {
   const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}/download`;
 
-  return axios.get<Response<ExamArchive>>(queryString);
+  return axios.get(queryString, { responseType: 'blob' });
 };
 
 const getById = (examId: string, admin = false) => {
@@ -79,7 +79,6 @@ const deleteById = (examId: string) => {
 
 const edit = (examId: string, data: EditArgument, admin = false) => {
   const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
-  console.log(data);
 
   return axios.patch<Response<ExamArchive>>(queryString, data);
 };

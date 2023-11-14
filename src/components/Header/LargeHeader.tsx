@@ -6,6 +6,9 @@ import { ReactComponent as LargeLogoCTCT } from '../../assets/svgs/LargeLogoCTCT
 import { useThrottle } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
+import LoginButton from '../LoginButton';
+
+import SearchBar from './SearchBar';
 
 const LargeHeader = () => {
   const { pathname } = useLocation();
@@ -21,7 +24,6 @@ const LargeHeader = () => {
 
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
-  const loginWithGoogle = useBoundStore.use.loginWithGoogle();
   const logout = useBoundStore.use.logout();
 
   useEffect(() => {
@@ -65,36 +67,34 @@ const LargeHeader = () => {
     <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
         className='z-30 flex w-full flex-row items-center justify-between
-        bg-white px-[16px] py-[12px] 3xl:px-[32px] 3xl:py-[16px]'
+        bg-white px-8 py-3 md:gap-x-10 lg:gap-x-[30px] 3xl:gap-x-20 3xl:px-12 3xl:py-4'
       >
         <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
           <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]' />
         </NavLink>
-        <div className='relative flex flex-row gap-x-[52px]'>
-          <div className='relative flex flex-row items-center'>
-            <input
-              className='w-[400px] rounded-[40px] border border-[#49BBBD] bg-inherit
-              py-[8px] pl-[20px] pr-[60px] 3xl:w-[500px] 3xl:py-[12px]
-              3xl:pl-[24px] 3xl:pr-[72px]'
-            />
-            <button
-              type='button'
-              className='absolute right-[16px] w-[16px] 3xl:right-[24px] 3xl:w-[24px]'
-            >
-              <Icon.Search className='aspect-square h-auto w-[16px] 3xl:w-[24px]' />
-            </button>
-          </div>
-          {!isAuthenticated && (
-            <button
-              type='submit'
-              className='inset-y-5 right-5 w-[144px] cursor-pointer rounded-[8px] 
-              bg-[#4285F4] text-base text-white 
-              duration-300 ease-out hover:bg-[#2374FA]'
-              onClick={loginWithGoogle}
-            >
-              Đăng nhập
-            </button>
-          )}
+        <div className='relative flex h-full flex-row items-center justify-between md:gap-x-10 lg:gap-x-8 3xl:gap-x-10'>
+          <SearchBar
+            options={[
+              {
+                label: 'Tài liệu',
+                value: '/library/material',
+              },
+              {
+                label: 'Đề thi',
+                value: '/library/exam-archive',
+              },
+              {
+                label: 'Bài tập rèn luyện',
+                value: '/room/exercises',
+              },
+              {
+                label: 'Thi thử',
+                value: '/room/tests',
+              },
+            ]}
+            value={{ label: '', value: '' }}
+          />
+          {!isAuthenticated && <LoginButton />}
           {isAuthenticated && (
             <>
               <div ref={profileRef}>
@@ -105,13 +105,13 @@ const LargeHeader = () => {
                   <img
                     alt='profile_pic'
                     src={user?.picture || require('../../assets/images/AvatarPic.png')}
-                    className='mr-[16px] h-[42px] w-[42px] rounded-[999px] border-2
-                  border-[#49BBBD] bg-[#979797] 3xl:mr-[24px] 3xl:h-[50px] 3xl:w-[50px]'
+                    className='mr-4 h-10 w-10 rounded-full border-2
+                    border-[#49BBBD] bg-white 3xl:mr-6 3xl:h-[52px] 3xl:w-[52px]'
                   />
                   <Icon.ChevronUp
                     fill={'#3b3b3b'}
                     fillOpacity={0.87}
-                    className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                    className={`transform-all aspect-[10/7] h-auto w-2 duration-300 ${
                       isProfileDrop ? 'rotate-0' : 'rotate-180'
                     }`}
                   />
@@ -126,7 +126,7 @@ const LargeHeader = () => {
                   maxHeight: isProfileDrop ? '1000px' : '0px',
                   opacity: isProfileDrop ? 1 : 0,
                   overflow: 'hidden',
-                  boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
                 }}
               >
                 <NavLink
@@ -162,7 +162,7 @@ const LargeHeader = () => {
       </div>
       <nav
         className='z-20 flex w-full flex-row items-center justify-start bg-[#E3F2FD]
-        transition-all duration-700 ease-out'
+        px-4 transition-all duration-700 ease-out'
       >
         <NavLink
           to='/'
@@ -229,19 +229,21 @@ const LargeHeader = () => {
               maxHeight: isLibraryOpen ? '1000px' : '0px',
               opacity: isLibraryOpen ? 1 : 0,
               overflow: 'hidden',
-              boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
             }}
           >
             <NavLink
               to='/library/material'
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              className='w-full bg-inherit'
               onClick={throttledLibraryClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname.includes('/library/material') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname.includes('/library/material') ? '#3b3b3b' : '#5B5B5B',
+                  color: pathname.includes('/library/material') ? '#3b3b3b' : 'inherit',
                   fontWeight: pathname.includes('/library/material') ? '700' : 'normal',
                 }}
               >
@@ -250,14 +252,16 @@ const LargeHeader = () => {
             </NavLink>
             <NavLink
               to='/library/exam-archive'
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              className='w-full bg-inherit'
               onClick={throttledLibraryClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname.includes('/library/exam-archive') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname.includes('/library/exam-archive') ? '#3b3b3b' : '#5B5B5B',
+                  color: pathname.includes('/library/exam-archive') ? '#3b3b3b' : 'inherit',
                   fontWeight: pathname.includes('/library/exam-archive') ? '700' : 'normal',
                 }}
               >
@@ -312,35 +316,35 @@ const LargeHeader = () => {
               maxHeight: isRoomOpen ? '1000px' : '0px',
               opacity: isRoomOpen ? 1 : 0,
               overflow: 'hidden',
-              boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
             }}
           >
             <NavLink
               to='/room/exercises'
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              className='w-full bg-inherit'
               onClick={throttledRoomClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname.includes('/room/exercises') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname.includes('/room/exercises') ? '#3b3b3b' : '#5B5B5B',
+                  color: pathname.includes('/room/exercises') ? '#3b3b3b' : 'inherit',
                   fontWeight: pathname.includes('/room/exercises') ? '700' : 'normal',
                 }}
               >
                 Bài tập rèn luyện
               </p>
             </NavLink>
-            <NavLink
-              to='/room/tests'
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-              onClick={throttledRoomClick}
-            >
+            <NavLink to='/room/tests' className='w-full bg-inherit' onClick={throttledRoomClick}>
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 
-                text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname.includes('/room/tests') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname.includes('/room/tests') ? '#3b3b3b' : '#5B5B5B',
+                  color: pathname.includes('/room/tests') ? '#3b3b3b' : 'inherit',
                   fontWeight: pathname.includes('/room/tests') ? '700' : 'normal',
                 }}
               >
@@ -401,19 +405,17 @@ const LargeHeader = () => {
               maxHeight: isAboutUsOpen ? '1000px' : '0px',
               opacity: isAboutUsOpen ? 1 : 0,
               overflow: 'hidden',
-              boxShadow: '0px 0px 30px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
             }}
           >
-            <NavLink
-              to='/about-us'
-              end
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-              onClick={throttledAboutUsClick}
-            >
+            <NavLink to='/about-us' className='w-full bg-inherit' onClick={throttledAboutUsClick}>
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname === '/about-us' ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname === '/about-us' ? '#3b3b3b' : '#5B5B5B',
+                  color: pathname === '/about-us' ? '#3b3b3b' : 'inherit',
                   fontWeight: pathname === '/about-us' ? '700' : 'normal',
                 }}
               >
@@ -422,15 +424,17 @@ const LargeHeader = () => {
             </NavLink>
             <NavLink
               to='/about-us/activities'
-              end
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              className='w-full bg-inherit'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname.includes('/about-us/activities') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname === '/about-us/activities' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/about-us/activities' ? '700' : 'normal',
+                  color: pathname.includes('/about-us/activities') ? '#3b3b3b' : 'inherit',
+                  fontWeight: pathname.includes('/about-us/activities') ? '700' : 'normal',
                 }}
               >
                 Hoạt động
@@ -438,15 +442,17 @@ const LargeHeader = () => {
             </NavLink>
             <NavLink
               to='/about-us/partners'
-              end
-              className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              className='w-full bg-inherit'
               onClick={throttledAboutUsClick}
             >
               <p
-                className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
+                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
+                  pathname.includes('/about-us/partners') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
                 style={{
-                  color: pathname === '/about-us/partners' ? '#3b3b3b' : '#5B5B5B',
-                  fontWeight: pathname === '/about-us/partners' ? '700' : 'normal',
+                  color: pathname.includes('/about-us/partners') ? '#3b3b3b' : 'inherit',
+                  fontWeight: pathname.includes('/about-us/partners') ? '700' : 'normal',
                 }}
               >
                 Đơn vị hợp tác
@@ -454,24 +460,6 @@ const LargeHeader = () => {
             </NavLink>
           </nav>
         </div>
-        <NavLink
-          to='/help'
-          end
-          className='flex h-[100%] items-center justify-start
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-        >
-          <p
-            className='whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-            style={{
-              color: pathname === '/help' ? '#FFFFFF' : '#5B5B5B',
-              backgroundColor: pathname === '/help' ? '#4285f4' : 'transparent',
-              borderRadius: '8px',
-            }}
-          >
-            Hỗ trợ
-          </p>
-        </NavLink>
         {isAuthenticated &&
         (user.isManager ||
           _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (

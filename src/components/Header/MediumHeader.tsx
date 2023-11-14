@@ -7,6 +7,9 @@ import { ReactComponent as MediumLogoCTCT } from '../../assets/svgs/MediumLogoCT
 import { useDebounce, useThrottle } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
+import LoginButton from '../LoginButton';
+
+import SearchBar from './SearchBar';
 
 const MediumHeader = () => {
   const style: CSSProperties = {
@@ -37,7 +40,6 @@ const MediumHeader = () => {
 
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
-  const loginWithGoogle = useBoundStore.use.loginWithGoogle();
   const logout = useBoundStore.use.logout();
 
   const onClick = () => {
@@ -107,13 +109,27 @@ const MediumHeader = () => {
           }}
         >
           <div className='relative flex w-full flex-row items-center justify-center'>
-            <input
-              className='w-full rounded-[40px] border border-[#49BBBD] 
-            bg-inherit px-[20px] py-[8px]'
+            <SearchBar
+              options={[
+                {
+                  label: 'Tài liệu',
+                  value: '/library/material',
+                },
+                {
+                  label: 'Đề thi',
+                  value: '/library/exam-archive',
+                },
+                {
+                  label: 'Bài tập rèn luyện',
+                  value: '/room/exercises',
+                },
+                {
+                  label: 'Thi thử',
+                  value: '/room/tests',
+                },
+              ]}
+              value={{ label: '', value: '' }}
             />
-            <button type='button' className='absolute right-[20px] w-[20px]'>
-              <Icon.Search className='w-[20px]' />
-            </button>
           </div>
           <nav className='flex w-full flex-col items-center gap-y-[12px]'>
             <NavLink
@@ -478,33 +494,7 @@ const MediumHeader = () => {
                 </NavLink>
               </nav>
             </div>
-            <NavLink
-              to='/help'
-              end
-              className='flex w-full flex-row items-center justify-start
-                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
-              style={({ isActive, isPending }) => ({
-                backgroundColor: isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
-              })}
-              onClick={() => setTimeout(throttledOnClick, 1000)}
-            >
-              {({ isActive, isPending }) => (
-                <>
-                  <Icon.Help fill={isActive || isPending ? '#4285F4' : '#696969'} />
-                  <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>Hỗ trợ</p>
-                </>
-              )}
-            </NavLink>
-            {!isAuthenticated && (
-              <button
-                type='submit'
-                className='inset-y-5 right-5 w-[144px] cursor-pointer gap-x-[16px] rounded-[12px] bg-[#4285F4] px-[20px] py-[16px] text-base text-white duration-300 ease-out hover:bg-[#2374FA]
-                '
-                onClick={loginWithGoogle}
-              >
-                Đăng nhập
-              </button>
-            )}
+            {!isAuthenticated && <LoginButton />}
             {isAuthenticated &&
             (user.isManager ||
               _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (

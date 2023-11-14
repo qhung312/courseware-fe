@@ -10,7 +10,7 @@ type Props = {
 
 const Pagination = ({ totalCount, pageSize = 10, currentPage, onPageChange }: Props) => {
   const pageRange = usePagination({ totalCount, pageSize: pageSize, siblingCount: 1, currentPage });
-  if ((pageRange?.length || 0) < 1) return null;
+  if ((pageRange?.length || 0) <= 1) return null;
 
   return (
     <ul className='my-4 flex flex-row items-center justify-center lg:gap-x-4'>

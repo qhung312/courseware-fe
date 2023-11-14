@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
 import { Chapter } from '../../../types';
-// import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
 const ChapterView = () => {
   const params = useParams();
@@ -24,7 +24,7 @@ const ChapterView = () => {
         setChapter(result);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -67,6 +67,7 @@ const ChapterView = () => {
             lg:px-10 lg:py-4 3xl:px-12 3xl:py-8'
             >
               <main className='flex flex-col gap-y-4'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>ID Chương: {id}</p>
                 <div className='flex flex-col gap-y-1'>
                   <label
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -118,7 +119,7 @@ const ChapterView = () => {
                     onClick={() => navigate(`/admin/chapter/edit/${params.id}`)}
                     className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
                   >
-                    <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                    <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                       Chỉnh sửa
                     </p>
                   </button>
@@ -127,6 +128,7 @@ const ChapterView = () => {
             </div>
           )}
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

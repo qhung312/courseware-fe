@@ -241,8 +241,8 @@ const MaterialList = () => {
                         {materials.map((material) => (
                           <tr
                             key={`material-${material._id}`}
+                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                             onClick={() => navigate(`/admin/material/view/${material._id}`)}
-                            className='flex w-full flex-1 cursor-pointer items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                           >
                             <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {material.name}
@@ -254,23 +254,10 @@ const MaterialList = () => {
                               {material.chapter?.name}
                             </td>
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              {/* <button
-                                type='button'
-                                onClick={() => navigate(`/admin/material/view/${material._id}`)}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
-                              >
-                                <Icon.ViewIcon
-                                  fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                />
-                              </button> */}
                               <button
                                 type='button'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/admin/material/edit/${material._id}`);
-                                }}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                onClick={() => navigate(`/admin/material/edit/${material._id}`)}
+                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -278,8 +265,7 @@ const MaterialList = () => {
                                 />
                               </button>
                               <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
+                                onClick={() => {
                                   materialToDelete.current = material._id;
                                   setDeleteModal(true);
                                 }}

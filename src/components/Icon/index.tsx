@@ -31,11 +31,13 @@ import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/svgs/FacebookIcon.svg';
 import { ReactComponent as LogoFessior } from '../../assets/svgs/FessiorLogo.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/FilterIcon.svg';
+import { ReactComponent as LogoGoogle } from '../../assets/svgs/GoogleIcon.svg';
 import { ReactComponent as Help } from '../../assets/svgs/HelpIcon.svg';
 import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
 import { ReactComponent as Introduction } from '../../assets/svgs/IntroductionIcon.svg';
 import { ReactComponent as Library } from '../../assets/svgs/LibraryIcon.svg';
 import { ReactComponent as List } from '../../assets/svgs/ListIcon.svg';
+import { ReactComponent as LiveHelpIcon } from '../../assets/svgs/LiveHelpIcon.svg';
 import { ReactComponent as LocationIcon } from '../../assets/svgs/LocationIcon.svg';
 import { ReactComponent as LogoCTCT } from '../../assets/svgs/LogoCTCT.svg';
 import { ReactComponent as LogoGDSC } from '../../assets/svgs/LogoGDSC.svg';
@@ -61,6 +63,8 @@ import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.s
 import { ReactComponent as ViewIcon } from '../../assets/svgs/ViewIcon.svg';
 import { ReactComponent as XMark } from '../../assets/svgs/XMarkIcon.svg';
 import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg';
+import { ReactComponent as ZoomInIcon } from '../../assets/svgs/ZoomInIcon.svg';
+import { ReactComponent as ZoomOutIcon } from '../../assets/svgs/ZoomOutIcon.svg';
 
 export default {
   AboutUs,
@@ -95,6 +99,7 @@ export default {
   LocationIcon,
   LogoCTCT,
   LogoGDSC,
+  LogoGoogle,
   LogoFessior,
   Exercise,
   PhoneIcon,
@@ -126,4 +131,7 @@ export default {
   XMark,
   Pen,
   YoutubeIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
+  LiveHelpIcon,
 };

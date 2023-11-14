@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
-// import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
-// import ChapterService from '../../../service/chapter.service';
-// import QuestionTemplateService from '../../../service/questionTemplate.service';
-// import SubjectService from '../../../service/subject.service';
 import QuizTemplateService from '../../../service/quiz.service';
 import { Quiz } from '../../../types';
 
@@ -26,7 +23,10 @@ const ViewExercisePage = () => {
         console.log('>>> result: ', result);
         setExercises(result);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message);
+      })
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -68,6 +68,9 @@ const ViewExercisePage = () => {
                 </>
               ) : (
                 <>
+                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                    ID bài tập rèn luyện: {id}
+                  </p>
                   <div className='flex flex-col gap-y-1'>
                     <label
                       className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
@@ -158,16 +161,16 @@ const ViewExercisePage = () => {
                     </div>
                     <div>
                       <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                        <p className='flex flex-[2.5] text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2.5] text-base text-[#4285f4] lg:text-lg 3xl:text-xl'>
                           Tên
                         </p>
-                        <p className='flex flex-[2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Môn
                         </p>
-                        <p className='flex flex-[1.2] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Chương
                         </p>
-                        <p className='flex flex-[1.5] text-base font-semibold text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.5] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Thời gian tạo
                         </p>
                       </div>
@@ -208,6 +211,7 @@ const ViewExercisePage = () => {
             </main>
           </div>
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

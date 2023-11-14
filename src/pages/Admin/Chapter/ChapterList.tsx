@@ -204,8 +204,8 @@ const ChapterListPage = () => {
                         {chapters.map((chapter) => (
                           <tr
                             key={`material-${chapter._id}`}
+                            className='flex w-full flex-1 items-center justify-start gap-x-3 border-b border-b-[#CCC] p-2 px-2 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-4 3xl:p-6 3xl:px-6'
                             onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
-                            className='flex w-full flex-1 cursor-pointer items-center justify-start gap-x-3 border-b border-b-[#CCC] p-2 px-2 lg:p-4 lg:px-4 3xl:p-6 3xl:px-6'
                           >
                             <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {chapter.name}
@@ -222,22 +222,9 @@ const ChapterListPage = () => {
                                 : undefined}
                             </td>
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-2 gap-y-2 xl:flex-nowrap xl:whitespace-nowrap'>
-                              {/* <button
-                                type='button'
-                                onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
-                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
-                              >
-                                <Icon.ViewIcon
-                                  fill='white'
-                                  className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
-                                />
-                              </button> */}
                               <button
                                 type='button'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/admin/chapter/edit/${chapter._id}`);
-                                }}
+                                onClick={() => navigate(`/admin/chapter/edit/${chapter._id}`)}
                                 className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
                               >
                                 <Icon.Edit
@@ -247,8 +234,7 @@ const ChapterListPage = () => {
                               </button>
                               <button
                                 className='hidden items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437] 2xl:flex'
-                                onClick={(e) => {
-                                  e.stopPropagation();
+                                onClick={() => {
                                   chapterToDelete.current = chapter._id;
                                   setDeleteModal(true);
                                 }}

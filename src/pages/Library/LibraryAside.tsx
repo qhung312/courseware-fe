@@ -8,16 +8,15 @@ import useBoundStore from '../../store';
 import type { Subject } from '../../types/subject';
 
 interface LibraryAsideProps {
-  title: string;
-  subTitle: string;
-  description: string;
+  title?: string;
+  subTitle?: string;
+  description?: string;
   baseRoute: string;
 }
 
 const LibraryAside: React.FC<LibraryAsideProps> = ({ title, subTitle, description, baseRoute }) => {
   const subjects = useBoundStore.use.subjects();
   const getAllSubjects = useBoundStore.use.getAllSubjects();
-  console.log(subjects);
 
   useLayoutEffect(() => {
     getAllSubjects();

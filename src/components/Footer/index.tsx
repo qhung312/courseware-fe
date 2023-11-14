@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon } from '../../components';
 
-const Footer = () => {
+const Footer: FC = () => {
   return (
-    <footer className='bg-white'>
+    <footer className='w-full bg-white'>
       <div className='xl:py-18 mx-auto w-full max-w-[1920px] flex-1 px-6 py-10 md:px-[50px] md:py-4 lg:px-0 lg:py-16 2xl:py-20'>
         <div className='3xl:space-x-50 mx-auto flex flex-col space-y-8 space-x-0 sm:flex-col sm:space-y-10 md:space-y-12 lg:max-w-[900px] lg:flex-row lg:justify-between  lg:space-y-0 lg:space-x-12 xl:max-w-[1160px] xl:space-x-24 2xl:max-w-[1416px] 2xl:space-x-36 3xl:max-w-[1600px] '>
           <div className='flex flex-1 justify-evenly lg:items-start lg:justify-between lg:pt-5 2xl:gap-x-[3rem]'>

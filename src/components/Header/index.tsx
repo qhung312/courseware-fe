@@ -18,8 +18,7 @@ const Header = () => {
   return (
     <>
       <header id='navbar' className='fixed top-0 z-50 w-full'>
-        <LargeHeader />
-        <MediumHeader />
+        {width < 768 ? <MediumHeader /> : <LargeHeader />}
       </header>
       <div id='stub' />
     </>

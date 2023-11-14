@@ -1,3 +1,7 @@
+label {
+  cursor: pointer;
+}
+
 input[type='radio'] {
   /* Add if not using autoprefixer */
   appearance: none;
@@ -30,6 +34,11 @@ input[type='checkbox'] {
   transition: all 300ms ease-out;
 }
 
+input[type='radio'] ~ *,
+input[type='checkbox'] ~ * {
+  cursor: pointer;
+}
+
 @media (min-width: 1024px) {
   input[type='radio'],
   input[type='checkbox'] {
@@ -38,18 +47,14 @@ input[type='checkbox'] {
   }
 }
 
-input[type='radio'] ~ span,
-input[type='checkbox'] ~ span {
-  pointer-events: none;
-}
-
 input[type='radio']:focus,
 input[type='checkbox']:focus {
   outline: none; /*to remove the square border on focus*/
 }
 
-input[type='radio']:checked ~ span,
-input[type='checkbox']:checked ~ span {
+input[type='radio']:checked ~ label,
+input[type='checkbox']:checked ~ label {
   color: white;
   font-weight: 500;
+  cursor: pointer;
 }

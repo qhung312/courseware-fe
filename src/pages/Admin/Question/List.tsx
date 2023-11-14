@@ -29,12 +29,13 @@ const QuestionListPage = () => {
   const [questionTemplates, setQuestionTemplates] = useState<Question[]>([]);
   const [totalCount, setTotalCount] = useState(1);
   const [page, setPage] = useState(1);
-  const navigate = useNavigate();
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 
   const questionToDelete = React.useRef<string | null>(null);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const onDeleteQuestion = () => {
     const questionId = questionToDelete.current;
@@ -246,8 +247,8 @@ const QuestionListPage = () => {
                         {questionTemplates.map((question, index) => (
                           <tr
                             key={`material-${index}`}
+                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                             onClick={() => navigate(`/admin/questions/view/${question._id}`)}
-                            className='flex w-full flex-1 cursor-pointer items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
                           >
                             <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
                               {question.name}
@@ -259,18 +260,8 @@ const QuestionListPage = () => {
                               {question?.chapter?.name}
                             </td>
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              {/* <Link
-                                to={`/admin/questions/view/${question._id}`}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
-                              >
-                                <Icon.ViewIcon
-                                  fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                />
-                              </Link> */}
                               <Link
                                 to={`/admin/questions/edit/${question._id}`}
-                                onClick={(e) => e.stopPropagation()}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
@@ -279,9 +270,8 @@ const QuestionListPage = () => {
                                 />
                               </Link>
                               <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#4285F4]'
-                                onClick={(e) => {
-                                  e.stopPropagation();
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
+                                onClick={() => {
                                   questionToDelete.current = question._id;
                                   setDeleteModal(true);
                                 }}
