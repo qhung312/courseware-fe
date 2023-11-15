@@ -360,7 +360,7 @@ const EditExercisePage = () => {
                           value={duration.minute}
                           type='number'
                           onChange={({ target }) => {
-                            const time = parseInt(target.value);
+                            const time = parseInt(target.value) ? parseInt(target.value) : 0;
                             setDuration({
                               ...duration,
                               minute: time === 60 ? 0 : time === -1 ? 59 : time,
@@ -372,7 +372,7 @@ const EditExercisePage = () => {
                           value={duration.second}
                           type='number'
                           onChange={({ target }) => {
-                            const time = parseInt(target.value);
+                            const time = parseInt(target.value) ? parseInt(target.value) : 0;
                             setDuration({
                               ...duration,
                               second: time === 60 ? 0 : time === -1 ? 59 : time,
@@ -387,7 +387,9 @@ const EditExercisePage = () => {
                         className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                         value={sampleSize}
                         placeholder={'Chọn số câu hỏi'}
-                        onChange={({ target }) => setSampleSize(parseInt(target.value))}
+                        onChange={({ target }) =>
+                          setSampleSize(parseInt(target.value) ? parseInt(target.value) : 0)
+                        }
                       />
                     </div>
                   </div>
