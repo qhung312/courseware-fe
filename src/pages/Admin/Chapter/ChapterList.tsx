@@ -221,7 +221,7 @@ const ChapterListPage = () => {
                                 ? new Date(chapter.lastUpdatedAt).toLocaleString()
                                 : undefined}
                             </td>
-                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-2 gap-y-2 xl:flex-nowrap xl:whitespace-nowrap'>
+                            <td className='flex flex-1 items-center justify-end gap-x-2 gap-y-2 whitespace-nowrap'>
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/chapter/edit/${chapter._id}`)}
