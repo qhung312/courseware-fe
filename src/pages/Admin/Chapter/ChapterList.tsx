@@ -225,7 +225,7 @@ const ChapterListPage = () => {
                               <button
                                 type='button'
                                 onClick={() => navigate(`/admin/chapter/edit/${chapter._id}`)}
-                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -233,7 +233,7 @@ const ChapterListPage = () => {
                                 />
                               </button>
                               <button
-                                className='hidden items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437] 2xl:flex'
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                                 onClick={() => {
                                   chapterToDelete.current = chapter._id;
                                   setDeleteModal(true);

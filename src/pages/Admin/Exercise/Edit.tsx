@@ -100,6 +100,10 @@ const EditExercisePage = () => {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const handleOnSetSampleSize = (size: number) => {
+    setSampleSize(Math.min(potentialQuestions?.length, size));
+  };
+
   const handleOnSetSave = useDebounce(() => {
     if (exercise) {
       const data1 = {
@@ -388,7 +392,7 @@ const EditExercisePage = () => {
                         value={sampleSize}
                         placeholder={'Chọn số câu hỏi'}
                         onChange={({ target }) =>
-                          setSampleSize(parseInt(target.value) ? parseInt(target.value) : 0)
+                          handleOnSetSampleSize(parseInt(target.value) ? parseInt(target.value) : 0)
                         }
                       />
                     </div>
@@ -509,6 +513,8 @@ const EditExercisePage = () => {
                                 ) as Question[];
                                 newPotentialQuestions.splice(index, 1);
                                 setPotentialQuestions(newPotentialQuestions);
+                                if ((newPotentialQuestions?.length ?? 0) < sampleSize)
+                                  setSampleSize(newPotentialQuestions?.length ?? 0);
                               }}
                             >
                               <Icon.Delete
