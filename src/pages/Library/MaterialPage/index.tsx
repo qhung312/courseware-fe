@@ -77,7 +77,7 @@ const MaterialPage: React.FC = () => {
   }
 
   return (
-    <Page title={`Tài liệu ${subject?.name}`}>
+    <Page title={`Tài liệu ${subject?.name ? subject?.name : ''}`}>
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'
