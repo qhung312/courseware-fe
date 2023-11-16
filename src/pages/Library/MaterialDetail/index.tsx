@@ -40,7 +40,9 @@ const MaterialDetailPage: React.FC = () => {
 
   return (
     <Page
-      title={`${material?.subject?.name} - ${material?.chapter?.name} - ${material?.name}`}
+      title={`Tài liệu ${material?.subject?.name ? material.subject.name : ''}${
+        material?.chapter?.name ? ` - ${material.chapter.name}` : ''
+      }${material?.name ? ` - ${material.name}` : ''}`}
       description='From CTCT'
     >
       <LibraryAside
