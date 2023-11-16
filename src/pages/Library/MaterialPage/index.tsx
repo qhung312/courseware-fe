@@ -45,7 +45,6 @@ const MaterialPage: React.FC = () => {
         .then((res) => {
           const { data } = res;
           const { payload } = data;
-          console.log(payload.result);
           setTimeout(() => setMaterials(payload.result), 300);
         })
         .catch((err) => {
@@ -114,6 +113,7 @@ const MaterialPage: React.FC = () => {
             )}
             {materials?.map((material) => (
               <DocumentCard
+                document={material}
                 key={material._id}
                 title={material.name}
                 to={`/library/material/${subject?._id}/pdf/${material._id}`}
