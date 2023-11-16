@@ -22,10 +22,8 @@ const MaterialView = () => {
   useEffect(() => {
     MaterialService.download(id, true)
       .then((res) => {
-        console.log('response: ', res);
         const stringResult = window.URL.createObjectURL(res?.data);
         setUrl(stringResult);
-        console.log('>>> string result:', stringResult);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +47,6 @@ const MaterialView = () => {
     MaterialService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
-        console.log('>>> result: ', result);
         setMaterial(result);
       })
       .catch((err) => {

@@ -140,7 +140,6 @@ const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
   }${query.startAt ? `&endedAtMin=${query.startAt}` : ''}${
     query.endAt ? `&endedAtMax=${query.endAt}` : ''
   }`;
-  console.log(queryString);
   return axios.get<Response<GetAllQuizHistoryReturnType>>(queryString);
 };
 

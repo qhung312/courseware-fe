@@ -20,7 +20,6 @@ const ViewExercisePage = () => {
     QuizTemplateService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
-        console.log('>>> result: ', result);
         setExercises(result);
       })
       .catch((err) => {

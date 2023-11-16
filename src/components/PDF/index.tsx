@@ -63,7 +63,6 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   const outlineRef = useRef<HTMLDivElement>(null);
 
   const onItemClick = ({ pageNumber }: { pageNumber: string }) => {
-    // console.log('>>> page click: ', pageNumber);
     pageRefs.current[parseInt(pageNumber)].scrollIntoView();
   };
 

@@ -64,7 +64,6 @@ const EditQuestionPage = () => {
       shuffleOptions,
       explanation,
     };
-    console.log('Answer key: ', answerKey);
     QuestionService.edit(id, data, true)
       .then(() => {
         toast.success('Chỉnh sửa thành công');

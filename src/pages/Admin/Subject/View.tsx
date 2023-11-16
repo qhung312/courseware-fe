@@ -20,11 +20,9 @@ const SubjectView = () => {
     SubjectService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
-        console.log('>>> result:', result);
         setSubject(result);
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.response.data.message);
       })
       .finally(() => {

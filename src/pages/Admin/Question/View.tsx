@@ -43,7 +43,6 @@ const ViewQuestionPage = () => {
     setLoading(true);
     QuestionService.getById(id, true)
       .then((res) => {
-        console.log(res.data.payload);
         setQuestion(res.data.payload);
       })
       .catch((err) => {
