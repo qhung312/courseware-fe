@@ -131,12 +131,12 @@ const Main: React.FC = () => {
               quizzes?.map((quiz, index) => (
                 <div
                   key={`${quiz.name}-${index}`}
-                  className='flex flex-col rounded-lg bg-white p-4 lg:p-6 3xl:p-8'
+                  className='flex flex-col rounded-lg bg-white p-3 md:p-4 lg:p-6 3xl:p-8'
                 >
-                  <h4 className='mb-1 text-lg font-semibold md:mb-4 lg:mb-6 lg:text-xl 3xl:mb-8 3xl:text-2xl'>
+                  <h4 className='mb-4 text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>
                     {quiz.name}
                   </h4>
-                  <div className='flex flex-col gap-y-4 md:flex-col-reverse lg:gap-y-6 3xl:gap-y-8'>
+                  <div className='flex flex-col gap-y-4 md:flex-col-reverse'>
                     <div className='flex flex-row items-center justify-between'>
                       <div className='flex h-fit flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none lg:gap-x-4 3xl:gap-x-6'>
                         <div className='hidden flex-1 flex-row items-center gap-x-1 md:flex'>
@@ -160,8 +160,7 @@ const Main: React.FC = () => {
                         </div>
                       </div>
                       <button
-                        className='hidden rounded-lg bg-[#4285F4]/80 px-5 py-4 hover:bg-[#4285F4]
-                        md:flex md:px-3 md:py-2 lg:px-5 lg:py-3 3xl:px-7 3xl:py-4'
+                        className='hidden rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:flex'
                         onClick={() => {
                           sessionQueriesResult[index]?.data === null
                             ? sessionMutation.mutate(quiz._id, {
@@ -194,7 +193,7 @@ const Main: React.FC = () => {
                       </p>
                     </div>
                     <button
-                      className='flex w-fit rounded-lg bg-[#4285F4]/80 px-5 py-2 hover:bg-[#4285F4] md:hidden'
+                      className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:hidden'
                       onClick={() => {
                         sessionQueriesResult[index]?.data === null
                           ? sessionMutation.mutate(quiz._id, {

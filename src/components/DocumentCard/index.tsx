@@ -1,27 +1,37 @@
-import { NavLink } from 'react-router-dom';
 // import { Tooltip } from 'react-tooltip';
 
+import { isEmpty } from 'lodash';
+import { Link, useLocation } from 'react-router-dom';
+
+import { Icon } from '..';
+import { ExamArchive, ExamType, Material } from '../../types';
 import CopyIcon from '../CopyIcon';
-// import Icon from '../Icon';
 
 interface DocumentCardProps {
+  document: Material | ExamArchive;
   title: string;
-  subTitle: string;
+  subTitle?: string;
   description: string;
   to: string;
   copyContent?: any;
 }
 
 const DocumentCard: React.FC<DocumentCardProps> = ({
+  document,
   title,
-  subTitle,
   description,
   to,
   copyContent,
 }) => {
+  const { pathname } = useLocation();
+  const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
+
   return (
-    <div className='relative z-[1] max-h-[266px] rounded-lg bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
-      <div className='absolute right-4 top-3 flex space-x-1 md:space-x-2 lg:space-x-3 xl:space-x-4 2xl:space-x-5'>
+    <div className='relative flex flex-col rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
+      <div
+        className='absolute right-4 top-4 flex space-x-1 md:space-x-2 lg:right-6 lg:top-6 
+        lg:space-x-3 xl:space-x-4 2xl:space-x-5 3xl:right-8 3xl:top-8'
+      >
         <CopyIcon copyContent={copyContent} />
         {/* <div>
           <button
@@ -33,16 +43,59 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
           <Tooltip anchorSelect='.share-anchor' />
         </div> */}
       </div>
-      <div className='space-y-2'>
-        <NavLink to={to}>
-          <h2 className='mr-16 text-base font-semibold md:text-xl lg:text-2xl'>{title}</h2>
-        </NavLink>
-        <p className='truncate text-sm text-[#696984] md:text-base'>{subTitle}</p>
-      </div>
-      <div className='mt-4 bg-[#9DCCFF] bg-opacity-20 p-2 md:mt-5 md:p-3 xl:mt-6 xl:p-4 2xl:mt-7 2xl:p-5'>
-        <p className='max-h-[75px] overflow-hidden text-ellipsis text-sm text-[#696984] md:text-base'>
-          {description}
-        </p>
+      <h4 className='mb-4 text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>{title}</h4>
+      <div className='flex flex-col gap-y-4 md:flex-col-reverse lg:gap-y-6 3xl:gap-y-8'>
+        <div className='flex flex-row items-center justify-between'>
+          <div className='flex h-fit flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none lg:gap-x-4 3xl:gap-x-6'>
+            <div className='hidden flex-1 flex-row items-center gap-x-1 md:flex'>
+              {isMaterial(document) ? (
+                <>
+                  <Icon.Document className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                  <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
+                    {document.chapter ? document.chapter.name : 'Chương không xác định'}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <Icon.Test className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                  <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
+                    {document.semester
+                      ? `Học kì ${document.semester.slice(-3)}`
+                      : 'Học kì không xác định'}
+                  </p>
+                </>
+              )}
+            </div>
+            {isMaterial(document) ? null : (
+              <>
+                <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' />
+                <div className='flex flex-1 flex-row items-center gap-x-1'>
+                  <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                  <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
+                    {document.type === ExamType.MIDTERM_EXAM ? 'Giữa kì' : 'Cuối kì'}
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+          <Link
+            to={to}
+            className='hidden rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:flex '
+          >
+            <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
+          </Link>
+        </div>
+        <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
+          <p className='text-justify text-[#666]'>
+            {isEmpty(description) ? 'Không có chú thích' : description}
+          </p>
+        </div>
+        <Link
+          to={to}
+          className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:hidden'
+        >
+          <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
+        </Link>
       </div>
     </div>
   );

@@ -61,7 +61,7 @@ const HomePage = () => {
                 Who We Are
               </h1>
               <h2 className='mb-5 text-[28px] font-bold uppercase leading-normal md:text-4xl md:font-semibold md:normal-case md:leading-normal md:text-[#2F327D] xl:text-5xl xl:leading-normal'>
-                Chúng ta cùng tiến
+                Chúng Ta Cùng Tiến
               </h2>
               <p
                 className='text-justify text-base leading-loose text-[#696984]
