@@ -39,7 +39,10 @@ const MaterialDetailPage: React.FC = () => {
   }, [isAsideOpen]);
 
   return (
-    <Page title={material?.name} description='From CTCT'>
+    <Page
+      title={`${material?.subject?.name} - ${material?.chapter?.name} - ${material?.name}`}
+      description='From CTCT'
+    >
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'

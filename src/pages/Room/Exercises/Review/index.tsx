@@ -25,7 +25,7 @@ const Review: React.FC = () => {
   }
 
   return (
-    <Page title={`${quiz.fromQuiz.subject.name} - ${quiz.fromQuiz.chapter.name}`}>
+    <Page title={`Xem lại - ${quiz.fromQuiz.subject.name} - ${quiz.fromQuiz.name}`}>
       {width < 768 ? <MobileReview quiz={quiz} /> : <DesktopReview quiz={quiz} />}
     </Page>
   );

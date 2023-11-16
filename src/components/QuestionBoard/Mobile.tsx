@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Icon, FinishModal } from '..';
-import { QuizSession } from '../../types';
+import { QuizSession, QuizStatus } from '../../types';
 import { calculateProgress } from '../../utils/helper';
 
 const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
@@ -24,11 +24,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
   const questionChunks = chunk(quiz.questions, 40);
 
   const onFinish = () => {
-    if (quiz.status === 'ENDED') {
-      submit();
-    } else {
-      setIsModalOpen(true);
-    }
+    setIsModalOpen(true);
   };
 
   return (
@@ -55,7 +51,15 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
           <h2 className='text-xl font-medium'>Danh sách câu hỏi</h2>
           <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
             {questionChunks[page - 1]?.map((question, index) => (
-              <div
+              <button
+                onClick={() => {
+                  setPage(Math.ceil(question.questionId / 40));
+                  document.getElementById(`question-${question.questionId}-card`)?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'start',
+                  });
+                }}
                 key={`mobile-${question.questionId}-list-${quiz._id}`}
                 className={`flex h-10 w-10 items-center justify-center ${
                   question.isCorrect !== undefined
@@ -81,14 +85,16 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
                     _.some(
                       [question.userAnswerKeys, question.userAnswerField],
                       (v) => !_.isEmpty(v)
-                    ) || starList.includes((page - 1) * 40 + index + 1)
+                    ) ||
+                    quiz.status === QuizStatus.ENDED ||
+                    starList.includes((page - 1) * 40 + index + 1)
                       ? 'text-white'
                       : ''
                   }`}
                 >
                   {(page - 1) * 40 + index + 1}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
           <div className='flex w-full flex-1 flex-row items-center justify-between'>
@@ -156,6 +162,11 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
         </div>
       </div>
       <FinishModal
+        message={
+          quiz.status === QuizStatus.ONGOING
+            ? 'Bạn có chắc chắn muốn hoàn thành bài làm?'
+            : 'Bạn có chắc chắn muốn hoàn thành xem lại?'
+        }
         isOpen={isModalOpen}
         handleOpen={setIsModalOpen}
         accept={submit}
