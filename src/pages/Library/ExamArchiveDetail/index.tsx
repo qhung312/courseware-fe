@@ -38,7 +38,10 @@ const ExamArchiveDetailPage: React.FC = () => {
   }, [isAsideOpen]);
 
   return (
-    <Page title={exam?.name} description='From CTCT'>
+    <Page
+      title={`${exam?.subject.name} - ${`Học kì ${exam?.semester.slice(-3)}`} - ${exam?.name}`}
+      description='From CTCT'
+    >
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'

@@ -1,4 +1,6 @@
 import { useLocation, useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Detail from './Detail';
 import Main from './Main';
@@ -9,15 +11,18 @@ const Exercises: React.FC = () => {
   const pathTokens = pathname.split('/');
   const params = useParams();
 
-  if (params?.quizId === undefined) {
-    return <Main />;
-  }
-
-  if (pathTokens.includes('review')) {
-    return <Review />;
-  }
-
-  return <Detail />;
+  return (
+    <>
+      {params?.quizId === undefined ? (
+        <Main />
+      ) : pathTokens.includes('review') ? (
+        <Review />
+      ) : (
+        <Detail />
+      )}
+      <ToastContainer position='bottom-right' draggable={false} />
+    </>
+  );
 };
 
 export default Exercises;

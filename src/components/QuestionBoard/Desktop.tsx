@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Icon, FinishModal } from '..';
-import { QuizSession } from '../../types';
+import { QuizSession, QuizStatus } from '../../types';
 import { calculateProgress, parseCountdown } from '../../utils/helper';
 
 const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
@@ -25,11 +25,7 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
   const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
 
   const onFinish = () => {
-    if (quiz.status === 'ENDED') {
-      submit();
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(true);
   };
 
   useEffect(() => {
@@ -91,7 +87,6 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                 <Countdown
                   date={timeLeft}
                   onTick={(props) => {
-                    console.log(props.total);
                     setTimeLeft(Date.now() + props.total);
                   }}
                   renderer={(props) => (
@@ -111,7 +106,17 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
             <h2 className='text-base font-medium lg:text-lg 3xl:text-2xl'>Danh sách câu hỏi</h2>
             <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
               {questionChunks[page - 1]?.map((question, index) => (
-                <div
+                <button
+                  onClick={() => {
+                    setPage(Math.ceil(question.questionId / 40));
+                    document
+                      .getElementById(`question-${question.questionId}-card`)
+                      ?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'start',
+                      });
+                  }}
                   key={`desktop-${question.questionId}-list-${quiz._id}`}
                   className={`flex h-10 w-10 items-center justify-center 3xl:h-[52px] 3xl:w-[52px] ${
                     starList.includes((page - 1) * 40 + index + 1)
@@ -137,14 +142,16 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
                       _.some(
                         [question.userAnswerKeys, question.userAnswerField],
                         (v) => !_.isEmpty(v)
-                      ) || starList.includes((page - 1) * 40 + index + 1)
+                      ) ||
+                      quiz.status === QuizStatus.ENDED ||
+                      starList.includes((page - 1) * 40 + index + 1)
                         ? 'text-white'
                         : ''
                     }`}
                   >
                     {(page - 1) * 40 + index + 1}
                   </p>
-                </div>
+                </button>
               ))}
             </div>
             <div className='flex w-full flex-row flex-wrap-reverse items-center justify-center gap-x-4 gap-y-4'>
@@ -193,6 +200,11 @@ const Desktop: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: num
         </div>
       </div>
       <FinishModal
+        message={
+          quiz.status === QuizStatus.ONGOING
+            ? 'Bạn có chắc chắn muốn hoàn thành bài làm?'
+            : 'Bạn có chắc chắn muốn hoàn thành xem lại?'
+        }
         isOpen={isOpen}
         handleOpen={setIsOpen}
         accept={submit}

@@ -2,11 +2,12 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, FC, SetStateAction, Dispatch } from 'react';
 
 const FinishModal: FC<{
+  message: string;
   isOpen: boolean;
   handleOpen: Dispatch<SetStateAction<boolean>>;
   accept: () => void;
   cancel: () => void;
-}> = ({ isOpen, handleOpen, accept, cancel }) => {
+}> = ({ message, isOpen, handleOpen, accept, cancel }) => {
   function closeModal() {
     handleOpen(false);
   }
@@ -39,7 +40,7 @@ const FinishModal: FC<{
             >
               <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all'>
                 <Dialog.Title as='h3' className='text-xl font-semibold leading-6'>
-                  Bạn có chắc chắn muốn hoàn thành bài làm?
+                  {message}
                 </Dialog.Title>
 
                 <div className='mt-4 flex flex-row items-center justify-between'>

@@ -24,7 +24,7 @@ const SearchBar = ({ options, onChange, ...props }: Props<Option, false, GroupBa
       options={options}
       onChange={onChange}
       unstyled
-      classNamePrefix='react-select'
+      classNamePrefix='react-search-bar'
       className='react-select__container'
       menuPlacement='auto'
       isClearable
@@ -33,6 +33,10 @@ const SearchBar = ({ options, onChange, ...props }: Props<Option, false, GroupBa
           ...baseStyle,
           outline: isFocused ? '2px auto #4285F4' : 'unset',
           boxSizing: 'content-box',
+        }),
+        dropdownIndicator: (baseStyle) => ({
+          ...baseStyle,
+          display: 'hidden',
         }),
       }}
       classNames={{
