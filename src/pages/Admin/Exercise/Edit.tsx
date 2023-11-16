@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SingleValue } from 'react-select';
@@ -100,9 +100,8 @@ const EditExercisePage = () => {
       .finally(() => setLoading(false));
   }, [id]);
 
-  const handleOnSetSampleSize = (size: number) => {
-    setSampleSize(Math.min(potentialQuestions?.length, size));
-  };
+  const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
+    setSampleSize(parseInt(event.target.value));
 
   const handleOnSetSave = useDebounce(() => {
     if (exercise) {
@@ -390,10 +389,10 @@ const EditExercisePage = () => {
                       <input
                         className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                         value={sampleSize}
-                        placeholder={'Chọn số câu hỏi'}
-                        onChange={({ target }) =>
-                          handleOnSetSampleSize(parseInt(target.value) ? parseInt(target.value) : 0)
-                        }
+                        type='number'
+                        onChange={onInputSampleSize}
+                        min={0}
+                        max={potentialQuestions.length}
                       />
                     </div>
                   </div>
