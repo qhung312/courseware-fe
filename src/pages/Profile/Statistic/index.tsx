@@ -181,7 +181,9 @@ const Statistic = () => {
                 <div className='lg:mt-[-16px]'>
                   <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
                     <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
-                    <p className='w-full text-center'>Hiện chưa có thống kê điểm số</p>
+                    <p className='w-full text-center lg:text-[18px] xl:text-xl'>
+                      Hiện chưa có thống kê điểm số
+                    </p>
                   </div>
                 </div>
               ) : (
