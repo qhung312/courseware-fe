@@ -45,7 +45,6 @@ const MaterialPage: React.FC = () => {
         .then((res) => {
           const { data } = res;
           const { payload } = data;
-          console.log(payload.result);
           setTimeout(() => setMaterials(payload.result), 300);
         })
         .catch((err) => {
@@ -78,7 +77,7 @@ const MaterialPage: React.FC = () => {
   }
 
   return (
-    <Page title={`Tài liệu ${subject?.name}`}>
+    <Page title={`Tài liệu ${subject?.name ? subject?.name : ''}`}>
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'
@@ -114,6 +113,7 @@ const MaterialPage: React.FC = () => {
             )}
             {materials?.map((material) => (
               <DocumentCard
+                document={material}
                 key={material._id}
                 title={material.name}
                 to={`/library/material/${subject?._id}/pdf/${material._id}`}

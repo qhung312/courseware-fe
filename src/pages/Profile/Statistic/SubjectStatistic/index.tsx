@@ -121,7 +121,7 @@ const SubjectStatistic = () => {
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:pt-10 lg:px-[60px]'>
           <Link
             to='/profile/statistic'
-            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:text-[18px] 3xl:text-2xl'
+            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:py-2 lg:text-[20px] 3xl:text-2xl'
           >
             <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
             Quay lại

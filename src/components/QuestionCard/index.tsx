@@ -43,7 +43,6 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
       return data.payload;
     },
     onSuccess: async () => {
-      toast.success('Đã lưu câu trả lời');
       await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
     },
     onError: () => {
@@ -116,7 +115,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   style={{ borderRadius: '9999px' }}
                   type='checkbox'
                   name={`question-${question.questionId}`}
-                  value={option.key}
+                  value={option.key || -1}
                   multiple={status === QuizStatus.ENDED}
                   checked={
                     numberAnswer[0] === option.key ||
@@ -166,7 +165,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   name={`question-${question.questionId}`}
                   type='checkbox'
                   multiple
-                  value={option.key}
+                  value={option.key || -1}
                   checked={
                     numberAnswer.includes(option.key) ||
                     (status === QuizStatus.ENDED && question.answerKeys?.includes(option.key))
@@ -203,7 +202,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
             type='text'
             disabled={status !== QuizStatus.ONGOING}
             placeholder='Nhập câu trả lời'
-            value={stringAnswer}
+            value={stringAnswer || ''}
           />
         </div>
       );
@@ -317,6 +316,7 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
   return (
     <>
       <div
+        id={`question-${question.questionId}-card`}
         className='flex w-full flex-1 flex-col items-start space-y-3 rounded-lg bg-white p-4
       md:bg-[#9DCCFF]/20 3xl:space-y-6'
       >

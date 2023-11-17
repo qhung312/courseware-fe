@@ -22,7 +22,6 @@ const MaterialDetailPage: React.FC = () => {
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
-      console.log('Material id: ', params?.pdfId);
       MaterialService.getById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;
@@ -39,7 +38,12 @@ const MaterialDetailPage: React.FC = () => {
   }, [isAsideOpen]);
 
   return (
-    <Page title={material?.name} description='From CTCT'>
+    <Page
+      title={`Tài liệu ${material?.subject?.name ? material.subject.name : ''}${
+        material?.chapter?.name ? ` - ${material.chapter.name}` : ''
+      }${material?.name ? ` - ${material.name}` : ''}`}
+      description='From CTCT'
+    >
       <LibraryAside
         title='Thư viện tài liệu'
         subTitle='Tài liệu các môn học'

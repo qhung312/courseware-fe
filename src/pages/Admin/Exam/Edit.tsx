@@ -171,7 +171,6 @@ const ExamEdit = () => {
                       value={subjectOptions.find((x) => x.value === subject) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
-                          console.log('subject', v);
                           setSubject(v.value);
                         }
                       }}
@@ -185,7 +184,6 @@ const ExamEdit = () => {
                       value={EXAM_TYPE_OPTIONS.find((x) => x.value === type) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
-                          console.log(v.value);
                           setType(v.value);
                         }
                       }}
@@ -199,7 +197,6 @@ const ExamEdit = () => {
                       value={SEMESTER_OPTIONS.find((x) => x.value === semester) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
-                          console.log(v.value);
                           setSemester(v.value);
                         }
                       }}

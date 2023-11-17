@@ -17,7 +17,7 @@ import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../t
 const EditQuestionPage = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const id = params?.questionid ?? '';
+  const id = params?.questionId ?? '';
   const [question, setQuestion] = useState<Question>();
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
@@ -64,7 +64,6 @@ const EditQuestionPage = () => {
       shuffleOptions,
       explanation,
     };
-    console.log('Answer key: ', answerKey);
     QuestionService.edit(id, data, true)
       .then(() => {
         toast.success('Chỉnh sửa thành công');
@@ -377,8 +376,8 @@ const EditQuestionPage = () => {
                       );
                     })}
                   </div>
-                  <div className='flex flex-row items-center gap-x-8'>
-                    <div className='flex flex-row items-center gap-x-4'>
+                  <div className='flex w-full flex-row flex-wrap items-center gap-x-8 gap-y-4'>
+                    <div className='flex w-full min-w-[200px] flex-1 flex-row items-center gap-x-4'>
                       <p className='flex text-base lg:text-lg 3xl:text-xl'>Đáp án đúng:</p>
                       <Select
                         options={options.map((option, index) => ({
@@ -396,7 +395,7 @@ const EditQuestionPage = () => {
                         }}
                       />
                     </div>
-                    <div className='flex flex-row items-center gap-x-4'>
+                    <div className='flex w-full flex-[5] flex-row items-center gap-x-4'>
                       <p className='flex text-base lg:text-lg 3xl:text-xl'>Xáo trộn lựa chọn:</p>
                       <input
                         type='checkbox'

@@ -1,7 +1,6 @@
 import { chunk } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
-import { ToastContainer } from 'react-toastify';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { QuizSession } from '../../../../types';
@@ -74,7 +73,6 @@ const MobileOngoing: React.FC<{
         </div>
       </div>
       <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
-      <ToastContainer position='bottom-center' draggable={false} />
     </div>
   );
 };

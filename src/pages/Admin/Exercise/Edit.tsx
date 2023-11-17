@@ -5,14 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Select } from '../../../components';
+import { Icon, InputNumber, Select } from '../../../components';
 import { Option } from '../../../components/Select';
-// import { useDebounce } from '../../../hooks';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
-// import ChapterService from '../../../service/chapter.service';
-// import QuestionTemplateService from '../../../service/questionTemplate.service';
-// import SubjectService from '../../../service/subject.service';
 import ChapterService from '../../../service/chapter.service';
 import QuestionService from '../../../service/question.service';
 import QuizService from '../../../service/quiz.service';
@@ -30,7 +26,7 @@ interface CountDown {
 const EditExercisePage = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const id = params?.exerciseid ?? '';
+  const id = params?.exerciseId ?? '';
   const [exercise, setExercise] = useState<Quiz>();
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
@@ -281,7 +277,7 @@ const EditExercisePage = () => {
             <p className='text-sm text-[#5B5B5B]'>Quay lại</p>
           </button>
           <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
-            <main className='flex flex-col gap-y-4'>
+            <main className='flex w-full flex-col gap-y-4'>
               {loading ? (
                 <>
                   <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
@@ -319,8 +315,8 @@ const EditExercisePage = () => {
                       onChange={({ target }) => setName(target.value)}
                     />
                   </div>
-                  <div className='flex flex-row gap-x-8'>
-                    <div className='flex w-full flex-col gap-y-1'>
+                  <div className='flex w-full flex-1 flex-row flex-wrap gap-x-8 gap-y-4'>
+                    <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
                       <Select
                         options={subjectOptions}
@@ -333,7 +329,7 @@ const EditExercisePage = () => {
                         }}
                       />
                     </div>
-                    <div className='flex w-full flex-col gap-y-1'>
+                    <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
                       <Select
                         options={chapterOptions}
@@ -347,61 +343,84 @@ const EditExercisePage = () => {
                         }}
                       />
                     </div>
-                    <div className='flex flex-col'>
-                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
-                        Thời gian làm bài (hh:mm:ss)
-                      </p>
-                      <div className='flex justify-around'>
-                        <input
-                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                          value={duration.hour}
-                          type='number'
+                    <div className='flex w-full flex-[2] flex-row flex-wrap gap-x-8 gap-y-4'>
+                      <div className='flex min-w-[300px] flex-[2] flex-col'>
+                        <p className='flex w-full flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                          Thời gian làm bài (hh:mm:ss)
+                        </p>
+                        <div className='flex w-full flex-1 justify-around gap-x-2'>
+                          <InputNumber
+                            containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                            className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            controllerClassName='rounded-lg'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                            value={duration.hour}
+                            min={0}
+                            max={23}
+                            onChange={({ target }) => {
+                              const time = parseInt(target.value);
+                              setDuration({
+                                ...duration,
+                                hour: time,
+                              });
+                            }}
+                          />
+                          <InputNumber
+                            containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                            className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            controllerClassName='rounded-lg'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                            value={duration.minute}
+                            min={0}
+                            max={59}
+                            onChange={({ target }) => {
+                              const time = parseInt(target.value);
+                              setDuration({
+                                ...duration,
+                                minute: time,
+                              });
+                            }}
+                          />
+                          <InputNumber
+                            containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                            className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            controllerClassName='rounded-lg'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                            value={duration.second}
+                            min={0}
+                            max={59}
+                            onChange={({ target }) => {
+                              const time = parseInt(target.value);
+                              setDuration({
+                                ...duration,
+                                second: time,
+                              });
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className='flex min-w-[100px] flex-1 flex-col'>
+                        <p className='flex flex-[2.5] whitespace-nowrap text-base lg:text-lg 3xl:text-xl'>
+                          Số câu hỏi
+                        </p>
+                        <InputNumber
+                          containerClassName='border border-[#D9D9D9] rounded-lg'
+                          className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          controllerClassName='rounded-lg'
+                          buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                          value={sampleSize}
+                          min={0}
+                          max={potentialQuestions.length}
+                          placeholder={'Chọn số câu hỏi'}
                           onChange={({ target }) => {
-                            const time = parseInt(target.value);
-                            setDuration({
-                              ...duration,
-                              hour: time === 24 ? 0 : time === -1 ? 23 : time,
-                            });
-                          }}
-                        />
-                        <input
-                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                          value={duration.minute}
-                          type='number'
-                          onChange={({ target }) => {
-                            const time = parseInt(target.value) ? parseInt(target.value) : 0;
-                            setDuration({
-                              ...duration,
-                              minute: time === 60 ? 0 : time === -1 ? 59 : time,
-                            });
-                          }}
-                        />
-                        <input
-                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                          value={duration.second}
-                          type='number'
-                          onChange={({ target }) => {
-                            const time = parseInt(target.value) ? parseInt(target.value) : 0;
-                            setDuration({
-                              ...duration,
-                              second: time === 60 ? 0 : time === -1 ? 59 : time,
-                            });
+                            const numberOfQuestions = parseInt(target.value);
+                            setSampleSize(isNaN(numberOfQuestions) ? 0 : numberOfQuestions);
                           }}
                         />
                       </div>
                     </div>
-                    <div className='flex flex-col'>
-                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
-                      <input
-                        className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                        value={sampleSize}
-                        type='number'
-                        onChange={onInputSampleSize}
-                        min={0}
-                        max={potentialQuestions.length}
-                      />
-                    </div>
                   </div>
+
                   <div className='flex flex-col gap-y-1'>
                     <label
                       className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'

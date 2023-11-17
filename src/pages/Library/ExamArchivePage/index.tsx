@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { find } from 'lodash';
 import { useLayoutEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useParams } from 'react-router-dom';
@@ -35,15 +35,16 @@ const ExamArchivePage: React.FC = () => {
   const id = params?.subjectId ?? '';
 
   const subjects = useBoundStore.use.subjects();
-  const subject = _.find(subjects, (subj) => subj._id === params?.subjectId);
+  const subject = find(subjects, (subj) => subj._id === params?.subjectId);
 
-  const [examArchives, setExamArchives] = useState<ExamArchive[]>([]);
+  const [examArchives, setExamArchives] = useState<ExamArchive[] | null>(null);
 
   useLayoutEffect(() => {
     if (id) {
+      setExamArchives(null);
+
       ExamArchiveService.getAll({ subject: id })
         .then((res) => {
-          console.log(res.data.payload.result);
           setExamArchives(res.data.payload.result);
         })
         .catch((err) => {
@@ -76,9 +77,9 @@ const ExamArchivePage: React.FC = () => {
   }
 
   return (
-    <Page title={`Tài liệu ${subject?.name}`}>
+    <Page title={`Đề thi ${subject?.name ? subject?.name : ''}`}>
       <LibraryAside
-        title='Thư viện tài liệu'
+        title='Thư viện đề thi'
         subTitle='Đề thi các môn học'
         baseRoute='/library/exam-archive'
       />
@@ -125,6 +126,7 @@ const ExamArchivePage: React.FC = () => {
             )}
             {examArchives?.map((exam) => (
               <DocumentCard
+                document={exam}
                 key={exam._id}
                 title={exam.name}
                 to={`/library/exam-archive/${subject?._id}/pdf/${exam._id}`}

@@ -67,7 +67,7 @@ const LargeHeader = () => {
     <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
       <div
         className='z-30 flex w-full flex-row items-center justify-between
-        bg-white px-8 py-3 md:gap-x-10 lg:gap-x-[30px] 3xl:gap-x-20 3xl:px-12 3xl:py-4'
+        bg-white px-8 py-3 md:gap-x-10 md:px-5 lg:gap-x-[30px] lg:px-10 xl:px-[60px] 2xl:px-20 3xl:gap-x-20 3xl:px-[100px] 3xl:py-4'
       >
         <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
           <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]' />
@@ -162,7 +162,7 @@ const LargeHeader = () => {
       </div>
       <nav
         className='z-20 flex w-full flex-row items-center justify-start bg-[#E3F2FD]
-        px-4 transition-all duration-700 ease-out'
+        px-1 transition-all duration-700 ease-out lg:px-6 xl:px-11 2xl:px-16 3xl:px-[68px]'
       >
         <NavLink
           to='/'
