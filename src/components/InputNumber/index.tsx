@@ -15,6 +15,7 @@ const InputNumber: React.FC<InputNumberProps> = ({
   value,
   min = -Infinity,
   max = Infinity,
+  disabled,
   onChange,
   containerClassName = '',
   className: inputClassName = '',
@@ -28,7 +29,13 @@ const InputNumber: React.FC<InputNumberProps> = ({
   }
 
   const [rawValue, setRawValue] = useState<string>(
-    value !== 0 && isNaN(value) ? String(value) : isEmpty(placeholder) ? String(min) : ''
+    disabled
+      ? String(value)
+      : value !== 0 && !isNaN(value)
+      ? String(value)
+      : isEmpty(placeholder)
+      ? String(min)
+      : ''
   );
   const processedValue = rawValue !== '' ? rawValue : isEmpty(placeholder) ? String(min) : '';
 
@@ -47,6 +54,22 @@ const InputNumber: React.FC<InputNumberProps> = ({
     );
   }, [width]);
 
+  console.log(controllerWidth, inputPadding);
+
+  useEffect(() => {
+    if (processedValue !== '') {
+      const numberValue = Number(processedValue);
+
+      if (numberValue < Number(min)) {
+        setRawValue(String(min));
+        onChange?.({ target: { value: String(min) } } as any);
+      } else if (numberValue > Number(max)) {
+        setRawValue(String(max));
+        onChange?.({ target: { value: String(max) } } as any);
+      }
+    }
+  }, [min, max, processedValue, onChange]);
+
   const handleChange = debounce(
     (event: ChangeEvent<HTMLInputElement>) => {
       const text = event.target.value;
@@ -60,11 +83,11 @@ const InputNumber: React.FC<InputNumberProps> = ({
           onChange?.(event);
           setRawValue(text);
         } else if (newValue < Number(min)) {
-          onChange?.({ ...event, target: { ...event.target, value: String(max) } });
-          setRawValue(String(max));
-        } else {
           onChange?.({ ...event, target: { ...event.target, value: String(min) } });
           setRawValue(String(min));
+        } else {
+          onChange?.({ ...event, target: { ...event.target, value: String(max) } });
+          setRawValue(String(max));
         }
       }
     },
@@ -95,22 +118,23 @@ const InputNumber: React.FC<InputNumberProps> = ({
     <div
       className={mergedContainerClassName}
       onMouseEnter={() => {
-        controllerRef.current?.classList.remove('opacity-0');
+        !disabled && controllerRef.current?.classList.remove('opacity-0');
       }}
       onMouseLeave={() => {
-        controllerRef.current?.classList.add('opacity-0');
+        !disabled && controllerRef.current?.classList.add('opacity-0');
       }}
       onFocusCapture={() => {
-        inputRef.current?.focus();
-        controllerRef.current?.classList.remove('opacity-0');
+        !disabled && inputRef.current?.focus();
+        !disabled && controllerRef.current?.classList.remove('opacity-0');
       }}
       onBlurCapture={() => {
-        inputRef.current?.blur();
-        controllerRef.current?.classList.add('opacity-0');
+        !disabled && inputRef.current?.blur();
+        !disabled && controllerRef.current?.classList.add('opacity-0');
       }}
     >
       <input
         ref={inputRef}
+        disabled={disabled}
         className={mergedInputClassName}
         value={processedValue}
         onBlur={handleBlur}
@@ -118,64 +142,65 @@ const InputNumber: React.FC<InputNumberProps> = ({
         onChange={handleChange}
         placeholder={placeholder}
         style={{
-          paddingRight:
-            controllerWidth && inputPadding ? `${Number(controllerWidth) + inputPadding}px` : '0px',
+          paddingRight: `${controllerWidth + inputPadding}px`,
         }}
         {...props}
       />
-      <div
-        ref={controllerRef}
-        className={mergedControllerClassName}
-        style={{ borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }}
-      >
-        <button
-          className={`h-[calc(50%-0.5px)] w-full transition-all duration-300 ease-in ${
-            Number(processedValue) === Number(max) ? 'opacity-50' : 'hover:bg-[#F1F1F1]'
-          } ${mergedButtonClassName}`}
-          disabled={Number(processedValue) === Number(max)}
-          style={{
-            borderTopLeftRadius: '0px',
-            borderBottomLeftRadius: '0px',
-            borderBottomRightRadius: '0px',
-          }}
-          onClick={() => {
-            if (processedValue === '' || processedValue === '-') {
-              setRawValue(String(min));
-              onChange?.({ target: { value: String(min) } } as any);
-            } else {
-              const newValue = Number(processedValue) + 1;
-              setRawValue(String(newValue));
-              onChange?.({ target: { value: String(newValue) } } as any);
-            }
-          }}
+      {disabled ? null : (
+        <div
+          ref={controllerRef}
+          className={mergedControllerClassName}
+          style={{ borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' }}
         >
-          <Icon.ChevronUp className='h-full w-auto fill-inherit' />
-        </button>
-        <span className='block h-fit w-full border-b border-[#CCC]' />
-        <button
-          className={`h-[calc(50%-0.5px)] w-full transition-all duration-300 ease-in ${
-            Number(processedValue) === Number(min) ? 'opacity-50' : 'hover:bg-[#F1F1F1] '
-          } ${mergedButtonClassName}`}
-          style={{
-            borderTopLeftRadius: '0px',
-            borderTopRightRadius: '0px',
-            borderBottomLeftRadius: '0px',
-          }}
-          disabled={Number(processedValue) === Number(min)}
-          onClick={() => {
-            if (processedValue === '' || processedValue === '-') {
-              setRawValue(String(min));
-              onChange?.({ target: { value: String(min) } } as any);
-            } else {
-              const newValue = Number(processedValue) - 1;
-              setRawValue(String(newValue));
-              onChange?.({ target: { value: String(newValue) } } as any);
-            }
-          }}
-        >
-          <Icon.ChevronUp className='h-full w-auto rotate-180 fill-inherit' />
-        </button>
-      </div>
+          <button
+            className={`h-[calc(50%-0.5px)] w-full transition-all duration-300 ease-in ${
+              Number(processedValue) === Number(max) ? 'opacity-50' : 'hover:bg-[#F1F1F1]'
+            } ${mergedButtonClassName}`}
+            disabled={Number(processedValue) === Number(max) || disabled}
+            style={{
+              borderTopLeftRadius: '0px',
+              borderBottomLeftRadius: '0px',
+              borderBottomRightRadius: '0px',
+            }}
+            onClick={() => {
+              if (processedValue === '' || processedValue === '-') {
+                setRawValue(String(min));
+                onChange?.({ target: { value: String(min) } } as any);
+              } else {
+                const newValue = Number(processedValue) + 1;
+                setRawValue(String(newValue));
+                onChange?.({ target: { value: String(newValue) } } as any);
+              }
+            }}
+          >
+            <Icon.ChevronUp className='h-full w-auto fill-inherit' />
+          </button>
+          <span className='block h-fit w-full border-b border-[#CCC]' />
+          <button
+            className={`h-[calc(50%-0.5px)] w-full transition-all duration-300 ease-in ${
+              Number(processedValue) === Number(min) ? 'opacity-50' : 'hover:bg-[#F1F1F1] '
+            } ${mergedButtonClassName}`}
+            style={{
+              borderTopLeftRadius: '0px',
+              borderTopRightRadius: '0px',
+              borderBottomLeftRadius: '0px',
+            }}
+            disabled={Number(processedValue) === Number(min) || disabled}
+            onClick={() => {
+              if (processedValue === '' || processedValue === '-') {
+                setRawValue(String(min));
+                onChange?.({ target: { value: String(min) } } as any);
+              } else {
+                const newValue = Number(processedValue) - 1;
+                setRawValue(String(newValue));
+                onChange?.({ target: { value: String(newValue) } } as any);
+              }
+            }}
+          >
+            <Icon.ChevronUp className='h-full w-auto rotate-180 fill-inherit' />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

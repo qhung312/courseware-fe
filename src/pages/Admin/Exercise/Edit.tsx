@@ -26,7 +26,7 @@ interface CountDown {
 const EditExercisePage = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const id = params?.exerciseid ?? '';
+  const id = params?.exerciseId ?? '';
   const [exercise, setExercise] = useState<Quiz>();
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
@@ -344,7 +344,7 @@ const EditExercisePage = () => {
                             containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
                             className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                             controllerClassName='rounded-lg'
-                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
                             value={duration.hour}
                             min={0}
                             max={23}
@@ -360,7 +360,7 @@ const EditExercisePage = () => {
                             containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
                             className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                             controllerClassName='rounded-lg'
-                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
                             value={duration.minute}
                             min={0}
                             max={59}
@@ -376,7 +376,7 @@ const EditExercisePage = () => {
                             containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
                             className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                             controllerClassName='rounded-lg'
-                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
                             value={duration.second}
                             min={0}
                             max={59}
@@ -398,16 +398,14 @@ const EditExercisePage = () => {
                           containerClassName='border border-[#D9D9D9] rounded-lg'
                           className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                           controllerClassName='rounded-lg'
-                          buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5'
+                          buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
                           value={sampleSize}
                           min={0}
+                          max={potentialQuestions.length}
                           placeholder={'Chọn số câu hỏi'}
                           onChange={({ target }) => {
-                            const time = parseInt(target.value);
-                            setDuration({
-                              ...duration,
-                              hour: time,
-                            });
+                            const numberOfQuestions = parseInt(target.value);
+                            setSampleSize(isNaN(numberOfQuestions) ? 0 : numberOfQuestions);
                           }}
                         />
                       </div>

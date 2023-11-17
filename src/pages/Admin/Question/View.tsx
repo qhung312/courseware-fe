@@ -13,7 +13,7 @@ const ViewQuestionPage = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState<Question>();
   const params = useParams();
-  const id = params?.questionid ?? '';
+  const id = params?.questionId ?? '';
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<ConcreteQuestion | null>(null);
 
