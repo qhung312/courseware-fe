@@ -146,26 +146,28 @@ const EditQuestionPage = () => {
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
-    if (!subject) {
+    if (subject === '') {
       setChapterOptions([]);
       setChapter('');
       return;
     }
-
-    ChapterService.getAll({ subject })
+    ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        const formattedData = chapters.map((chap) => ({
-          value: chap._id,
-          label: chap.name,
-        }));
-        setChapterOptions(formattedData);
-        setChapter('');
+        setChapterOptions(
+          chapters.map((chap) => ({
+            value: chap._id,
+            label: chap.name,
+          }))
+        );
+        if (chapterOptions.length > 0 && !chapterOptions.find((option) => option.value === chapter))
+          setChapter('');
+        console.log('update subject chapters list first');
       })
       .catch((err) => {
-        console.error(err);
         toast.error(err.response.data.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject]);
 
   useEffect(() => {
