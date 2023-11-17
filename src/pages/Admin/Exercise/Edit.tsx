@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SingleValue } from 'react-select';
@@ -95,9 +95,6 @@ const EditExercisePage = () => {
       })
       .finally(() => setLoading(false));
   }, [id]);
-
-  const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
-    setSampleSize(parseInt(event.target.value));
 
   const handleOnSetSave = useDebounce(() => {
     if (exercise) {
@@ -202,14 +199,14 @@ const EditExercisePage = () => {
     ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        setChapterOptions(
-          chapters.map((chap) => ({
-            value: chap._id,
-            label: chap.name,
-          }))
-        );
-        if (chapterOptions.length > 0 && !chapterOptions.find((option) => option.value === chapter))
+        const listOption = chapters.map((chap) => ({
+          value: chap._id,
+          label: chap.name,
+        }));
+        setChapterOptions(listOption);
+        if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
           setChapter('');
+        }
         console.log('update subject chapters list first');
       })
       .catch((err) => {

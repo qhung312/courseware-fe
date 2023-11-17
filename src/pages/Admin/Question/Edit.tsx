@@ -153,14 +153,14 @@ const EditQuestionPage = () => {
     ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        setChapterOptions(
-          chapters.map((chap) => ({
-            value: chap._id,
-            label: chap.name,
-          }))
-        );
-        if (chapterOptions.length > 0 && !chapterOptions.find((option) => option.value === chapter))
+        const listOption = chapters.map((chap) => ({
+          value: chap._id,
+          label: chap.name,
+        }));
+        setChapterOptions(listOption);
+        if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
           setChapter('');
+        }
         console.log('update subject chapters list first');
       })
       .catch((err) => {
@@ -262,7 +262,7 @@ const EditQuestionPage = () => {
                     <Select
                       options={subjectOptions}
                       placeholder='Chọn môn'
-                      value={subjectOptions.find((x) => x.value === subject)}
+                      value={subjectOptions.find((x) => x.value === subject) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           setSubject(v?.value);
@@ -275,7 +275,7 @@ const EditQuestionPage = () => {
                     <Select
                       options={chapterOptions}
                       placeholder='Chọn chương'
-                      value={chapterOptions.find((x) => x.value === chapter)}
+                      value={chapterOptions.find((x) => x.value === chapter) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           setChapter(v.value);

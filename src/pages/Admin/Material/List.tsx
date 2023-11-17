@@ -256,7 +256,10 @@ const MaterialList = () => {
                             <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <button
                                 type='button'
-                                onClick={() => navigate(`/admin/material/edit/${material._id}`)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/admin/material/edit/${material._id}`);
+                                }}
                                 className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
@@ -265,7 +268,8 @@ const MaterialList = () => {
                                 />
                               </button>
                               <button
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   materialToDelete.current = material._id;
                                   setDeleteModal(true);
                                 }}
