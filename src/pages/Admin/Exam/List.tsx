@@ -271,8 +271,11 @@ const ExamList = () => {
                             <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                               <button
                                 type='button'
-                                onClick={() => navigate(`/admin/exam-archive/edit/${exam._id}`)}
-                                className='hidden items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4] 2xl:flex'
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/admin/exam-archive/edit/${exam._id}`);
+                                }}
+                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
                               >
                                 <Icon.Edit
                                   fill='white'
@@ -280,8 +283,9 @@ const ExamList = () => {
                                 />
                               </button>
                               <button
-                                className='hidden items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437] 2xl:flex'
-                                onClick={() => {
+                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   examArchiveToDelete.current = exam._id;
                                   setDeleteModal(true);
                                 }}

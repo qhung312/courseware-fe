@@ -145,26 +145,28 @@ const EditQuestionPage = () => {
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
-    if (!subject) {
+    if (subject === '') {
       setChapterOptions([]);
       setChapter('');
       return;
     }
-
-    ChapterService.getAll({ subject })
+    ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        const formattedData = chapters.map((chap) => ({
+        const listOption = chapters.map((chap) => ({
           value: chap._id,
           label: chap.name,
         }));
-        setChapterOptions(formattedData);
-        setChapter('');
+        setChapterOptions(listOption);
+        if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
+          setChapter('');
+        }
+        console.log('update subject chapters list first');
       })
       .catch((err) => {
-        console.error(err);
         toast.error(err.response.data.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject]);
 
   useEffect(() => {
@@ -260,7 +262,7 @@ const EditQuestionPage = () => {
                     <Select
                       options={subjectOptions}
                       placeholder='Chọn môn'
-                      value={subjectOptions.find((x) => x.value === subject)}
+                      value={subjectOptions.find((x) => x.value === subject) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           setSubject(v?.value);
@@ -273,7 +275,7 @@ const EditQuestionPage = () => {
                     <Select
                       options={chapterOptions}
                       placeholder='Chọn chương'
-                      value={chapterOptions.find((x) => x.value === chapter)}
+                      value={chapterOptions.find((x) => x.value === chapter) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           setChapter(v.value);

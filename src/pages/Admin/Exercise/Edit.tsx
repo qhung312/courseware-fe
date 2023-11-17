@@ -162,8 +162,8 @@ const EditExercisePage = () => {
   useEffect(() => {
     if (exercise) {
       setName(exercise.name);
-      setChapter(exercise.chapter._id);
       setSubject(exercise.subject._id);
+      setChapter(exercise.chapter._id);
       setDescription(exercise.description);
       setDuration(getCountDown(exercise.duration));
       setSampleSize(exercise?.sampleSize ?? 0);
@@ -196,22 +196,28 @@ const EditExercisePage = () => {
       setChapter('');
       return;
     }
-
     ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        setChapterOptions(
-          chapters.map((chap) => ({
-            value: chap._id,
-            label: chap.name,
-          }))
-        );
-        setChapter('');
+        const listOption = chapters.map((chap) => ({
+          value: chap._id,
+          label: chap.name,
+        }));
+        setChapterOptions(listOption);
+        if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
+          setChapter('');
+        }
+        console.log('update subject chapters list first');
       })
       .catch((err) => {
         toast.error(err.response.data.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject]);
+
+  useEffect(() => {
+    console.log('chapter: ', chapter);
+  }, [chapter]);
 
   useEffect(() => {
     // update options for filter chapter when filter subject changes
@@ -528,6 +534,8 @@ const EditExercisePage = () => {
                                 ) as Question[];
                                 newPotentialQuestions.splice(index, 1);
                                 setPotentialQuestions(newPotentialQuestions);
+                                if ((newPotentialQuestions?.length ?? 0) < sampleSize)
+                                  setSampleSize(newPotentialQuestions?.length ?? 0);
                               }}
                             >
                               <Icon.Delete
