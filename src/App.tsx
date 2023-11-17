@@ -2,7 +2,6 @@ import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Loading } from './components';
-import { ENVIRONMENT } from './config';
 import { AdministratorRoute, UserRoute } from './routes';
 import { socket } from './socket';
 import useBoundStore from './store';
@@ -21,8 +20,6 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('Environment:', ENVIRONMENT);
-
     if (
       queryToken &&
       queryToken !== '' &&
@@ -45,11 +42,11 @@ const App = () => {
 
   useEffect(() => {
     const onConnect = () => {
-      console.log('Connected to server');
+      console.log('Connected to server socket');
     };
 
     const onDisconnect = () => {
-      console.log('Disconnected from server');
+      console.log('Disconnected from server socket');
     };
 
     socket.on(SocketEvent.CONNECT, onConnect);

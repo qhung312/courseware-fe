@@ -37,7 +37,6 @@ const MaterialEdit = () => {
     MaterialService.getById(id, true)
       .then((res) => {
         setMaterial(res.data.payload);
-        console.log(res.data.payload);
       })
       .catch((err) => {
         console.log(err);
@@ -70,7 +69,6 @@ const MaterialEdit = () => {
       })
       .catch((err) => {
         console.error(err);
-        console.log('query body: ', queryBody);
         toast.error(err.response.data.message);
       })
       .finally(() => {
@@ -106,7 +104,6 @@ const MaterialEdit = () => {
           value: chap._id,
           label: chap.name,
         }));
-        console.log('formattedData', formattedData);
         setChapterOptions(formattedData);
         setChapter('');
       })
@@ -127,7 +124,6 @@ const MaterialEdit = () => {
             label: sub.name,
           };
         });
-        console.log('>>> formattedData, ', formattedData);
         setSubjectOptions(formattedData);
       })
       .catch((err) => {
@@ -204,9 +200,7 @@ const MaterialEdit = () => {
                       value={subjectOptions.find((x) => x.value === subject) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
-                          console.log('subject', v);
                           setSubject(v.value);
-                          console.log('subject choosing: ', subject);
                         }
                       }}
                       placeholder='Chọn môn'

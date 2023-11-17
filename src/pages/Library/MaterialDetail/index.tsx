@@ -22,7 +22,6 @@ const MaterialDetailPage: React.FC = () => {
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
-      console.log('Material id: ', params?.pdfId);
       MaterialService.getById(params?.pdfId).then((res) => {
         const { data } = res;
         const { payload } = data;

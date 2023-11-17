@@ -21,7 +21,6 @@ const UserInformation = () => {
     .split('T')[0];
 
   const updateProfile = () => {
-    console.log(userProfile);
     UserService.editUserProfile(userProfile)
       .then((res) => {
         toast.success('Cập nhật thông tin thành công');
@@ -207,7 +206,6 @@ const UserInformation = () => {
                       : 'bg-[#D9D9D9]'
                   } p-4 text-xl text-[#252641] opacity-100`}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setUserProfile({ ...userProfile, gender: e.target.value });
                   }}
                 >
