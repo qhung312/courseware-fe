@@ -1,9 +1,9 @@
 import { useLayoutEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import PDF from '../../../components/PDF';
-import { API_URL } from '../../../config';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
 import ExamArchiveService from '../../../service/examArchive.service';
@@ -16,19 +16,39 @@ const ExamArchiveDetailPage: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [exam, setExam] = useState<ExamArchive | null>(null);
   const isAsideOpen = useBoundStore.use.isAsideOpen();
   const toggleAside = useBoundStore.use.toggleAside();
 
+  const [exam, setExam] = useState<ExamArchive | null>(null);
+  const [file, setFile] = useState<File | undefined>(undefined);
+
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
-      ExamArchiveService.getById(params?.pdfId).then((res) => {
-        const { data } = res;
-        const { payload } = data;
-        setExam(payload);
-      });
+      ExamArchiveService.getById(params?.pdfId)
+        .then((res) => {
+          const { data } = res;
+          const { payload } = data;
+          setExam(payload);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response.data.message);
+        });
     }
   }, [params]);
+
+  useLayoutEffect(() => {
+    if (exam !== null) {
+      ExamArchiveService.download(exam._id)
+        .then((downloadFileResponse) => {
+          setFile(downloadFileResponse.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response.data.message);
+        });
+    }
+  }, [exam]);
 
   useLayoutEffect(() => {
     const detail = document.getElementById('previous-exams-detail');
@@ -72,8 +92,9 @@ const ExamArchiveDetailPage: React.FC = () => {
           </button>
 
           {/* PDF */}
-          <PDF url={`${API_URL}previous_exam/${params.pdfId}/download`} />
+          <PDF file={file} />
         </div>
+        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );
