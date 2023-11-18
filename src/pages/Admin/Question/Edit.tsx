@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, QuestionCard, Select } from '../../../components';
+import { Icon, Markdown, QuestionCard, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -13,11 +13,12 @@ import ChapterService from '../../../service/chapter.service';
 import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
 import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const EditQuestionPage = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const id = params?.questionid ?? '';
+  const id = params?.questionId ?? '';
   const [question, setQuestion] = useState<Question>();
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
@@ -64,7 +65,6 @@ const EditQuestionPage = () => {
       shuffleOptions,
       explanation,
     };
-    console.log('Answer key: ', answerKey);
     QuestionService.edit(id, data, true)
       .then(() => {
         toast.success('Chỉnh sửa thành công');
@@ -146,26 +146,28 @@ const EditQuestionPage = () => {
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
-    if (!subject) {
+    if (subject === '') {
       setChapterOptions([]);
       setChapter('');
       return;
     }
-
-    ChapterService.getAll({ subject })
+    ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        const formattedData = chapters.map((chap) => ({
+        const listOption = chapters.map((chap) => ({
           value: chap._id,
           label: chap.name,
         }));
-        setChapterOptions(formattedData);
-        setChapter('');
+        setChapterOptions(listOption);
+        if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
+          setChapter('');
+        }
+        console.log('update subject chapters list first');
       })
       .catch((err) => {
-        console.error(err);
         toast.error(err.response.data.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject]);
 
   useEffect(() => {
@@ -261,7 +263,7 @@ const EditQuestionPage = () => {
                     <Select
                       options={subjectOptions}
                       placeholder='Chọn môn'
-                      value={subjectOptions.find((x) => x.value === subject)}
+                      value={subjectOptions.find((x) => x.value === subject) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           setSubject(v?.value);
@@ -274,7 +276,7 @@ const EditQuestionPage = () => {
                     <Select
                       options={chapterOptions}
                       placeholder='Chọn chương'
-                      value={chapterOptions.find((x) => x.value === chapter)}
+                      value={chapterOptions.find((x) => x.value === chapter) ?? null}
                       onChange={(v) => {
                         if (v !== null) {
                           setChapter(v.value);
@@ -375,8 +377,8 @@ const EditQuestionPage = () => {
                       );
                     })}
                   </div>
-                  <div className='flex flex-row items-center gap-x-8'>
-                    <div className='flex flex-row items-center gap-x-4'>
+                  <div className='flex w-full flex-row flex-wrap items-center gap-x-8 gap-y-4'>
+                    <div className='flex w-full min-w-[200px] flex-1 flex-row items-center gap-x-4'>
                       <p className='flex text-base lg:text-lg 3xl:text-xl'>Đáp án đúng:</p>
                       <Select
                         options={options.map((option, index) => ({
@@ -394,7 +396,7 @@ const EditQuestionPage = () => {
                         }}
                       />
                     </div>
-                    <div className='flex flex-row items-center gap-x-4'>
+                    <div className='flex w-full flex-[5] flex-row items-center gap-x-4'>
                       <p className='flex text-base lg:text-lg 3xl:text-xl'>Xáo trộn lựa chọn:</p>
                       <input
                         type='checkbox'
@@ -426,7 +428,33 @@ const EditQuestionPage = () => {
                     <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
                       Xem trước câu hỏi
                     </p>
-                    <QuestionCard question={preview} status={QuizStatus.ENDED} questionNumber={1} />
+                    <QuestionCard
+                      question={preview}
+                      status={QuizStatus.ENDED}
+                      questionNumber={1}
+                      showInfo={false}
+                    />
+                    <div className='flex h-full w-full flex-row gap-x-4'>
+                      <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+                        <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
+                        <div className='flex flex-col items-start justify-center gap-y-1'>
+                          <div className='flex flex-row items-center gap-x-2'>
+                            <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
+                            <p className='text-base font-semibold text-[#666]'>
+                              Đáp án đúng:{' '}
+                              {MULTIPLE_CHOICE_LABELS.at(
+                                preview.options?.findIndex(
+                                  (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
+                                ) || 0
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                        <span className='my-4 border-t border-[#666]' />
+                        <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+                        <Markdown>{preview.explanation}</Markdown>
+                      </div>
+                    </div>
                   </div>
                 )}
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>

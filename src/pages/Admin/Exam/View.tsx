@@ -32,7 +32,6 @@ const ExamView = () => {
   useEffect(() => {
     ExamArchiveService.download(id, true)
       .then((res) => {
-        console.log('response: ', res);
         const stringResult = window.URL.createObjectURL(res?.data);
         setUrl(stringResult);
       })

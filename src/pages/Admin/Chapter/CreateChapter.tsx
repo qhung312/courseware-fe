@@ -89,12 +89,12 @@ const CreateChapterPage = () => {
                 />
               </div>
               <div className='flex flex-col gap-y-1'>
-                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Tên</p>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Tên môn</p>
                 <Select
                   options={subjectOptions}
                   value={subjectOptions.find((x) => x.value === subject) ?? null}
                   onChange={onSelectSubject}
-                  placeholder='Chọn chương'
+                  placeholder='Chọn môn'
                 />
               </div>
               {/**

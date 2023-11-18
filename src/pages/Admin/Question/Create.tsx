@@ -196,7 +196,7 @@ const CreateQuestionPage = () => {
                   <Select
                     options={subjectOptions}
                     placeholder='Chọn môn'
-                    value={subjectOptions.find((x) => x.value === subject)}
+                    value={subjectOptions.find((x) => x.value === subject) ?? null}
                     onChange={onSelectSubject}
                   />
                 </div>
@@ -205,7 +205,7 @@ const CreateQuestionPage = () => {
                   <Select
                     options={chapterOptions}
                     placeholder='Chọn chương'
-                    value={chapterOptions.find((x) => x.value === subject)}
+                    value={chapterOptions.find((x) => x.value === chapter) ?? null}
                     onChange={onSelectChapter}
                   />
                 </div>
@@ -296,8 +296,8 @@ const CreateQuestionPage = () => {
                     );
                   })}
                 </div>
-                <div className='flex flex-row items-center gap-x-8'>
-                  <div className='flex flex-row items-center gap-x-4'>
+                <div className='flex w-full flex-row flex-wrap items-center gap-x-8 gap-y-4'>
+                  <div className='flex w-full min-w-[200px] flex-1 flex-row items-center gap-x-4'>
                     <p className='flex text-base lg:text-lg 3xl:text-xl'>Đáp án đúng:</p>
                     <Select
                       options={options.map((_, index) => ({
@@ -311,7 +311,7 @@ const CreateQuestionPage = () => {
                       onChange={onSelectAnswerKey}
                     />
                   </div>
-                  <div className='flex flex-row items-center gap-x-4'>
+                  <div className='flex w-full flex-[5] flex-row items-center gap-x-4'>
                     <p className='flex text-base lg:text-lg 3xl:text-xl'>Xáo trộn lựa chọn:</p>
                     <input
                       type='checkbox'
@@ -343,7 +343,12 @@ const CreateQuestionPage = () => {
                     Xem trước câu hỏi
                   </p>
                   <div className='flex flex-col gap-y-4'>
-                    <QuestionCard question={preview} status={QuizStatus.ENDED} questionNumber={1} />
+                    <QuestionCard
+                      question={preview}
+                      status={QuizStatus.ENDED}
+                      questionNumber={1}
+                      showInfo={false}
+                    />
                     <div className='flex h-full w-full flex-row gap-x-4'>
                       <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
                         <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>

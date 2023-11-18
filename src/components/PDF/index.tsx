@@ -1,12 +1,16 @@
 import { debounce } from 'lodash';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Document, Outline, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
+// eslint-disable-next-line import/order
+import { Document, Outline, Page, pdfjs } from 'react-pdf';
 
 import './index.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { OnItemClickArgs } from 'react-pdf/dist/cjs/shared/types';
+
 import { useDebounce } from '../../hooks';
 import Icon from '../Icon';
+
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const options = {
   cMapUrl: 'cmaps/',
@@ -17,16 +21,15 @@ const options = {
 };
 
 interface PDFProps {
-  url: string | URL;
   renderMode?: 'canvas' | 'svg' | 'none';
   className?: string;
   pageClassName?: string;
   title?: string;
+  file?: File | undefined;
 }
 
-const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) => {
+const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file }) => {
   const [numPages, setNumPages] = useState(1);
-  const file = useMemo(() => ({ url: typeof url === 'string' ? new URL(url) : url }), [url]);
   const [zoom, setZoom] = useState(1);
   const [width, setWidth] = useState<number | undefined>();
   const [isShowOutline, setIsShowOutline] = useState(false);
@@ -62,9 +65,8 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
   const pageRefs = useRef<HTMLCanvasElement[]>([]);
   const outlineRef = useRef<HTMLDivElement>(null);
 
-  const onItemClick = ({ pageNumber }: { pageNumber: string }) => {
-    // console.log('>>> page click: ', pageNumber);
-    pageRefs.current[parseInt(pageNumber)].scrollIntoView();
+  const onItemClick = ({ pageNumber }: OnItemClickArgs) => {
+    pageRefs.current[pageNumber].scrollIntoView();
   };
 
   const setWrapperSize = () => {
@@ -190,10 +192,9 @@ const PDF: React.FC<PDFProps> = ({ url, renderMode, className, pageClassName }) 
                 loading={<Skeleton baseColor='#9DCCFF' borderRadius={0} height='100vh' />}
                 key={`page_${index + 1}`}
                 pageNumber={index + 1}
-                renderTextLayer={true}
-                renderInteractiveForms={false}
-                renderMode='canvas'
                 renderAnnotationLayer={false}
+                renderTextLayer={false}
+                renderMode='canvas'
                 scale={zoom}
               />
             ))}

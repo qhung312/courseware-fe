@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon } from '../../../components';
+import { Icon, InputNumber } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 import QuizTemplateService from '../../../service/quiz.service';
 import { Quiz } from '../../../types';
@@ -11,7 +11,7 @@ import { Quiz } from '../../../types';
 const ViewExercisePage = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const id = params?.exerciseid ?? '';
+  const id = params?.exerciseId ?? '';
   const [exercises, setExercises] = useState<Quiz>();
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,6 @@ const ViewExercisePage = () => {
     QuizTemplateService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
-        console.log('>>> result: ', result);
         setExercises(result);
       })
       .catch((err) => {
@@ -86,54 +85,67 @@ const ViewExercisePage = () => {
                       disabled
                     />
                   </div>
-                  <div className='flex flex-row gap-x-8'>
-                    <div className='flex w-full flex-col gap-y-1'>
+                  <div className='flex w-full flex-1 flex-row flex-wrap gap-x-8 gap-y-4'>
+                    <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
                       <div className='flex w-full flex-1 items-center rounded-lg border border-[#CCC] bg-[#efefef4d]  p-1 text-xs font-medium text-[#252641] lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                         {exercises?.subject?.name}
                       </div>
                     </div>
-                    <div className='flex w-full flex-col gap-y-1'>
+                    <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
                       <div className='flex w-full flex-1 items-center rounded-lg border border-[#CCC] bg-[#efefef4d]  p-1 text-xs font-medium text-[#252641] lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                         {exercises?.chapter?.name}
                       </div>
                     </div>
-                    <div className='flex flex-col'>
-                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
-                        Thời gian làm bài (hh:mm:ss)
-                      </p>
-                      <div className='flex justify-around'>
-                        <input
-                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                          value={Math.floor((exercises?.duration ?? 0) / 3600000)}
-                          type='number'
-                          disabled
-                        />
-                        <input
-                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                          value={Math.floor((exercises?.duration ?? 0) / 60000) % 60}
-                          type='number'
-                          disabled
-                        />
-                        <input
-                          className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                          value={Math.floor((exercises?.duration ?? 0) / 1000) % 60}
-                          type='number'
+                    <div className='flex w-full flex-[2] flex-row flex-wrap gap-x-8 gap-y-4'>
+                      <div className='flex min-w-[300px] flex-[2] flex-col'>
+                        <p className='flex w-full flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                          Thời gian làm bài (hh:mm:ss)
+                        </p>
+                        <div className='flex w-full flex-1 justify-around gap-x-2'>
+                          <InputNumber
+                            containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                            className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            controllerClassName='rounded-lg'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                            value={Math.floor((exercises?.duration ?? 0) / 3600000)}
+                            disabled
+                          />
+                          <InputNumber
+                            containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                            className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            controllerClassName='rounded-lg'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                            value={Math.floor((exercises?.duration ?? 0) / 60000) % 60}
+                            disabled
+                          />
+                          <InputNumber
+                            containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                            className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            controllerClassName='rounded-lg'
+                            buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                            value={Math.floor((exercises?.duration ?? 0) / 1000) % 60}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className='flex min-w-[100px] flex-1 flex-col'>
+                        <p className='flex flex-[2.5] whitespace-nowrap text-base lg:text-lg 3xl:text-xl'>
+                          Số câu hỏi
+                        </p>
+                        <InputNumber
+                          containerClassName='border border-[#D9D9D9] rounded-lg'
+                          className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                          controllerClassName='rounded-lg'
+                          buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                          value={exercises?.sampleSize ?? 0}
                           disabled
                         />
                       </div>
                     </div>
-                    <div className='flex flex-col'>
-                      <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
-                      <input
-                        className='flex w-24 flex-1 rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                        value={exercises?.sampleSize}
-                        placeholder={'0'}
-                        disabled
-                      />
-                    </div>
                   </div>
+
                   <div className='flex flex-col gap-y-1'>
                     <label
                       className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'

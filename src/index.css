@@ -117,7 +117,7 @@ p {
 
 input:focus,
 textarea:focus {
-  outline: 2px auto #4285f4;
+  outline: 2px solid #4285f4;
 }
 
 code {
@@ -154,6 +154,16 @@ code {
 
 .recharts-wrapper {
   margin-left: -20px;
+}
+
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
 }
 
 * {

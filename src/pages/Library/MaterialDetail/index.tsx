@@ -1,9 +1,9 @@
 import { useLayoutEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import PDF from '../../../components/PDF';
-import { API_URL } from '../../../config';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
 import MaterialService from '../../../service/material.service';
@@ -17,19 +17,37 @@ const MaterialDetailPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [material, setMaterial] = useState<Material | null>(null);
+  const [file, setFile] = useState<File | undefined>(undefined);
   const isAsideOpen = useBoundStore.use.isAsideOpen();
   const toggleAside = useBoundStore.use.toggleAside();
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
-      console.log('Material id: ', params?.pdfId);
-      MaterialService.getById(params?.pdfId).then((res) => {
-        const { data } = res;
-        const { payload } = data;
-        setMaterial(payload);
-      });
+      MaterialService.getById(params?.pdfId)
+        .then((res) => {
+          const { data } = res;
+          const { payload } = data;
+          setMaterial(payload);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response.data.message);
+        });
     }
   }, [params]);
+
+  useLayoutEffect(() => {
+    if (material !== null) {
+      MaterialService.download(material._id)
+        .then((downloadFileResponse) => {
+          setFile(downloadFileResponse.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response.data.message);
+        });
+    }
+  }, [material]);
 
   useLayoutEffect(() => {
     const detail = document.getElementById('material-detail');
@@ -40,7 +58,9 @@ const MaterialDetailPage: React.FC = () => {
 
   return (
     <Page
-      title={`${material?.subject?.name} - ${material?.chapter?.name} - ${material?.name}`}
+      title={`Tài liệu ${material?.subject?.name ? material.subject.name : ''}${
+        material?.chapter?.name ? ` - ${material.chapter.name}` : ''
+      }${material?.name ? ` - ${material.name}` : ''}`}
       description='From CTCT'
     >
       <LibraryAside
@@ -71,7 +91,7 @@ const MaterialDetailPage: React.FC = () => {
           </button>
 
           {/* PDF */}
-          <PDF url={`${API_URL}material/${params.pdfId}/download`} title={material?.name} />
+          <PDF file={file} title={material?.name} />
         </div>
       </Wrapper>
     </Page>

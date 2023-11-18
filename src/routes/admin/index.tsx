@@ -124,7 +124,7 @@ const AdministratorRoute = () => {
               }
             />
             <Route
-              path='edit/:exerciseid'
+              path='edit/:exerciseId'
               element={
                 <Suspense fallback={<Loading />}>
                   <EditExercisePage />
@@ -132,7 +132,7 @@ const AdministratorRoute = () => {
               }
             />
             <Route
-              path='view/:exerciseid'
+              path='view/:exerciseId'
               element={
                 <Suspense fallback={<Loading />}>
                   <ViewExercisePage />
@@ -158,7 +158,7 @@ const AdministratorRoute = () => {
               }
             />
             <Route
-              path='view/:questionid'
+              path='view/:questionId'
               element={
                 <Suspense fallback={<Loading />}>
                   <ViewQuestionPage />
@@ -166,7 +166,7 @@ const AdministratorRoute = () => {
               }
             />
             <Route
-              path='edit/:questionid'
+              path='edit/:questionId'
               element={
                 <Suspense fallback={<Loading />}>
                   <EditQuestionPage />

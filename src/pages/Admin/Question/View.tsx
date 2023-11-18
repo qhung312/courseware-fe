@@ -3,17 +3,18 @@ import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, QuestionCard } from '../../../components';
+import { Icon, Markdown, QuestionCard } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
 import './index.css';
 import QuestionService from '../../../service/question.service';
 import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
+import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const ViewQuestionPage = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState<Question>();
   const params = useParams();
-  const id = params?.questionid ?? '';
+  const id = params?.questionId ?? '';
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<ConcreteQuestion | null>(null);
 
@@ -43,7 +44,6 @@ const ViewQuestionPage = () => {
     setLoading(true);
     QuestionService.getById(id, true)
       .then((res) => {
-        console.log(res.data.payload);
         setQuestion(res.data.payload);
       })
       .catch((err) => {
@@ -227,7 +227,33 @@ const ViewQuestionPage = () => {
                     <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
                       Xem trước câu hỏi
                     </p>
-                    <QuestionCard question={preview} status={QuizStatus.ENDED} questionNumber={1} />
+                    <QuestionCard
+                      question={preview}
+                      status={QuizStatus.ENDED}
+                      questionNumber={1}
+                      showInfo={false}
+                    />
+                    <div className='flex h-full w-full flex-row gap-x-4'>
+                      <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+                        <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
+                        <div className='flex flex-col items-start justify-center gap-y-1'>
+                          <div className='flex flex-row items-center gap-x-2'>
+                            <Icon.Answer className='h-5 w-auto' fill='#49BBBD' />
+                            <p className='text-base font-semibold text-[#666]'>
+                              Đáp án đúng:{' '}
+                              {MULTIPLE_CHOICE_LABELS.at(
+                                preview.options?.findIndex(
+                                  (option) => option.key === (preview.answerKeys?.at(0) ?? 0)
+                                ) || 0
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                        <span className='my-4 border-t border-[#666]' />
+                        <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+                        <Markdown>{preview.explanation}</Markdown>
+                      </div>
+                    </div>
                   </div>
                 )}
                 <div className='mt-4 flex flex-row-reverse gap-x-8'>

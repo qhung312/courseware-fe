@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Select } from '../../../components';
+import { Icon, InputNumber, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -13,9 +13,9 @@ import SubjectService from '../../../service/subject.service';
 import { Question } from '../../../types';
 
 interface CountDown {
-  hours: number;
-  minutes: number;
-  seconds: number;
+  hour: number;
+  minute: number;
+  second: number;
 }
 
 type OptionWithQuestion = Option & { question: Question };
@@ -26,9 +26,9 @@ const CreateExercisePage = () => {
   const [chapter, setChapter] = useState('');
 
   const [duration, setDuration] = useState<CountDown>({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
   });
   const [sampleSize, setSampleSize] = useState(0);
   const [description, setDescription] = useState('');
@@ -63,14 +63,14 @@ const CreateExercisePage = () => {
     }
   };
 
-  const onInputDurationHours = (event: ChangeEvent<HTMLInputElement>) =>
-    setDuration({ ...duration, hours: parseInt(event.target.value) });
+  const onInputDurationHour = (event: ChangeEvent<HTMLInputElement>) =>
+    setDuration({ ...duration, hour: parseInt(event.target.value) });
 
-  const onInputDurationMinutes = (event: ChangeEvent<HTMLInputElement>) =>
-    setDuration({ ...duration, minutes: parseInt(event.target.value) });
+  const onInputDurationMinute = (event: ChangeEvent<HTMLInputElement>) =>
+    setDuration({ ...duration, minute: parseInt(event.target.value) });
 
-  const onInputDurationSeconds = (event: ChangeEvent<HTMLInputElement>) =>
-    setDuration({ ...duration, seconds: parseInt(event.target.value) });
+  const onInputDurationSecond = (event: ChangeEvent<HTMLInputElement>) =>
+    setDuration({ ...duration, second: parseInt(event.target.value) });
 
   const onInputSampleSize = (event: ChangeEvent<HTMLInputElement>) =>
     setSampleSize(parseInt(event.target.value));
@@ -109,7 +109,7 @@ const CreateExercisePage = () => {
       description,
       subject,
       chapter,
-      duration: (duration.hours * 3600 + duration.minutes * 60 + duration.seconds) * 1000,
+      duration: (duration.hour * 3600 + duration.minute * 60 + duration.second) * 1000,
       potentialQuestions: potentialQuestions.map((question) => question._id),
       sampleSize: sampleSize,
     })
@@ -118,7 +118,7 @@ const CreateExercisePage = () => {
         setName('');
         setSubject('');
         setChapter('');
-        setDuration({ hours: 0, minutes: 0, seconds: 0 });
+        setDuration({ hour: 0, minute: 0, second: 0 });
         setSampleSize(0);
         setDescription('');
         setPotentialQuestions([]);
@@ -246,8 +246,9 @@ const CreateExercisePage = () => {
                   onChange={onInputName}
                 />
               </div>
-              <div className='flex flex-row gap-x-8'>
-                <div className='flex w-full flex-col gap-y-1'>
+
+              <div className='flex w-full flex-1 flex-row flex-wrap gap-x-8 gap-y-4'>
+                <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Môn</p>
                   <Select
                     options={subjectOptions}
@@ -256,53 +257,72 @@ const CreateExercisePage = () => {
                     onChange={onSelectSubject}
                   />
                 </div>
-                <div className='flex w-full flex-col gap-y-1'>
+                <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                   <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Chương</p>
                   <Select
                     options={chapterOptions}
                     placeholder='Chọn chương'
-                    className='w-80'
                     value={chapterOptions.find((x) => x.value === chapter) ?? null}
                     onChange={onSelectChapter}
                   />
                 </div>
-                <div className='flex flex-col'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
-                    Thời gian làm bài (hh:mm:ss)
-                  </p>
-                  <div className='flex justify-around'>
-                    <input
-                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={duration.hours}
-                      type='number'
-                      onChange={onInputDurationHours}
-                    />
-                    <input
-                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={duration.minutes}
-                      type='number'
-                      onChange={onInputDurationMinutes}
-                    />
-                    <input
-                      className='flex w-[30%] rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      value={duration.seconds}
-                      type='number'
-                      onChange={onInputDurationSeconds}
+                <div className='flex w-full flex-[2] flex-row flex-wrap gap-x-8 gap-y-4'>
+                  <div className='flex min-w-[300px] flex-[2] flex-col'>
+                    <p className='flex w-full flex-[2.5] text-base lg:text-lg 3xl:text-xl'>
+                      Thời gian làm bài (hh:mm:ss)
+                    </p>
+                    <div className='flex w-full flex-1 justify-around gap-x-2'>
+                      <InputNumber
+                        containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                        className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                        controllerClassName='rounded-lg'
+                        buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                        value={duration.hour}
+                        min={0}
+                        max={23}
+                        onChange={onInputDurationHour}
+                      />
+                      <InputNumber
+                        containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                        className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                        controllerClassName='rounded-lg'
+                        buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                        value={duration.minute}
+                        min={0}
+                        max={59}
+                        onChange={onInputDurationMinute}
+                      />
+                      <InputNumber
+                        containerClassName='w-1/3 border border-[#D9D9D9] rounded-lg'
+                        className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                        controllerClassName='rounded-lg'
+                        buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                        value={duration.second}
+                        min={0}
+                        max={59}
+                        onChange={onInputDurationSecond}
+                      />
+                    </div>
+                  </div>
+                  <div className='flex min-w-[100px] flex-1 flex-col'>
+                    <p className='flex flex-[2.5] whitespace-nowrap text-base lg:text-lg 3xl:text-xl'>
+                      Số câu hỏi
+                    </p>
+                    <InputNumber
+                      containerClassName='border border-[#D9D9D9] rounded-lg'
+                      className='rounded-lg p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      controllerClassName='rounded-lg'
+                      buttonClassName='rounded-lg md:pl-2 md:pr-[10px] lg:pl-3 lg:pr-[15px] 3xl:pl-4 3xl:pr-5 3xl:py-3'
+                      value={sampleSize}
+                      min={0}
+                      max={potentialQuestions.length}
+                      placeholder={'Chọn số câu hỏi'}
+                      onChange={onInputSampleSize}
                     />
                   </div>
                 </div>
-                <div className='flex flex-col'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Số câu hỏi</p>
-                  <input
-                    className='flex w-full rounded-lg border border-[#D9D9D9] p-1 text-center text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={sampleSize}
-                    type='number'
-                    onChange={onInputSampleSize}
-                    min={0}
-                    max={potentialQuestions.length}
-                  />
-                </div>
               </div>
+
               <div className='flex flex-col gap-y-1'>
                 <label
                   className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'

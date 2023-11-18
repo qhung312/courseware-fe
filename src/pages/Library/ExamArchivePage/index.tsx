@@ -77,9 +77,9 @@ const ExamArchivePage: React.FC = () => {
   }
 
   return (
-    <Page title={`Tài liệu ${subject?.name}`}>
+    <Page title={`Đề thi ${subject?.name ? subject?.name : ''}`}>
       <LibraryAside
-        title='Thư viện tài liệu'
+        title='Thư viện đề thi'
         subTitle='Đề thi các môn học'
         baseRoute='/library/exam-archive'
       />

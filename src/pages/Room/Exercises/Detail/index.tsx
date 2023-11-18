@@ -58,7 +58,11 @@ const Detail: React.FC = () => {
   }
 
   return (
-    <Page title={`${quiz?.fromQuiz.subject.name} - ${quiz?.fromQuiz.name}`}>
+    <Page
+      title={`${quiz.fromQuiz.subject.name ? ` - ${quiz.fromQuiz.subject.name}` : ''}${
+        quiz.fromQuiz.name ? ` - ${quiz.fromQuiz.name}` : ''
+      }`}
+    >
       {width < 768 ? (
         <MobileOngoing quiz={quiz} handleSubmit={submit.mutate} />
       ) : (

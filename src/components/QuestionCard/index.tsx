@@ -215,9 +215,10 @@ type Props = {
   question: ConcreteQuestion;
   status: QuizStatus;
   questionNumber: number;
+  showInfo?: boolean;
 };
 
-const QuestionCard = ({ question, status, questionNumber }: Props) => {
+const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Props) => {
   const params = useParams();
   const [stringAnswer, setStringAnswer] = useState<string>(
     String(question.userAnswerField || question.answerField)
@@ -390,7 +391,7 @@ const QuestionCard = ({ question, status, questionNumber }: Props) => {
           />
         </div>
       </div>
-      {status === QuizStatus.ENDED && (
+      {status === QuizStatus.ENDED && showInfo === true && (
         <div className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
           <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
             <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>

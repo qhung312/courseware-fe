@@ -63,7 +63,7 @@ const HomePage = () => {
               <h2 className='mb-5 text-[28px] font-bold uppercase leading-normal md:text-4xl md:font-semibold md:normal-case md:leading-normal md:text-[#2F327D] xl:text-5xl xl:leading-normal'>
                 Chúng Ta Cùng Tiến
               </h2>
-              <p
+              <div
                 className='text-justify text-base leading-loose text-[#696984]
                 lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'
               >
@@ -82,7 +82,7 @@ const HomePage = () => {
                   <strong>TRUYỀN THÔNG</strong>; Năng động thích ứng trong <strong>SỰ KIỆN</strong>;
                   và Thân thiện, hài hòa trong <strong>NHÂN SỰ HẬU CẦN</strong>.
                 </p>
-              </p>
+              </div>
             </div>
             <div className='relative h-full w-full flex-1'>
               <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#4285F4] lg:hidden' />

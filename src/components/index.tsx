@@ -5,6 +5,7 @@ import DocumentCard from './DocumentCard';
 import Footer from './Footer';
 import Header from './Header';
 import Icon from './Icon';
+import InputNumber from './InputNumber';
 import LazyLoadImage from './LazyLoadImage';
 import Loading from './Loading';
 import LoginButton from './LoginButton';
@@ -32,6 +33,7 @@ export {
   LoginButton,
   Pagination,
   QuestionBoard,
+  InputNumber,
   QuestionCard,
   PDF,
   Select,
