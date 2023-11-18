@@ -205,7 +205,7 @@ const CreateQuestionPage = () => {
                   <Select
                     options={chapterOptions}
                     placeholder='Chọn chương'
-                    value={chapterOptions.find((x) => x.value === subject) ?? null}
+                    value={chapterOptions.find((x) => x.value === chapter) ?? null}
                     onChange={onSelectChapter}
                   />
                 </div>
