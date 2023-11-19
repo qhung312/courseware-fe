@@ -21,7 +21,7 @@ const Main: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: quizzes, isLoading: isLoadingQuizzes } = useQuery({
+  const { data: quizzes, isFetching: isFetchingQuizzes } = useQuery({
     enabled: !!params?.subjectId,
     queryKey: ['quizzes', params.subjectId as string],
     queryFn: async ({ queryKey }) => {
@@ -115,7 +115,7 @@ const Main: React.FC = () => {
 
           {/* Chapters */}
           <div className='space-y-2 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7'>
-            {isLoadingQuizzes ? (
+            {isFetchingQuizzes ? (
               <Skeleton
                 count={4}
                 baseColor='#9DCCFF'
@@ -161,6 +161,7 @@ const Main: React.FC = () => {
                       </div>
                       <button
                         className='hidden rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:flex'
+                        disabled={sessionMutation.isLoading}
                         onClick={() => {
                           sessionQueriesResult[index]?.data === null
                             ? sessionMutation.mutate(quiz._id, {
@@ -177,7 +178,7 @@ const Main: React.FC = () => {
                         }}
                       >
                         <p className='text-xs text-white lg:text-sm 3xl:text-base'>
-                          {sessionQueriesResult[index]?.isLoading ? (
+                          {sessionQueriesResult[index]?.isFetching ? (
                             <Skeleton baseColor='#' />
                           ) : sessionQueriesResult[index]?.data !== null ? (
                             'Tiếp tục làm bài'
@@ -194,6 +195,7 @@ const Main: React.FC = () => {
                     </div>
                     <button
                       className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:hidden'
+                      disabled={sessionMutation.isLoading}
                       onClick={() => {
                         sessionQueriesResult[index]?.data === null
                           ? sessionMutation.mutate(quiz._id, {
@@ -210,7 +212,7 @@ const Main: React.FC = () => {
                       }}
                     >
                       <p className='text-xs text-white lg:text-sm 3xl:text-base'>
-                        {sessionQueriesResult[index]?.isLoading ? (
+                        {sessionQueriesResult[index]?.isFetching ? (
                           <Skeleton baseColor='#' />
                         ) : sessionQueriesResult[index]?.data !== null ? (
                           'Tiếp tục làm bài'
