@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 // import DemoLineChart from '../../../../assets/images/DemoLineChart.png';
+import { ReactComponent as NoChartData } from '../../../../assets/svgs/NoChart.svg';
 import { Footer } from '../../../../components';
 import Icon from '../../../../components/Icon';
 import ProfileOption from '../../../../components/ProfileOption';
@@ -28,8 +29,21 @@ const SubjectStatistic = () => {
   const params = useParams();
   const [quizHistory, setQuizHistory] = useState<SubjectQuizHistoryReturnType[]>([]);
   const [lineChartData, setLineChartData] = useState<ChartData[]>([]);
+  const [queryPeriod, setQueryPeriod] = useState(getEpochTimestamps());
+  const [subjectName, setSubjectName] = useState<string>('');
 
-  const epochToDateString = (epochTime: number): string => {
+  function haveSameDate(timestamp: number) {
+    const date1 = new Date(timestamp);
+    const date2 = new Date();
+
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  }
+
+  const epochToDateString = (epochTime: number, fullDisplay: boolean): string => {
     const date = new Date(epochTime);
 
     const day = date.getDate().toString().padStart(2, '0');
@@ -38,15 +52,9 @@ const SubjectStatistic = () => {
     const hour = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
-    return `${hour}:${minutes}, ${day}/${month}/${year}`;
-  };
-
-  const epochToChartDate = (epochTime: number): string => {
-    const date = new Date(epochTime);
-
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-
+    if (fullDisplay) {
+      return `${hour}:${minutes}, ${day}/${month}/${year}`;
+    }
     return `${day}/${month}`;
   };
 
@@ -55,8 +63,7 @@ const SubjectStatistic = () => {
     const currentDate = new Date();
 
     // Calculate the date of a week ago
-    const weekAgoDate = new Date();
-    weekAgoDate.setDate(currentDate.getDate() - 7);
+    const weekAgoDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
     weekAgoDate.setHours(0, 0, 0, 0);
 
     // Convert dates to epoch timestamps (milliseconds since January 1, 1970)
@@ -69,21 +76,41 @@ const SubjectStatistic = () => {
     };
   }
 
+  const getEpochTimestampsForQuery = (period: number, forward: boolean) => {
+    const currentDate = new Date(period);
+    const timeChange1 = forward ? 8 * 24 * 60 * 60 * 1000 : -24 * 60 * 60 * 1000;
+    const timeChange2 = forward ? 24 * 60 * 60 * 1000 : -8 * 24 * 60 * 60 * 1000;
+    const newCurrentDate = new Date(currentDate.getTime() + timeChange1);
+    // Calculate the date of a week ago
+    const weekAgoDate = new Date(currentDate.getTime() + timeChange2);
+    weekAgoDate.setHours(0, 0, 0, 0);
+    newCurrentDate.setHours(23, 59, 59, 999);
+
+    // Convert dates to epoch timestamps (milliseconds since January 1, 1970)
+    const currentEpochTimestamp = newCurrentDate.getTime();
+    const weekAgoEpochTimestamp = weekAgoDate.getTime();
+
+    setQueryPeriod({
+      currentEpochTimestamp,
+      weekAgoEpochTimestamp,
+    });
+  };
+
   useEffect(() => {
-    const timestamps = getEpochTimestamps();
     const queryProps: GetAllQuizHistoryProps = {
       subjectId: params.subjectId || '',
-      startAt: timestamps.weekAgoEpochTimestamp.toString(),
-      endAt: timestamps.currentEpochTimestamp.toString(),
+      startAt: queryPeriod.weekAgoEpochTimestamp.toString(),
+      endAt: queryPeriod.currentEpochTimestamp.toString(),
     };
     UserService.getAllSubjectQuizHistory(queryProps)
       .then((res) => {
         const { result } = res.data.payload;
         setQuizHistory(result);
+        if (result.length !== 0) setSubjectName(result[0]?.fromQuiz?.subject?.name);
         const newResult: SubjectQuizHistoryReturnTypeWithDate[] = result.map((item) => {
           return {
             ...item,
-            dateString: epochToChartDate(item.endedAt),
+            dateString: epochToDateString(item.endedAt, false),
           };
         });
         const generatedData: ChartData[] = Object.values(
@@ -111,7 +138,7 @@ const SubjectStatistic = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [params.subjectId]);
+  }, [params.subjectId, queryPeriod]);
 
   return (
     <Page title='Thông tin người dùng - Thống kê điểm số'>
@@ -127,10 +154,7 @@ const SubjectStatistic = () => {
             Quay lại
           </Link>
           <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-center lg:text-[28px] 3xl:text-[36px]'>
-            Thống kê môn{' '}
-            <span className='md:text-[#4285f4]'>
-              {quizHistory ? quizHistory[0]?.fromQuiz?.subject?.name : 'Môn học'}
-            </span>
+            Thống kê môn <span className='md:text-[#4285f4]'>{subjectName || 'học'}</span>
           </h1>
           <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:border-0'>
             <div className='flex flex-row items-center justify-start gap-x-2'>
@@ -140,12 +164,53 @@ const SubjectStatistic = () => {
               </p>
             </div>
             <div className='mt-4 h-[1px] w-full bg-[#D9D9D9] md:hidden' />
+            <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
+              <button
+                className='rounded-full p-2 hover:bg-[#9DCCFF]/[.5]'
+                // disabled={quizHistory.length === 0}
+                onClick={() => getEpochTimestampsForQuery(queryPeriod.weekAgoEpochTimestamp, false)}
+              >
+                <Icon.Chevron fill='#4285f4' className='-rotate-90' />
+              </button>
+              <p>
+                Từ {epochToDateString(queryPeriod.weekAgoEpochTimestamp, false)} đến{' '}
+                {epochToDateString(queryPeriod.currentEpochTimestamp, false)}
+              </p>
+              <button
+                className={`rounded-full p-2 ${
+                  haveSameDate(queryPeriod.currentEpochTimestamp) ? '' : 'hover:bg-[#9DCCFF]/[.5]'
+                }`}
+                disabled={haveSameDate(queryPeriod.currentEpochTimestamp)}
+                onClick={() => getEpochTimestampsForQuery(queryPeriod.currentEpochTimestamp, true)}
+              >
+                <Icon.Chevron
+                  fill={`${
+                    haveSameDate(queryPeriod.currentEpochTimestamp) ? '#5b5b5b' : '#4285f4'
+                  }`}
+                  className='rotate-90'
+                />
+              </button>
+            </div>
             <div className='mt-5 h-[200px] sm:h-[320px] md:h-[360px] md:w-[70vw] md:self-center lg:h-[400px] lg:w-[60vw] xl:w-[50vw]'>
               {/* <p className='text-semibold text-sm text-[#696969] md:text-base lg:text-xl 3xl:text-[28px]'>
                 Điểm
               </p> */}
               {/* <img src={DemoLineChart} alt='Demo Line Chart' className='h-fit w-full md:w-[70vw]' /> */}
-              <RenderLineChart data={lineChartData} />
+              {quizHistory.length === 0 ? (
+                <div className='lg:mt-[-16px]'>
+                  <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                    <NoChartData
+                      width={200}
+                      className='mx-auto h-[200px] w-[200px] p-7 xl:h-[300px] xl:w-[300px]'
+                    />
+                    <p className='w-full text-center lg:text-[18px] xl:text-xl'>
+                      Hiện không có thống kê điểm số trong thời gian này
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <RenderLineChart data={lineChartData} />
+              )}
             </div>
           </div>
           <div className='show-scrollbar mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:max-h-[50vh] md:overflow-y-scroll md:border-0 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'>
@@ -155,6 +220,10 @@ const SubjectStatistic = () => {
                 Lịch sử làm bài
               </p>
             </div>
+            <p className='mt-1 text-[#5b5b5b] 2xl:text-[18px]'>
+              - Từ {epochToDateString(queryPeriod.weekAgoEpochTimestamp, false)} đến{' '}
+              {epochToDateString(queryPeriod.currentEpochTimestamp, false)}
+            </p>
             <div className='mt-6 flex items-center md:w-[80%]'>
               <div className='flex items-center gap-x-2 md:flex-[6]'>
                 <div className='h-4 w-4 rounded-full bg-[#49BBBD] md:bg-[#9DCCFF] 3xl:h-5 3xl:w-5' />
@@ -184,7 +253,7 @@ const SubjectStatistic = () => {
                   <div className='flex gap-x-2'>
                     <p className='w-[148px] text-[14px] font-medium text-[#252641]'>
                       <span className='text-[#0f9d58]'>Hoàn thành:</span>{' '}
-                      {test.endedAt ? epochToDateString(test?.endedAt) : 'Chưa cập nhật'}
+                      {test.endedAt ? epochToDateString(test?.endedAt, true) : 'Chưa cập nhật'}
                     </p>
                     <p className='text-[14px] font-medium text-[#252641]'>
                       <span className='text-[#0f9d58]'>Điểm:</span>{' '}
@@ -207,7 +276,7 @@ const SubjectStatistic = () => {
                         {test?.fromQuiz?.name || 'Quiz'}
                       </p>
                       <p className='flex-[3] font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
-                        {test.endedAt ? epochToDateString(test.endedAt) : 'Chưa cập nhật'}
+                        {test.endedAt ? epochToDateString(test.endedAt, true) : 'Chưa cập nhật'}
                       </p>
                       <p className='flex-[1] font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
                         {test?.standardizedScore < 10 && 0}
