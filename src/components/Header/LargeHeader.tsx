@@ -119,7 +119,7 @@ const LargeHeader = () => {
               </div>
               <nav
                 className='set-11 absolute right-0 top-[136%] z-10 mt-1 flex w-[200px] flex-col 
-                items-center justify-center rounded-lg bg-[#FBFCFF]
+                 rounded-lg bg-[#FBFCFF]
                 transition-all duration-300'
                 style={{
                   transform: isProfileDrop ? 'translateY(0%)' : 'translateY(10%)',
@@ -132,12 +132,12 @@ const LargeHeader = () => {
                 <NavLink
                   to='/profile'
                   end
-                  className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+                  className='flex w-full items-center justify-center bg-inherit px-[16px] py-[8px] text-[#5B5B5B] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
                   onClick={throttledLibraryClick}
                 >
                   <p
-                    className='${ font-norma whitespace-nowrap bg-inherit 
-                px-2 py-1 text-[14px] text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-black 3xl:px-3
+                    className='whitespace-nowrap bg-inherit px-2 
+                py-1 text-[14px] font-normal 3xl:px-3
                 3xl:py-2 3xl:text-[18px]
                 '
                   >
@@ -145,11 +145,11 @@ const LargeHeader = () => {
                   </p>
                 </NavLink>
                 <button
-                  className='bg-inherit px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+                  className='bg-inherit px-[16px] py-[8px] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
                   onClick={logout}
                 >
                   <p
-                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] transition-all duration-300 ease-linear 3xl:px-3
+                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] 3xl:px-3
                     3xl:py-2 3xl:text-[18px]'
                   >
                     Đăng xuất

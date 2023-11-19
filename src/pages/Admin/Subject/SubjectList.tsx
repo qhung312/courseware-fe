@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
+import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { Icon, Pagination } from '../../../components';
 import DeleteModal from '../../../components/Modal/DeleteModal';
 import { useDebounce } from '../../../hooks';
@@ -145,53 +146,60 @@ const SubjectList = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {subjects.map((subject) => (
-                          <tr
-                            key={`material-${subject._id}`}
-                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
-                            onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
-                          >
-                            <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {subject.name}
-                            </td>
-                            <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {new Date(subject.createdAt).toLocaleString()}
-                            </td>
-                            <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {subject.lastUpdatedAt !== undefined
-                                ? new Date(subject.lastUpdatedAt).toLocaleString()
-                                : undefined}
-                            </td>
-                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button
-                                type='button'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/admin/subject/edit/${subject._id}`);
-                                }}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
-                              >
-                                <Icon.Edit
-                                  fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                />
-                              </button>
-                              <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  subjectToDelete.current = subject._id;
-                                  setDeleteModal(true);
-                                }}
-                              >
-                                <Icon.Delete
-                                  fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                        {subjects.length === 0 ? (
+                          <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                            <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                            <p className='w-full text-center'>Không tìm thấy môn học</p>
+                          </div>
+                        ) : (
+                          subjects.map((subject) => (
+                            <tr
+                              key={`material-${subject._id}`}
+                              className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                              onClick={() => navigate(`/admin/subject/view/${subject._id}`)}
+                            >
+                              <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {subject.name}
+                              </td>
+                              <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {new Date(subject.createdAt).toLocaleString()}
+                              </td>
+                              <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {subject.lastUpdatedAt !== undefined
+                                  ? new Date(subject.lastUpdatedAt).toLocaleString()
+                                  : undefined}
+                              </td>
+                              <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                                <button
+                                  type='button'
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/admin/subject/edit/${subject._id}`);
+                                  }}
+                                  className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                >
+                                  <Icon.Edit
+                                    fill='white'
+                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  />
+                                </button>
+                                <button
+                                  className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    subjectToDelete.current = subject._id;
+                                    setDeleteModal(true);
+                                  }}
+                                >
+                                  <Icon.Delete
+                                    fill='white'
+                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   </div>
