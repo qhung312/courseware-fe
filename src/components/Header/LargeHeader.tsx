@@ -8,8 +8,6 @@ import useBoundStore from '../../store';
 import Icon from '../Icon';
 import LoginButton from '../LoginButton';
 
-import SearchBar from './SearchBar';
-
 const LargeHeader = () => {
   const { pathname } = useLocation();
   const libraryRef = useRef<HTMLDivElement>(null);
@@ -21,6 +19,12 @@ const LargeHeader = () => {
   const [isRoomOpen, setIsRoomOpen] = useState(false);
   const [isAboutUsOpen, setIsAboutUsOpen] = useState(false);
   const [isProfileDrop, setIsProfileDrop] = useState(false);
+
+  const [isHoverHome, setIsHoverHome] = useState(false);
+  const [isHoverLibrary, setIsHoverLibrary] = useState(false);
+  const [isHoverRoom, setIsHoverRoom] = useState(false);
+  const [isHoverAboutUs, setIsHoverAboutUs] = useState(false);
+  const [isHoverAdmin, setIsHoverAdmin] = useState(false);
 
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
@@ -64,425 +68,392 @@ const LargeHeader = () => {
   const throttledAboutUsClick = useThrottle(onAboutUsClick);
 
   return (
-    <div className='flex-column relative top-0 z-30 hidden w-full flex-wrap bg-white md:flex'>
-      <div
-        className='z-30 flex w-full flex-row items-center justify-between
-        bg-white px-8 py-3 md:gap-x-10 md:px-5 lg:gap-x-[30px] lg:px-10 xl:px-[60px] 2xl:px-20 3xl:gap-x-20 3xl:px-[100px] 3xl:py-4'
-      >
-        <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]'>
-          <LargeLogoCTCT className='aspect-[107/60] h-[40px] w-auto 3xl:h-[48px]' />
+    <div
+      className='relative top-0 z-30 hidden w-full flex-row flex-wrap items-center justify-between bg-white
+        px-8 py-2 shadow-lg md:flex md:px-5 md:py-3 lg:py-4 lg:px-10 xl:px-20 3xl:px-[100px] 3xl:py-5'
+    >
+      <div className='flex flex-row text-[14px] md:text-[14px] lg:gap-x-4 xl:gap-x-6 xl:text-[16px] 2xl:gap-x-8 3xl:gap-x-10 3xl:text-[20px]'>
+        <NavLink
+          to='/'
+          className='aspect-[107/60] h-[40px] w-auto xl:h-[48px] 2xl:h-[52px] 3xl:h-[60px]'
+        >
+          <LargeLogoCTCT className='aspect-[107/60] h-full w-auto 3xl:h-[48px]' />
         </NavLink>
-        <div className='relative flex h-full flex-row items-center justify-between md:gap-x-10 lg:gap-x-8 3xl:gap-x-10'>
-          <SearchBar
-            options={[
-              {
-                label: 'Tài liệu',
-                value: '/library/material',
-              },
-              {
-                label: 'Đề thi',
-                value: '/library/exam-archive',
-              },
-              {
-                label: 'Bài tập rèn luyện',
-                value: '/room/exercises',
-              },
-              {
-                label: 'Thi thử',
-                value: '/room/tests',
-              },
-            ]}
-            value={{ label: '', value: '' }}
-          />
-          {!isAuthenticated && <LoginButton />}
-          {isAuthenticated && (
-            <>
-              <div ref={profileRef}>
-                <button
-                  className='flex flex-row items-center justify-center'
-                  onClick={onProfileClick}
-                >
-                  <img
-                    alt='profile_pic'
-                    src={user?.picture || require('../../assets/images/AvatarPic.png')}
-                    className='mr-4 h-10 w-10 rounded-full border-2
-                    border-[#49BBBD] bg-white 3xl:mr-6 3xl:h-[52px] 3xl:w-[52px]'
-                  />
-                  <Icon.ChevronUp
-                    fill={'#3b3b3b'}
-                    fillOpacity={0.87}
-                    className={`transform-all aspect-[10/7] h-auto w-2 duration-300 ${
-                      isProfileDrop ? 'rotate-0' : 'rotate-180'
-                    }`}
-                  />
-                </button>
+        <nav className='z-20 flex w-full flex-row items-center justify-start transition-all duration-700 ease-out'>
+          <NavLink
+            to='/'
+            end
+            className={`flex h-[100%] items-center justify-start 
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]`}
+            onMouseEnter={() => setIsHoverHome(true)}
+            onMouseLeave={() => setIsHoverHome(false)}
+          >
+            <p
+              className={`whitespace-nowrap border-[#4285F4] bg-inherit px-2
+            py-1 transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 ${
+              pathname === '/' || isHoverHome
+                ? 'border-b-[3px] text-[#242323]'
+                : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+            }`}
+            >
+              Trang chủ
+            </p>
+          </NavLink>
+          <div className='relative' ref={libraryRef}>
+            <button
+              type='button'
+              className='z-20
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              onClick={throttledLibraryClick}
+              onMouseEnter={() => setIsHoverLibrary(true)}
+              onMouseLeave={() => setIsHoverLibrary(false)}
+            >
+              <div
+                className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
+                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                  pathname.includes('/library/material') ||
+                  pathname.includes('/library/exam-archive') ||
+                  isHoverLibrary
+                    ? 'border-b-[3px] text-[#242323]'
+                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                }`}
+              >
+                <p className={`whitespace-nowrap bg-inherit`}>Thư viện</p>
+                <Icon.ChevronUp
+                  fill={
+                    pathname.includes('/library/material') ||
+                    pathname.includes('/library/exam-archive')
+                      ? '#242323'
+                      : '#5B5B5B'
+                  }
+                  fillOpacity={0.87}
+                  className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                    isLibraryOpen ? 'rotate-0' : 'rotate-180'
+                  }`}
+                />
               </div>
-              <nav
-                className='set-11 absolute right-0 top-[136%] z-10 mt-1 flex w-[200px] flex-col 
+            </button>
+            <nav
+              className='absolute z-10 mt-1 flex w-[120%] flex-col 
+            items-center justify-center rounded-lg bg-[#FBFCFF]
+            transition-all duration-300'
+              style={{
+                transform: isLibraryOpen ? 'translateY(0%)' : 'translateY(10%)',
+                maxHeight: isLibraryOpen ? '1000px' : '0px',
+                opacity: isLibraryOpen ? 1 : 0,
+                overflow: 'hidden',
+                boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <NavLink
+                to='/library/material'
+                className='w-full bg-inherit'
+                onClick={throttledLibraryClick}
+              >
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname.includes('/library/material') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname.includes('/library/material') ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname.includes('/library/material') ? '700' : 'normal',
+                  }}
+                >
+                  Tài liệu
+                </p>
+              </NavLink>
+              <NavLink
+                to='/library/exam-archive'
+                className='w-full bg-inherit'
+                onClick={throttledLibraryClick}
+              >
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname.includes('/library/exam-archive') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname.includes('/library/exam-archive') ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname.includes('/library/exam-archive') ? '700' : 'normal',
+                  }}
+                >
+                  Đề thi
+                </p>
+              </NavLink>
+            </nav>
+          </div>
+          <div className='relative' ref={roomRef}>
+            <button
+              type='button'
+              className='z-20 flex flex-row items-center justify-start
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              onClick={throttledRoomClick}
+              onMouseEnter={() => setIsHoverRoom(true)}
+              onMouseLeave={() => setIsHoverRoom(false)}
+            >
+              <div
+                className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
+                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                  pathname.includes('/room/exercises') ||
+                  pathname.includes('/room/tests') ||
+                  isHoverRoom
+                    ? 'border-b-[3px] text-[#242323]'
+                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                }`}
+              >
+                <p className={`whitespace-nowrap bg-inherit`}>Phòng thi</p>
+                <Icon.ChevronUp
+                  fill={
+                    pathname.includes('/room/exercises') || pathname.includes('/room/tests')
+                      ? '#242323'
+                      : '#5B5B5B'
+                  }
+                  fillOpacity={0.87}
+                  className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                    isRoomOpen ? 'rotate-0' : 'rotate-180'
+                  }`}
+                />
+              </div>
+            </button>
+            <nav
+              className='absolute z-10 mt-1 flex w-[120%] flex-col 
+            items-center justify-center rounded-lg bg-[#FBFCFF]
+            transition-all duration-300'
+              style={{
+                transform: isRoomOpen ? 'translateY(0%)' : 'translateY(10%)',
+                maxHeight: isRoomOpen ? '1000px' : '0px',
+                opacity: isRoomOpen ? 1 : 0,
+                overflow: 'hidden',
+                boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <NavLink
+                to='/room/exercises'
+                className='w-full bg-inherit'
+                onClick={throttledRoomClick}
+              >
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname.includes('/room/exercises') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname.includes('/room/exercises') ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname.includes('/room/exercises') ? '700' : 'normal',
+                  }}
+                >
+                  Bài tập rèn luyện
+                </p>
+              </NavLink>
+              <NavLink to='/room/tests' className='w-full bg-inherit' onClick={throttledRoomClick}>
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname.includes('/room/tests') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname.includes('/room/tests') ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname.includes('/room/tests') ? '700' : 'normal',
+                  }}
+                >
+                  Thi thử
+                </p>
+              </NavLink>
+            </nav>
+          </div>
+          <div className='relative' ref={aboutUsRef}>
+            <button
+              type='button'
+              className='z-20 flex flex-row items-center justify-start
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              onClick={throttledAboutUsClick}
+              onMouseEnter={() => setIsHoverAboutUs(true)}
+              onMouseLeave={() => setIsHoverAboutUs(false)}
+            >
+              <div
+                className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
+                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                  pathname === '/about-us' ||
+                  pathname === '/about-us/activities' ||
+                  pathname === '/about-us/partners' ||
+                  isHoverAboutUs
+                    ? 'border-b-[3px] text-[#242323]'
+                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                }`}
+              >
+                <p className='mr-[8px] whitespace-nowrap bg-inherit'>Về chúng tôi</p>
+
+                <Icon.ChevronUp
+                  fill={
+                    pathname === '/about-us' ||
+                    pathname === '/about-us/activities' ||
+                    pathname === '/about-us/partners'
+                      ? '#3b3b3b'
+                      : '#5B5B5B'
+                  }
+                  fillOpacity={0.87}
+                  className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
+                    isAboutUsOpen ? 'rotate-0' : 'rotate-180'
+                  }`}
+                />
+              </div>
+            </button>
+            <nav
+              className='absolute z-10 mt-1 flex w-[120%] flex-col 
+            items-center justify-center rounded-lg bg-[#FBFCFF]
+            transition-all duration-300'
+              style={{
+                transform: isAboutUsOpen ? 'translateY(0%)' : 'translateY(10%)',
+                maxHeight: isAboutUsOpen ? '1000px' : '0px',
+                opacity: isAboutUsOpen ? 1 : 0,
+                overflow: 'hidden',
+                boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <NavLink to='/about-us' className='w-full bg-inherit' onClick={throttledAboutUsClick}>
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname === '/about-us' ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname === '/about-us' ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname === '/about-us' ? '700' : 'normal',
+                  }}
+                >
+                  Giới thiệu
+                </p>
+              </NavLink>
+              <NavLink
+                to='/about-us/activities'
+                className='w-full bg-inherit'
+                onClick={throttledAboutUsClick}
+              >
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname.includes('/about-us/activities') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname.includes('/about-us/activities') ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname.includes('/about-us/activities') ? '700' : 'normal',
+                  }}
+                >
+                  Hoạt động
+                </p>
+              </NavLink>
+              <NavLink
+                to='/about-us/partners'
+                className='w-full bg-inherit'
+                onClick={throttledAboutUsClick}
+              >
+                <p
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 ${
+                  pathname.includes('/about-us/partners') ? '' : 'hover:bg-[#F1F1F1]'
+                }`}
+                  style={{
+                    color: pathname.includes('/about-us/partners') ? '#3b3b3b' : 'inherit',
+                    fontWeight: pathname.includes('/about-us/partners') ? '700' : 'normal',
+                  }}
+                >
+                  Đơn vị hợp tác
+                </p>
+              </NavLink>
+            </nav>
+          </div>
+          {isAuthenticated &&
+          (user.isManager ||
+            _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (
+            <NavLink
+              to='/admin'
+              end
+              className='flex h-[100%] items-center justify-start 
+          px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+              onMouseEnter={() => setIsHoverAdmin(true)}
+              onMouseLeave={() => setIsHoverAdmin(false)}
+            >
+              <div
+                className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
+                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                  pathname === '/admin' || isHoverAdmin
+                    ? 'border-b-[3px] text-[#242323]'
+                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                }`}
+              >
+                <p className='whitespace-nowrap bg-inherit'>Admin</p>
+              </div>
+            </NavLink>
+          ) : null}
+        </nav>
+      </div>
+      <div className='relative flex h-full flex-row items-center justify-end md:gap-x-10 lg:gap-x-8 3xl:gap-x-10'>
+        {!isAuthenticated && <LoginButton />}
+        {isAuthenticated && (
+          <>
+            <div ref={profileRef}>
+              <button
+                className='flex flex-row items-center justify-center'
+                onClick={onProfileClick}
+              >
+                <img
+                  alt='profile_pic'
+                  src={user?.picture || require('../../assets/images/AvatarPic.png')}
+                  className='mr-4 h-10 w-10 rounded-full border-2
+                    border-[#49BBBD] bg-white 2xl:h-[46px] 2xl:w-[46px] 3xl:mr-6 3xl:h-[52px] 3xl:w-[52px]'
+                />
+                <Icon.ChevronUp
+                  fill={'#3b3b3b'}
+                  fillOpacity={0.87}
+                  className={`transform-all aspect-[10/7] h-auto w-2 duration-300 ${
+                    isProfileDrop ? 'rotate-0' : 'rotate-180'
+                  }`}
+                />
+              </button>
+            </div>
+            <nav
+              className='set-11 absolute right-0 top-[136%] z-10 mt-1 flex w-[200px] flex-col 
                  rounded-lg bg-[#FBFCFF]
                 transition-all duration-300'
-                style={{
-                  transform: isProfileDrop ? 'translateY(0%)' : 'translateY(10%)',
-                  maxHeight: isProfileDrop ? '1000px' : '0px',
-                  opacity: isProfileDrop ? 1 : 0,
-                  overflow: 'hidden',
-                  boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
-                }}
+              style={{
+                transform: isProfileDrop ? 'translateY(0%)' : 'translateY(10%)',
+                maxHeight: isProfileDrop ? '1000px' : '0px',
+                opacity: isProfileDrop ? 1 : 0,
+                overflow: 'hidden',
+                boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <NavLink
+                to='/profile'
+                end
+                className='flex w-full items-center justify-center bg-inherit px-[16px] py-[8px] text-[#5B5B5B] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
+                onClick={throttledLibraryClick}
               >
-                <NavLink
-                  to='/profile'
-                  end
-                  className='flex w-full items-center justify-center bg-inherit px-[16px] py-[8px] text-[#5B5B5B] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
-                  onClick={throttledLibraryClick}
-                >
-                  <p
-                    className='whitespace-nowrap bg-inherit px-2 
+                <p
+                  className='whitespace-nowrap bg-inherit px-2 
                 py-1 text-[14px] font-normal 3xl:px-3
                 3xl:py-2 3xl:text-[18px]
                 '
-                  >
-                    Thông tin của tôi
-                  </p>
-                </NavLink>
-                <button
-                  className='bg-inherit px-[16px] py-[8px] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
-                  onClick={logout}
                 >
-                  <p
-                    className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] 3xl:px-3
+                  Thông tin của tôi
+                </p>
+              </NavLink>
+              <button
+                className='bg-inherit px-[16px] py-[8px] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
+                onClick={logout}
+              >
+                <p
+                  className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] 3xl:px-3
                     3xl:py-2 3xl:text-[18px]'
-                  >
-                    Đăng xuất
-                  </p>
-                </button>
-              </nav>
-            </>
-          )}
-        </div>
+                >
+                  Đăng xuất
+                </p>
+              </button>
+            </nav>
+          </>
+        )}
       </div>
-      <nav
-        className='z-20 flex w-full flex-row items-center justify-start bg-[#E3F2FD]
-        px-1 transition-all duration-700 ease-out lg:px-6 xl:px-11 2xl:px-16 3xl:px-[68px]'
-      >
-        <NavLink
-          to='/'
-          end
-          className='flex h-[100%] items-center justify-start 
-          px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-        >
-          <p
-            className='whitespace-nowrap bg-inherit px-2 py-1
-            text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-            style={{
-              color: pathname === '/' ? '#FFFFFF' : '#5B5B5B',
-              backgroundColor: pathname === '/' ? '#4285f4' : 'transparent',
-              borderRadius: '8px',
-            }}
-          >
-            Trang chủ
-          </p>
-        </NavLink>
-        <div className='relative' ref={libraryRef}>
-          <button
-            type='button'
-            className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-            onClick={throttledLibraryClick}
-          >
-            <p
-              className='mr-[8px] whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-              style={{
-                color:
-                  pathname.includes('/library/material') ||
-                  pathname.includes('/library/exam-archive')
-                    ? '#FFFFFF'
-                    : '#5B5B5B',
-                backgroundColor:
-                  pathname.includes('/library/material') ||
-                  pathname.includes('/library/exam-archive')
-                    ? '#4285f4'
-                    : 'transparent',
-                borderRadius: '8px',
-              }}
-            >
-              Thư viện
-            </p>
-            <Icon.ChevronUp
-              fill={
-                pathname.includes('/library/material') || pathname.includes('/library/exam-archive')
-                  ? '#3b3b3b'
-                  : '#5B5B5B'
-              }
-              fillOpacity={0.87}
-              className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                isLibraryOpen ? 'rotate-0' : 'rotate-180'
-              }`}
-            />
-          </button>
-          <nav
-            className='absolute z-10 mt-1 flex w-[120%] flex-col 
-            items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all duration-300'
-            style={{
-              transform: isLibraryOpen ? 'translateY(0%)' : 'translateY(10%)',
-              maxHeight: isLibraryOpen ? '1000px' : '0px',
-              opacity: isLibraryOpen ? 1 : 0,
-              overflow: 'hidden',
-              boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <NavLink
-              to='/library/material'
-              className='w-full bg-inherit'
-              onClick={throttledLibraryClick}
-            >
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname.includes('/library/material') ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname.includes('/library/material') ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname.includes('/library/material') ? '700' : 'normal',
-                }}
-              >
-                Tài liệu
-              </p>
-            </NavLink>
-            <NavLink
-              to='/library/exam-archive'
-              className='w-full bg-inherit'
-              onClick={throttledLibraryClick}
-            >
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname.includes('/library/exam-archive') ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname.includes('/library/exam-archive') ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname.includes('/library/exam-archive') ? '700' : 'normal',
-                }}
-              >
-                Đề thi
-              </p>
-            </NavLink>
-          </nav>
-        </div>
-        <div className='relative' ref={roomRef}>
-          <button
-            type='button'
-            className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-            onClick={throttledRoomClick}
-          >
-            <p
-              className='mr-[8px] bg-inherit px-2 py-1
-              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-              style={{
-                color:
-                  pathname.includes('/room/exercises') || pathname.includes('/room/tests')
-                    ? '#FFFFFF'
-                    : '#5B5B5B',
-                backgroundColor:
-                  pathname.includes('/room/exercises') || pathname.includes('/room/tests')
-                    ? '#4285f4'
-                    : 'transparent',
-                borderRadius: '8px',
-              }}
-            >
-              Phòng thi
-            </p>
-
-            <Icon.ChevronUp
-              fill={
-                pathname.includes('/room/exercises') || pathname.includes('/room/tests')
-                  ? '#3b3b3b'
-                  : '#5B5B5B'
-              }
-              fillOpacity={0.87}
-              className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                isRoomOpen ? 'rotate-0' : 'rotate-180'
-              }`}
-            />
-          </button>
-          <nav
-            className='absolute z-10 mt-1 flex w-[120%] flex-col 
-            items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all duration-300'
-            style={{
-              transform: isRoomOpen ? 'translateY(0%)' : 'translateY(10%)',
-              maxHeight: isRoomOpen ? '1000px' : '0px',
-              opacity: isRoomOpen ? 1 : 0,
-              overflow: 'hidden',
-              boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <NavLink
-              to='/room/exercises'
-              className='w-full bg-inherit'
-              onClick={throttledRoomClick}
-            >
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname.includes('/room/exercises') ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname.includes('/room/exercises') ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname.includes('/room/exercises') ? '700' : 'normal',
-                }}
-              >
-                Bài tập rèn luyện
-              </p>
-            </NavLink>
-            <NavLink to='/room/tests' className='w-full bg-inherit' onClick={throttledRoomClick}>
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname.includes('/room/tests') ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname.includes('/room/tests') ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname.includes('/room/tests') ? '700' : 'normal',
-                }}
-              >
-                Thi thử
-              </p>
-            </NavLink>
-          </nav>
-        </div>
-        <div className='relative' ref={aboutUsRef}>
-          <button
-            type='button'
-            className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-            onClick={throttledAboutUsClick}
-          >
-            <p
-              className='mr-[8px] whitespace-nowrap bg-inherit px-2 py-1 
-              text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-              style={{
-                color:
-                  pathname === '/about-us' ||
-                  pathname === '/about-us/activities' ||
-                  pathname === '/about-us/partners'
-                    ? '#FFFFFF'
-                    : '#5B5B5B',
-                backgroundColor:
-                  pathname === '/about-us' ||
-                  pathname === '/about-us/activities' ||
-                  pathname === '/about-us/partners'
-                    ? '#4285f4'
-                    : 'transparent',
-                borderRadius: '8px',
-              }}
-            >
-              Về chúng tôi
-            </p>
-
-            <Icon.ChevronUp
-              fill={
-                pathname === '/about-us' ||
-                pathname === '/about-us/activities' ||
-                pathname === '/about-us/partners'
-                  ? '#3b3b3b'
-                  : '#5B5B5B'
-              }
-              fillOpacity={0.87}
-              className={`transform-all aspect-[10/7] h-auto w-[8px] duration-300 ${
-                isAboutUsOpen ? 'rotate-0' : 'rotate-180'
-              }`}
-            />
-          </button>
-          <nav
-            className='absolute z-10 mt-1 flex w-[120%] flex-col 
-            items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all duration-300'
-            style={{
-              transform: isAboutUsOpen ? 'translateY(0%)' : 'translateY(10%)',
-              maxHeight: isAboutUsOpen ? '1000px' : '0px',
-              opacity: isAboutUsOpen ? 1 : 0,
-              overflow: 'hidden',
-              boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <NavLink to='/about-us' className='w-full bg-inherit' onClick={throttledAboutUsClick}>
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname === '/about-us' ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname === '/about-us' ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname === '/about-us' ? '700' : 'normal',
-                }}
-              >
-                Giới thiệu
-              </p>
-            </NavLink>
-            <NavLink
-              to='/about-us/activities'
-              className='w-full bg-inherit'
-              onClick={throttledAboutUsClick}
-            >
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname.includes('/about-us/activities') ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname.includes('/about-us/activities') ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname.includes('/about-us/activities') ? '700' : 'normal',
-                }}
-              >
-                Hoạt động
-              </p>
-            </NavLink>
-            <NavLink
-              to='/about-us/partners'
-              className='w-full bg-inherit'
-              onClick={throttledAboutUsClick}
-            >
-              <p
-                className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center text-[14px] 
-                transition-colors duration-300 ease-linear 3xl:px-11 3xl:py-5 3xl:text-[18px] ${
-                  pathname.includes('/about-us/partners') ? '' : 'hover:bg-[#F1F1F1]'
-                }`}
-                style={{
-                  color: pathname.includes('/about-us/partners') ? '#3b3b3b' : 'inherit',
-                  fontWeight: pathname.includes('/about-us/partners') ? '700' : 'normal',
-                }}
-              >
-                Đơn vị hợp tác
-              </p>
-            </NavLink>
-          </nav>
-        </div>
-        {isAuthenticated &&
-        (user.isManager ||
-          _.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))) ? (
-          <NavLink
-            to='/admin'
-            end
-            className='flex h-[100%] items-center justify-start 
-          px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-          >
-            <p
-              className='whitespace-nowrap bg-inherit px-2 py-1
-            text-[14px] transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 3xl:text-[18px]'
-              style={{
-                color: pathname.includes('/admin') ? '#FFFFFF' : '#5B5B5B',
-                backgroundColor: pathname.includes('/admin') ? '#4285f4' : 'transparent',
-                borderRadius: '8px',
-              }}
-            >
-              Admin
-            </p>
-          </NavLink>
-        ) : null}
-      </nav>
     </div>
   );
 };
