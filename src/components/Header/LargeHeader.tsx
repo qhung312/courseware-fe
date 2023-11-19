@@ -20,12 +20,6 @@ const LargeHeader = () => {
   const [isAboutUsOpen, setIsAboutUsOpen] = useState(false);
   const [isProfileDrop, setIsProfileDrop] = useState(false);
 
-  const [isHoverHome, setIsHoverHome] = useState(false);
-  const [isHoverLibrary, setIsHoverLibrary] = useState(false);
-  const [isHoverRoom, setIsHoverRoom] = useState(false);
-  const [isHoverAboutUs, setIsHoverAboutUs] = useState(false);
-  const [isHoverAdmin, setIsHoverAdmin] = useState(false);
-
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
   const logout = useBoundStore.use.logout();
@@ -70,12 +64,12 @@ const LargeHeader = () => {
   return (
     <div
       className='relative top-0 z-30 hidden w-full flex-row flex-wrap items-center justify-between bg-white
-        px-8 py-2 shadow-lg md:flex md:px-5 md:py-3 lg:py-4 lg:px-10 xl:px-20 3xl:px-[100px] 3xl:py-5'
+        px-8 py-1 shadow-lg md:flex md:px-5 md:py-2 lg:py-3 lg:px-10 xl:px-20 3xl:px-[100px] 3xl:py-4'
     >
       <div className='flex flex-row text-[14px] md:text-[14px] lg:gap-x-4 xl:gap-x-6 xl:text-[16px] 2xl:gap-x-8 3xl:gap-x-10 3xl:text-[20px]'>
         <NavLink
           to='/'
-          className='aspect-[107/60] h-[40px] w-auto xl:h-[48px] 2xl:h-[52px] 3xl:h-[60px]'
+          className='aspect-[107/60] h-[36px] w-auto xl:h-[42px] 2xl:h-[48px] 3xl:h-[54px]'
         >
           <LargeLogoCTCT className='aspect-[107/60] h-full w-auto 3xl:h-[48px]' />
         </NavLink>
@@ -84,16 +78,12 @@ const LargeHeader = () => {
             to='/'
             end
             className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]`}
-            onMouseEnter={() => setIsHoverHome(true)}
-            onMouseLeave={() => setIsHoverHome(false)}
+            px-[16px] py-[8px] text-[#5B5B5B] hover:text-[#070707] 3xl:px-[32px] 3xl:py-[12px]`}
           >
             <p
-              className={`whitespace-nowrap border-[#4285F4] bg-inherit px-2
-            py-1 transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 ${
-              pathname === '/' || isHoverHome
-                ? 'border-b-[3px] text-[#242323]'
-                : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+              className={`whitespace-nowrap border-[#4285F4] bg-inherit px-2 py-1
+            text-inherit transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 ${
+              pathname === '/' ? 'border-b-[3px] text-[#070707]' : 'border-none'
             }`}
             >
               Trang chủ
@@ -103,27 +93,24 @@ const LargeHeader = () => {
             <button
               type='button'
               className='z-20
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+            px-[16px] py-[8px] text-[#5B5B5B] hover:text-[#070707] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledLibraryClick}
-              onMouseEnter={() => setIsHoverLibrary(true)}
-              onMouseLeave={() => setIsHoverLibrary(false)}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
-                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                px-2 py-1 text-[#5B5B5B] transition-colors duration-300 ease-linear hover:text-[#070707] lg:gap-x-2 2xl:gap-x-3  3xl:px-3 3xl:py-2 ${
                   pathname.includes('/library/material') ||
-                  pathname.includes('/library/exam-archive') ||
-                  isHoverLibrary
-                    ? 'border-b-[3px] text-[#242323]'
-                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                  pathname.includes('/library/exam-archive')
+                    ? 'border-b-[3px] text-[#070707]'
+                    : 'border-none'
                 }`}
               >
-                <p className={`whitespace-nowrap bg-inherit`}>Thư viện</p>
+                <p className={`whitespace-nowrap bg-inherit text-inherit`}>Thư viện</p>
                 <Icon.ChevronUp
                   fill={
                     pathname.includes('/library/material') ||
                     pathname.includes('/library/exam-archive')
-                      ? '#242323'
+                      ? '#070707'
                       : '#5B5B5B'
                   }
                   fillOpacity={0.87}
@@ -189,24 +176,20 @@ const LargeHeader = () => {
               className='z-20 flex flex-row items-center justify-start
             px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
               onClick={throttledRoomClick}
-              onMouseEnter={() => setIsHoverRoom(true)}
-              onMouseLeave={() => setIsHoverRoom(false)}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
-                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
-                  pathname.includes('/room/exercises') ||
-                  pathname.includes('/room/tests') ||
-                  isHoverRoom
-                    ? 'border-b-[3px] text-[#242323]'
-                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                px-2 py-1 text-[#5B5B5B] transition-colors duration-300  ease-linear hover:text-[#070707] lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                  pathname.includes('/room/exercises') || pathname.includes('/room/tests')
+                    ? 'border-b-[3px] text-[#070707]'
+                    : 'border-none'
                 }`}
               >
-                <p className={`whitespace-nowrap bg-inherit`}>Phòng thi</p>
+                <p className={`whitespace-nowrap bg-inherit text-inherit`}>Phòng thi</p>
                 <Icon.ChevronUp
                   fill={
                     pathname.includes('/room/exercises') || pathname.includes('/room/tests')
-                      ? '#242323'
+                      ? '#070707'
                       : '#5B5B5B'
                   }
                   fillOpacity={0.87}
@@ -266,23 +249,20 @@ const LargeHeader = () => {
             <button
               type='button'
               className='z-20 flex flex-row items-center justify-start
-            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
+            px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px] '
               onClick={throttledAboutUsClick}
-              onMouseEnter={() => setIsHoverAboutUs(true)}
-              onMouseLeave={() => setIsHoverAboutUs(false)}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
-                px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                px-2 py-1 text-[#5B5B5B]  transition-colors duration-300 ease-linear hover:text-[#070707] lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
                   pathname === '/about-us' ||
                   pathname === '/about-us/activities' ||
-                  pathname === '/about-us/partners' ||
-                  isHoverAboutUs
-                    ? 'border-b-[3px] text-[#242323]'
-                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                  pathname === '/about-us/partners'
+                    ? 'border-b-[3px] text-[#070707]'
+                    : 'border-none'
                 }`}
               >
-                <p className='mr-[8px] whitespace-nowrap bg-inherit'>Về chúng tôi</p>
+                <p className='whitespace-nowrap bg-inherit text-inherit'>Về chúng tôi</p>
 
                 <Icon.ChevronUp
                   fill={
@@ -370,19 +350,15 @@ const LargeHeader = () => {
               to='/admin'
               end
               className='flex h-[100%] items-center justify-start 
-          px-[16px] py-[8px] 3xl:px-[32px] 3xl:py-[12px]'
-              onMouseEnter={() => setIsHoverAdmin(true)}
-              onMouseLeave={() => setIsHoverAdmin(false)}
+          px-[16px] py-[8px] text-[#5B5B5B] hover:text-[#070707] 3xl:px-[32px] 3xl:py-[12px]'
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-[#4285F4] p-0
                 px-2 py-1 transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
-                  pathname === '/admin' || isHoverAdmin
-                    ? 'border-b-[3px] text-[#242323]'
-                    : 'border-none text-[#5B5B5B] hover:border-b-[3px]'
+                  pathname === '/admin' ? 'border-b-[3px] text-[#070707]' : 'border-none'
                 }`}
               >
-                <p className='whitespace-nowrap bg-inherit'>Admin</p>
+                <p className='whitespace-nowrap bg-inherit text-inherit'>Admin</p>
               </div>
             </NavLink>
           ) : null}
