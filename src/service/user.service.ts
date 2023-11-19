@@ -10,6 +10,12 @@ export type GetActivityProp = {
   pageNumber?: number;
 };
 
+export type GetAllQuizHistoryProps = {
+  subjectId: string;
+  startAt: string;
+  endAt: string;
+};
+
 export type ActivityReturnType = {
   _id: string;
   type: string;
@@ -108,12 +114,6 @@ interface GetAllQuizHistoryReturnType {
   result: SubjectQuizHistoryReturnType[];
 }
 
-export type GetAllQuizHistoryProps = {
-  subjectId: string;
-  startAt: string;
-  endAt: string;
-};
-
 const getUserProfile = () => axios.get<Response<User>>(`${API_URL}me`);
 
 const editUserProfile = (profile: User) => {
@@ -140,6 +140,7 @@ const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
   }${query.startAt ? `&endedAtMin=${query.startAt}` : ''}${
     query.endAt ? `&endedAtMax=${query.endAt}` : ''
   }`;
+
   return axios.get<Response<GetAllQuizHistoryReturnType>>(queryString);
 };
 

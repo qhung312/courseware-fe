@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserProfileBanner from '../../assets/images/UserProfile.png';
@@ -14,7 +14,7 @@ interface Option {
 
 const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: Option) => {
   const user = useBoundStore.use.user();
-  const [photo, setPhoto] = useState<string>(user?.picture || '');
+  // const [photo, setPhoto] = useState<string>(user?.picture || '');
 
   return (
     <div className='padding flex flex-col items-center bg-[#E3F2FD] pt-10 pb-4 md:relative md:pb-0 md:pt-0'>
@@ -26,7 +26,7 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
           <div className='flex h-[180px] w-[180px] items-center justify-center rounded-full bg-white md:h-[160px] md:w-[160px] lg:h-[180px] lg:w-[180px] 3xl:h-[220px] 3xl:w-[220px]'>
             <img
               alt='User avatar'
-              src={photo}
+              src={require('../../assets/images/AvatarPic.png')}
               className='h-[180px] w-[180px] rounded-full bg-slate-600 md:h-[140px] md:w-[140px] lg:h-[160px] lg:w-[160px] 3xl:h-[200px] 3xl:w-[200px]'
             />
           </div>
@@ -44,7 +44,7 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
                     setAvatar(URL.createObjectURL(e.target.files[0]));
-                    setPhoto(URL.createObjectURL(e.target.files[0]));
+                    // setPhoto(URL.createObjectURL(e.target.files[0]));
                   }
                 }}
               />

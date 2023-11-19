@@ -21,7 +21,7 @@ const RenderLineChart: React.FC<RenderLineChartProps> = ({ data }) => {
       <LineChart width={500} height={300} data={data}>
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='dateString' />
-        <YAxis />
+        <YAxis type='number' domain={[0, 10]} />
         <Tooltip />
         <Legend />
         <Line type='monotone' dataKey='Điểm' stroke='#8884d8' activeDot={{ r: 8 }} />
