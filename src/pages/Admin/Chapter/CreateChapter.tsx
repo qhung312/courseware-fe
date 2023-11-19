@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -17,7 +16,7 @@ const CreateChapterPage = () => {
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
-  const createDisabled = name.trim().length === 0 || subject === '';
+  const createDisabled = name.trim().length === 0 || subject === '' || loading;
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -76,87 +75,65 @@ const CreateChapterPage = () => {
           </p>
         </div>
         <div className='w-full p-4'>
-          {loading ? (
-            <>
-              <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
-                <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
-              </p>
-              <p className='w-full px-6 lg:px-8 3xl:px-10'>
-                {
-                  <Skeleton
-                    count={10}
-                    className='my-2 box-content lg:my-4 3xl:my-6'
-                    width={'100%'}
-                    height={40}
-                    baseColor='#9DCCFF'
-                  />
-                }
-              </p>
-            </>
-          ) : (
-            <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
-              <main className='flex flex-col gap-y-4'>
-                {/**
-                 * Name field
-                 */}
-                <div className='flex flex-col gap-y-1'>
-                  <label
-                    className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
-                    htmlFor='name'
-                  >
-                    Tên
-                  </label>
-                  <input
-                    id='name'
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={name}
-                    onChange={onInputName}
-                  />
-                </div>
-                <div className='flex flex-col gap-y-1'>
-                  <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Tên môn</p>
-                  <Select
-                    options={subjectOptions}
-                    value={subjectOptions.find((x) => x.value === subject) ?? null}
-                    onChange={onSelectSubject}
-                    placeholder='Chọn môn'
-                  />
-                </div>
-                {/**
-                 * Description field
-                 */}
-                <div className='flex flex-col gap-y-1'>
-                  <label
-                    className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
-                    htmlFor='description'
-                  >
-                    Chú thích
-                  </label>
-                  <textarea
-                    id='description'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    value={description}
-                    onChange={onInputDescription}
-                  />
-                </div>
-                {/**
-                 * Create button
-                 */}
-                <div className='my-5 flex flex-row-reverse gap-x-8'>
-                  <button
-                    className={`flex items-center rounded-lg transition-all duration-200 ${
-                      createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
-                    } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
-                    disabled={createDisabled}
-                    onClick={createChapter}
-                  >
-                    <p className='text-white'>Tạo</p>
-                  </button>
-                </div>
-              </main>
-            </div>
-          )}
+          <div className='h-full w-full rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
+            <main className='flex flex-col gap-y-4'>
+              {/**
+               * Name field
+               */}
+              <div className='flex flex-col gap-y-1'>
+                <label className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl' htmlFor='name'>
+                  Tên
+                </label>
+                <input
+                  id='name'
+                  className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                  value={name}
+                  onChange={onInputName}
+                />
+              </div>
+              <div className='flex flex-col gap-y-1'>
+                <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Tên môn</p>
+                <Select
+                  options={subjectOptions}
+                  value={subjectOptions.find((x) => x.value === subject) ?? null}
+                  onChange={onSelectSubject}
+                  placeholder='Chọn môn'
+                />
+              </div>
+              {/**
+               * Description field
+               */}
+              <div className='flex flex-col gap-y-1'>
+                <label
+                  className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
+                  htmlFor='description'
+                >
+                  Chú thích
+                </label>
+                <textarea
+                  id='description'
+                  rows={10}
+                  className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                  value={description}
+                  onChange={onInputDescription}
+                />
+              </div>
+              {/**
+               * Create button
+               */}
+              <div className='my-5 flex flex-row-reverse gap-x-8'>
+                <button
+                  className={`flex items-center rounded-lg transition-all duration-200 ${
+                    createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                  } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
+                  disabled={createDisabled}
+                  onClick={createChapter}
+                >
+                  <p className='text-white'>Tạo</p>
+                </button>
+              </div>
+            </main>
+          </div>
         </div>
         <ToastContainer position='bottom-right' />
       </Wrapper>
