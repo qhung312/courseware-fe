@@ -130,7 +130,7 @@ const SubjectStatistic = () => {
         const newData = generatedData.map((item) => {
           return {
             ...item,
-            Điểm: item.Điểm / item.count,
+            Điểm: Math.round((item.Điểm / item.count) * 100) / 100,
           };
         });
         setLineChartData(newData);
