@@ -63,22 +63,22 @@ const LargeHeader = () => {
 
   return (
     <div
-      className='relative top-0 z-30 hidden w-full flex-row flex-wrap items-center justify-between border-b-[1px]
-        border-[#ecedef] bg-white px-8 shadow-md md:flex md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'
+      className='relative top-0 z-30 hidden w-full flex-row flex-wrap items-center justify-between
+        bg-white px-8 shadow-md md:flex md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'
     >
       <div className='flex flex-row text-[14px] md:text-[14px] lg:gap-x-4 xl:gap-x-6 xl:text-[16px] 2xl:gap-x-8 3xl:gap-x-10 3xl:text-[20px]'>
         <NavLink
           to='/'
           className='flex aspect-[107/60] min-h-[36px] w-auto flex-1 items-center py-3 lg:py-4'
         >
-          <LargeLogoCTCT className='aspect-[107/60] h-[36px] w-auto  xl:h-[42px] 2xl:h-[48px] 3xl:h-[54px]' />
+          <LargeLogoCTCT className='aspect-[107/60] h-[28px] w-auto  xl:h-[36px] 2xl:h-[42px]' />
         </NavLink>
         <nav className='z-20 flex w-full flex-row items-center justify-start transition-all duration-700 ease-out'>
           <NavLink
             to='/'
             end
             className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-3 hover:font-medium hover:text-[#070707] lg:py-4 3xl:px-[32px] ${
+            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
               pathname === '/'
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#5B5B5B]'
@@ -95,7 +95,7 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-3 hover:font-medium hover:text-[#070707] lg:py-4 3xl:px-[32px] ${
+            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
               pathname.includes('/library/material') || pathname.includes('/library/exam-archive')
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#5B5B5B]'
@@ -175,7 +175,7 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-3 hover:font-medium hover:text-[#070707] lg:py-4 3xl:px-[32px] ${
+            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
               pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#585858]'
@@ -248,7 +248,7 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-3 hover:font-medium hover:text-[#070707] lg:py-4 3xl:px-[32px] ${
+            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
               pathname === '/about-us' ||
               pathname === '/about-us/activities' ||
               pathname === '/about-us/partners'
@@ -347,7 +347,7 @@ const LargeHeader = () => {
               to='/admin'
               end
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-3 hover:font-medium hover:text-[#070707] lg:py-4 3xl:px-[32px] ${
+            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
               pathname.includes('/admin')
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#585858]'
@@ -375,8 +375,8 @@ const LargeHeader = () => {
                 <img
                   alt='profile_pic'
                   src={user?.picture || require('../../assets/images/AvatarPic.png')}
-                  className='mr-4 h-10 w-10 rounded-full border-2
-                    border-[#49BBBD] bg-white 2xl:h-[46px] 2xl:w-[46px] 3xl:mr-6 3xl:h-[52px] 3xl:w-[52px]'
+                  className='mr-4 h-8 w-8 rounded-full border-2
+                    border-[#49BBBD] bg-white 2xl:h-[40px] 2xl:w-[40px] 3xl:mr-6 3xl:h-[44px] 3xl:w-[44px]'
                 />
                 <Icon.ChevronUp
                   fill={'#3b3b3b'}
