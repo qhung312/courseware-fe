@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 
-import { CarouselIndicator, Footer, LazyLoadImage, UserSharingCard } from '../../components';
+import { CarouselIndicator, LazyLoadImage, UserSharingCard } from '../../components';
+import Footer2 from '../../components/Footer/FooterText';
 import { CarouselData as data, EventsAndActivities as eventsData } from '../../data/CarouselData';
 import { useWindowDimensions } from '../../hooks';
 import { Page } from '../../layout';
@@ -290,7 +291,7 @@ const HomePage = () => {
             </div>
           </section>
         </div>
-        <Footer />
+        <Footer2 />
       </main>
     </Page>
   );
