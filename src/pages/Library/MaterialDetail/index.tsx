@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -18,6 +19,7 @@ const MaterialDetailPage: React.FC = () => {
 
   const [material, setMaterial] = useState<Material | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
+  const [loadingPDF, setLoadingPDF] = useState(true);
   const isAsideOpen = useBoundStore.use.isAsideOpen();
   const toggleAside = useBoundStore.use.toggleAside();
 
@@ -45,7 +47,8 @@ const MaterialDetailPage: React.FC = () => {
         .catch((err) => {
           console.log(err);
           toast.error(err.response.data.message);
-        });
+        })
+        .finally(() => setLoadingPDF(false));
     }
   }, [material]);
 
@@ -91,7 +94,26 @@ const MaterialDetailPage: React.FC = () => {
           </button>
 
           {/* PDF */}
-          <PDF file={file} title={material?.name} />
+          {loadingPDF ? (
+            <>
+              <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
+              </p>
+              <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                {
+                  <Skeleton
+                    count={10}
+                    className='my-2 box-content lg:my-4 3xl:my-6'
+                    width={'100%'}
+                    height={40}
+                    baseColor='#9DCCFF'
+                  />
+                }
+              </p>
+            </>
+          ) : (
+            <PDF file={file} title={material?.name} />
+          )}
         </div>
       </Wrapper>
     </Page>

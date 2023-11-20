@@ -7,8 +7,9 @@ import SubjectService from '../../../service/subject.service';
 const CreateSubjectPage = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const createDisabled = name.trim().length === 0;
+  const createDisabled = name.trim().length === 0 || loading;
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -19,6 +20,7 @@ const CreateSubjectPage = () => {
   };
 
   const onCreateSubject = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    setLoading(true);
     SubjectService.create(name, description)
       .then((_res) => {
         toast.success('Tạo môn học thành công');
@@ -27,7 +29,8 @@ const CreateSubjectPage = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (

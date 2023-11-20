@@ -9,7 +9,7 @@ const linkYoutube = 'https://www.youtube.com/c/CLBCh%C3%BAngtac%C3%B9ngti%E1%BA%
 const linkFacebookCTCT = 'https://facebook.com/chungtacungtien';
 const linkFaceBookGDSC = 'https://www.facebook.com/dscxhcmut';
 
-const Footer: FC = () => {
+const Footer2: FC = () => {
   return (
     <footer className='flex w-full flex-col bg-white'>
       <div className='flex w-full flex-col gap-y-4 md:gap-y-2 lg:gap-y-3 xl:gap-y-4 2xl:gap-y-5'>
@@ -71,33 +71,24 @@ const Footer: FC = () => {
                 <div>
                   <Icon.LocationIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
                 </div>
-                <a
-                  target='_blank'
-                  href={linkGoogleMap}
-                  className='flex flex-col text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
-                  rel='noreferrer'
-                >
-                  <p className='whitespace-nowrap text-inherit'>
+                <a target='_blank' href={linkGoogleMap} className='flex flex-col' rel='noreferrer'>
+                  <p className='whitespace-nowrap text-[11.5px] md:text-lg lg:text-[16px]'>
                     Phòng 102, Nhà học Thể dục thể thao, Đại học Bách
                   </p>
-                  <p className='whitespace-nowrap text-inherit'>
+                  <p className='whitespace-nowrap text-[11.5px] md:text-lg lg:text-[16px]'>
                     Khoa - Đại học Quốc gia Hồ Chí Minh, Cơ sở 2
                   </p>
                 </a>
               </div>
 
-              <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem] '>
+              <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
                 <div>
                   <Icon.PhoneIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
                 </div>
-                <div className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'>
-                  <a href='tel:036329470' className='text-inherit'>
-                    036 329 4701
-                  </a>
-                  <span className='text-inherit'> - </span>
-                  <a href='tel:0868353556' className='text-inherit'>
-                    086 835 3556
-                  </a>
+                <div className='text-[11.5px] md:text-lg lg:text-[16px]'>
+                  <a href='tel:036329470'>036 329 4701</a>
+                  <span> - </span>
+                  <a href='tel:0868353556'>086 835 3556</a>
                 </div>
               </div>
 
@@ -107,7 +98,7 @@ const Footer: FC = () => {
                 </div>
                 <a
                   href='mailto:chungtacungtienbk@gmail.com'
-                  className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+                  className='text-[11.5px] md:text-sm lg:text-[16px] 2xl:text-[18px]'
                 >
                   chungtacungtienbk@gmail.com
                 </a>
@@ -141,4 +132,4 @@ const Footer: FC = () => {
   );
 };
 
-export default Footer;
+export default Footer2;

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { Icon, Pagination, Select } from '../../../components';
 import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
@@ -201,56 +202,63 @@ const ChapterListPage = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {chapters.map((chapter) => (
-                          <tr
-                            key={`material-${chapter._id}`}
-                            className='flex w-full flex-1 items-center justify-start gap-x-3 border-b border-b-[#CCC] p-2 px-2 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-4 3xl:p-6 3xl:px-6'
-                            onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
-                          >
-                            <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {chapter.name}
-                            </td>
-                            <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {chapter.subject.name}
-                            </td>
-                            <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {new Date(chapter.createdAt).toLocaleString()}
-                            </td>
-                            <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {chapter.lastUpdatedAt !== undefined
-                                ? new Date(chapter.lastUpdatedAt).toLocaleString()
-                                : undefined}
-                            </td>
-                            <td className='flex flex-1 items-center justify-end gap-x-2 gap-y-2 whitespace-nowrap'>
-                              <button
-                                type='button'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/admin/chapter/edit/${chapter._id}`);
-                                }}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
-                              >
-                                <Icon.Edit
-                                  fill='white'
-                                  className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
-                                />
-                              </button>
-                              <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  chapterToDelete.current = chapter._id;
-                                  setDeleteModal(true);
-                                }}
-                              >
-                                <Icon.Delete
-                                  fill='white'
-                                  className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
-                                />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                        {chapters.length === 0 ? (
+                          <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                            <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                            <p className='w-full text-center'>Không tìm thấy chương</p>
+                          </div>
+                        ) : (
+                          chapters.map((chapter) => (
+                            <tr
+                              key={`material-${chapter._id}`}
+                              className='flex w-full flex-1 items-center justify-start gap-x-3 border-b border-b-[#CCC] p-2 px-2 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-4 3xl:p-6 3xl:px-6'
+                              onClick={() => navigate(`/admin/chapter/view/${chapter._id}`)}
+                            >
+                              <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {chapter.name}
+                              </td>
+                              <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {chapter.subject.name}
+                              </td>
+                              <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {new Date(chapter.createdAt).toLocaleString()}
+                              </td>
+                              <td className='flex flex-[2.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {chapter.lastUpdatedAt !== undefined
+                                  ? new Date(chapter.lastUpdatedAt).toLocaleString()
+                                  : undefined}
+                              </td>
+                              <td className='flex flex-1 items-center justify-end gap-x-2 gap-y-2 whitespace-nowrap'>
+                                <button
+                                  type='button'
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/admin/chapter/edit/${chapter._id}`);
+                                  }}
+                                  className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                >
+                                  <Icon.Edit
+                                    fill='white'
+                                    className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
+                                  />
+                                </button>
+                                <button
+                                  className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    chapterToDelete.current = chapter._id;
+                                    setDeleteModal(true);
+                                  }}
+                                >
+                                  <Icon.Delete
+                                    fill='white'
+                                    className='h-3 w-3 lg:h-4 lg:w-4 3xl:h-5 3xl:w-5'
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   </div>

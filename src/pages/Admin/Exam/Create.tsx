@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
 // eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
-
 import './index.css';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -19,6 +18,7 @@ const ExamCreate = () => {
   const [type, setType] = useState('');
   const [semester, setSemester] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
@@ -26,7 +26,12 @@ const ExamCreate = () => {
 
   const fileUploaderRef = useRef<FilePond>(null);
   const submitDisabled =
-    name === '' || subject === '' || type === '' || semester === '' || uploadedFiles.length === 0;
+    name === '' ||
+    subject === '' ||
+    type === '' ||
+    semester === '' ||
+    uploadedFiles.length === 0 ||
+    loading;
 
   useEffect(() => {
     // fetch subject on first load
@@ -49,14 +54,13 @@ const ExamCreate = () => {
 
   const createExamArchive = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
+    setLoading(true);
     const formData = new FormData();
     formData.append('name', name);
     formData.append('', uploadedFiles[0]);
     formData.append('subject', subject);
     formData.append('type', type);
     formData.append('semester', semester);
-
     ExamArchiveService.create(formData)
       .then((_) => {
         toast.success('Tạo đề thi thành công');
@@ -70,7 +74,8 @@ const ExamCreate = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (

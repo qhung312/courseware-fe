@@ -24,6 +24,7 @@ const CreateExercisePage = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [chapter, setChapter] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [duration, setDuration] = useState<CountDown>({
     hour: 0,
@@ -47,7 +48,8 @@ const CreateExercisePage = () => {
     subject === '' ||
     chapter === '' ||
     potentialQuestions.length === 0 ||
-    sampleSize === 0;
+    sampleSize === 0 ||
+    loading;
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => setName(event.target.value);
 
@@ -104,6 +106,7 @@ const CreateExercisePage = () => {
   };
 
   const createExercise = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    setLoading(true);
     QuizService.create({
       name,
       description,
@@ -127,7 +130,8 @@ const CreateExercisePage = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const fetchQuestions = useDebounce(() => {

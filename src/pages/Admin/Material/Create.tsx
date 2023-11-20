@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { FilePond } from 'react-filepond';
 // eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
-
 import './index.css';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -19,13 +18,14 @@ const MaterialCreate = () => {
   const [chapter, setChapter] = useState('');
   const [description, setDescription] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
 
   const fileUploaderRef = useRef<FilePond>(null);
   const submitDisabled =
-    name === '' || subject === '' || chapter === '' || uploadedFiles.length === 0;
+    name === '' || subject === '' || chapter === '' || uploadedFiles.length === 0 || loading;
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
@@ -70,6 +70,7 @@ const MaterialCreate = () => {
 
   const createMaterial = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.append('name', name);
@@ -90,7 +91,8 @@ const MaterialCreate = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (

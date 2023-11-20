@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -21,6 +22,7 @@ const ExamArchiveDetailPage: React.FC = () => {
 
   const [exam, setExam] = useState<ExamArchive | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
+  const [loadingPDF, setLoadingPDF] = useState(true);
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
@@ -46,7 +48,8 @@ const ExamArchiveDetailPage: React.FC = () => {
         .catch((err) => {
           console.log(err);
           toast.error(err.response.data.message);
-        });
+        })
+        .finally(() => setLoadingPDF(false));
     }
   }, [exam]);
 
@@ -92,7 +95,26 @@ const ExamArchiveDetailPage: React.FC = () => {
           </button>
 
           {/* PDF */}
-          <PDF file={file} />
+          {loadingPDF ? (
+            <>
+              <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
+                <Skeleton width={'100%'} baseColor='#9DCCFF' height={56} />
+              </p>
+              <p className='w-full px-6 lg:px-8 3xl:px-10'>
+                {
+                  <Skeleton
+                    count={10}
+                    className='my-2 box-content lg:my-4 3xl:my-6'
+                    width={'100%'}
+                    height={40}
+                    baseColor='#9DCCFF'
+                  />
+                }
+              </p>
+            </>
+          ) : (
+            <PDF file={file} />
+          )}
         </div>
         <ToastContainer position='bottom-right' />
       </Wrapper>

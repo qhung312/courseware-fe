@@ -12,10 +12,11 @@ const CreateChapterPage = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [subject, setSubject] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
-  const createDisabled = name.trim().length === 0 || subject === '';
+  const createDisabled = name.trim().length === 0 || subject === '' || loading;
 
   const onInputName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -26,6 +27,7 @@ const CreateChapterPage = () => {
   };
 
   const createChapter = (_event: React.MouseEvent<HTMLButtonElement>) => {
+    setLoading(true);
     ChapterService.create(name, subject, description)
       .then((_res) => {
         toast.success('Tạo chương mới thành công');
@@ -35,7 +37,8 @@ const CreateChapterPage = () => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const onSelectSubject = (event: SingleValue<Option>) => {

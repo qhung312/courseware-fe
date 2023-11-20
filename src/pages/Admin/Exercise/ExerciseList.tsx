@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { Icon, Pagination, Select } from '../../../components';
 import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
@@ -242,50 +243,57 @@ const ExerciseListPage = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {exercises.map((exercise) => (
-                          <tr
-                            key={`material-${exercise._id}`}
-                            className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
-                            onClick={() => navigate(`/admin/exercises/view/${exercise._id}`)}
-                          >
-                            <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {exercise.name}
-                            </td>
-                            <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {exercise?.subject?.name}
-                            </td>
-                            <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
-                              {exercise?.chapter?.name}
-                            </td>
-                            <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/admin/exercises/edit/${exercise._id}`);
-                                }}
-                                className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
-                              >
-                                <Icon.Edit
-                                  fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                />
-                              </button>
-                              <button
-                                className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  exerciseToDelete.current = exercise._id;
-                                  setDeleteModal(true);
-                                }}
-                              >
-                                <Icon.Delete
-                                  fill='white'
-                                  className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                                />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                        {exercises.length === 0 ? (
+                          <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
+                            <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                            <p className='w-full text-center'>Không tìm thấy bài tập</p>
+                          </div>
+                        ) : (
+                          exercises.map((exercise) => (
+                            <tr
+                              key={`material-${exercise._id}`}
+                              className='flex w-full flex-1 items-center justify-start gap-x-4 border-b border-b-[#CCC] p-2 px-6 hover:cursor-pointer hover:bg-[#F1F1F1] lg:p-4 lg:px-8 3xl:p-6 3xl:px-10'
+                              onClick={() => navigate(`/admin/exercises/view/${exercise._id}`)}
+                            >
+                              <td className='flex flex-[3] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {exercise.name}
+                              </td>
+                              <td className='flex flex-[1.5] items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {exercise?.subject?.name}
+                              </td>
+                              <td className='flex flex-1 items-center justify-start text-xs font-medium lg:text-sm 3xl:text-base'>
+                                {exercise?.chapter?.name}
+                              </td>
+                              <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/admin/exercises/edit/${exercise._id}`);
+                                  }}
+                                  className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                >
+                                  <Icon.Edit
+                                    fill='white'
+                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  />
+                                </button>
+                                <button
+                                  className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    exerciseToDelete.current = exercise._id;
+                                    setDeleteModal(true);
+                                  }}
+                                >
+                                  <Icon.Delete
+                                    fill='white'
+                                    className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   </div>
