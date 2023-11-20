@@ -78,7 +78,7 @@ const LargeHeader = () => {
             to='/'
             end
             className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
+            px-[16px] py-4 hover:font-medium hover:text-[#070707] 3xl:px-[32px] ${
               pathname === '/'
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#5B5B5B]'
@@ -95,7 +95,7 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
+            px-[16px] py-4 hover:font-medium hover:text-[#070707] 3xl:px-[32px] ${
               pathname.includes('/library/material') || pathname.includes('/library/exam-archive')
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#5B5B5B]'
@@ -175,7 +175,7 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
+            px-[16px] py-4 hover:font-medium hover:text-[#070707] 3xl:px-[32px] ${
               pathname.includes('/room/exercises') || pathname.includes('/room/tests')
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#585858]'
@@ -248,7 +248,7 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
+            px-[16px] py-4 hover:font-medium hover:text-[#070707] 3xl:px-[32px] ${
               pathname === '/about-us' ||
               pathname === '/about-us/activities' ||
               pathname === '/about-us/partners'
@@ -347,7 +347,7 @@ const LargeHeader = () => {
               to='/admin'
               end
               className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-1 hover:font-medium hover:text-[#070707] lg:py-2 3xl:px-[32px] ${
+            px-[16px] py-4 hover:font-medium hover:text-[#070707] 3xl:px-[32px] ${
               pathname.includes('/admin')
                 ? 'border-[#4285F4] font-medium text-[#070707]'
                 : 'border-transparent text-[#585858]'
