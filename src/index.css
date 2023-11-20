@@ -140,15 +140,29 @@ code {
 
 @media (min-width: 768px) {
   .with-nav-height {
-    min-height: calc(100vh - 109px);
-    height: calc(100vh - 109px);
+    min-height: calc(100vh - 56px);
+    height: calc(100vh - 56px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .with-nav-height {
+    min-height: calc(100vh - 64px);
+    height: calc(100vh - 644px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .with-nav-height {
+    min-height: calc(100vh - 67px);
+    height: calc(100vh - 67px);
   }
 }
 
 @media (min-width: 1872px) {
   .with-nav-height {
-    min-height: calc(100vh - 151px);
-    height: calc(100vh - 151px);
+    min-height: calc(100vh - 81px);
+    height: calc(100vh - 811px);
   }
 }
 
