@@ -3,102 +3,137 @@ import { Link } from 'react-router-dom';
 
 import { Icon } from '../../components';
 
+const linkGoogleMap =
+  'https://www.google.com/maps/search/%C4%90%E1%BA%A1i+h%E1%BB%8Dc+B%C3%A1ch++Khoa+-+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+Qu%E1%BB%91c+gia+H%E1%BB%93+Ch%C3%AD+Minh,+C%C6%A1+s%E1%BB%9F+2/@10.8800234,106.8050395,18.58z?hl=vi-VN&entry=ttu';
+const linkYoutube = 'https://www.youtube.com/c/CLBCh%C3%BAngtac%C3%B9ngti%E1%BA%BFn%C4%90HBK';
+const linkFacebookCTCT = 'https://facebook.com/chungtacungtien';
+const linkFaceBookGDSC = 'https://www.facebook.com/dscxhcmut';
+
 const Footer: FC = () => {
   return (
-    <footer className='w-full bg-white'>
-      <div className='xl:py-18 mx-auto w-full max-w-[1920px] flex-1 px-6 py-10 md:px-[50px] md:py-4 lg:px-0 lg:py-16 2xl:py-20'>
-        <div className='3xl:space-x-50 mx-auto flex flex-col space-y-8 space-x-0 sm:flex-col sm:space-y-10 md:space-y-12 lg:max-w-[900px] lg:flex-row lg:justify-between  lg:space-y-0 lg:space-x-12 xl:max-w-[1160px] xl:space-x-24 2xl:max-w-[1416px] 2xl:space-x-36 3xl:max-w-[1600px] '>
-          <div className='flex flex-1 justify-evenly lg:items-start lg:justify-between lg:pt-5 2xl:gap-x-[3rem]'>
-            <div className='mt-[1.25rem] sm:mt-[1.625rem]'>
-              <Icon.LogoCTCT className='h-[3.5rem] w-[7.5rem] sm:h-[5rem] sm:w-[9.375rem] md:h-[7.5rem] md:w-[11rem] lg:h-[3.5rem] lg:w-[8rem] xl:h-[4.75rem] xl:w-[9rem] 2xl:h-[5.5rem] 2xl:w-[10rem]' />
+    <footer className='flex w-full flex-col bg-white'>
+      <div className='flex w-full flex-col gap-y-4 md:gap-y-2 lg:gap-y-3 xl:gap-y-4 2xl:gap-y-5'>
+        <div className='flex w-full flex-col justify-between gap-y-8 px-8 py-2 md:gap-y-12 md:px-5 md:py-4 lg:flex-row lg:gap-y-6 lg:px-10 lg:py-4 xl:gap-y-10 xl:px-20 2xl:gap-y-10 3xl:px-[100px]'>
+          <div className='flex flex-row items-center justify-evenly md:gap-x-6 lg:justify-start lg:gap-y-6 lg:gap-x-10 xl:gap-y-12 2xl:w-[25%] 2xl:gap-x-14 3xl:gap-x-16'>
+            <div className='flex items-center'>
+              <Icon.LogoCTCT className='h-auto w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
             </div>
 
-            <div className='flex flex-col gap-y-[1rem]'>
-              <div className='mx-auto'>
-                <p className='font-[600] text-[#000] sm:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl'>
-                  Đơn vị hợp tác
-                </p>
-              </div>
-              <a href='https://www.facebook.com/dscxhcmut'>
-                <Icon.LogoFessior className='h-[3rem] w-[11rem] sm:h-[4rem] sm:w-[12rem] md:h-[5rem] md:w-[15rem] lg:h-[3rem] lg:w-[10rem] xl:h-[4rem] xl:w-[13rem] 2xl:h-[5rem] 2xl:w-[14rem]' />
+            <div className='flex flex-col items-center justify-center gap-y-2'>
+              <p className='font-normal text-[#000] sm:text-sm xl:text-lg 2xl:text-xl 3xl:text-2xl'>
+                Đơn vị hợp tác
+              </p>
+              <a href={linkFaceBookGDSC}>
+                <Icon.LogoFessior className='h-auto w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
               </a>
             </div>
           </div>
-
-          <div className='flex h-fit flex-[2] flex-col justify-between space-y-4 lg:space-y-6 xl:space-y-7 2xl:space-y-8 3xl:ml-10'>
+          <div className='flex h-fit flex-col justify-between gap-y-1 pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
+            <div className='flex flex-col'>
+              <p className='text-left text-[20px] font-semibold md:text-[20px] lg:text-lg xl:text-xl'>
+                Thông tin
+              </p>
+              <button
+                className='h-[5px] w-[8%] justify-start rounded-r-lg bg-[#E3F2FD] lg:w-[40%]'
+                disabled
+              />
+            </div>
             <Link
               to='/'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl'
+              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
             >
               Home
             </Link>
             <Link
               to='/about-us'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl '
+              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
             >
               Giới thiệu
             </Link>
             <Link
               to='/about-us/activities'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-lg xl:text-xl '
+              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
             >
               Cộng đồng Chúng Ta Cùng Tiến
             </Link>
           </div>
 
-          <div className='box-content flex flex-[2] flex-col gap-y-[1rem] sm:justify-between sm:gap-y-[1.5rem] lg:justify-start'>
-            <div className=''>
-              <p className='text-lg font-semibold sm:text-left sm:text-xl lg:text-center lg:text-2xl xl:text-3xl'>
-                Liên Hệ
-              </p>
+          <div className='flex h-fit flex-col justify-between gap-y-1 pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
+            <div className='flex flex-col'>
+              <p className='text-left text-[20px] font-semibold lg:text-lg xl:text-xl'>Liên Hệ</p>
+              <button
+                className='h-[5px] w-[10%] justify-start rounded-r-lg bg-[#E3F2FD] lg:w-[15%]'
+                disabled
+              />
             </div>
-            <div className='flex flex-col gap-y-[0.75rem] sm:gap-y-[0.5rem]'>
+            <div className='flex flex-col gap-y-1 lg:gap-y-2 2xl:gap-y-3 3xl:gap-y-4'>
               <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
                 <div>
-                  <Icon.LocationIcon className='h-[2.25rem] w-[2.25rem] sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+                  <Icon.LocationIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
                 </div>
-                <p className='text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
-                  Phòng 102, Nhà học Thể dục thể thao, Đại học Bách Khoa - Đại học Quốc gia Hồ Chí
-                  Minh, Cơ sở 2
-                </p>
+                <a
+                  target='_blank'
+                  href={linkGoogleMap}
+                  className='flex flex-col text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+                  rel='noreferrer'
+                >
+                  <p className='whitespace-nowrap text-inherit'>
+                    Phòng 102, Nhà học Thể dục thể thao, Đại học Bách
+                  </p>
+                  <p className='whitespace-nowrap text-inherit'>
+                    Khoa - Đại học Quốc gia Hồ Chí Minh, Cơ sở 2
+                  </p>
+                </a>
+              </div>
+
+              <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem] '>
+                <div>
+                  <Icon.PhoneIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
+                </div>
+                <div className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'>
+                  <a href='tel:036329470' className='text-inherit'>
+                    036 329 4701
+                  </a>
+                  <span className='text-inherit'> - </span>
+                  <a href='tel:0868353556' className='text-inherit'>
+                    086 835 3556
+                  </a>
+                </div>
               </div>
 
               <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
                 <div>
-                  <Icon.PhoneIcon className='h-[2.25rem] w-[2.25rem] sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
+                  <Icon.MailIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
                 </div>
-                <p className='text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
-                  036 329 4701 - 086 835 3556
-                </p>
-              </div>
-
-              <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
-                <div>
-                  <Icon.MailIcon className='h-[2.25rem] w-[2.25rem] sm:h-[2.25rem] sm:w-[2.25rem] md:h-[2.75rem] md:w-[2.75rem] lg:h-[2.5rem] lg:w-[2.5rem] xl:h-[3rem] xl:w-[3rem]' />
-                </div>
-                <p className='text-[11.5px] sm:text-[14px] md:text-[16px] lg:text-[14px] xl:text-[16px] 2xl:text-[20px]'>
+                <a
+                  href='mailto:chungtacungtienbk@gmail.com'
+                  className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+                >
                   chungtacungtienbk@gmail.com
-                </p>
+                </a>
               </div>
             </div>
           </div>
         </div>
+        <div className='w-full'>
+          <p className='flex justify-center text-[32px] font-bold text-[#4285F4] md:text-[24px] xl:text-[28px] 2xl:text-[32px] 3xl:text-[40px]'>
+            WE LEARN - WE SHARE
+          </p>
+        </div>
       </div>
-      <hr className='border-t-[1px] border-solid border-black' />
-      <div className='relative mx-auto flex flex-col items-center gap-y-6  py-4 px-6 md:flex-row md:justify-between md:py-5 md:px-[50px] lg:max-w-[900px] lg:py-8 lg:px-0 xl:max-w-[1160px] xl:py-9 2xl:max-w-[1416px] 2xl:py-10 3xl:max-w-[1600px]'>
-        <p className='flex  min-h-[50px] text-2xl font-bold md:text-xl xl:text-2xl 2xl:text-3xl'>
-          WE LEARN - WE SHARE
+      <div className='h-[2px] w-full px-8 md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'>
+        <div className='h-[2px] w-full bg-[#ecedef]' />
+      </div>
+      <div className='flex w-full flex-row justify-between px-8 py-2 md:px-5 lg:px-10 xl:px-20 2xl:py-3'>
+        <p className='flex h-full items-center text-sm font-medium md:text-[16px] xl:text-lg 2xl:text-xl'>
+          &copy; 2023 bởi Fessior Community
         </p>
-        <div className='flex gap-x-[1.25rem] sm:gap-x-[2rem]'>
-          <a href='https://facebook.com/chungtacungtien' target='_blank' rel='noopener noreferrer'>
-            <Icon.FacebookIcon className='aspect-square w-[50px]' />
+        <div className='flex gap-x-3 md:gap-x-2 lg:gap-x-4 2xl:gap-x-6'>
+          <a href={linkFacebookCTCT} target='_blank' rel='noopener noreferrer'>
+            <Icon.FacebookIcon className='aspect-square w-[40px] lg:w-[36px] 2xl:w-[42px] 3xl:w-[50px]' />
           </a>
-          <a
-            href='https://www.youtube.com/c/CLBCh%C3%BAngtac%C3%B9ngti%E1%BA%BFn%C4%90HBK'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <Icon.YoutubeIcon className='aspect-square w-[50px]' />
+          <a href={linkYoutube} target='_blank' rel='noopener noreferrer'>
+            <Icon.YoutubeIcon className='aspect-square  w-[40px] lg:w-[36px] 2xl:w-[42px] 3xl:w-[50px]' />
           </a>
         </div>
       </div>
