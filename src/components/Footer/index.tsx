@@ -121,7 +121,7 @@ const Footer: FC = () => {
       <div className='h-[2px] w-full px-8 md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'>
         <div className='h-[2px] w-full bg-[#ecedef]' />
       </div>
-      <div className='flex w-full flex-row justify-between px-8 py-2 md:px-5 lg:px-10 xl:px-20 2xl:py-3'>
+      <div className='flex w-full flex-row justify-between px-8 py-2 md:px-5 lg:px-10 xl:px-20 2xl:py-3 3xl:px-[100px]'>
         <p className='flex h-full items-center text-sm font-medium md:text-[16px] xl:text-lg 2xl:text-xl'>
           &copy; 2023 bởi Fessior Community
         </p>
