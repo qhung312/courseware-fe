@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import LHOTTTPlaceHolder from '../../../assets/images/LHOT-placeholder.jpg';
 import LHOTTT from '../../../assets/images/LHOT.png';
 import GSAXPlaceHolder from '../../../assets/images/LRQGSAX-placeholder.png';
@@ -10,6 +12,7 @@ import { Footer, LazyLoadImage } from '../../../components';
 import { Page } from '../../../layout';
 
 const ActivitiesPage = () => {
+  const navigate = useNavigate();
   return (
     <Page title='Hoạt động'>
       <main className='with-nav-height flex flex-col gap-y-28 overflow-y-auto lg:gap-y-36 2xl:gap-y-40 3xl:gap-y-44'>
@@ -49,7 +52,11 @@ const ActivitiesPage = () => {
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 md:text-[14px] lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button
+                    type='button'
+                    onClick={() => navigate('tiep-suc-toi-truong')}
+                    className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 md:text-[14px] lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'
+                  >
                     Chi tiết
                   </button>
                 </div>
