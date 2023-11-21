@@ -86,7 +86,7 @@ const TSTTPage = () => {
                       <span>
                         {width < 768 || width > 1528
                           ? 'định hướng phát triển cho Tân sinh viên của từng khóa.'
-                          : '...'}{' '}
+                          : '. . .'}{' '}
                       </span>
                     </p>
                   </div>
@@ -116,15 +116,15 @@ const TSTTPage = () => {
                       <Icon.DevelopmentIcon className='z-[1] aspect-square w-[60%] fill-white' />
                     </div>
                   )}
-                  <div className='flex h-fit w-full items-start bg-transparent py-3 pt-9 md:pt-0 lg:py-4 2xl:py-6 3xl:py-7'>
+                  <div className='flex h-fit w-full items-start bg-transparent py-3 pt-9 md:py-3 lg:py-4 2xl:py-6 3xl:py-7'>
                     <p className='text-[16px] font-normal leading-7 text-[#696984] md:leading-5 lg:text-lg lg:leading-7 2xl:text-[22px] 2xl:leading-9 3xl:text-[22px]'>
                       Chương trình tiếp tục phát triển và nhân rộng quy mô với hoạt động Hỗ trợ các
                       bạn Tân sinh viên di chuyển và làm quen với Ký túc xá Đại học Quốc gia trong
-                      những ngày đầu đặt chân đến Thành phố.
+                      những ngày đầu đặt chân đến Thành phố
                       <span>
                         {width < 768 ||
                           (width > 1528 &&
-                            'Điều này giúp các bạn và phụ huynh tiết kiệm thời gian và công sức vì những điều mới lạ trong quá trình nhập học.')}
+                            '. Điều này giúp các bạn và phụ huynh tiết kiệm thời gian và công sức vì những điều mới lạ trong quá trình nhập học.')}
                       </span>
                     </p>
                   </div>
