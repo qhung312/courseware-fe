@@ -267,7 +267,6 @@ const ExerciseListPage = () => {
                               <td className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                                 <button
                                   onClick={(e) => {
-                                    e.preventDefault();
                                     e.stopPropagation();
                                     navigate(`/admin/exercises/edit/${exercise._id}`);
                                   }}
@@ -281,7 +280,6 @@ const ExerciseListPage = () => {
                                 <button
                                   className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                                   onClick={(e) => {
-                                    e.preventDefault();
                                     e.stopPropagation();
                                     exerciseToDelete.current = exercise._id;
                                     setDeleteModal(true);
