@@ -79,14 +79,15 @@ const TSTTPage = () => {
                       <Icon.OriginIcon className='z-[1] aspect-square w-[60%] fill-white' />
                     </div>
                   )}
-                  <div className='flex h-full w-full items-start bg-transparent py-3 pt-9 md:pt-0 lg:py-4 2xl:py-6 3xl:py-7'>
-                    <p className='text-[16px] font-normal leading-7 text-[#696984] md:leading-6 lg:text-xl lg:leading-8 2xl:text-[22px] 2xl:leading-10 3xl:text-[24px]'>
+                  <div className='flex h-fit w-full items-start bg-transparent py-3 pt-9 md:py-3 lg:py-4 2xl:py-6 3xl:py-7'>
+                    <p className='text-[16px] font-normal leading-7 text-[#696984] md:leading-6 lg:text-lg lg:leading-7 xl:text-xl xl:leading-8 2xl:text-[22px] 2xl:leading-10 3xl:text-[24px]'>
                       Chương trình được khởi động từ những năm 2015 - 2016, với các hoạt động tiêu
-                      biểu như các buổi chia sẻ phương pháp học tập,{' '}
+                      biểu như các buổi chia sẻ phương pháp{' '}
+                      <span>{width < 768 || width > 820 ? 'học tập' : '. . .'} </span>
                       <span>
                         {width < 768 || width > 1528
-                          ? 'định hướng phát triển cho Tân sinh viên của từng khóa.'
-                          : '. . .'}{' '}
+                          ? ', định hướng phát triển cho Tân sinh viên của từng khóa.'
+                          : width > 820 && ', . . .'}{' '}
                       </span>
                     </p>
                   </div>
@@ -117,10 +118,13 @@ const TSTTPage = () => {
                     </div>
                   )}
                   <div className='flex h-fit w-full items-start bg-transparent py-3 pt-9 md:py-3 lg:py-4 2xl:py-6 3xl:py-7'>
-                    <p className='text-[16px] font-normal leading-7 text-[#696984] md:leading-5 lg:text-lg lg:leading-7 2xl:text-[22px] 2xl:leading-9 3xl:text-[22px]'>
+                    <p className='text-[16px] font-normal leading-7 text-[#696984] md:leading-6 lg:text-lg lg:leading-7 xl:text-xl xl:leading-8 2xl:text-[22px] 2xl:leading-10 3xl:text-[24px]'>
                       Chương trình tiếp tục phát triển và nhân rộng quy mô với hoạt động Hỗ trợ các
                       bạn Tân sinh viên di chuyển và làm quen với Ký túc xá Đại học Quốc gia trong
-                      những ngày đầu đặt chân đến Thành phố
+                      những ngày đầu{' '}
+                      <span>
+                        {width < 768 || (width > 820 ? 'đặt chân đến Thành phố' : '. . .')}
+                      </span>
                       <span>
                         {width < 768 ||
                           (width > 1528 &&
