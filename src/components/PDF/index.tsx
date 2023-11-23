@@ -38,6 +38,7 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
   const canZoomIn = zoom < 2;
   const canZoomOut = zoom > 0.4;
   const timeRef = useRef<NodeJS.Timeout>();
+  const [hasOutline, setHasOutline] = useState(true);
 
   const handleOnMouseIn = (isIn: boolean) => {
     if (timeRef.current) {
@@ -134,7 +135,10 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
             <Outline
               onItemClick={onItemClick}
               className={`with-nav-height ${isShowOutline ? '' : 'hidden'}`}
-              onLoadSuccess={(outline) => console.log('>> outline: ', outline)}
+              onLoadSuccess={(outline) => {
+                console.log('>> outline: ', outline);
+                setHasOutline(outline != null);
+              }}
             />
           </div>
           <div
@@ -146,12 +150,13 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
           >
             <button
               type='button'
-              className='flex flex-1 items-center whitespace-nowrap rounded-lg p-3 text-[#d4d4d5] hover:bg-[#606063] md:p-1 lg:p-3 3xl:p-5'
-              onClick={() => {
-                setIsShowOutline(!isShowOutline);
-              }}
+              className={`flex flex-1 items-center whitespace-nowrap rounded-lg p-3 text-[#d4d4d5] md:p-1 lg:p-3 3xl:p-5 ${
+                !hasOutline ? 'cursor-not-allowed' : 'hover:bg-[#606063]'
+              }`}
+              onClick={() => setIsShowOutline(!isShowOutline)}
+              disabled={!hasOutline}
             >
-              {isShowOutline ? 'Ẩn' : 'Hiện'} mục lục
+              {hasOutline ? `${isShowOutline ? 'Ẩn' : 'Hiện'} mục lục` : 'Không có mục lục'}
             </button>
             <button
               type='button'
