@@ -104,7 +104,7 @@ const TSTTPage = () => {
               </div>
             </div>
             <div className='flex w-full justify-end'>
-              <div className='flex h-fit w-full flex-col justify-between rounded-[20px] bg-transparent shadow-xl md:w-[75%] md:translate-x-[4%] md:flex-row md:overflow-x-hidden'>
+              <div className='flex h-fit w-full flex-col justify-between rounded-[20px] bg-transparent shadow-xl md:w-[75%] md:flex-row md:overflow-x-hidden'>
                 <div className='relative h-fit w-full items-start px-4 md:flex md:flex-row md:gap-x-3 lg:gap-x-5 lg:px-6 2xl:gap-x-7 2xl:px-8 3xl:px-9'>
                   {width > 768 ? (
                     <div className='flex w-fit items-start py-4 lg:py-6 2xl:py-8 3xl:py-9'>

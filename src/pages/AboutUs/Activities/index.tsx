@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import LHOTTTPlaceHolder from '../../../assets/images/LHOT-placeholder.jpg';
-import LHOTTT from '../../../assets/images/LHOT.png';
+import LHOTTT from '../../../assets/images/LHOTTT.png';
 import GSAXPlaceHolder from '../../../assets/images/LRQGSAX-placeholder.png';
 import GSAX from '../../../assets/images/LRQGSAX.png';
 import SCTTMPlaceHolder from '../../../assets/images/NHSCTTM-placeholder.png';
@@ -16,13 +15,13 @@ const ActivitiesPage = () => {
   return (
     <Page title='Hoạt động'>
       <main className='with-nav-height flex flex-col gap-y-28 overflow-y-auto lg:gap-y-36 2xl:gap-y-40 3xl:gap-y-44'>
-        <div className='flex w-full flex-col gap-y-12 px-5 py-8 md:px-[48px] lg:gap-y-20 lg:px-24 xl:py-10 2xl:gap-y-24 2xl:py-12 2xl:px-32 3xl:gap-y-28 3xl:py-14 3xl:px-40'>
-          <div className='flex w-full flex-col items-start justify-center md:items-center'>
-            <h1 className='text-start text-[28px] font-bold text-[#00CBB8] md:text-center md:text-[24px] md:text-2xl md:text-[#4285F4] lg:text-3xl xl:text-4xl 2xl:text-5xl'>
+        <div className='flex w-full flex-col gap-y-9 px-5 py-8 md:gap-y-12 md:px-[48px] lg:gap-y-20 lg:px-24 xl:py-10 2xl:gap-y-24 2xl:py-12 2xl:px-32 3xl:gap-y-28 3xl:py-14 3xl:px-40'>
+          <div className='flex w-full flex-col items-start justify-center md:items-center md:gap-y-2 lg:gap-y-4 2xl:gap-y-6'>
+            <h1 className='text-start text-[28px] font-bold text-[#2F327D] md:text-center md:text-[24px] md:text-2xl md:text-[#4285F4] lg:text-3xl xl:text-4xl 2xl:text-5xl'>
               HOẠT ĐỘNG
             </h1>
-            <h3 className='hidden text-center text-lg font-normal text-[#696984] md:flex lg:text-xl 2xl:text-2xl'>
-              Những hoạt động nổi bật được tổ chức bỏi Câu lạc bộ Chúng ta cùng tiến
+            <h3 className='hidden text-center text-lg font-normal text-[#696984] md:flex md:text-xl lg:text-2xl 2xl:text-3xl'>
+              Những hoạt động nổi bật được tổ chức bởi Câu lạc bộ Chúng ta cùng tiến
             </h3>
             <p className='flex text-[16px] font-normal text-[#696984] md:hidden'>
               Những hoạt động nổi bật
@@ -66,22 +65,21 @@ const ActivitiesPage = () => {
             <div className='flex w-full flex-col items-center justify-center gap-y-8 md:flex-row md:justify-between'>
               <div className='flex w-full flex-col justify-center gap-2 md:w-[44%] lg:gap-3 xl:gap-4'>
                 <div className='w-full space-y-3 md:space-y-4 xl:space-y-5'>
-                  <h2 className='text-start text-[24px] font-semibold text-[#00CBB8] md:uppercase lg:text-[28px] xl:text-[32px] 2xl:text-[36px]'>
-                    SÁCH <span className='text-black md:text-[#00CBB8]'>CŨ, </span>TRI THỨC{' '}
-                    <span className='text-black md:text-[#00CBB8]'>MỚI</span>
+                  <h2 className='text-start text-[24px] font-semibold text-[#2F327D] md:uppercase lg:text-[28px] xl:text-[32px] 2xl:text-[36px]'>
+                    SÁCH <span className='text-black md:text-[#2F327D]'>CŨ, </span>TRI THỨC{' '}
+                    <span className='text-black md:text-[#2F327D]'>MỚI</span>
                   </h2>
                   <p className='text-start text-[16px] text-[#696984] md:text-[14px] lg:text-[18px] 2xl:text-[22px]'>
-                    <span className='font-semibold md:font-normal'>Sách cũ Tri thức mới</span> là
-                    chương trình thường niên được biết đến với tên gọi khác là Hội sách. Chương
-                    trình được tổ chức nhằm trao tặng Tân sinh viên những đầu sách đại cương cũ được
-                    quyên góp từ các sinh viên khóa trước. Chương trình luôn là niềm tự hào của CLB
-                    Chúng Ta Cùng Tiến không chỉ ở quy mô tổ chức mà còn là ngọn lửa giữ lấy tinh
-                    thần đoàn kết, lá lành đùm lá rách trong cộng đồng sinh viên ở các trường Đại
-                    học.
+                    <span className='font-semibold'>Sách cũ Tri thức mới</span> là chương trình
+                    thường niên được biết đến với tên gọi khác là Hội sách. Chương trình được tổ
+                    chức nhằm trao tặng Tân sinh viên những đầu sách đại cương cũ được quyên góp từ
+                    các sinh viên khóa trước. Chương trình luôn là niềm tự hào của CLB Chúng Ta Cùng
+                    Tiến không chỉ ở quy mô tổ chức mà còn là ngọn lửa giữ lấy tinh thần đoàn kết,
+                    lá lành đùm lá rách trong cộng đồng sinh viên ở các trường Đại học.
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#00CBB8]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#00CBB8] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
                     Chi tiết
                   </button>
                 </div>
@@ -104,7 +102,7 @@ const ActivitiesPage = () => {
                 <LazyLoadImage
                   className='z-[1] block aspect-[360/200]'
                   src={LHOTTT}
-                  placeHolderSrc={LHOTTTPlaceHolder}
+                  placeHolderSrc={LHOTTT}
                   alt='lhottt_alt'
                   objectFit='cover'
                 />
@@ -118,7 +116,7 @@ const ActivitiesPage = () => {
                     Lớp học ôn tập là một hoạt động phi lợi nhuận được Câu lạc bộ Chúng Ta Cùng Tiến
                     tổ chức vào mỗi học kỳ trong nhiều năm qua. Hoạt động đã trở nên rất quen thuộc
                     với nhiều thế hệ sinh viên Bách khoa và là “người bạn” đồng hành vượt qua các
-                    môn đại cương khó khăn, chia sẻ kinh nghiệm học tập, thi cử,...
+                    môn đại cương khó khăn, chia sẻ kinh nghiệm học tập, thi cử. . .
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
@@ -136,14 +134,14 @@ const ActivitiesPage = () => {
                     GIA SƯ <span className='text-[#4285F4]'>ÁO XANH</span>
                   </h2>
                   <p className='text-start text-[16px] text-[#696984] md:text-[14px] lg:text-[18px] 2xl:text-[22px]'>
-                    Gia Sư Áo Xanh Bách Khoa là chiến dịch thường niên được khởi động từ năm
-                    2011,xây dựng và phát triển cho đến nay. Chúng Ta Cùng Tiến luôn tự hào rằng đây
-                    là điểm xuất phát của tất cả chiến dịch Gia Sư Áo Xanh được phát động rộng rãi
-                    trên khắp các trường Đại học tại Thành phố Hồ Chí Minh.
+                    Gia Sư Áo Xanh Bách Khoa là chiến dịch thường niên được khởi động từ năm 2011,
+                    xây dựng và phát triển cho đến nay. Chúng Ta Cùng Tiến luôn tự hào rằng đây là
+                    điểm xuất phát của tất cả chiến dịch Gia Sư Áo Xanh được phát động rộng rãi trên
+                    khắp các trường Đại học tại Thành phố Hồ Chí Minh.
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#00CBB8]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#00CBB8] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
                     Chi tiết
                   </button>
                 </div>
