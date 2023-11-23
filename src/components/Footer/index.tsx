@@ -38,21 +38,18 @@ const Footer: FC = () => {
                 disabled
               />
             </div>
-            <Link
-              to='/'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
-            >
+            <Link to='/' className='text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'>
               Home
             </Link>
             <Link
               to='/about-us'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+              className='text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'
             >
               Giới thiệu
             </Link>
             <Link
               to='/about-us/activities'
-              className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+              className='text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'
             >
               Cộng đồng Chúng Ta Cùng Tiến
             </Link>
@@ -74,7 +71,7 @@ const Footer: FC = () => {
                 <a
                   target='_blank'
                   href={linkGoogleMap}
-                  className='flex flex-col text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+                  className='flex flex-col text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'
                   rel='noreferrer'
                 >
                   <p className='whitespace-nowrap text-inherit'>
@@ -90,7 +87,7 @@ const Footer: FC = () => {
                 <div>
                   <Icon.PhoneIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
                 </div>
-                <div className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'>
+                <div className='text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'>
                   <a href='tel:036329470' className='text-inherit'>
                     036 329 4701
                   </a>
@@ -107,7 +104,7 @@ const Footer: FC = () => {
                 </div>
                 <a
                   href='mailto:chungtacungtienbk@gmail.com'
-                  className='text-xs text-[#5b5b5b] hover:text-black md:text-lg lg:text-[16px]'
+                  className='text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'
                 >
                   chungtacungtienbk@gmail.com
                 </a>
@@ -124,7 +121,7 @@ const Footer: FC = () => {
       <div className='h-[2px] w-full px-8 md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'>
         <div className='h-[2px] w-full bg-[#ecedef]' />
       </div>
-      <div className='flex w-full flex-row justify-between px-8 py-2 md:px-5 lg:px-10 xl:px-20 2xl:py-3'>
+      <div className='flex w-full flex-row justify-between px-8 py-2 md:px-5 lg:px-10 xl:px-20 2xl:py-3 3xl:px-[100px]'>
         <p className='flex h-full items-center text-sm font-medium md:text-[16px] xl:text-lg 2xl:text-xl'>
           &copy; 2023 bởi Fessior Community
         </p>

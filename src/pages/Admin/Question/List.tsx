@@ -269,7 +269,7 @@ const QuestionListPage = () => {
                               <td className='flex flex-[2] flex-wrap items-center justify-end gap-x-4 gap-y-2'>
                                 <button
                                   onClick={(e) => {
-                                    e.preventDefault();
+                                    e.stopPropagation();
                                     navigate(`/admin/questions/edit/${question._id}`);
                                   }}
                                   className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
@@ -282,7 +282,7 @@ const QuestionListPage = () => {
                                 <button
                                   className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                                   onClick={(e) => {
-                                    e.preventDefault();
+                                    e.stopPropagation();
                                     questionToDelete.current = question._id;
                                     setDeleteModal(true);
                                   }}
