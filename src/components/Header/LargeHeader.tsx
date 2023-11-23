@@ -91,7 +91,7 @@ const LargeHeader = () => {
             px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
           >
             <p
-              className={`whitespace-nowrap border-b-[3px] bg-inherit px-2 py-1 text-inherit
+              className={`whitespace-nowrap border-b-[3px] bg-inherit px-2 py-1
             3xl:px-3 3xl:py-2 ${
               pathname === '/' ? 'border-[#4285F4] text-black' : 'border-transparent text-inherit'
             } `}
