@@ -133,7 +133,7 @@ const LargeHeader = () => {
             <nav
               className='absolute z-10 mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all duration-300'
+            transition-all duration-300 ease-linear'
               style={{
                 transform: isLibraryOpen ? 'translateY(0%)' : 'translateY(10%)',
                 maxHeight: isLibraryOpen ? '1000px' : '0px',
@@ -149,7 +149,7 @@ const LargeHeader = () => {
               >
                 <p
                   className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
-                    3xl:px-11 3xl:py-5 ${
+                    transition-all duration-500 3xl:px-11 3xl:py-5 ${
                       pathname.includes('/library/material') ? '' : 'hover:bg-[#F1F1F1]'
                     }`}
                   style={{
@@ -167,7 +167,7 @@ const LargeHeader = () => {
               >
                 <p
                   className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
-                  3xl:px-11 3xl:py-5 ${
+                  transition-all duration-500 3xl:px-11 3xl:py-5 ${
                     pathname.includes('/library/exam-archive') ? '' : 'hover:bg-[#F1F1F1]'
                   }`}
                   style={{
@@ -228,7 +228,7 @@ const LargeHeader = () => {
               >
                 <p
                   className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
-                3xl:px-11 3xl:py-5 ${
+                transition-all duration-500 3xl:px-11 3xl:py-5 ${
                   pathname.includes('/room/exercises') ? '' : 'hover:bg-[#F1F1F1]'
                 }`}
                   style={{
@@ -241,7 +241,7 @@ const LargeHeader = () => {
               </NavLink>
               <NavLink to='/room/tests' className='w-full bg-inherit' onClick={throttledRoomClick}>
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${pathname.includes('/room/tests') ? '' : 'hover:bg-[#F1F1F1]'}`}
                   style={{
                     color: pathname.includes('/room/tests') ? '#3b3b3b' : 'inherit',
@@ -301,7 +301,7 @@ const LargeHeader = () => {
             >
               <NavLink to='/about-us' className='w-full bg-inherit' onClick={throttledAboutUsClick}>
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${pathname === '/about-us' ? '' : 'hover:bg-[#F1F1F1]'}`}
                   style={{
                     color: pathname === '/about-us' ? '#3b3b3b' : 'inherit',
@@ -317,7 +317,7 @@ const LargeHeader = () => {
                 onClick={throttledAboutUsClick}
               >
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${
                   pathname.includes('/about-us/activities') ? '' : 'hover:bg-[#F1F1F1]'
                 }`}
@@ -335,7 +335,7 @@ const LargeHeader = () => {
                 onClick={throttledAboutUsClick}
               >
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${
                   pathname.includes('/about-us/partners') ? '' : 'hover:bg-[#F1F1F1]'
                 }`}
