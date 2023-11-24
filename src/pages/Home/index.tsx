@@ -119,7 +119,7 @@ const HomePage = () => {
               </Carousel>
             </div>
           </section>
-          <section className='relative flex w-screen overflow-hidden md:w-full'>
+          <section className='relative flex w-screen overflow-hidden rounded-lg md:w-full'>
             <div className='absolute top-0 left-0 right-0 bottom-0 z-0 w-full'>
               <div className='absolute z-[1] h-full w-full bg-[#4285F4]/70' />
               <LazyLoadImage
@@ -259,23 +259,22 @@ const HomePage = () => {
               >
                 <div className='w-full px-2 pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
                   <UserSharingCard
-                    name='Kim Chi'
-                    profileImg={require('../../assets/images/KimChiProfile.jpg')}
-                    sharing='Tui có một tật xấu là tới sát thi thì hay bị rối lên không thể hệ thống kiến thức đầy đủ, tài liệu này đã giúp tui không ít. Đặc biệt là Hóa đại cương ><'
-                  />
-                </div>
-                <div className='w-full px-2 pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
-                  <UserSharingCard
-                    name='Diệu My'
-                    profileImg={require('../../assets/images/DieuMyProfile.png')}
-                    sharing='Tài liệu rất chi tiết và đầy đủ, tui rất khâm phục các bạn đã dày công biên soạn tài liệu này. Cảm ơn CTCT.'
-                  />
-                </div>
-                <div className='w-full px-2 pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
-                  <UserSharingCard
-                    name='Quang Vinh'
+                    name='Nguyễn Văn A'
                     profileImg={require('../../assets/images/AvatarPic.png')}
-                    sharing='Cảm ơn CTCT vì kho tài liệu quý giá này, rất chỉn chu.'
+                    sharing='Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempos Lorem ipsum dolor sitamet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempos Lorem ipsum dolor sitame'
+                  />
+                </div>
+                <div className='w-full px-2 pb-10 lg:pb-[60px] 3xl:pb-[100px]'>
+                  <UserSharingCard
+                    name='Nguyễn Văn A'
+                    profileImg={require('../../assets/images/AvatarPic.png')}
+                    sharing='Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempos Lorem ipsum dolor sitamet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempos Lorem ipsum dolor sitame'
                   />
                 </div>
               </Carousel>
