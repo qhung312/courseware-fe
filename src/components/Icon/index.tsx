@@ -23,6 +23,7 @@ import { ReactComponent as Delete } from '../../assets/svgs/DeleteIcon.svg';
 import { ReactComponent as DeleteIconSnackbar } from '../../assets/svgs/DeleteIconSnackbar.svg';
 import { ReactComponent as DeleteModalIcon } from '../../assets/svgs/DeleteModalIcon.svg';
 import { ReactComponent as DescriptionIcon } from '../../assets/svgs/DescriptionIcon.svg';
+import { ReactComponent as DevelopmentIcon } from '../../assets/svgs/DevelopmentIcon.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
 import { ReactComponent as Edit } from '../../assets/svgs/EditIcon.svg';
 import { ReactComponent as EducationHat } from '../../assets/svgs/EducationHatIcon.svg';
@@ -45,6 +46,7 @@ import { ReactComponent as Logout } from '../../assets/svgs/LogoutIcon.svg';
 import { ReactComponent as MailIcon } from '../../assets/svgs/MailIcon.svg';
 import { ReactComponent as OpenBook } from '../../assets/svgs/OpenBookIcon.svg';
 import { ReactComponent as OpenQuote } from '../../assets/svgs/OpenQuoteIcon.svg';
+import { ReactComponent as OriginIcon } from '../../assets/svgs/OriginIcon.svg';
 import { ReactComponent as Partner } from '../../assets/svgs/PartnerIcon.svg';
 import { ReactComponent as Pen } from '../../assets/svgs/PenIcon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/svgs/PhoneIcon.svg';
@@ -90,6 +92,7 @@ export default {
   DeleteModalIcon,
   DescriptionIcon,
   DeleteIconSnackbar,
+  DevelopmentIcon,
   Document,
   Edit,
   EducationHat,
@@ -112,6 +115,7 @@ export default {
   Logout,
   Partner,
   Quiz,
+  OriginIcon,
   OpenBook,
   OpenQuote,
   CloseQuote,

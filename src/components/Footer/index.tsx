@@ -16,7 +16,7 @@ const Footer: FC = () => {
         <div className='flex w-full flex-col justify-between gap-y-8 px-8 py-2 md:gap-y-12 md:px-5 md:py-4 lg:flex-row lg:gap-y-6 lg:px-10 lg:py-4 xl:gap-y-10 xl:px-20 2xl:gap-y-10 3xl:px-[100px]'>
           <div className='flex flex-row items-center justify-evenly md:gap-x-6 lg:justify-start lg:gap-y-6 lg:gap-x-10 xl:gap-y-12 2xl:w-[25%] 2xl:gap-x-14 3xl:gap-x-16'>
             <div className='flex items-center'>
-              <Icon.LogoCTCT className='h-auto w-[132px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
+              <Icon.LogoCTCT className='h-auto w-[108px] md:w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
             </div>
 
             <div className='flex flex-col items-center justify-center gap-y-2'>
@@ -24,7 +24,7 @@ const Footer: FC = () => {
                 Đơn vị hợp tác
               </p>
               <a href={linkFaceBookGDSC}>
-                <Icon.LogoFessior className='h-auto w-[132px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
+                <Icon.LogoFessior className='h-auto w-[132px] md:w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
               </a>
             </div>
           </div>

@@ -1,8 +1,10 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
+import ActivitiesPage from '../../pages/AboutUs/Activities';
+import TSTTPage from '../../pages/AboutUs/Activities/TSTT.tsx';
 import ComingSoonPage from '../../pages/ComingSoon';
 import NotFoundPage from '../../pages/NotFound';
 import ActivityHistory from '../../pages/Profile/ActivityHistory';
@@ -48,12 +50,27 @@ const UserRoute = () => {
             </Suspense>
           }
         >
-          <Route path='activities' element={<Outlet />}>
+          <Route
+            path='activities'
+            element={
+              <Suspense fallback={<Loading />}>
+                <ActivitiesPage />
+              </Suspense>
+            }
+          >
             <Route
               path='gia-su-ao-xanh'
               element={
                 <Suspense fallback={<Loading />}>
                   <GSAXPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='tiep-suc-toi-truong'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <TSTTPage />
                 </Suspense>
               }
             />

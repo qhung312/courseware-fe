@@ -78,9 +78,9 @@ const LargeHeader = () => {
             to='/'
             end
             className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-4 hover:text-[#070707] 3xl:px-[32px] ${
+            px-[16px] py-4 hover:text-black 3xl:px-[32px] ${
               pathname === '/'
-                ? 'border-[#4285F4] text-[#070707]'
+                ? 'border-[#4285F4] text-black'
                 : 'border-transparent text-[#5B5B5B]'
             }`}
           > */}
@@ -88,14 +88,12 @@ const LargeHeader = () => {
             to='/'
             end
             className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 hover:text-[#070707] 3xl:px-[32px] `}
+            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
           >
             <p
-              className={`whitespace-nowrap border-b-[3px] bg-inherit px-2 py-1 text-inherit
-            transition-colors duration-300 ease-linear 3xl:px-3 3xl:py-2 ${
-              pathname === '/'
-                ? 'border-[#4285F4] text-[#070707]'
-                : 'border-transparent text-[#5B5B5B]'
+              className={`whitespace-nowrap border-b-[3px] bg-inherit px-2 py-1
+            3xl:px-3 3xl:py-2 ${
+              pathname === '/' ? 'border-[#4285F4] text-black' : 'border-transparent text-inherit'
             } `}
             >
               Trang chủ
@@ -104,17 +102,17 @@ const LargeHeader = () => {
           <div className='relative' ref={libraryRef}>
             <button
               type='button'
-              className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 hover:text-[#070707] 3xl:px-[32px]`}
+              className={`flex h-[100%] items-center justify-start px-[16px] 
+            py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px] `}
               onClick={throttledLibraryClick}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-                py-1 text-inherit transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3  3xl:px-3 3xl:py-2 ${
+                py-1  lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
                   pathname.includes('/library/material') ||
                   pathname.includes('/library/exam-archive')
-                    ? 'border-[#4285F4] text-[#070707]'
-                    : 'border-transparent text-[#5B5B5B]'
+                    ? 'border-[#4285F4] text-black'
+                    : 'border-transparent text-inherit'
                 }`}
               >
                 <p className={`whitespace-nowrap bg-inherit text-inherit`}>Thư viện</p>
@@ -135,7 +133,7 @@ const LargeHeader = () => {
             <nav
               className='absolute z-10 mt-1 flex w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
-            transition-all duration-300'
+            transition-all duration-300 ease-linear'
               style={{
                 transform: isLibraryOpen ? 'translateY(0%)' : 'translateY(10%)',
                 maxHeight: isLibraryOpen ? '1000px' : '0px',
@@ -151,7 +149,7 @@ const LargeHeader = () => {
               >
                 <p
                   className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
-                    3xl:px-11 3xl:py-5 ${
+                    transition-all duration-500 3xl:px-11 3xl:py-5 ${
                       pathname.includes('/library/material') ? '' : 'hover:bg-[#F1F1F1]'
                     }`}
                   style={{
@@ -169,7 +167,7 @@ const LargeHeader = () => {
               >
                 <p
                   className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
-                  3xl:px-11 3xl:py-5 ${
+                  transition-all duration-500 3xl:px-11 3xl:py-5 ${
                     pathname.includes('/library/exam-archive') ? '' : 'hover:bg-[#F1F1F1]'
                   }`}
                   style={{
@@ -186,15 +184,15 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 hover:text-[#070707] 3xl:px-[32px]`}
+            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
               onClick={throttledRoomClick}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-            py-1 text-inherit transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3  3xl:px-3 3xl:py-2 ${
+            py-1 lg:gap-x-2 2xl:gap-x-3  3xl:px-3 3xl:py-2 ${
               pathname.includes('/room/exercises') || pathname.includes('/room/tests')
-                ? 'border-[#4285F4] text-[#070707]'
-                : 'border-transparent text-[#585858]'
+                ? 'border-[#4285F4] text-black'
+                : 'border-transparent text-inherit'
             }`}
               >
                 <p className={`whitespace-nowrap bg-inherit text-inherit`}>Phòng thi</p>
@@ -230,7 +228,7 @@ const LargeHeader = () => {
               >
                 <p
                   className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
-                3xl:px-11 3xl:py-5 ${
+                transition-all duration-500 3xl:px-11 3xl:py-5 ${
                   pathname.includes('/room/exercises') ? '' : 'hover:bg-[#F1F1F1]'
                 }`}
                   style={{
@@ -243,7 +241,7 @@ const LargeHeader = () => {
               </NavLink>
               <NavLink to='/room/tests' className='w-full bg-inherit' onClick={throttledRoomClick}>
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${pathname.includes('/room/tests') ? '' : 'hover:bg-[#F1F1F1]'}`}
                   style={{
                     color: pathname.includes('/room/tests') ? '#3b3b3b' : 'inherit',
@@ -259,17 +257,17 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start
-            px-[16px] py-4 hover:text-[#070707] 3xl:px-[32px] `}
+            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
               onClick={throttledAboutUsClick}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-                py-1 text-inherit transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                py-1 lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
                   pathname === '/about-us' ||
                   pathname.includes('/about-us/activities') ||
                   pathname === '/about-us/partners'
-                    ? 'border-[#4285F4] text-[#070707]'
-                    : 'border-transparent text-[#585858]'
+                    ? 'border-[#4285F4] text-black'
+                    : 'border-transparent text-inherit'
                 }`}
               >
                 <p className='whitespace-nowrap bg-inherit text-inherit'>Về chúng tôi</p>
@@ -303,7 +301,7 @@ const LargeHeader = () => {
             >
               <NavLink to='/about-us' className='w-full bg-inherit' onClick={throttledAboutUsClick}>
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center 
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${pathname === '/about-us' ? '' : 'hover:bg-[#F1F1F1]'}`}
                   style={{
                     color: pathname === '/about-us' ? '#3b3b3b' : 'inherit',
@@ -319,7 +317,7 @@ const LargeHeader = () => {
                 onClick={throttledAboutUsClick}
               >
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${
                   pathname.includes('/about-us/activities') ? '' : 'hover:bg-[#F1F1F1]'
                 }`}
@@ -337,7 +335,7 @@ const LargeHeader = () => {
                 onClick={throttledAboutUsClick}
               >
                 <p
-                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center
+                  className={`w-full whitespace-nowrap bg-inherit px-6 py-3 text-center transition-all duration-500
                 3xl:px-11 3xl:py-5 ${
                   pathname.includes('/about-us/partners') ? '' : 'hover:bg-[#F1F1F1]'
                 }`}
@@ -358,14 +356,14 @@ const LargeHeader = () => {
               to='/admin'
               end
               className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 hover:text-[#070707] 3xl:px-[32px] `}
+            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
             >
               <div
                 className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-                py-1 text-inherit transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
+                py-1 lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
                   pathname.includes('/admin')
-                    ? 'border-[#4285F4] text-[#070707]'
-                    : 'border-transparent text-[#585858]'
+                    ? 'border-[#4285F4] text-black'
+                    : 'border-transparent text-inherit'
                 }`}
               >
                 <p className='whitespace-nowrap bg-inherit text-inherit'>Admin</p>
