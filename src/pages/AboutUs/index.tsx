@@ -106,7 +106,8 @@ const AboutUsPage = () => {
           </div>
           <div className='mb-8 flex-1 md:mb-0'>
             <LazyLoadImage
-              className='z-[1] block aspect-[360/200] rounded-lg md:rounded-xl xl:rounded-2xl 2xl:rounded-3xl'
+              className='rounded-lg'
+              containerClassName='block aspect-[360/200]'
               src={MissionImg}
               placeHolderSrc={MissionPlaceholder}
               alt='introduction_pic'
@@ -134,7 +135,8 @@ const AboutUsPage = () => {
           </div>
           <div className='mb-8 flex-1 md:mb-0'>
             <LazyLoadImage
-              className='z-[1] block aspect-[360/200] rounded-lg object-cover md:rounded-xl xl:rounded-2xl 2xl:rounded-3xl'
+              className='rounded-lg'
+              containerClassName='block aspect-[360/200]'
               src={VisionImg}
               placeHolderSrc={VisionPlaceholder}
               alt='introduction_pic'
