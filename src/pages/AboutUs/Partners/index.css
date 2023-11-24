@@ -1,0 +1,28 @@
+.swiper {
+  overflow: visible !important;
+}
+
+.swiper-wrapper {
+  overflow: visible !important;
+}
+
+.swiper-pagination {
+  inset: 0 !important;
+  position: relative !important;
+  height: fit-content;
+  margin-top: 16px;
+}
+
+.swiper-pagination-bullet {
+  background-color: rgba(179, 185, 187, 0.5);
+  opacity: 1;
+  width: 28px;
+  height: 8px;
+  border-radius: 9999px;
+  margin: 0 12px !important;
+  transition: all 1s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #4285f4;
+}

@@ -3,16 +3,17 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
-import ActivitiesPage from '../../pages/AboutUs/Activities';
-import TSTTPage from '../../pages/AboutUs/Activities/TSTT.tsx';
 import ComingSoonPage from '../../pages/ComingSoon';
 import NotFoundPage from '../../pages/NotFound';
-import ActivityHistory from '../../pages/Profile/ActivityHistory';
-import UserInformation from '../../pages/Profile/Information';
-import Statistic from '../../pages/Profile/Statistic';
-import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
+const ActivitiesPage = lazy(() => import('../../pages/AboutUs/Activities'));
+const TSTTPage = lazy(() => import('../../pages/AboutUs/Activities/TSTT.tsx'));
+const PartnersPage = lazy(() => import('../../pages/AboutUs/Partners'));
+const ActivityHistoryPage = lazy(() => import('../../pages/Profile/ActivityHistory'));
+const UserInformationPage = lazy(() => import('../../pages/Profile/Information'));
+const StatisticPage = lazy(() => import('../../pages/Profile/Statistic'));
+const SubjectStatisticPage = lazy(() => import('../../pages/Profile/Statistic/SubjectStatistic'));
 const HomePage = lazy(() => import('../../pages/Home'));
 const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
@@ -50,19 +51,29 @@ const UserRoute = () => {
               </Suspense>
             }
           />
+          <Route path='activities'>
+            <Route
+              path=''
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ActivitiesPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='tiep-suc-toi-truong'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <TSTTPage />
+                </Suspense>
+              }
+            />
+          </Route>
           <Route
-            path='activities'
+            path='partners'
             element={
               <Suspense fallback={<Loading />}>
-                <ActivitiesPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path='activities/tiep-suc-toi-truong'
-            element={
-              <Suspense fallback={<Loading />}>
-                <TSTTPage />
+                <PartnersPage />
               </Suspense>
             }
           />
@@ -72,7 +83,7 @@ const UserRoute = () => {
             path=''
             element={
               <Suspense fallback={<Loading />}>
-                <UserInformation />
+                <UserInformationPage />
               </Suspense>
             }
           />
@@ -80,7 +91,7 @@ const UserRoute = () => {
             path='history'
             element={
               <Suspense fallback={<Loading />}>
-                <ActivityHistory />
+                <ActivityHistoryPage />
               </Suspense>
             }
           />
@@ -88,7 +99,7 @@ const UserRoute = () => {
             path='statistic'
             element={
               <Suspense fallback={<Loading />}>
-                <Statistic />
+                <StatisticPage />
               </Suspense>
             }
           />
@@ -96,7 +107,7 @@ const UserRoute = () => {
             path='statistic/:subjectId'
             element={
               <Suspense fallback={<Loading />}>
-                <SubjectStatistic />
+                <SubjectStatisticPage />
               </Suspense>
             }
           />

@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
-import './index.css';
+import { useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface LazyLoadImageProps {
   src: string;
@@ -19,27 +18,34 @@ const LazyLoadImage = ({
   placeHolderSrc,
   objectFit = 'none',
 }: LazyLoadImageProps) => {
+  const placeholderRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  const mergedContainerClassName = twMerge('relative h-full', containerClassName);
+  const mergedClassName = twMerge('h-full', className);
+
   const [loading, setLoading] = useState(true);
   return (
-    <div className={`relative flex h-full flex-row ${containerClassName}`}>
+    <div className={`flex flex-row ${mergedContainerClassName}`}>
       <img
+        ref={placeholderRef}
         src={placeHolderSrc}
         alt={`${alt} placeholder`}
-        className={`full ${loading ? 'z-1' : '-z-10'} ${className}`}
+        className={`w-full ${loading ? 'z-[1]' : '-z-10'} ${mergedClassName}`}
         style={{
           objectFit,
           opacity: loading ? 1 : 0,
           transition: 'opacity 0.5s ease',
-          zIndex: loading ? 1 : -1,
         }}
       />
       <img
+        ref={imageRef}
         onLoad={() => {
           setLoading(false);
         }}
         src={src}
         alt={alt}
-        className={`full relative -ml-[100%] ${loading ? '-z-10' : 'z-1'} ${className}`}
+        className={`absolute inset-0 w-full ${loading ? '-z-10' : 'z-[1]'} ${mergedClassName}`}
         loading='lazy'
         style={{
           objectFit,
