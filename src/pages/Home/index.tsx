@@ -41,7 +41,7 @@ const HomePage = () => {
 
   return (
     <Page>
-      <main className='with-nav-height flex w-full flex-col items-center justify-start overflow-y-auto bg-inherit'>
+      <main className='flex w-full flex-col items-center justify-start bg-inherit'>
         <div
           className='ml-0 mr-0 flex w-full flex-1 flex-col items-center justify-center space-y-10 px-4 py-10 md:px-5
           lg:space-y-20 lg:py-[60px] lg:px-10 xl:px-[60px] xl:py-20 2xl:px-20 3xl:space-y-[100px] 3xl:px-[100px]'
@@ -290,8 +290,8 @@ const HomePage = () => {
             </div>
           </section>
         </div>
-        <Footer />
       </main>
+      <Footer />
     </Page>
   );
 };

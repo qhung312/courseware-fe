@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
@@ -11,6 +11,7 @@ import Statistic from '../../pages/Profile/Statistic';
 import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
+const GSAXPage = lazy(() => import('../../pages/AboutUs/Activities/GSAX'));
 const HomePage = lazy(() => import('../../pages/Home'));
 const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
@@ -46,7 +47,19 @@ const UserRoute = () => {
               <AboutUsPage />
             </Suspense>
           }
-        />
+        >
+          <Route path='activities' element={<Outlet />}>
+            <Route
+              path='gia-su-ao-xanh'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <GSAXPage />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route path='partners' element={<ComingSoonPage />} />
+        </Route>
         <Route path='profile' element={<Protected />}>
           <Route
             path=''

@@ -266,7 +266,7 @@ const LargeHeader = () => {
                 className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
                 py-1 text-inherit transition-colors duration-300 ease-linear lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
                   pathname === '/about-us' ||
-                  pathname === '/about-us/activities' ||
+                  pathname.includes('/about-us/activities') ||
                   pathname === '/about-us/partners'
                     ? 'border-[#4285F4] text-[#070707]'
                     : 'border-transparent text-[#585858]'
@@ -277,7 +277,7 @@ const LargeHeader = () => {
                 <Icon.ChevronUp
                   fill={
                     pathname === '/about-us' ||
-                    pathname === '/about-us/activities' ||
+                    pathname.includes('/about-us/activities') ||
                     pathname === '/about-us/partners'
                       ? '#3b3b3b'
                       : '#5B5B5B'
