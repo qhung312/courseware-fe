@@ -174,7 +174,7 @@ const Statistic = () => {
             <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block' />
             <div className='absolute top-0 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block' />
             <div className='show-scrollbar relative z-10 hidden h-fit rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
-              <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-xl 2xl:text-[26px]'>
+              <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-base 2xl:text-xl'>
                 Điểm trung bình bài tập
               </h1>
               {subjectGrade.length === 0 ? (
