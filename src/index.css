@@ -140,15 +140,8 @@ code {
 
 @media (min-width: 768px) {
   .with-nav-height {
-    min-height: calc(100vh - 56px);
-    height: calc(100vh - 56px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .with-nav-height {
     min-height: calc(100vh - 64px);
-    height: calc(100vh - 644px);
+    height: calc(100vh - 64px);
   }
 }
 
@@ -162,7 +155,7 @@ code {
 @media (min-width: 1872px) {
   .with-nav-height {
     min-height: calc(100vh - 81px);
-    height: calc(100vh - 811px);
+    height: calc(100vh - 81px);
   }
 }
 

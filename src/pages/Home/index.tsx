@@ -41,7 +41,7 @@ const HomePage = () => {
 
   return (
     <Page>
-      <main className='with-nav-height flex w-full flex-col items-center justify-start overflow-y-auto bg-inherit'>
+      <main className='flex w-full flex-col items-center justify-start bg-inherit'>
         <div
           className='ml-0 mr-0 flex w-full flex-1 flex-col items-center justify-center space-y-10 px-4 py-10 md:px-5
           lg:space-y-20 lg:py-[60px] lg:px-10 xl:px-[60px] xl:py-20 2xl:px-20 3xl:space-y-[100px] 3xl:px-[100px]'
@@ -119,15 +119,15 @@ const HomePage = () => {
               </Carousel>
             </div>
           </section>
-          <section className='relative flex w-screen overflow-hidden md:w-full'>
+          <section className='relative flex w-screen overflow-hidden rounded-lg md:w-full'>
             <div className='absolute top-0 left-0 right-0 bottom-0 z-0 w-full'>
-              <div className='absolute z-[1] h-full w-full bg-[#4285F4]/70' />
+              <div className='absolute z-20 h-full w-full bg-[#4285F4]/70' />
               <LazyLoadImage
                 src={require('../../assets/images/Banner.jpg')}
                 alt='banner'
                 placeHolderSrc={require('../../assets/images/Banner-placeholder.jpg')}
                 containerClassName='w-full'
-                className='mt-[-22%] h-auto'
+                className='mt-[-22%] h-auto w-full'
                 objectFit='cover'
               />
             </div>
@@ -291,8 +291,8 @@ const HomePage = () => {
             </div>
           </section>
         </div>
-        <Footer />
       </main>
+      <Footer />
     </Page>
   );
 };

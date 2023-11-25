@@ -15,6 +15,7 @@ import Statistic from '../../pages/Profile/Statistic';
 import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
+const GSAXPage = lazy(() => import('../../pages/AboutUs/Activities/GSAX'));
 const HomePage = lazy(() => import('../../pages/Home'));
 const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
@@ -43,15 +44,14 @@ const UserRoute = () => {
             </Suspense>
           }
         />
-        <Route path='about-us'>
-          <Route
-            path=''
-            element={
-              <Suspense fallback={<Loading />}>
-                <AboutUsPage />
-              </Suspense>
-            }
-          />
+        <Route
+          path='about-us'
+          element={
+            <Suspense fallback={<Loading />}>
+              <AboutUsPage />
+            </Suspense>
+          }
+        >
           <Route
             path='activities'
             element={
@@ -69,7 +69,7 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='activities/lop-hoc-on-tap-thi-thu'
+            path='activities/lop-hoc-on-tap'
             element={
               <Suspense fallback={<Loading />}>
                 <LHOTTCPage />
@@ -77,10 +77,18 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='activities/ngay-hoi-sach'
+            path='activities/sach-cu-tri-thuc-moi'
             element={
               <Suspense fallback={<Loading />}>
                 <SCTTMPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='activities/gia-su-ao-xanh'
+            element={
+              <Suspense fallback={<Loading />}>
+                <GSAXPage />
               </Suspense>
             }
           />

@@ -23,7 +23,7 @@ const SCTTMPage = () => {
   }, [width]);
 
   return (
-    <Page title='Hoạt động'>
+    <Page title='Sách cũ tri thức mới'>
       <main className='with-nav-height flex flex-col gap-y-5 overflow-y-auto text-[16px] md:text-[14px] lg:gap-y-10 lg:text-[18px] xl:text-[20px] 2xl:gap-y-[54px] 3xl:gap-y-[60px]'>
         <div className='w-full'>
           <LazyLoadImage

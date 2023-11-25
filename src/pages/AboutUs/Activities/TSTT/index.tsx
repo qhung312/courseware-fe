@@ -21,11 +21,11 @@ const TSTTPage = () => {
   }, [width]);
 
   return (
-    <Page title='Hoạt động'>
-      <main className='with-nav-height flex flex-col gap-y-5 overflow-y-auto lg:gap-y-10 2xl:gap-y-[54px] 3xl:gap-y-[60px]'>
+    <Page title='Tiếp sức tới trường'>
+      <main className='flex flex-col gap-y-5 overflow-y-auto lg:gap-y-10 2xl:gap-y-[54px] 3xl:gap-y-[60px]'>
         <div className='w-full'>
           <LazyLoadImage
-            className='z-[1] block aspect-[52/25] md:aspect-[4/1]'
+            containerClassName='block aspect-[52/25] md:aspect-[4/1]'
             src={TSTT}
             placeHolderSrc={TSTTPlaceHolder}
             alt='tstt_alt'
@@ -50,9 +50,10 @@ const TSTTPage = () => {
                   </p>
                 </div>
               </div>
-              <div className='relative mb-8 max-w-[100%] flex-1  md:mb-0 md:max-w-[45%]'>
+              <div className='relative mb-8 max-w-[100%] flex-1 md:mb-0 md:max-w-[45%]'>
                 <LazyLoadImage
-                  className='z-[1] block aspect-[360/200] rounded-[20px]'
+                  containerClassName='block aspect-[360/200]'
+                  className='rounded-lg'
                   src={GTTSTT}
                   placeHolderSrc={GTTSTT}
                   alt='scttm_alt'
@@ -94,7 +95,8 @@ const TSTTPage = () => {
                 </div>
                 <div className='h-full w-full rounded-none p-0 md:h-auto md:w-[40%]'>
                   <LazyLoadImage
-                    className='z-[1] block h-full rounded-b-[20px] md:rounded-none'
+                    containerClassName='block h-full'
+                    className='rounded-b-[20px] md:rounded-none'
                     src={OriginIllustration}
                     placeHolderSrc={OriginIllustration}
                     alt='scttm_alt'
@@ -135,7 +137,8 @@ const TSTTPage = () => {
                 </div>
                 <div className='h-full w-full p-0 md:h-auto md:w-[45%]'>
                   <LazyLoadImage
-                    className='z-[1] block rounded-b-[20px] p-0 md:h-auto md:w-full md:rounded-none '
+                    containerClassName='block p-0 md:h-auto md:w-full'
+                    className='rounded-b-[20px] md:rounded-none'
                     src={DevelopmentIllustration}
                     placeHolderSrc={DevelopmentIllustration}
                     alt='scttm_alt'

@@ -1,5 +1,7 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
+import { Outlet, useLocation } from 'react-router-dom';
+
 import IntroductionPlaceHolder from '../../assets/images/Introduction-placeholder.jpg';
 import IntroductionImg from '../../assets/images/IntroductionPic.jpg';
 import MissionPlaceholder from '../../assets/images/Mission-small.png';
@@ -10,9 +12,11 @@ import { Footer, LazyLoadImage } from '../../components';
 import { Container, Page } from '../../layout';
 
 const AboutUsPage = () => {
-  return (
+  const { pathname } = useLocation();
+
+  return pathname === '/about-us' ? (
     <Page title='Về chúng tôi'>
-      <main className='with-nav-height w-full overflow-y-auto md:px-[48px]'>
+      <main className='w-full md:px-[48px]'>
         {/* Banner */}
         <Container className='relative flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
           <div className='z-[4] lg:absolute lg:text-white'>
@@ -102,7 +106,8 @@ const AboutUsPage = () => {
           </div>
           <div className='mb-8 flex-1 md:mb-0'>
             <LazyLoadImage
-              className='z-[1] block aspect-[360/200] rounded-lg md:rounded-xl xl:rounded-2xl 2xl:rounded-3xl'
+              className='rounded-lg'
+              containerClassName='block aspect-[360/200]'
               src={MissionImg}
               placeHolderSrc={MissionPlaceholder}
               alt='introduction_pic'
@@ -130,7 +135,8 @@ const AboutUsPage = () => {
           </div>
           <div className='mb-8 flex-1 md:mb-0'>
             <LazyLoadImage
-              className='z-[1] block aspect-[360/200] rounded-lg object-cover md:rounded-xl xl:rounded-2xl 2xl:rounded-3xl'
+              className='rounded-lg'
+              containerClassName='block aspect-[360/200]'
               src={VisionImg}
               placeHolderSrc={VisionPlaceholder}
               alt='introduction_pic'
@@ -141,6 +147,8 @@ const AboutUsPage = () => {
       </main>
       <Footer />
     </Page>
+  ) : (
+    <Outlet />
   );
 };
 
