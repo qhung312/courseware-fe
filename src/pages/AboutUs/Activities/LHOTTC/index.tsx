@@ -91,8 +91,8 @@ const LHOTTCPage = () => {
                   </p>
                 </div>
               </div>
-              <div className='flex w-full flex-col items-center justify-between gap-5 md:flex-row md:gap-8 lg:gap-12 2xl:gap-[56px]'>
-                <div className='flex flex-col justify-center gap-2 md:max-w-[46%] lg:gap-4 2xl:gap-5'>
+              <div className='flex w-full flex-col items-start justify-between gap-5 md:flex-row md:gap-8 lg:gap-12 2xl:gap-[56px]'>
+                <div className='lg:px-py-3 flex flex-col justify-center gap-2 md:max-w-[46%] md:py-2 lg:gap-4 2xl:gap-5 2xl:py-4'>
                   <h2 className='text-start text-[24px] font-semibold text-[#000000] lg:text-[28px] xl:text-[32px] 2xl:text-[36px]'>
                     Hình thành và Phát triển
                   </h2>
@@ -174,9 +174,12 @@ const LHOTTCPage = () => {
               {width > 768 ? (
                 <div className='flex w-full flex-row md:gap-8 lg:gap-12 2xl:gap-[56px]'>
                   {data.map((item, index) => (
-                    <div
+                    <a
                       className='flex w-[25%] cursor-pointer flex-col items-start justify-center gap-y-2 rounded-[20px] py-7 px-5 shadow-xl md:p-3 lg:gap-y-3 lg:py-5 lg:px-4 2xl:py-7 2xl:px-5'
                       key={`new_${index}`}
+                      target='_blank'
+                      href={item.hRef}
+                      rel='noreferrer'
                     >
                       <div className='w-[100%]'>
                         <LazyLoadImage
@@ -202,7 +205,7 @@ const LHOTTCPage = () => {
                       <p className='text-[14px] font-normal leading-6 lg:text-[16px] lg:leading-7 2xl:text-[18px] 2xl:leading-8'>
                         {item.description}
                       </p>
-                    </div>
+                    </a>
                   ))}
                 </div>
               ) : (
@@ -224,7 +227,12 @@ const LHOTTCPage = () => {
                   >
                     {data.map((item, index) => (
                       <div className='flex w-full justify-center pb-10' key={`new_${index}`}>
-                        <div className='flex w-[calc(100%-40px)] cursor-pointer flex-col items-start justify-center gap-y-2 rounded-[20px] p-3 shadow-xl'>
+                        <a
+                          target='_blank'
+                          href={item.hRef}
+                          className='flex w-[calc(100%-40px)] cursor-pointer flex-col items-start justify-center gap-y-2 rounded-[20px] p-3 shadow-xl'
+                          rel='noreferrer'
+                        >
                           <div className='w-[100%]'>
                             <LazyLoadImage
                               className='z-[1] block aspect-[3/2] rounded-[20px]'
@@ -247,7 +255,7 @@ const LHOTTCPage = () => {
                           <p className='text-start text-[16px] font-normal leading-7 text-[#696984]'>
                             {item.description}
                           </p>
-                        </div>
+                        </a>
                       </div>
                     ))}
                   </Carousel>
