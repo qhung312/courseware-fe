@@ -119,7 +119,7 @@ const HomePage = () => {
               </Carousel>
             </div>
           </section>
-          <section className='relative flex w-screen overflow-hidden md:w-full'>
+          <section className='relative flex w-screen overflow-hidden rounded-lg md:w-full'>
             <div className='absolute top-0 left-0 right-0 bottom-0 z-0 w-full'>
               <div className='absolute z-20 h-full w-full bg-[#4285F4]/70' />
               <LazyLoadImage
