@@ -32,8 +32,8 @@ const GSAX: FC = () => {
         placeHolderSrc={require('../../../assets/images/GSAX-Header-placeholder.jpg')}
         alt='Banner của Gia Sư Áo Xanh'
         objectFit='cover'
-        containerClassName='aspect-[2] h-auto md:aspect-[4] w-screen'
-        className='-mt-[27%] h-auto w-full'
+        containerClassName='aspect-[2] h-auto md:aspect-[4] w-screen overflow-hidden'
+        className='h-full w-full object-[50%_82%]'
       />
       <main
         className='flex flex-col gap-y-5 px-5 py-5 
