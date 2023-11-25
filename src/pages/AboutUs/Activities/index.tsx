@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-import LHOTTT from '../../../assets/images/LHOTTT.png';
+import LHOTTT from '../../../assets/images/LHOT_1.jpg';
 import GSAXPlaceHolder from '../../../assets/images/LRQGSAX-placeholder.png';
 import GSAX from '../../../assets/images/LRQGSAX.png';
-import SCTTMPlaceHolder from '../../../assets/images/NHSCTTM-placeholder.png';
-import SCTTM from '../../../assets/images/NHSCTTM.png';
+import SCTTM from '../../../assets/images/SCTTM_1.jpg';
 import TSTTPlaceHolder from '../../../assets/images/TSTT-placeholder.jpg';
 import TSTT from '../../../assets/images/TSTT.jpg';
 import { Footer, LazyLoadImage } from '../../../components';
@@ -79,7 +78,10 @@ const ActivitiesPage = () => {
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button
+                    onClick={() => navigate('ngay-hoi-sach')}
+                    className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'
+                  >
                     Chi tiết
                   </button>
                 </div>
@@ -89,7 +91,7 @@ const ActivitiesPage = () => {
                 <LazyLoadImage
                   className='z-[1] block aspect-[360/200]'
                   src={SCTTM}
-                  placeHolderSrc={SCTTMPlaceHolder}
+                  placeHolderSrc={SCTTM}
                   alt='scttm_alt'
                   objectFit='cover'
                 />
@@ -120,7 +122,10 @@ const ActivitiesPage = () => {
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button
+                    onClick={() => navigate('lop-hoc-on-tap-thi-thu')}
+                    className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'
+                  >
                     Chi tiết
                   </button>
                 </div>
