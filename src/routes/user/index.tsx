@@ -13,6 +13,7 @@ import Statistic from '../../pages/Profile/Statistic';
 import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
+const GSAXPage = lazy(() => import('../../pages/AboutUs/Activities/GSAX'));
 const HomePage = lazy(() => import('../../pages/Home'));
 const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
@@ -41,15 +42,14 @@ const UserRoute = () => {
             </Suspense>
           }
         />
-        <Route path='about-us'>
-          <Route
-            path=''
-            element={
-              <Suspense fallback={<Loading />}>
-                <AboutUsPage />
-              </Suspense>
-            }
-          />
+        <Route
+          path='about-us'
+          element={
+            <Suspense fallback={<Loading />}>
+              <AboutUsPage />
+            </Suspense>
+          }
+        >
           <Route
             path='activities'
             element={
@@ -57,15 +57,25 @@ const UserRoute = () => {
                 <ActivitiesPage />
               </Suspense>
             }
-          />
-          <Route
-            path='activities/tiep-suc-toi-truong'
-            element={
-              <Suspense fallback={<Loading />}>
-                <TSTTPage />
-              </Suspense>
-            }
-          />
+          >
+            <Route
+              path='gia-su-ao-xanh'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <GSAXPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='tiep-suc-toi-truong'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <TSTTPage />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route path='partners' element={<ComingSoonPage />} />
         </Route>
         <Route path='profile' element={<Protected />}>
           <Route
