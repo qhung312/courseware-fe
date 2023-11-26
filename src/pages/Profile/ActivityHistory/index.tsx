@@ -241,16 +241,16 @@ const ActivityHistory = () => {
             </nav>
           </div>
           <div className='hidden h-fit w-[29%] rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:block'>
-            <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-xl 2xl:text-[26px]'>
+            <h1 className='mb-3 text-xl font-semibold text-[#2252641] md:text-lg 2xl:text-xl'>
               Nhật ký hoạt động
             </h1>
             <div className='mt-2 flex items-center'>
-              <div className='mr-2 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#4285f4]'>
-                <Icon.FilterIcon fill='#FFFFFF' className='h-5 w-5' />
+              <div className='mr-2 flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#4285f4]'>
+                <Icon.FilterIcon fill='#FFFFFF' className='h-4 w-4' />
               </div>
-              <p className='text-[18px] font-semibold text-[#5B5B5B] 2xl:text-xl'>Bộ lọc</p>
+              <p className='font-semibold text-[#5B5B5B] 2xl:text-[18px]'>Bộ lọc</p>
             </div>
-            <div className='mt-6 mb-5 h-[1px] w-full bg-[#696984]' />
+            <div className='mt-4 mb-5 h-[1px] w-full bg-[#696984]' />
             <button
               className={`flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 1 && 'bg-[#9DCCFF]/[.3]'
@@ -330,12 +330,12 @@ const ActivityHistory = () => {
                     }
                     className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
                   >
-                    <p className='text-xl text-[rgba(45,52,54,0.7)]'>
+                    <p className='text-xl text-[rgba(45,52,54,0.7)] md:text-base 3xl:text-xl'>
                       {activity.createdAt
                         ? epochToDateString(activity.createdAt)
                         : '00 thàng 00 năm 0000'}
                     </p>
-                    <h2 className='mt-1 text-2xl text-[#2D3436]'>
+                    <h2 className='mt-1 text-2xl text-[#2D3436] md:text-xl 3xl:text-2xl'>
                       {activity.type === 'VIEW_PREVIOUS_EXAM'
                         ? (user?.familyAndMiddleName || '') +
                           ' ' +
@@ -362,53 +362,55 @@ const ActivityHistory = () => {
                           (activity?.quizSessionId?.fromQuiz?.subject?.name || '')
                         : ''}
                     </h2>
-                    <div className='mt-3 flex items-center'>
-                      <Icon.OpenBook />
-                      <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
-                        {activity.type === 'VIEW_PREVIOUS_EXAM'
-                          ? 'Học kì ' +
-                            (activity?.previousExamId?.semester
-                              ? activity?.previousExamId?.semester.slice(9, 12)
-                              : '')
-                          : activity.type === 'VIEW_MATERIAL'
-                          ? activity?.materialId?.subject?.name || ''
-                          : activity.type === 'START_QUIZ_SESSION'
-                          ? activity?.quizSessionId?.fromQuiz?.chapter?.name || ''
-                          : ''}
-                      </p>
-                    </div>
-                    <div
-                      className='ml-auto flex w-fit justify-end'
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <CopyIcon
-                        copyContent={
-                          activity.type === 'VIEW_MATERIAL'
-                            ? `${API_URL}library/material/${
-                                activity?.materialId?.subject?._id || ''
-                              }/pdf/${activity?.materialId?._id || ''}`
-                            : activity.type === 'VIEW_PREVIOUS_EXAM'
-                            ? `${API_URL}exam-archive/${
-                                activity?.previousExamId?.subject?._id || ''
-                              }/pdf/${activity?.previousExamId?._id || ''}`
+                    <div className='mt-3 flex justify-between'>
+                      <div className='flex items-center'>
+                        <Icon.OpenBook />
+                        <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
+                          {activity.type === 'VIEW_PREVIOUS_EXAM'
+                            ? 'Học kì ' +
+                              (activity?.previousExamId?.semester
+                                ? activity?.previousExamId?.semester.slice(9, 12)
+                                : '')
+                            : activity.type === 'VIEW_MATERIAL'
+                            ? activity?.materialId?.subject?.name || ''
                             : activity.type === 'START_QUIZ_SESSION'
-                            ? `${API_URL}room/exercises/${
-                                activity?.quizSessionId?.fromQuiz?.subject?._id || ''
-                              }/quiz/${activity?.quizSessionId?._id || ''}`
-                            : API_URL
-                        }
-                      />
-                      <button
-                        className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437] hover:bg-[#DB4437]/[.8]'
-                        onClick={() =>
-                          setDeleteModal({
-                            show: true,
-                            deleteId: activity._id,
-                          })
-                        }
+                            ? activity?.quizSessionId?.fromQuiz?.chapter?.name || ''
+                            : ''}
+                        </p>
+                      </div>
+                      <div
+                        className='ml-auto flex w-fit justify-end'
+                        onClick={(e) => e.preventDefault()}
                       >
-                        <Icon.Delete fill='white' className='h-4 w-4' />
-                      </button>
+                        <CopyIcon
+                          copyContent={
+                            activity.type === 'VIEW_MATERIAL'
+                              ? `${API_URL}library/material/${
+                                  activity?.materialId?.subject?._id || ''
+                                }/pdf/${activity?.materialId?._id || ''}`
+                              : activity.type === 'VIEW_PREVIOUS_EXAM'
+                              ? `${API_URL}exam-archive/${
+                                  activity?.previousExamId?.subject?._id || ''
+                                }/pdf/${activity?.previousExamId?._id || ''}`
+                              : activity.type === 'START_QUIZ_SESSION'
+                              ? `${API_URL}room/exercises/${
+                                  activity?.quizSessionId?.fromQuiz?.subject?._id || ''
+                                }/quiz/${activity?.quizSessionId?._id || ''}`
+                              : API_URL
+                          }
+                        />
+                        <button
+                          className='ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#DB4437] hover:bg-[#DB4437]/[.8]'
+                          onClick={() =>
+                            setDeleteModal({
+                              show: true,
+                              deleteId: activity._id,
+                            })
+                          }
+                        >
+                          <Icon.Delete fill='white' className='h-4 w-4' />
+                        </button>
+                      </div>
                     </div>
                   </Link>
                 </div>

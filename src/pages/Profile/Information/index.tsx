@@ -50,11 +50,11 @@ const UserInformation = () => {
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:rounded-[20px] md:px-10 md:pt-10 lg:px-[120px] xl:px-[240px] 2xl:px-[360px] 3xl:px-[460px]'>
           <div className='md:rounded-[20px] md:px-5 md:py-8 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:px-8 xl:px-10'>
             {updatedName ? (
-              <h1 className='text-2xl font-semibold text-[#2252641] 3xl:text-[28px]'>
+              <h1 className='text-xl font-semibold text-[#2252641] 2xl:text-2xl 3xl:text-[28px]'>
                 Thông tin của {updatedName}
               </h1>
             ) : (
-              <h1 className='text-2xl font-semibold text-[#2252641] 3xl:text-[28px]'>
+              <h1 className='text-xl font-semibold text-[#2252641] 2xl:text-2xl 3xl:text-[28px]'>
                 Thông tin của {user?.familyAndMiddleName || ''} {user?.givenName || 'người dùng'}
               </h1>
             )}
@@ -65,9 +65,9 @@ const UserInformation = () => {
             ) : (
               <button
                 onClick={() => setIsEditMode(true)}
-                className='mt-3 mb-5 flex w-fit gap-x-[2px] rounded-[12px] bg-[#E3F2FD] px-3 py-2 hover:bg-[#9DCCFF]'
+                className='mt-3 mb-5 flex w-fit items-center gap-x-[2px] rounded-[12px] bg-[#E3F2FD] px-3 py-2 hover:bg-[#9DCCFF]'
               >
-                <Icon.Pen fill='#252641' className='h-5 w-5 3xl:h-6 3xl:w-6' />
+                <Icon.Pen fill='#252641' className='h-4 w-4 3xl:h-5 3xl:w-5' />
                 <p className='text-base font-semibold text-[#252641] 3xl:text-xl'>Chỉnh sửa</p>
               </button>
             )}
@@ -93,7 +93,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -115,7 +115,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -137,7 +137,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -159,7 +159,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -185,7 +185,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -204,7 +204,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641] opacity-100`}
+                  } px-4 py-3 text-xl text-[#252641] opacity-100`}
                   onChange={(e) => {
                     setUserProfile({ ...userProfile, gender: e.target.value });
                   }}
@@ -233,7 +233,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
               <div className='flex flex-col md:mt-2 md:flex-row md:items-center'>
@@ -255,7 +255,7 @@ const UserInformation = () => {
                     isEditMode
                       ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
                       : 'bg-[#D9D9D9]'
-                  } p-4 text-xl text-[#252641]`}
+                  } px-4 py-3 text-xl text-[#252641]`}
                 />
               </div>
             </form>
@@ -263,7 +263,7 @@ const UserInformation = () => {
               <div className='flex gap-x-2'>
                 <button
                   onClick={updateProfile}
-                  className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-3 px-6 text-xl font-semibold text-white hover:bg-[#4285f4]/[.7]'
+                  className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-2 px-4 text-xl font-semibold text-white hover:bg-[#4285f4]/[.7]'
                 >
                   Cập nhật
                 </button>
@@ -272,7 +272,7 @@ const UserInformation = () => {
                     setIsEditMode(false);
                     setUserProfile(user);
                   }}
-                  className='mt-8 w-fit rounded-[12px] bg-[#db4437] py-3 px-6 text-xl font-semibold text-white hover:bg-[#db4437]/[.7]'
+                  className='mt-8 w-fit rounded-[12px] bg-[#db4437] py-2 px-4 text-xl font-semibold text-white hover:bg-[#db4437]/[.7]'
                 >
                   Hủy
                 </button>
