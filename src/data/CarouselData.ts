@@ -56,4 +56,16 @@ const EventsAndActivities = [
   },
 ];
 
-export { CarouselData, EventsAndActivities };
+const RevisionClassData = [
+  {
+    id: '1',
+    name: 'NÀO CHÚNG TA CÙNG TIẾN!',
+    description:
+      'Vào thứ Bảy và Chủ nhật hằng tuần, tại nhà H6 Trường ĐH Bách Khoa ĐHQG-HCM (Cơ sở Dĩ An) có hàng trăm sinh viên đến tham gia lớp học mang tên Chúng ta cùng tiến.',
+    date: '9 tháng 4, năm 2019',
+    imgSrc: require('../assets/images/LHOTTTNews.png'),
+    hRef: 'https://vnuhcm.edu.vn/sinh-vien_33386864/nao-chung-ta-cung-tien-/313930366864.html',
+  },
+];
+
+export { CarouselData, EventsAndActivities, RevisionClassData };

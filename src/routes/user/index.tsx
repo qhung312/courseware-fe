@@ -4,7 +4,9 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import ActivitiesPage from '../../pages/AboutUs/Activities';
-import TSTTPage from '../../pages/AboutUs/Activities/TSTT.tsx';
+import LHOTTCPage from '../../pages/AboutUs/Activities/LHOTTC';
+import SCTTMPage from '../../pages/AboutUs/Activities/SCTTM';
+import TSTTPage from '../../pages/AboutUs/Activities/TSTT';
 import ComingSoonPage from '../../pages/ComingSoon';
 import NotFoundPage from '../../pages/NotFound';
 import ActivityHistory from '../../pages/Profile/ActivityHistory';
@@ -57,25 +59,39 @@ const UserRoute = () => {
                 <ActivitiesPage />
               </Suspense>
             }
-          >
-            <Route
-              path='gia-su-ao-xanh'
-              element={
-                <Suspense fallback={<Loading />}>
-                  <GSAXPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path='tiep-suc-toi-truong'
-              element={
-                <Suspense fallback={<Loading />}>
-                  <TSTTPage />
-                </Suspense>
-              }
-            />
-          </Route>
-          <Route path='partners' element={<ComingSoonPage />} />
+          />
+          <Route
+            path='activities/tiep-suc-toi-truong'
+            element={
+              <Suspense fallback={<Loading />}>
+                <TSTTPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='activities/lop-hoc-on-tap'
+            element={
+              <Suspense fallback={<Loading />}>
+                <LHOTTCPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='activities/sach-cu-tri-thuc-moi'
+            element={
+              <Suspense fallback={<Loading />}>
+                <SCTTMPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='activities/gia-su-ao-xanh'
+            element={
+              <Suspense fallback={<Loading />}>
+                <GSAXPage />
+              </Suspense>
+            }
+          />
         </Route>
         <Route path='profile' element={<Protected />}>
           <Route
