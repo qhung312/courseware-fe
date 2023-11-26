@@ -72,7 +72,7 @@ const UserRoute = () => {
               }
             />
             <Route
-              path='activities/lop-hoc-on-tap'
+              path='lop-hoc-on-tap'
               element={
                 <Suspense fallback={<Loading />}>
                   <LHOTTCPage />
@@ -80,7 +80,7 @@ const UserRoute = () => {
               }
             />
             <Route
-              path='activities/sach-cu-tri-thuc-moi'
+              path='sach-cu-tri-thuc-moi'
               element={
                 <Suspense fallback={<Loading />}>
                   <SCTTMPage />
@@ -88,7 +88,7 @@ const UserRoute = () => {
               }
             />
             <Route
-              path='activities/gia-su-ao-xanh'
+              path='gia-su-ao-xanh'
               element={
                 <Suspense fallback={<Loading />}>
                   <GSAXPage />
