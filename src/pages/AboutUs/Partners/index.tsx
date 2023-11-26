@@ -25,7 +25,7 @@ const MobileContactCard = forwardRef<HTMLDivElement, {}>((_props, ref) => {
       <div className='mt-3 text-justify text-[16px] font-medium leading-snug text-white'>
         <p className='text-inherit'>
           Email:{' '}
-          <a href='admin@fessior.com' target='_blank' rel='noreferrer'>
+          <a href='mailto:admin@fessior.com' target='_blank' rel='noreferrer'>
             admin@fessior.com
           </a>
         </p>
@@ -46,7 +46,7 @@ const MobileContactCard = forwardRef<HTMLDivElement, {}>((_props, ref) => {
           <Icon.LogoFacebook className='h-auto w-[28px]' fill='white' />
         </a>
         <a
-          href='admin@fessior.com'
+          href='mailto:admin@fessior.com'
           target='_blank'
           rel='noreferrer'
           className='rounded-lg bg-[#4285F4] p-2'
@@ -89,7 +89,7 @@ const DesktopContactCard = forwardRef<HTMLDivElement, {}>((_props, ref) => {
         <div className='mt-3 text-justify text-[16px] font-medium leading-snug text-white lg:text-[20px] 3xl:text-[28px]'>
           <p className='text-inherit'>
             Email:{' '}
-            <a href='admin@fessior.com' target='_blank' rel='noreferrer'>
+            <a href='mailto:admin@fessior.com' target='_blank' rel='noreferrer'>
               admin@fessior.com
             </a>
           </p>
@@ -111,7 +111,7 @@ const DesktopContactCard = forwardRef<HTMLDivElement, {}>((_props, ref) => {
             <Icon.LogoFacebook className='h-auto w-[28px]' fill='white' />
           </a>
           <a
-            href='admin@fessior.com'
+            href='mailto:admin@fessior.com'
             target='_blank'
             rel='noreferrer'
             className='rounded-lg bg-[#4285F4] p-2'
@@ -336,7 +336,7 @@ const Fessior: FC = () => {
               slidesPerGroup={1}
               loop
               loopPreventsSlide
-              autoplay={{ delay: 3000 }}
+              autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
               speed={1200}
               pagination={{
                 el: '.swiper-pagination',
@@ -347,7 +347,7 @@ const Fessior: FC = () => {
                 type: 'bullets',
               }}
               modules={[Autoplay, Pagination]}
-              initialSlide={1}
+              initialSlide={2}
               className='mt-5 flex h-full'
             >
               {projects.map((project) => (
@@ -379,7 +379,7 @@ const Fessior: FC = () => {
                     href={project.href}
                     target='_blank'
                     rel='noreferrer'
-                    className='mt-3 leading-loose text-[#4285F4] underline'
+                    className='mt-3 w-fit leading-loose text-[#4285F4] underline'
                   >
                     Chi tiết
                   </a>
