@@ -148,7 +148,7 @@ const SubjectStatistic = () => {
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:pt-10 lg:px-[60px]'>
           <Link
             to='/profile/statistic'
-            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:py-2 lg:text-[20px] 3xl:text-2xl'
+            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-xl bg-[#4285f4]/[.6] px-2 py-1 text-white hover:bg-[#4285f4]/[.8] lg:py-1 2xl:text-[20px]'
           >
             <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
             Quay lại
@@ -158,8 +158,8 @@ const SubjectStatistic = () => {
           </h1>
           <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:border-0'>
             <div className='flex flex-row items-center justify-start gap-x-2'>
-              <Icon.EqualizerIcon fill='#49BBBD' className='lg:h-7 lg:w-7 3xl:h-9 3xl:w-9' />
-              <p className='text-xl font-medium text-[#49BBBD] lg:text-2xl 3xl:text-[32px]'>
+              <Icon.EqualizerIcon fill='#9dccff' className='lg:h-7 lg:w-7 3xl:h-9 3xl:w-9' />
+              <p className='text-xl font-medium text-[#9dccff] lg:text-2xl 3xl:text-[32px]'>
                 Thống kê điểm số
               </p>
             </div>
