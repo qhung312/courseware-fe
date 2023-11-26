@@ -1,18 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import LHOTTT from '../../../assets/images/LHOTTT.png';
+import LHOTTT from '../../../assets/images/LHOT_1.jpg';
 import GSAXPlaceHolder from '../../../assets/images/LRQGSAX-placeholder.png';
 import GSAX from '../../../assets/images/LRQGSAX.png';
-import SCTTMPlaceHolder from '../../../assets/images/NHSCTTM-placeholder.png';
-import SCTTM from '../../../assets/images/NHSCTTM.png';
+import SCTTM from '../../../assets/images/SCTTM_1.jpg';
 import TSTTPlaceHolder from '../../../assets/images/TSTT-placeholder.jpg';
 import TSTT from '../../../assets/images/TSTT.jpg';
 import { Footer, LazyLoadImage } from '../../../components';
 import { Page } from '../../../layout';
 
 const ActivitiesPage = () => {
+  const { pathname } = useLocation();
+
   const navigate = useNavigate();
-  return (
+  return pathname === '/about-us/activities' ? (
     <Page title='Hoạt động'>
       <main className='with-nav-height flex flex-col gap-y-28 overflow-y-auto lg:gap-y-36 2xl:gap-y-40 3xl:gap-y-44'>
         <div className='flex w-full flex-col gap-y-9 px-5 py-8 md:gap-y-12 md:px-[48px] lg:gap-y-20 lg:px-24 xl:py-10 2xl:gap-y-24 2xl:py-12 2xl:px-32 3xl:gap-y-28 3xl:py-14 3xl:px-40'>
@@ -79,7 +80,10 @@ const ActivitiesPage = () => {
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button
+                    onClick={() => navigate('sach-cu-tri-thuc-moi')}
+                    className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'
+                  >
                     Chi tiết
                   </button>
                 </div>
@@ -89,7 +93,7 @@ const ActivitiesPage = () => {
                 <LazyLoadImage
                   className='z-[1] block aspect-[360/200]'
                   src={SCTTM}
-                  placeHolderSrc={SCTTMPlaceHolder}
+                  placeHolderSrc={SCTTM}
                   alt='scttm_alt'
                   objectFit='cover'
                 />
@@ -100,7 +104,7 @@ const ActivitiesPage = () => {
               <div className='relative mb-8 max-w-[100%] flex-1 md:mb-0 md:max-w-[51%]'>
                 <div className='absolute top-[0] left-[0] z-0 aspect-square w-[12.5%] translate-x-[-25%] translate-y-[-30%] rounded-full bg-[#687EF3] md:translate-x-[-36%] md:translate-y-[-40%]' />
                 <LazyLoadImage
-                  className='z-[1] block aspect-[360/200]'
+                  className='block aspect-[360/200] w-full'
                   src={LHOTTT}
                   placeHolderSrc={LHOTTT}
                   alt='lhottt_alt'
@@ -120,7 +124,10 @@ const ActivitiesPage = () => {
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button
+                    onClick={() => navigate('lop-hoc-on-tap')}
+                    className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'
+                  >
                     Chi tiết
                   </button>
                 </div>
@@ -141,15 +148,18 @@ const ActivitiesPage = () => {
                   </p>
                 </div>
                 <div className='flex items-center justify-start'>
-                  <button className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'>
+                  <button
+                    onClick={() => navigate('gia-su-ao-xanh')}
+                    className='rounded-full bg-[#3465E1]/80 px-6 py-2 text-[14px] font-bold text-white shadow-xl hover:bg-[#3465E1] md:px-5 md:py-1 lg:px-7 lg:py-2 lg:text-[16px] 2xl:px-9 2xl:py-[10px] 2xl:text-[20px]'
+                  >
                     Chi tiết
                   </button>
                 </div>
               </div>
               <div className='relative mb-8 max-w-[100%] flex-1 md:mb-0 md:max-w-[51%]'>
-                <div className='absolute top-[100%] left-[100%] z-0 aspect-square w-[22%] translate-x-[-92%] translate-y-[-92%] bg-[#73BCFF] md:w-[36%]' />
+                <div className='absolute -bottom-5 -right-5 z-0 aspect-square w-[22%] bg-[#73BCFF] md:w-[36%]' />
                 <LazyLoadImage
-                  className='z-[1] block aspect-[360/200]'
+                  className='block aspect-[360/200] w-full'
                   src={GSAX}
                   placeHolderSrc={GSAXPlaceHolder}
                   alt='gsax_alt'
@@ -162,6 +172,8 @@ const ActivitiesPage = () => {
         <Footer />
       </main>
     </Page>
+  ) : (
+    <Outlet />
   );
 };
 

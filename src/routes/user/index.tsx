@@ -8,12 +8,15 @@ import NotFoundPage from '../../pages/NotFound';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const ActivitiesPage = lazy(() => import('../../pages/AboutUs/Activities'));
-const TSTTPage = lazy(() => import('../../pages/AboutUs/Activities/TSTT.tsx'));
+const TSTTPage = lazy(() => import('../../pages/AboutUs/Activities/TSTT'));
+const LHOTTCPage = lazy(() => import('../../pages/AboutUs/Activities/LHOTTC'));
+const SCTTMPage = lazy(() => import('../../pages/AboutUs/Activities/SCTTM'));
 const PartnersPage = lazy(() => import('../../pages/AboutUs/Partners'));
 const ActivityHistoryPage = lazy(() => import('../../pages/Profile/ActivityHistory'));
 const UserInformationPage = lazy(() => import('../../pages/Profile/Information'));
 const StatisticPage = lazy(() => import('../../pages/Profile/Statistic'));
 const SubjectStatisticPage = lazy(() => import('../../pages/Profile/Statistic/SubjectStatistic'));
+const GSAXPage = lazy(() => import('../../pages/AboutUs/Activities/GSAX'));
 const HomePage = lazy(() => import('../../pages/Home'));
 const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
 const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
@@ -65,6 +68,30 @@ const UserRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <TSTTPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='activities/lop-hoc-on-tap'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <LHOTTCPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='activities/sach-cu-tri-thuc-moi'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <SCTTMPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='activities/gia-su-ao-xanh'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <GSAXPage />
                 </Suspense>
               }
             />

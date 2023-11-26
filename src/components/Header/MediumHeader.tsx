@@ -34,7 +34,7 @@ const MediumHeader = () => {
   );
   const [isAboutUsOpen, setIsAboutUsOpen] = useState(
     pathname === '/about-us' ||
-      pathname === '/about-us/activities' ||
+      pathname.includes('/about-us/activities') ||
       pathname === '/about-us/partners'
   );
 
@@ -67,7 +67,6 @@ const MediumHeader = () => {
   };
 
   const onLogout = () => {
-    // TODO
     logout();
     setIsOverlayOpen(false);
     setIsLibraryOpen(false);
@@ -367,7 +366,7 @@ const MediumHeader = () => {
                   <Icon.AboutUs
                     fill={
                       pathname === '/about-us' ||
-                      pathname === '/about-us/activities' ||
+                      pathname.includes('/about-us/activities') ||
                       pathname === '/about-us/partners'
                         ? '#4285F4'
                         : '#696969'
@@ -377,7 +376,7 @@ const MediumHeader = () => {
                     style={{
                       color:
                         pathname === '/about-us' ||
-                        pathname === '/about-us/activities' ||
+                        pathname.includes('/about-us/activities') ||
                         pathname === '/about-us/partners'
                           ? '#4285F4'
                           : '#696969',
@@ -390,7 +389,7 @@ const MediumHeader = () => {
                   <Icon.ChevronUp
                     fill={
                       pathname === '/about-us' ||
-                      pathname === '/about-us/activities' ||
+                      pathname.includes('/about-us/activities') ||
                       pathname === '/about-us/partners'
                         ? '#4285F4'
                         : '#696969'
@@ -402,7 +401,7 @@ const MediumHeader = () => {
                   <Icon.ChevronDown
                     fill={
                       pathname === '/about-us' ||
-                      pathname === '/about-us/activities' ||
+                      pathname.includes('/about-us/activities') ||
                       pathname === '/about-us/partners'
                         ? '#4285F4'
                         : '#696969'
