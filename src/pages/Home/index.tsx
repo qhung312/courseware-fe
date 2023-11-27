@@ -293,6 +293,7 @@ const HomePage = () => {
                     loop
                     autoPlay
                     muted
+                    controls
                     className='z-[2] block h-full w-full rounded-lg object-cover'
                   >
                     <source
