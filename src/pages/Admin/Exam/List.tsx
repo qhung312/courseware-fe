@@ -11,6 +11,7 @@ import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ExamArchiveService from '../../../service/examArchive.service';
 import SubjectService from '../../../service/subject.service';
+import useBoundStore from '../../../store';
 import { ExamArchive } from '../../../types';
 import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
@@ -20,15 +21,20 @@ const ExamList = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [filterName, setFilterName] = useState('');
-  const [filterSubject, setFilterSubject] = useState('');
-  const [filterSemester, setFilterSemester] = useState('');
-  const [filterExamType, setFilterExamType] = useState('');
+  const filterName = useBoundStore.use.filterName();
+  const setFilterName = useBoundStore.use.setFilterName();
+  const filterSubject = useBoundStore.use.filterSubject();
+  const setFilterSubject = useBoundStore.use.setFilterSubject();
+  const filterSemester = useBoundStore.use.filterSemster();
+  const setFilterSemester = useBoundStore.use.setFilterSemester();
+  const filterExamType = useBoundStore.use.filterChapter();
+  const setFilterExamType = useBoundStore.use.setFilterChapter();
+  const page = useBoundStore.use.page();
+  const setPage = useBoundStore.use.setPage();
 
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
   const [examArchives, setExamArchives] = useState<ExamArchive[]>([]);
   const [totalCount, setTotalCount] = useState(1);
-  const [page, setPage] = useState(1);
 
   const tableRef = useRef<HTMLDivElement>(null);
 
