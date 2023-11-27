@@ -29,10 +29,11 @@ const ExerciseListPage = () => {
   const setFilterChapter = useBoundStore.use.setFilterChapter();
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
+  const page = useBoundStore.use.page();
+  const setPage = useBoundStore.use.setPage();
 
   const [exercises, setExercises] = useState<Quiz[]>([]);
   const [totalCount, setTotalCount] = useState(1);
-  const [page, setPage] = useState(1);
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 

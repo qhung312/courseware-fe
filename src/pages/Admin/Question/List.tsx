@@ -27,13 +27,14 @@ const QuestionListPage = () => {
   const setFilterSubject = useBoundStore.use.setFilterSubject();
   const filterChapter = useBoundStore.use.filterChapter();
   const setFilterChapter = useBoundStore.use.setFilterChapter();
+  const page = useBoundStore.use.page();
+  const setPage = useBoundStore.use.setPage();
 
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
   const [questionTemplates, setQuestionTemplates] = useState<Question[]>([]);
   const [totalCount, setTotalCount] = useState(1);
-  const [page, setPage] = useState(1);
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 

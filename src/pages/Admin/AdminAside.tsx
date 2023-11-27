@@ -34,6 +34,7 @@ const AdminAside: FC = () => {
   const setFilterSubject = useBoundStore.use.setFilterSubject();
   const setFilterChapter = useBoundStore.use.setFilterChapter();
   const setFilterSemester = useBoundStore.use.setFilterSemester();
+  const setPage = useBoundStore.use.setPage();
 
   const handleClick = (
     type: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | 'chapter'
@@ -62,6 +63,7 @@ const AdminAside: FC = () => {
       setFilterChapter('');
       setFilterSemester('');
       setFilterSubject('');
+      setPage(1);
     }
 
     if (pathname.includes('/admin/material')) {
@@ -94,14 +96,14 @@ const AdminAside: FC = () => {
           titleName='môn'
           isOpen={menuState.subject}
           handleClick={handleClick}
-          IconProp={Icon.Test}
+          IconProp={Icon.Subject}
         />
         <AdminAsideLink
           path='chapter'
           titleName='chương'
           isOpen={menuState.chapter}
           handleClick={handleClick}
-          IconProp={Icon.Test}
+          IconProp={Icon.ContentPaste}
         />
         <AdminAsideLink
           path='question'

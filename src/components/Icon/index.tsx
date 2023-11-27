@@ -17,6 +17,7 @@ import { ReactComponent as ClipboardIcon } from '../../assets/svgs/ClipboardIcon
 import { ReactComponent as Clock } from '../../assets/svgs/ClockIcon.svg';
 import { ReactComponent as CloseIconSnackbar } from '../../assets/svgs/CloseIconSnackbar.svg';
 import { ReactComponent as CloseQuote } from '../../assets/svgs/CloseQuoteIcon.svg';
+import { ReactComponent as ContentPaste } from '../../assets/svgs/ContentPasteIcon.svg';
 import { ReactComponent as Copy } from '../../assets/svgs/CopyIcon.svg';
 import { ReactComponent as CorrectTotal } from '../../assets/svgs/CorrectTotalIcon.svg';
 import { ReactComponent as Delete } from '../../assets/svgs/DeleteIcon.svg';
@@ -59,6 +60,7 @@ import { ReactComponent as Search } from '../../assets/svgs/SearchIcon.svg';
 import { ReactComponent as Share } from '../../assets/svgs/ShareIcon.svg';
 import { ReactComponent as StarDim } from '../../assets/svgs/StarDimIcon.svg';
 import { ReactComponent as StarLit } from '../../assets/svgs/StarLitIcon.svg';
+import { ReactComponent as Subject } from '../../assets/svgs/SubjectIcon.svg';
 import { ReactComponent as Test } from '../../assets/svgs/TestIcon.svg';
 import { ReactComponent as Upload } from '../../assets/svgs/UploadIcon.svg';
 import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.svg';
@@ -83,6 +85,7 @@ export default {
   ChevronLeft,
   ChevronRight,
   Clock,
+  ContentPaste,
   Book,
   ChevronUp,
   ClipboardIcon,
@@ -125,6 +128,7 @@ export default {
   Search,
   Share,
   StarLit,
+  Subject,
   PieChart,
   CorrectTotal,
   StarDim,

@@ -18,10 +18,11 @@ const SubjectList = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
   const filterName = useBoundStore.use.filterName();
   const setFilterName = useBoundStore.use.setFilterName();
+  const page = useBoundStore.use.page();
+  const setPage = useBoundStore.use.setPage();
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
 

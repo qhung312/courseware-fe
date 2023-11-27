@@ -25,11 +25,12 @@ const ChapterListPage = () => {
   const setFilterName = useBoundStore.use.setFilterName();
   const filterSubject = useBoundStore.use.filterSubject();
   const setFilterSubject = useBoundStore.use.setFilterSubject();
+  const page = useBoundStore.use.page();
+  const setPage = useBoundStore.use.setPage();
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
 
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [totalCount, setTotalCount] = useState(1);
-  const [page, setPage] = useState(1);
 
   const tableRef = React.useRef<HTMLDivElement>(null);
 

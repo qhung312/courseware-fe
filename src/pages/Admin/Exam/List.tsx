@@ -29,11 +29,12 @@ const ExamList = () => {
   const setFilterSemester = useBoundStore.use.setFilterSemester();
   const filterExamType = useBoundStore.use.filterChapter();
   const setFilterExamType = useBoundStore.use.setFilterChapter();
+  const page = useBoundStore.use.page();
+  const setPage = useBoundStore.use.setPage();
 
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
   const [examArchives, setExamArchives] = useState<ExamArchive[]>([]);
   const [totalCount, setTotalCount] = useState(1);
-  const [page, setPage] = useState(1);
 
   const tableRef = useRef<HTMLDivElement>(null);
 
