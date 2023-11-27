@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon } from '../../components';
+import { useWindowDimensions } from '../../hooks';
 
 const linkGoogleMap =
   'https://www.google.com/maps/search/%C4%90%E1%BA%A1i+h%E1%BB%8Dc+B%C3%A1ch++Khoa+-+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+Qu%E1%BB%91c+gia+H%E1%BB%93+Ch%C3%AD+Minh,+C%C6%A1+s%E1%BB%9F+2/@10.8800234,106.8050395,18.58z?hl=vi-VN&entry=ttu';
@@ -10,10 +11,19 @@ const linkFacebookCTCT = 'https://facebook.com/chungtacungtien';
 const linkFaceBookGDSC = 'https://www.facebook.com/dscxhcmut';
 
 const Footer: FC = () => {
+  const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    const stub = document.getElementById('stub') as HTMLElement;
+    const navbar = document.getElementById('navbar') as HTMLElement;
+
+    stub.style.marginBottom = `${navbar.clientHeight}px`;
+  }, [width]);
+
   return (
     <footer className='flex w-full flex-col bg-white'>
       <div className='flex w-full flex-col gap-y-4 md:gap-y-2 lg:gap-y-3 xl:gap-y-4 2xl:gap-y-5'>
-        <div className='flex w-full flex-col justify-between gap-y-8 px-8 py-2 md:gap-y-12 md:px-5 md:py-4 lg:flex-row lg:gap-y-6 lg:px-10 lg:py-4 xl:gap-y-10 xl:px-20 2xl:gap-y-10 3xl:px-[100px]'>
+        <div className='flex w-full flex-col justify-between gap-y-8 px-5 py-2 md:gap-y-12 md:px-5 md:py-4 lg:flex-row lg:gap-y-6 lg:px-10 lg:py-4 xl:gap-y-10 xl:px-20 2xl:gap-y-10 3xl:px-[100px]'>
           <div className='flex flex-row items-center justify-evenly md:gap-x-6 lg:justify-start lg:gap-y-6 lg:gap-x-10 xl:gap-y-12 2xl:w-[25%] 2xl:gap-x-14 3xl:gap-x-16'>
             <div className='flex items-center'>
               <Icon.LogoCTCT className='h-auto w-[108px] md:w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
@@ -28,7 +38,7 @@ const Footer: FC = () => {
               </a>
             </div>
           </div>
-          <div className='flex h-fit flex-col justify-between gap-y-1 pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
+          <div className='flex h-fit flex-col justify-between gap-y-1 pl-0 md:pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
             <div className='flex flex-col'>
               <p className='text-left text-[20px] font-semibold md:text-[20px] lg:text-lg xl:text-xl'>
                 Thông tin
@@ -55,7 +65,7 @@ const Footer: FC = () => {
             </Link>
           </div>
 
-          <div className='flex h-fit flex-col justify-between gap-y-1 pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
+          <div className='flex h-fit flex-col justify-between gap-y-3 pl-0 md:gap-y-1 md:pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
             <div className='flex flex-col'>
               <p className='text-left text-[20px] font-semibold lg:text-lg xl:text-xl'>Liên Hệ</p>
               <button
@@ -63,7 +73,7 @@ const Footer: FC = () => {
                 disabled
               />
             </div>
-            <div className='flex flex-col gap-y-1 lg:gap-y-2 2xl:gap-y-3 3xl:gap-y-4'>
+            <div className='flex flex-col gap-y-3 lg:gap-y-2 2xl:gap-y-3 3xl:gap-y-4'>
               <div className='flex items-center gap-x-[0.5rem] sm:gap-x-[0.75rem]'>
                 <div>
                   <Icon.LocationIcon className='h-auto w-[36px] fill-[#202420] md:w-[28px] lg:w-[28px] 2xl:w-[36px] 3xl:w-[42px]' />
@@ -74,10 +84,9 @@ const Footer: FC = () => {
                   className='flex flex-col text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'
                   rel='noreferrer'
                 >
-                  <p className='whitespace-nowrap text-inherit'>
+                  <p className='text-inherit md:whitespace-nowrap'>
                     Phòng 102, Nhà học Thể dục thể thao, Đại học Bách
-                  </p>
-                  <p className='whitespace-nowrap text-inherit'>
+                    {width > 768 && <br />}
                     Khoa - Đại học Quốc gia Hồ Chí Minh, Cơ sở 2
                   </p>
                 </a>

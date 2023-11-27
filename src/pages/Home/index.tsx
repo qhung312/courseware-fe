@@ -207,7 +207,8 @@ const HomePage = () => {
                     justify-start gap-x-6 px-5 pb-10 lg:pb-20 3xl:pb-[100px]'
                   >
                     {events.map((event) => (
-                      <div
+                      <Link
+                        to={event.linkTo}
                         key={event.id}
                         className='relative aspect-square h-auto w-full'
                         style={{ flex: `${events.length / eventsChunk[0]?.length}` }}
@@ -228,7 +229,7 @@ const HomePage = () => {
                             {event.name}
                           </p>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 ))}
@@ -282,11 +283,22 @@ const HomePage = () => {
               <div className='relative h-fit w-full flex-1 xl:h-full'>
                 <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-top-3 lg:-left-3 lg:w-[90px] 3xl:-top-5 3xl:-left-5 3xl:w-[140px]' />
                 <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-bottom-3 lg:-right-3 lg:w-[90px] 3xl:-bottom-5 3xl:-right-5 3xl:w-[140px]' />
-                <img
+                {/* <img
                   src={require('../../assets/images/stubVideo.png')}
                   alt='video'
                   className='relative z-[2] h-full w-full rounded-lg object-cover'
-                />
+                /> */}
+                <div className='relative z-[2] h-full w-full rounded-lg object-cover'>
+                  <video
+                    loop
+                    autoPlay
+                    muted
+                    className='z-[2] block h-full w-full rounded-lg object-cover'
+                    controls
+                  >
+                    <source src={require('../../assets/video/1280x720.mp4')} type='video/mp4' />
+                  </video>
+                </div>
               </div>
             </div>
           </section>

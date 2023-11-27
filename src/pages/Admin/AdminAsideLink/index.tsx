@@ -51,22 +51,11 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
       >
         <div className='flex flex-row items-center justify-start gap-x-[16px]'>
           <IconProp
-            fill={
-              pathname.includes(`/admin/${pathLink}/manage`) ||
-              pathname.includes(`/admin/${pathLink}/create`) ||
-              isHover
-                ? '#4285F4'
-                : '#5B5B5B'
-            }
+            fill={pathname.includes(`/admin/${pathLink}`) || isHover ? '#4285F4' : '#5B5B5B'}
           />
           <p
             style={{
-              color:
-                pathname.includes(`/admin/${pathLink}/manage`) ||
-                pathname.includes(`/admin/${pathLink}/create`) ||
-                isHover
-                  ? '#4285F4'
-                  : '#5B5B5B',
+              color: pathname.includes(`/admin/${pathLink}`) || isHover ? '#4285F4' : '#5B5B5B',
             }}
           >
             {`Quản lý ${titleName}`}
@@ -75,7 +64,7 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
         {isOpen ? (
           <Icon.ChevronUp
             fill={
-              pathname.includes(`/admin/${pathLink}/manage`) ||
+              pathname.includes(`/admin/${pathLink}`) ||
               pathname.includes(`/admin/${pathLink}/create`) ||
               isHover
                 ? '#4285F4'

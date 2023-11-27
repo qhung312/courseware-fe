@@ -12,6 +12,7 @@ import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
 import SubjectService from '../../../service/subject.service';
+import useBoundStore from '../../../store';
 import { Chapter } from '../../../types';
 
 const ITEMS_PER_PAGE = 10;
@@ -20,8 +21,10 @@ const ChapterListPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [filterName, setFilterName] = useState('');
-  const [filterSubject, setFilterSubject] = useState('');
+  const filterName = useBoundStore.use.filterName();
+  const setFilterName = useBoundStore.use.setFilterName();
+  const filterSubject = useBoundStore.use.filterSubject();
+  const setFilterSubject = useBoundStore.use.setFilterSubject();
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
 
   const [chapters, setChapters] = useState<Chapter[]>([]);

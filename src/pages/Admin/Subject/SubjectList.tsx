@@ -9,6 +9,7 @@ import DeleteModal from '../../../components/Modal/DeleteModal';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import SubjectService from '../../../service/subject.service';
+import useBoundStore from '../../../store';
 import { Subject } from '../../../types';
 
 const ITEMS_PER_PAGE = 10;
@@ -19,7 +20,9 @@ const SubjectList = () => {
 
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [filterName, setFilterName] = useState('');
+  const filterName = useBoundStore.use.filterName();
+  const setFilterName = useBoundStore.use.setFilterName();
+
   const [subjects, setSubjects] = useState<Subject[]>([]);
 
   const tableRef = React.useRef<HTMLDivElement>(null);

@@ -13,6 +13,7 @@ import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
 import QuizService from '../../../service/quiz.service';
 import SubjectService from '../../../service/subject.service';
+import useBoundStore from '../../../store';
 import { Quiz } from '../../../types';
 
 const ITEMS_PER_PAGE = 10;
@@ -20,9 +21,12 @@ const ITEMS_PER_PAGE = 10;
 const ExerciseListPage = () => {
   const [loading, setLoading] = useState(false);
 
-  const [filterName, setFilterName] = useState('');
-  const [filterSubject, setFilterSubject] = useState('');
-  const [filterChapter, setFilterChapter] = useState('');
+  const filterName = useBoundStore.use.filterName();
+  const setFilterName = useBoundStore.use.setFilterName();
+  const filterSubject = useBoundStore.use.filterSubject();
+  const setFilterSubject = useBoundStore.use.setFilterSubject();
+  const filterChapter = useBoundStore.use.filterChapter();
+  const setFilterChapter = useBoundStore.use.setFilterChapter();
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
@@ -123,6 +127,7 @@ const ExerciseListPage = () => {
       .catch((err) => {
         toast.error(err.response.data.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterSubject]);
 
   useEffect(() => {

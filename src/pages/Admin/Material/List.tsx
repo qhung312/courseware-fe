@@ -12,6 +12,7 @@ import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
 import MaterialService from '../../../service/material.service';
 import SubjectService from '../../../service/subject.service';
+import useBoundStore from '../../../store';
 import { Material } from '../../../types';
 
 const ITEMS_PER_PAGE = 10;
@@ -20,9 +21,12 @@ const MaterialList = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [filterName, setFilterName] = useState('');
-  const [filterSubject, setFilterSubject] = useState('');
-  const [filterChapter, setFilterChapter] = useState('');
+  const filterName = useBoundStore.use.filterName();
+  const setFilterName = useBoundStore.use.setFilterName();
+  const filterSubject = useBoundStore.use.filterSubject();
+  const setFilterSubject = useBoundStore.use.setFilterSubject();
+  const filterChapter = useBoundStore.use.filterChapter();
+  const setFilterChapter = useBoundStore.use.setFilterChapter();
 
   const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
   const [filterSubjectOptions, setFilterSubjectOptions] = useState<Option[]>([]);
@@ -124,6 +128,7 @@ const MaterialList = () => {
       .catch((err) => {
         console.error(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterSubject]);
 
   return (

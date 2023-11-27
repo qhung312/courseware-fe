@@ -98,7 +98,7 @@ const ViewQuestionPage = () => {
                     className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'
                     htmlFor='question_name'
                   >
-                    Tên
+                    Dạng câu hỏi
                   </label>
                   <input
                     id='question_name'
