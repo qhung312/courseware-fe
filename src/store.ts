@@ -1,6 +1,7 @@
 import { create, StoreApi, UseBoundStore } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { AdminFilterSlice, TAdminFilterSlice } from './slices/admin';
 import { AppSlice, TAppSlice } from './slices/app';
 import { AuthSlice, TAuthSlice, initialState as authInitialState } from './slices/auth';
 import { LibrarySlice, TLibrarySlice } from './slices/library';
@@ -25,13 +26,14 @@ export interface TCommonActions {
 }
 
 const useBoundStoreBase = create<
-  TAppSlice & TAuthSlice & TUserSlice & TLibrarySlice & TCommonActions
+  TAppSlice & TAuthSlice & TUserSlice & TLibrarySlice & TCommonActions & TAdminFilterSlice
 >()(
   devtools((...a) => ({
     ...AppSlice(...a),
     ...AuthSlice(...a),
     ...UserSlice(...a),
     ...LibrarySlice(...a),
+    ...AdminFilterSlice(...a),
     logout: () => {
       localStorage.clear();
       a[0]({ ...authInitialState, ...userInitialState });
