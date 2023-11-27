@@ -209,7 +209,7 @@ const UserInformation = () => {
                     setUserProfile({ ...userProfile, gender: e.target.value });
                   }}
                 >
-                  <option value='MALE'>NAM</option>
+                  <option value='MALE'>Nam</option>
                   <option value='FEMALE'>Nữ</option>
                   <option value='OTHER'>Khác</option>
                 </select>
