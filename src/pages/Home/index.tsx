@@ -294,9 +294,11 @@ const HomePage = () => {
                     autoPlay
                     muted
                     className='z-[2] block h-full w-full rounded-lg object-cover'
-                    controls
                   >
-                    <source src={require('../../assets/video/1280x720.mp4')} type='video/mp4' />
+                    <source
+                      src={require('../../assets/video/introduction-video.mp4')}
+                      type='video/mp4'
+                    />
                   </video>
                 </div>
               </div>
