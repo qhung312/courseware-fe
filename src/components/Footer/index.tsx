@@ -24,7 +24,7 @@ const Footer: FC = () => {
                 Đơn vị hợp tác
               </p>
               <a href={linkFaceBookGDSC}>
-                <Icon.LogoFessior className='h-auto w-[132px] md:w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
+                <Icon.LogoFessior className='h-auto w-[132px] fill-[#0F2D85] md:w-[160px] lg:w-[120px] xl:w-[132px] 2xl:w-[152px]' />
               </a>
             </div>
           </div>

@@ -121,7 +121,7 @@ const HomePage = () => {
           </section>
           <section className='relative flex w-screen overflow-hidden rounded-lg md:w-full'>
             <div className='absolute top-0 left-0 right-0 bottom-0 z-0 w-full'>
-              <div className='absolute z-20 h-full w-full bg-[#4285F4]/70' />
+              <div className='absolute z-[8] h-full w-full bg-[#4285F4]/70' />
               <LazyLoadImage
                 src={require('../../assets/images/Banner.jpg')}
                 alt='banner'
@@ -131,7 +131,7 @@ const HomePage = () => {
                 objectFit='cover'
               />
             </div>
-            <div className='relative z-[3] flex w-full flex-row flex-wrap items-center justify-between gap-y-[60px] gap-x-10 p-5'>
+            <div className='relative z-10 flex w-full flex-row flex-wrap items-center justify-between gap-y-[60px] gap-x-10 p-5'>
               <h2
                 className='flex-1 whitespace-nowrap text-center 
                 text-2xl font-semibold text-white md:font-bold lg:text-3xl 3xl:text-5xl'

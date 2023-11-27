@@ -3,18 +3,19 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
-import ActivitiesPage from '../../pages/AboutUs/Activities';
-import LHOTTCPage from '../../pages/AboutUs/Activities/LHOTTC';
-import SCTTMPage from '../../pages/AboutUs/Activities/SCTTM';
-import TSTTPage from '../../pages/AboutUs/Activities/TSTT';
 import ComingSoonPage from '../../pages/ComingSoon';
 import NotFoundPage from '../../pages/NotFound';
-import ActivityHistory from '../../pages/Profile/ActivityHistory';
-import UserInformation from '../../pages/Profile/Information';
-import Statistic from '../../pages/Profile/Statistic';
-import SubjectStatistic from '../../pages/Profile/Statistic/SubjectStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
+const ActivitiesPage = lazy(() => import('../../pages/AboutUs/Activities'));
+const TSTTPage = lazy(() => import('../../pages/AboutUs/Activities/TSTT'));
+const LHOTTCPage = lazy(() => import('../../pages/AboutUs/Activities/LHOTTC'));
+const SCTTMPage = lazy(() => import('../../pages/AboutUs/Activities/SCTTM'));
+const PartnersPage = lazy(() => import('../../pages/AboutUs/Partners'));
+const ActivityHistoryPage = lazy(() => import('../../pages/Profile/ActivityHistory'));
+const UserInformationPage = lazy(() => import('../../pages/Profile/Information'));
+const StatisticPage = lazy(() => import('../../pages/Profile/Statistic'));
+const SubjectStatisticPage = lazy(() => import('../../pages/Profile/Statistic/SubjectStatistic'));
 const GSAXPage = lazy(() => import('../../pages/AboutUs/Activities/GSAX'));
 const HomePage = lazy(() => import('../../pages/Home'));
 const MaterialPage = lazy(() => import('../../pages/Library/MaterialPage'));
@@ -44,51 +45,62 @@ const UserRoute = () => {
             </Suspense>
           }
         />
-        <Route
-          path='about-us'
-          element={
-            <Suspense fallback={<Loading />}>
-              <AboutUsPage />
-            </Suspense>
-          }
-        >
+        <Route path='about-us'>
           <Route
-            path='activities'
+            path=''
             element={
               <Suspense fallback={<Loading />}>
-                <ActivitiesPage />
+                <AboutUsPage />
               </Suspense>
             }
           />
+          <Route path='activities'>
+            <Route
+              path=''
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ActivitiesPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='tiep-suc-toi-truong'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <TSTTPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='lop-hoc-on-tap'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <LHOTTCPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='sach-cu-tri-thuc-moi'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <SCTTMPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='gia-su-ao-xanh'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <GSAXPage />
+                </Suspense>
+              }
+            />
+          </Route>
           <Route
-            path='activities/tiep-suc-toi-truong'
+            path='partners'
             element={
               <Suspense fallback={<Loading />}>
-                <TSTTPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path='activities/lop-hoc-on-tap'
-            element={
-              <Suspense fallback={<Loading />}>
-                <LHOTTCPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path='activities/sach-cu-tri-thuc-moi'
-            element={
-              <Suspense fallback={<Loading />}>
-                <SCTTMPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path='activities/gia-su-ao-xanh'
-            element={
-              <Suspense fallback={<Loading />}>
-                <GSAXPage />
+                <PartnersPage />
               </Suspense>
             }
           />
@@ -98,7 +110,7 @@ const UserRoute = () => {
             path=''
             element={
               <Suspense fallback={<Loading />}>
-                <UserInformation />
+                <UserInformationPage />
               </Suspense>
             }
           />
@@ -106,7 +118,7 @@ const UserRoute = () => {
             path='history'
             element={
               <Suspense fallback={<Loading />}>
-                <ActivityHistory />
+                <ActivityHistoryPage />
               </Suspense>
             }
           />
@@ -114,7 +126,7 @@ const UserRoute = () => {
             path='statistic'
             element={
               <Suspense fallback={<Loading />}>
-                <Statistic />
+                <StatisticPage />
               </Suspense>
             }
           />
@@ -122,7 +134,7 @@ const UserRoute = () => {
             path='statistic/:subjectId'
             element={
               <Suspense fallback={<Loading />}>
-                <SubjectStatistic />
+                <SubjectStatisticPage />
               </Suspense>
             }
           />

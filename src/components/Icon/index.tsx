@@ -41,7 +41,11 @@ import { ReactComponent as List } from '../../assets/svgs/ListIcon.svg';
 import { ReactComponent as LiveHelpIcon } from '../../assets/svgs/LiveHelpIcon.svg';
 import { ReactComponent as LocationIcon } from '../../assets/svgs/LocationIcon.svg';
 import { ReactComponent as LogoCTCT } from '../../assets/svgs/LogoCTCT.svg';
+import { ReactComponent as LogoDiscord } from '../../assets/svgs/LogoDiscord.svg';
+import { ReactComponent as LogoFacebook } from '../../assets/svgs/LogoFacebook.svg';
 import { ReactComponent as LogoGDSC } from '../../assets/svgs/LogoGDSC.svg';
+import { ReactComponent as LogoGmail } from '../../assets/svgs/LogoGmail.svg';
+import { ReactComponent as LogoLinkedin } from '../../assets/svgs/LogoLinkedin.svg';
 import { ReactComponent as Logout } from '../../assets/svgs/LogoutIcon.svg';
 import { ReactComponent as MailIcon } from '../../assets/svgs/MailIcon.svg';
 import { ReactComponent as OpenBook } from '../../assets/svgs/OpenBookIcon.svg';
@@ -92,6 +96,7 @@ export default {
   DeleteModalIcon,
   DescriptionIcon,
   DeleteIconSnackbar,
+  LogoLinkedin,
   DevelopmentIcon,
   Document,
   Edit,
@@ -133,6 +138,9 @@ export default {
   Upload,
   ViewIcon,
   XMark,
+  LogoGmail,
+  LogoFacebook,
+  LogoDiscord,
   Pen,
   YoutubeIcon,
   ZoomInIcon,
