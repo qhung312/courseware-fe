@@ -112,7 +112,11 @@ const MaterialDetailPage: React.FC = () => {
               </p>
             </>
           ) : (
-            <PDF file={file} title={material?.name} />
+            <PDF
+              file={file}
+              title={material?.name}
+              pageClassName='border border-[#bbbcbc] shadow'
+            />
           )}
         </div>
       </Wrapper>
