@@ -3,6 +3,7 @@ import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Markdown, QuestionCard, Select } from '../../../components';
+import { ExpressionEditor, MarkdownEditor } from '../../../components/CodeEditor';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
@@ -89,11 +90,6 @@ const CreateQuestionPage = () => {
     }
   };
 
-  const onInputDescription = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setDescription(event.target.value);
-
-  const onInputCode = (event: ChangeEvent<HTMLTextAreaElement>) => setCode(event.target.value);
-
   const onAddOption = (_: React.MouseEvent<HTMLButtonElement>) => {
     const newOptions = JSON.parse(JSON.stringify(options)) as string[];
     newOptions.push('');
@@ -105,9 +101,6 @@ const CreateQuestionPage = () => {
       setAnswerKey(parseInt(event.value));
     }
   };
-
-  const onInputExplanation = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setExplanation(event.target.value);
 
   const toggleShuffleOptions = (_: ChangeEvent<HTMLInputElement>) =>
     setShuffleOptions(!shuffleOptions);
@@ -287,12 +280,14 @@ const CreateQuestionPage = () => {
                     >
                       Đề
                     </label>
-                    <textarea
+                    <MarkdownEditor
                       id='description'
-                      rows={10}
-                      className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                       value={description}
-                      onChange={onInputDescription}
+                      placeholder='Nhập đề câu hỏi'
+                      onChange={(value, _viewUpdate) => {
+                        setDescription(value);
+                      }}
                     />
                   </div>
                   <div className='flex flex-col gap-y-1'>
@@ -311,12 +306,14 @@ const CreateQuestionPage = () => {
                         />
                       </a>
                     </div>
-                    <textarea
+                    <ExpressionEditor
                       id='code'
-                      rows={10}
-                      className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                      className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                       value={code}
-                      onChange={onInputCode}
+                      placeholder='Nhập biểu thức'
+                      onChange={(value, _viewUpdate) => {
+                        setCode(value);
+                      }}
                     />
                   </div>
                   <div className='flex flex-col gap-y-8'>
@@ -338,7 +335,7 @@ const CreateQuestionPage = () => {
                             </label>
                             <input
                               id={`option_${index}`}
-                              className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                              className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 font-mono text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                               value={option}
                               onChange={({ target }) => {
                                 const newOptions = JSON.parse(JSON.stringify(options)) as string[];
@@ -401,12 +398,14 @@ const CreateQuestionPage = () => {
                     >
                       Giải thích
                     </label>
-                    <textarea
-                      id='explanation'
-                      rows={10}
-                      className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    <MarkdownEditor
+                      id='explaination'
+                      className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                       value={explanation}
-                      onChange={onInputExplanation}
+                      placeholder='Nhập giải thích'
+                      onChange={(value, _viewUpdate) => {
+                        setExplanation(value);
+                      }}
                     />
                   </div>
                 </>

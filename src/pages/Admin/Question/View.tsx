@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Markdown, QuestionCard } from '../../../components';
+import { MarkdownEditor, ExpressionEditor } from '../../../components/CodeEditor';
 import { Page, Wrapper } from '../../../layout';
 import './index.css';
 import QuestionService from '../../../service/question.service';
@@ -128,13 +129,12 @@ const ViewQuestionPage = () => {
                   >
                     Đề
                   </label>
-                  <textarea
+                  <MarkdownEditor
                     id='description'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    className='flex w-full flex-1 cursor-not-allowed text-xs font-medium lg:text-sm 3xl:text-base'
                     value={question?.description}
-                    disabled
-                    placeholder={'Không có thông tin đề'}
+                    placeholder='Không có đề cho câu hỏi này'
+                    readOnly={true}
                   />
                 </div>
                 <div className='flex flex-col gap-y-1'>
@@ -153,13 +153,12 @@ const ViewQuestionPage = () => {
                       />
                     </a>
                   </div>
-                  <textarea
+                  <ExpressionEditor
                     id='code'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    className='flex w-full flex-1 cursor-not-allowed text-xs font-medium lg:text-sm 3xl:text-base'
                     value={question?.code}
-                    disabled
-                    placeholder={'Không có thông tin biểu thức'}
+                    placeholder='Không có biểu thức cho câu hỏi này'
+                    readOnly={true}
                   />
                 </div>
                 <div className='flex flex-col gap-y-8'>
@@ -175,7 +174,7 @@ const ViewQuestionPage = () => {
                           </label>
                           <input
                             id={`option_${index}`}
-                            className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 font-mono text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                             value={option.description}
                             disabled
                           />
@@ -213,13 +212,12 @@ const ViewQuestionPage = () => {
                   >
                     Giải thích
                   </label>
-                  <textarea
+                  <MarkdownEditor
                     id='explanation'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    className='flex w-full flex-1 cursor-not-allowed text-xs font-medium lg:text-sm 3xl:text-base'
                     value={question?.explanation}
-                    disabled
-                    placeholder={'Câu hỏi này chưa có giải thích'}
+                    placeholder='Không có giải thích cho câu hỏi này'
+                    readOnly={true}
                   />
                 </div>
                 {preview !== null && (

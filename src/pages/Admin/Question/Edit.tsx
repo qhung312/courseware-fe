@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon, Markdown, QuestionCard, Select } from '../../../components';
+import { ExpressionEditor, MarkdownEditor } from '../../../components/CodeEditor';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -292,14 +293,13 @@ const EditQuestionPage = () => {
                   >
                     Đề
                   </label>
-                  <textarea
+                  <MarkdownEditor
                     id='description'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                     value={description}
-                    placeholder={'Nhập đề'}
-                    onChange={({ target }) => {
-                      setDescription(target.value);
+                    placeholder='Nhập đề câu hỏi'
+                    onChange={(value, _viewUpdate) => {
+                      setDescription(value);
                     }}
                   />
                 </div>
@@ -319,13 +319,14 @@ const EditQuestionPage = () => {
                       />
                     </a>
                   </div>
-                  <textarea
+                  <ExpressionEditor
                     id='code'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                     value={code}
-                    placeholder={'Nhập biểu thức'}
-                    onChange={({ target }) => setCode(target.value)}
+                    placeholder='Nhập biểu thức'
+                    onChange={(value, _viewUpdate) => {
+                      setCode(value);
+                    }}
                   />
                 </div>
                 <div className='flex flex-col gap-y-8'>
@@ -349,7 +350,7 @@ const EditQuestionPage = () => {
                           </label>
                           <input
                             id={`option_${index}`}
-                            className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                            className='flex flex-1 rounded-lg border border-[#D9D9D9] p-1 font-mono text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
                             value={option}
                             onChange={({ target }) => {
                               const newOptions = JSON.parse(JSON.stringify(options)) as string[];
@@ -414,13 +415,14 @@ const EditQuestionPage = () => {
                   >
                     Giải thích
                   </label>
-                  <textarea
-                    id='explanation'
-                    rows={10}
-                    className='flex w-full flex-1 rounded-lg border border-[#D9D9D9] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                  <MarkdownEditor
+                    id='explaination'
+                    className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                     value={explanation}
-                    placeholder={'Nhập giải thích cho câu hỏi'}
-                    onChange={({ target }) => setExplanation(target.value)}
+                    placeholder='Nhập giải thích'
+                    onChange={(value, _viewUpdate) => {
+                      setExplanation(value);
+                    }}
                   />
                 </div>
                 {preview !== null && (
