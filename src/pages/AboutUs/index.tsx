@@ -16,7 +16,7 @@ const AboutUsPage = () => {
 
   return pathname === '/about-us' ? (
     <Page title='Về chúng tôi'>
-      <main className='w-full md:px-[48px]'>
+      <main className='flex w-full flex-col items-center md:px-[48px]'>
         {/* Banner */}
         <Container className='relative flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
           <div className='z-[4] lg:absolute lg:text-white'>
@@ -72,22 +72,20 @@ const AboutUsPage = () => {
         </Container>
 
         {/* Section 2 */}
-        <div className='w-full bg-[#4285F4]'>
-          <Container className='flex flex-col items-center justify-center'>
-            <div className='flex flex-1 items-center'>
-              <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
-                <h1 className='text-center text-[28px] font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
-                  We <span className='text-[#F4B301]'>Learn</span> - We{' '}
-                  <span className='text-[#F4B301]'>Share</span>
-                </h1>
-                <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] 2xl:text-[22px]'>
-                  Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một
-                  trọng trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành
-                  cùng sinh viên.
-                </p>
-              </div>
+        <div className='flex w-full flex-col items-center justify-center px-0 py-8 md:w-[calc(100%+96px)] md:py-12 md:px-5 lg:px-10 xl:py-24 xl:px-20 2xl:py-[124px] 3xl:px-[100px]'>
+          <div className='flex w-full flex-col items-center justify-center bg-[#4285F4] px-8 py-8 md:py-12 md:px-5 lg:px-10 xl:py-24 xl:px-20 2xl:py-[124px] 3xl:px-[100px]'>
+            <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
+              <h1 className='text-center text-[28px] font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
+                We <span className='text-[#F4B301]'>Learn</span> - We{' '}
+                <span className='text-[#F4B301]'>Share</span>
+              </h1>
+              <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] 2xl:text-[22px]'>
+                Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một trọng
+                trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành cùng sinh
+                viên.
+              </p>
             </div>
-          </Container>
+          </div>
         </div>
 
         {/* Section 3 */}
