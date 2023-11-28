@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
-import { Footer } from '../../../components';
+import { Footer, Pagination } from '../../../components';
 import CopyIcon from '../../../components/CopyIcon';
 import Icon from '../../../components/Icon';
 import DeleteModal from '../../../components/Modal/DeleteModal';
@@ -60,6 +60,7 @@ const ActivityHistory = () => {
       .then((res) => {
         const { results: allActivities, count, total } = res.data.payload;
         setActivities(allActivities);
+        console.log(allActivities);
         setTotalActivity({
           currentTotal: total,
           viewMaterial: count?.VIEW_MATERIAL,
@@ -148,6 +149,7 @@ const ActivityHistory = () => {
                 onClick={() => {
                   if (filterOption === 1) setFilterOption(0);
                   else setFilterOption(1);
+                  setPage(1);
                 }}
               >
                 <div className='flex items-center'>
@@ -180,6 +182,7 @@ const ActivityHistory = () => {
                 onClick={() => {
                   if (filterOption === 2) setFilterOption(0);
                   else setFilterOption(2);
+                  setPage(1);
                 }}
               >
                 <div className='flex items-center'>
@@ -212,6 +215,7 @@ const ActivityHistory = () => {
                 onClick={() => {
                   if (filterOption === 3) setFilterOption(0);
                   else setFilterOption(3);
+                  setPage(1);
                 }}
               >
                 <div className='flex items-center'>
@@ -258,6 +262,7 @@ const ActivityHistory = () => {
               onClick={() => {
                 if (filterOption === 1) setFilterOption(0);
                 else setFilterOption(1);
+                setPage(1);
               }}
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Tài liệu học tập</h3>
@@ -277,6 +282,7 @@ const ActivityHistory = () => {
               onClick={() => {
                 if (filterOption === 2) setFilterOption(0);
                 else setFilterOption(2);
+                setPage(1);
               }}
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Bài tập rèn luyện</h3>
@@ -289,6 +295,7 @@ const ActivityHistory = () => {
               onClick={() => {
                 if (filterOption === 3) setFilterOption(0);
                 else setFilterOption(3);
+                setPage(1);
               }}
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Đề thi</h3>
@@ -311,7 +318,7 @@ const ActivityHistory = () => {
             </>
           )}
           {!loading && activities.length !== 0 && (
-            <div className='lg:mt-[-16px] lg:w-[69%]'>
+            <div className='lg:mt-[-16px] lg:min-h-[600px] lg:w-[69%]'>
               {activities.map((activity, index) => (
                 <div className='mt-4' key={index}>
                   <Link
@@ -415,48 +422,17 @@ const ActivityHistory = () => {
                   </Link>
                 </div>
               ))}
-              <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
-                <button
-                  className={`rounded-full p-2 ${page === 1 ? '' : 'hover:bg-black/20'}`}
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='-rotate-90' />
-                </button>
-                {Array.from(
-                  { length: Math.ceil(totalActivity.currentTotal / 5) },
-                  (_e, index) => index + 1
-                ).map((index) => (
-                  <button
-                    key={`page-${index}`}
-                    className={`aspect-square rounded-full p-2 ${
-                      index === page ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
-                    }`}
-                    onClick={() => setPage(index)}
-                  >
-                    <p
-                      className={`w-7 text-lg ${
-                        index === page ? 'font-semibold text-white' : 'font-medium'
-                      }`}
-                    >
-                      {index}
-                    </p>
-                  </button>
-                ))}
-                <button
-                  className={`rounded-full p-2 ${
-                    page === Math.ceil(totalActivity.currentTotal / 5) ? '' : 'hover:bg-black/20'
-                  }`}
-                  disabled={page === Math.ceil(totalActivity.currentTotal / 5)}
-                  onClick={() => setPage(page + 1)}
-                >
-                  <Icon.Chevron fill='#5B5B5B' className='rotate-90' />
-                </button>
-              </div>
+              <div className='mt-9' />
+              <Pagination
+                currentPage={page}
+                totalCount={totalActivity.currentTotal}
+                pageSize={5}
+                onPageChange={setPage}
+              />
             </div>
           )}
           {!loading && activities.length === 0 && (
-            <div className='lg:mt-[-16px] lg:w-[69%]'>
+            <div className='lg:mt-[-16px] lg:min-h-[600px] lg:w-[69%]'>
               <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
                 <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
                 <p className='w-full text-center'>Hiện chưa có hoạt động nào</p>

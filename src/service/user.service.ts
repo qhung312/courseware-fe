@@ -125,7 +125,7 @@ const editUserProfile = (profile: User) => {
 const getUserActivity = (query: GetActivityProp) => {
   const queryString = `${API_URL}me/activity?type=${query.activityType}\
 ${query.pageSize ? `&pageSize=${query.pageSize}` : ''}\
-${query.pageNumber ? `&pageSize=${query.pageNumber}` : ''}`;
+${query.pageNumber ? `&pageNumber=${query.pageNumber}` : ''}`;
   return axios.get<Response<GetAllActivityReturnType>>(queryString);
 };
 

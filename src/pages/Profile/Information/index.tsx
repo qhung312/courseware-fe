@@ -209,7 +209,8 @@ const UserInformation = () => {
                     setUserProfile({ ...userProfile, gender: e.target.value });
                   }}
                 >
-                  <option value='MALE'>{!userProfile?.gender ? 'Chọn giới tính' : 'Nam'}</option>
+                  <option value='' selected disabled className='hidden'></option>
+                  <option value='MALE'>Nam</option>
                   <option value='FEMALE'>Nữ</option>
                   <option value='OTHER'>Khác</option>
                 </select>
