@@ -1,6 +1,7 @@
 import AsideLink from './AsideLink';
 import CarouselArrow from './CarouselArrow';
 import CarouselIndicator from './CarouselIndicator';
+import { MarkdownEditor, ExpressionEditor } from './CodeEditor';
 import DocumentCard from './DocumentCard';
 import Footer from './Footer';
 import Header from './Header';
@@ -38,4 +39,6 @@ export {
   PDF,
   Select,
   UserSharingCard,
+  MarkdownEditor,
+  ExpressionEditor,
 };

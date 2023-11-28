@@ -1,9 +1,16 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ViewUpdate } from '@codemirror/view';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Markdown, QuestionCard, Select } from '../../../components';
-import { ExpressionEditor, MarkdownEditor } from '../../../components/CodeEditor';
+import {
+  Icon,
+  Markdown,
+  QuestionCard,
+  Select,
+  MarkdownEditor,
+  ExpressionEditor,
+} from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
@@ -89,6 +96,18 @@ const CreateQuestionPage = () => {
       setChapter(event.value);
     }
   };
+
+  const onInputDescription = useCallback((value: string, _viewUpdate: ViewUpdate) => {
+    setDescription(value);
+  }, []);
+
+  const onInputCode = useCallback((value: string, _viewUpdate: ViewUpdate) => {
+    setCode(value);
+  }, []);
+
+  const onInputExplanation = useCallback((value: string, _viewUpdate: ViewUpdate) => {
+    setExplanation(value);
+  }, []);
 
   const onAddOption = (_: React.MouseEvent<HTMLButtonElement>) => {
     const newOptions = JSON.parse(JSON.stringify(options)) as string[];
@@ -285,9 +304,7 @@ const CreateQuestionPage = () => {
                       className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                       value={description}
                       placeholder='Nhập đề câu hỏi'
-                      onChange={(value, _viewUpdate) => {
-                        setDescription(value);
-                      }}
+                      onChange={onInputDescription}
                     />
                   </div>
                   <div className='flex flex-col gap-y-1'>
@@ -311,9 +328,7 @@ const CreateQuestionPage = () => {
                       className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                       value={code}
                       placeholder='Nhập biểu thức'
-                      onChange={(value, _viewUpdate) => {
-                        setCode(value);
-                      }}
+                      onChange={onInputCode}
                     />
                   </div>
                   <div className='flex flex-col gap-y-8'>
@@ -403,9 +418,7 @@ const CreateQuestionPage = () => {
                       className='flex w-full flex-1 text-xs font-medium lg:text-sm 3xl:text-base'
                       value={explanation}
                       placeholder='Nhập giải thích'
-                      onChange={(value, _viewUpdate) => {
-                        setExplanation(value);
-                      }}
+                      onChange={onInputExplanation}
                     />
                   </div>
                 </>
