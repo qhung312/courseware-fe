@@ -313,10 +313,7 @@ const EditQuestionPage = () => {
                       target='_blank'
                       rel='noreferrer'
                     >
-                      <Icon.LiveHelpIcon
-                        fill='#666666'
-                        className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
-                      />
+                      <Icon.Help fill='#666666' className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6' />
                     </a>
                   </div>
                   <ExpressionEditor
