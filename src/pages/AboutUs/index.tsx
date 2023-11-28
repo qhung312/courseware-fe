@@ -9,16 +9,16 @@ import MissionImg from '../../assets/images/Mission.png';
 import VisionPlaceholder from '../../assets/images/Vision-small.jpg';
 import VisionImg from '../../assets/images/Vision.jpg';
 import { Footer, LazyLoadImage } from '../../components';
-import { Container, Page } from '../../layout';
+import { Page } from '../../layout';
 
 const AboutUsPage = () => {
   const { pathname } = useLocation();
 
   return pathname === '/about-us' ? (
     <Page title='Về chúng tôi'>
-      <main className='w-full md:px-[48px]'>
+      <main className='flex w-full flex-col items-center px-4 md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'>
         {/* Banner */}
-        <Container className='relative flex flex-col items-center justify-center space-y-16 lg:space-y-0'>
+        <div className='relative flex w-full flex-col items-center justify-center space-y-16 py-8 md:py-12 lg:space-y-0 lg:py-16 xl:py-24 2xl:py-[124px]'>
           <div className='z-[4] lg:absolute lg:text-white'>
             <h1 className='text-center text-[28px] font-bold md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
               CHÚNG TA CÙNG TIẾN
@@ -42,10 +42,10 @@ const AboutUsPage = () => {
               objectFit='cover'
             />
           </div>
-        </Container>
+        </div>
 
         {/* Section 1 */}
-        <Container className='flex flex-col space-y-16 md:justify-between lg:flex-row  lg:space-y-0'>
+        <div className='flex w-full flex-col space-y-16 py-8 md:justify-between md:py-12 lg:flex-row lg:space-y-0 lg:py-16 xl:py-24 2xl:py-[124px]'>
           <div className='space-y-3 md:max-w-md md:space-y-4 xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
             <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
               Giới thiệu
@@ -69,29 +69,25 @@ const AboutUsPage = () => {
               ban.
             </p>
           </div>
-        </Container>
+        </div>
 
         {/* Section 2 */}
-        <div className='w-full bg-[#4285F4]'>
-          <Container className='flex flex-col items-center justify-center'>
-            <div className='flex flex-1 items-center'>
-              <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
-                <h1 className='text-center text-[28px] font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
-                  We <span className='text-[#F4B301]'>Learn</span> - We{' '}
-                  <span className='text-[#F4B301]'>Share</span>
-                </h1>
-                <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] 2xl:text-[22px]'>
-                  Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một
-                  trọng trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành
-                  cùng sinh viên.
-                </p>
-              </div>
-            </div>
-          </Container>
+        <div className='flex w-[calc(100%+32px)] flex-col items-center justify-center bg-[#4285F4] px-[72px] py-8 md:w-[calc(100%+40px)] md:py-12 md:px-5 lg:w-[calc(100%+80px)] lg:px-10 xl:w-[calc(100%+160px)] xl:py-24 xl:px-20 2xl:py-[124px] 3xl:w-[calc(100%+200px)] 3xl:px-[100px]'>
+          <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
+            <h1 className='text-center text-[28px] font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
+              We <span className='text-[#F4B301]'>Learn</span> - We{' '}
+              <span className='text-[#F4B301]'>Share</span>
+            </h1>
+            <p className='text-center text-[12px] font-medium text-white opacity-80 lg:text-[16px] 2xl:text-[22px]'>
+              Với khẩu hiệu “We Learn We Share”, Chúng Ta Cùng Tiến luôn mang trong mình một trọng
+              trách là tổ chức hoạt động vì lợi ích của sinh viên và kết nối, đồng hành cùng sinh
+              viên.
+            </p>
+          </div>
         </div>
 
         {/* Section 3 */}
-        <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
+        <div className='flex w-full flex-col-reverse py-8 md:flex-row md:justify-between md:py-12 lg:py-16 xl:py-24 2xl:py-[124px]'>
           <div className='flex flex-1 items-center'>
             <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
               <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
@@ -114,10 +110,10 @@ const AboutUsPage = () => {
               objectFit='cover'
             />
           </div>
-        </Container>
+        </div>
 
         {/* Section 4 */}
-        <Container className='flex flex-col-reverse md:flex-row md:justify-between'>
+        <div className='flex w-full flex-col-reverse py-8 md:flex-row md:justify-between md:py-12 lg:py-16 xl:py-24 2xl:py-[124px]'>
           <div className='flex flex-1 items-center'>
             <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
               <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
@@ -143,7 +139,7 @@ const AboutUsPage = () => {
               objectFit='cover'
             />
           </div>
-        </Container>
+        </div>
       </main>
       <Footer />
     </Page>
