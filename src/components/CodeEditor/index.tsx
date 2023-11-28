@@ -4,8 +4,8 @@ import { Extension } from '@codemirror/state';
 import { EditorView, ViewUpdate } from '@codemirror/view';
 import { githubLightInit } from '@uiw/codemirror-theme-github';
 import CodeMirror from '@uiw/react-codemirror';
-
 import './index.css';
+import React, { memo } from 'react';
 
 type BaseEditorProps = {
   id?: string;
@@ -30,6 +30,7 @@ const BaseEditor = ({
   placeholder,
   readOnly,
 }: BaseEditorProps) => {
+  console.log('render ', id);
   return (
     <CodeMirror
       id={id}
@@ -62,7 +63,7 @@ type MarkdownEditorProps = {
   onChange?: (value: string, viewUpdate: ViewUpdate) => void;
 };
 
-export const MarkdownEditor = (props: MarkdownEditorProps) => {
+const MarkdownEditor = memo(function MarkdownEditor(props: MarkdownEditorProps) {
   return (
     <BaseEditor
       {...props}
@@ -75,10 +76,12 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
       ]}
     />
   );
-};
+});
 
 type ExpressionEditorProps = MarkdownEditorProps;
 
-export const ExpressionEditor = (props: ExpressionEditorProps) => {
+const ExpressionEditor = memo(function ExpressionEditor(props: ExpressionEditorProps) {
   return <BaseEditor {...props} extensions={[EditorView.lineWrapping]} />;
-};
+});
+
+export { MarkdownEditor, ExpressionEditor };
