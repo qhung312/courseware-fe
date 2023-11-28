@@ -18,7 +18,7 @@ const AboutUsPage = () => {
     <Page title='Về chúng tôi'>
       <main className='flex w-full flex-col items-center px-4 md:px-5 lg:px-10 xl:px-20 3xl:px-[100px]'>
         {/* Banner */}
-        <div className='relative flex w-full flex-col items-center justify-center space-y-16 lg:space-y-0'>
+        <div className='relative flex w-full flex-col items-center justify-center space-y-16 py-8 md:py-12 lg:space-y-0 lg:py-16 xl:py-24 2xl:py-[124px]'>
           <div className='z-[4] lg:absolute lg:text-white'>
             <h1 className='text-center text-[28px] font-bold md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
               CHÚNG TA CÙNG TIẾN
