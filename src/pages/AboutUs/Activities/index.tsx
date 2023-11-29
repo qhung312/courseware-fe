@@ -1,11 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import LHOTTT from '../../../assets/images/LHOT_1.jpg';
-import GSAXPlaceHolder from '../../../assets/images/LRQGSAX-placeholder.png';
-import GSAX from '../../../assets/images/LRQGSAX.png';
-import SCTTM from '../../../assets/images/SCTTM_1.jpg';
-import TSTTPlaceHolder from '../../../assets/images/TSTT-placeholder.jpg';
-import TSTT from '../../../assets/images/TSTT.jpg';
 import { Footer, LazyLoadImage } from '../../../components';
 import { Page } from '../../../layout';
 
@@ -35,8 +29,8 @@ const ActivitiesPage = () => {
                 <div className='absolute top-[100%] left-[100%] z-0 aspect-square w-[22%] translate-x-[-83%] translate-y-[-83%] rounded-full bg-[#5B61EB] md:w-[28%] md:translate-x-[-75%] md:translate-y-[-70%]' />
                 <LazyLoadImage
                   className='z-[1] block aspect-[360/200]'
-                  src={TSTT}
-                  placeHolderSrc={TSTTPlaceHolder}
+                  src={require('../../../assets/images/TSTT.jpg')}
+                  placeHolderSrc={require('../../../assets/images/TSTT-placeholder.jpg')}
                   alt='tstt_alt'
                   objectFit='cover'
                 />
@@ -92,8 +86,8 @@ const ActivitiesPage = () => {
                 <div className='absolute top-[100%] left-[0] z-0 aspect-[7/5] w-[36%] translate-x-[-7%] translate-y-[-90%] bg-[#D3E7FF]' />
                 <LazyLoadImage
                   className='z-[1] block aspect-[360/200]'
-                  src={SCTTM}
-                  placeHolderSrc={SCTTM}
+                  src={require('../../../assets/images/SCTTM_1.jpg')}
+                  placeHolderSrc={require('../../../assets/images/SCTTM_1-placeholder.jpg')}
                   alt='scttm_alt'
                   objectFit='cover'
                 />
@@ -105,8 +99,8 @@ const ActivitiesPage = () => {
                 <div className='absolute top-[0] left-[0] z-0 aspect-square w-[12.5%] translate-x-[-25%] translate-y-[-30%] rounded-full bg-[#687EF3] md:translate-x-[-36%] md:translate-y-[-40%]' />
                 <LazyLoadImage
                   className='block aspect-[360/200] w-full'
-                  src={LHOTTT}
-                  placeHolderSrc={LHOTTT}
+                  src={require('../../../assets/images/LHOT_1.jpg')}
+                  placeHolderSrc={require('../../../assets/images/LHOT_1-placeholder.jpg')}
                   alt='lhottt_alt'
                   objectFit='cover'
                 />
@@ -160,8 +154,8 @@ const ActivitiesPage = () => {
                 <div className='absolute -bottom-5 -right-5 z-0 aspect-square w-[22%] bg-[#73BCFF] md:w-[36%]' />
                 <LazyLoadImage
                   className='block aspect-[360/200] w-full'
-                  src={GSAX}
-                  placeHolderSrc={GSAXPlaceHolder}
+                  src={require('../../../assets/images/LRQGSAX.png')}
+                  placeHolderSrc={require('../../../assets/images/LRQGSAX-placeholder.png')}
                   alt='gsax_alt'
                   objectFit='cover'
                 />
