@@ -8,7 +8,7 @@ const Mobile: FC<{
   sharing: string;
 }> = ({ name, profileImg, sharing }) => {
   return (
-    <div className='flex w-full flex-col items-start justify-start'>
+    <div className='flex h-full w-full flex-col items-start justify-start overflow-visible rounded-lg shadow-[0_20px_20px_0_rgba(47,50,125,0.1)]'>
       <div className='flex w-full flex-col items-center justify-center gap-y-1 rounded-t-2xl bg-[#E3F2FD] p-2'>
         <img
           src={profileImg}

@@ -8,7 +8,7 @@ const Desktop: FC<{
   sharing: string;
 }> = ({ name, profileImg, sharing }) => {
   return (
-    <div className='flex flex-col items-start justify-start rounded-2xl bg-white shadow-[0_4px_4px_0_rgba(47,50,125,0.1)] '>
+    <div className='flex h-full flex-col items-start justify-start rounded-2xl bg-white shadow-[0_20px_20px_0_rgba(47,50,125,0.1)] '>
       <div className='relative flex w-full flex-row items-start justify-start gap-y-1 rounded-t-2xl bg-[#E3F2FD] px-8 py-5'>
         <p className='ml-[144px] text-xl font-medium lg:text-2xl 3xl:text-3xl'>{name}</p>
       </div>
