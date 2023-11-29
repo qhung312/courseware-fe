@@ -1,11 +1,6 @@
 // import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
 import { useEffect } from 'react';
 
-import DevelopmentIllustration from '../../../../assets/images/DevelopmentIllustration.png';
-import GTTSTT from '../../../../assets/images/GTTSTT.png';
-import OriginIllustration from '../../../../assets/images/OriginIllustration.png';
-import TSTTPlaceHolder from '../../../../assets/images/TSTT-placeholder.jpg';
-import TSTT from '../../../../assets/images/TSTT.jpg';
 import { Footer, Icon, LazyLoadImage } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
@@ -26,8 +21,8 @@ const TSTTPage = () => {
         <div className='w-full'>
           <LazyLoadImage
             containerClassName='block aspect-[52/25] md:aspect-[4/1]'
-            src={TSTT}
-            placeHolderSrc={TSTTPlaceHolder}
+            src={require('../../../../assets/images/TSTT.jpg')}
+            placeHolderSrc={require('../../../../assets/images/TSTT-placeholder.jpg')}
             alt='tstt_alt'
             objectFit='cover'
           />
@@ -54,8 +49,8 @@ const TSTTPage = () => {
                 <LazyLoadImage
                   containerClassName='block aspect-[360/200]'
                   className='rounded-lg'
-                  src={GTTSTT}
-                  placeHolderSrc={GTTSTT}
+                  src={require('../../../../assets/images/TSTT_4.jpg')}
+                  placeHolderSrc={require('../../../../assets/images/TSTT_4-placeholder.jpg')}
                   alt='scttm_alt'
                   objectFit='cover'
                 />
@@ -97,8 +92,8 @@ const TSTTPage = () => {
                   <LazyLoadImage
                     containerClassName='block h-full'
                     className='rounded-b-[20px] md:rounded-none'
-                    src={OriginIllustration}
-                    placeHolderSrc={OriginIllustration}
+                    src={require('../../../../assets/images/TSTT_1.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/TSTT_1-placeholder.jpg')}
                     alt='scttm_alt'
                     objectFit='cover'
                   />
@@ -137,10 +132,10 @@ const TSTTPage = () => {
                 </div>
                 <div className='h-full w-full p-0 md:h-auto md:w-[45%]'>
                   <LazyLoadImage
-                    containerClassName='block p-0 md:h-auto md:w-full'
-                    className='rounded-b-[20px] md:rounded-none'
-                    src={DevelopmentIllustration}
-                    placeHolderSrc={DevelopmentIllustration}
+                    containerClassName='block p-0 h-full md:w-full'
+                    className='h-full rounded-b-[20px] md:rounded-none'
+                    src={require('../../../../assets/images/TSTT_2.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/TSTT_2-placeholder.jpg')}
                     alt='scttm_alt'
                     objectFit='cover'
                   />
