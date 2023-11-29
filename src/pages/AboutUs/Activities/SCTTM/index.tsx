@@ -1,13 +1,6 @@
 // import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
 import { useEffect } from 'react';
 
-import IntroductionPic from '../../../../assets/images/IntroductionPic.jpg';
-import SCTTM_3 from '../../../../assets/images/SCTTM.jpg';
-import SCTTM from '../../../../assets/images/SCTTM.png';
-import SCTTM_1 from '../../../../assets/images/SCTTM_1.jpg';
-import SCTTM_2 from '../../../../assets/images/SCTTM_2.jpg';
-import SCTTM_4 from '../../../../assets/images/SCTTM_4.jpg';
-import SCTTM_5 from '../../../../assets/images/SCTTM_5.jpg';
 import { Footer, LazyLoadImage } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
@@ -28,8 +21,8 @@ const SCTTMPage = () => {
         <div className='w-full'>
           <LazyLoadImage
             className='z-[1] block aspect-[52/25] md:aspect-[4/1]'
-            src={IntroductionPic}
-            placeHolderSrc={IntroductionPic}
+            src={require('../../../../assets/images/IntroductionPic.jpg')}
+            placeHolderSrc={require('../../../../assets/images/Introduction-placeholder.jpg')}
             alt='tstt_alt'
             objectFit='cover'
           />
@@ -59,8 +52,8 @@ const SCTTMPage = () => {
                 <div className='w-[100%] md:w-[50%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[47/28] rounded-[20px] md:aspect-[52/31]'
-                    src={SCTTM_3}
-                    placeHolderSrc={SCTTM_3}
+                    src={require('../../../../assets/images/SCTTM.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/SCTTM-placeholder.jpg')}
                     alt='scttm_3_picture'
                     objectFit='cover'
                   />
@@ -81,8 +74,8 @@ const SCTTMPage = () => {
                   <div className='w-[100%] md:w-[41%]'>
                     <LazyLoadImage
                       className='z-[1] block aspect-[16/9] rounded-[20px]'
-                      src={SCTTM_2}
-                      placeHolderSrc={SCTTM_2}
+                      src={require('../../../../assets/images/SCTTM_2.jpg')}
+                      placeHolderSrc={require('../../../../assets/images/SCTTM_2-placeholder.jpg')}
                       alt='gt_scttm_picture'
                       objectFit='cover'
                     />
@@ -101,8 +94,8 @@ const SCTTMPage = () => {
                 <div className='w-[100%] md:w-[41%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[16/9] rounded-[20px]'
-                    src={SCTTM_1}
-                    placeHolderSrc={SCTTM_1}
+                    src={require('../../../../assets/images/SCTTM_1.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/SCTTM_1-placeholder.jpg')}
                     alt='gt_scttm_picture'
                     objectFit='cover'
                   />
@@ -117,8 +110,8 @@ const SCTTMPage = () => {
                     <div className='w-[100%]'>
                       <LazyLoadImage
                         className='z-[1] block aspect-[5/3] rounded-t-[20px]'
-                        src={SCTTM_4}
-                        placeHolderSrc={SCTTM_4}
+                        src={require('../../../../assets/images/SCTTM_4.jpg')}
+                        placeHolderSrc={require('../../../../assets/images/SCTTM_4-placeholder.jpg')}
                         alt='gt_scttm_picture'
                         objectFit='cover'
                       />
@@ -135,8 +128,8 @@ const SCTTMPage = () => {
                     <div className='w-[100%]'>
                       <LazyLoadImage
                         className='z-[1] block aspect-[5/3] rounded-t-[20px]'
-                        src={SCTTM_5}
-                        placeHolderSrc={SCTTM_5}
+                        src={require('../../../../assets/images/SCTTM_5.jpg')}
+                        placeHolderSrc={require('../../../../assets/images/SCTTM_5-placeholder.jpg')}
                         alt='gt_scttm_picture'
                         objectFit='cover'
                       />
@@ -154,8 +147,8 @@ const SCTTMPage = () => {
                     <div className='w-[100%]'>
                       <LazyLoadImage
                         className='z-[1] block aspect-[5/3] rounded-t-[20px]'
-                        src={SCTTM}
-                        placeHolderSrc={SCTTM}
+                        src={require('../../../../assets/images/SCTTM_3.jpg')}
+                        placeHolderSrc={require('../../../../assets/images/SCTTM_3-placeholder.jpg')}
                         alt='gt_scttm_picture'
                         objectFit='cover'
                       />

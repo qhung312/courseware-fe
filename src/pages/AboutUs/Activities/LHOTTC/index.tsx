@@ -2,11 +2,6 @@
 import { useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
-import LHOT from '../../../../assets/images/LHOT.png';
-import LHOT_1 from '../../../../assets/images/LHOT_1.jpg';
-import LHOT_2 from '../../../../assets/images/LHOT_2.png';
-import LHOT_4 from '../../../../assets/images/LHOT_4.jpg';
-import LHOT_5 from '../../../../assets/images/LHOT_5.png';
 import { CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../../../components';
 import { RevisionClassData as data } from '../../../../data/CarouselData';
 import { useWindowDimensions } from '../../../../hooks';
@@ -28,8 +23,8 @@ const LHOTTCPage = () => {
         <div className='w-full'>
           <LazyLoadImage
             className='z-[1] block aspect-[52/25] md:aspect-[4/1]'
-            src={LHOT_1}
-            placeHolderSrc={LHOT_1}
+            src={require('../../../../assets/images/LHOT_1.jpg')}
+            placeHolderSrc={require('../../../../assets/images/LHOT_1-placeholder.jpg')}
             alt='tstt_alt'
             objectFit='cover'
           />
@@ -64,8 +59,8 @@ const LHOTTCPage = () => {
                 <div className='w-[100%] md:w-[50%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[47/28] rounded-[20px] md:aspect-[3/2]'
-                    src={LHOT_2}
-                    placeHolderSrc={LHOT_2}
+                    src={require('../../../../assets/images/LHOT_2.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/LHOT_2-placeholder.jpg')}
                     alt='tstt_alt'
                     objectFit='cover'
                   />
@@ -75,8 +70,8 @@ const LHOTTCPage = () => {
                 <div className='w-[100%] md:w-[50%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[11/5] rounded-[20px]'
-                    src={LHOT}
-                    placeHolderSrc={LHOT}
+                    src={require('../../../../assets/images/LHOT.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/LHOT-placeholder.jpg')}
                     alt='tstt_alt'
                     objectFit='cover'
                   />
@@ -111,8 +106,8 @@ const LHOTTCPage = () => {
                 <div className='w-[100%] md:w-[50%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[4/3] rounded-[20px]'
-                    src={LHOT_4}
-                    placeHolderSrc={LHOT_4}
+                    src={require('../../../../assets/images/LHOT_4.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/LHOT_4-placeholder.jpg')}
                     alt='tstt_alt'
                     objectFit='cover'
                   />
@@ -137,8 +132,8 @@ const LHOTTCPage = () => {
                 <div className='w-[100%] md:w-[50%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[5/2] rounded-[20px]'
-                    src={LHOT_1}
-                    placeHolderSrc={LHOT_1}
+                    src={require('../../../../assets/images/LHOT_1.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/LHOT_1-placeholder.jpg')}
                     alt='tstt_alt'
                     objectFit='cover'
                   />
@@ -148,8 +143,8 @@ const LHOTTCPage = () => {
                 <div className='w-[100%] md:w-[50%]'>
                   <LazyLoadImage
                     className='z-[1] block aspect-[5/2] rounded-[20px]'
-                    src={LHOT_5}
-                    placeHolderSrc={LHOT_5}
+                    src={require('../../../../assets/images/LHOT_5.jpg')}
+                    placeHolderSrc={require('../../../../assets/images/LHOT_5-placeholder.jpg')}
                     alt='tstt_alt'
                     objectFit='cover'
                   />

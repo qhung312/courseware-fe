@@ -40,7 +40,7 @@ const EventsAndActivities = [
   {
     id: '2',
     name: 'Lớp học ôn tập',
-    imgSrc: require('../assets/images/LHOT.png'),
+    imgSrc: require('../assets/images/LHOT.jpg'),
     imgPlaceholder: require('../assets/images/LHOT-placeholder.jpg'),
     linkTo: 'about-us/activities/lop-hoc-on-tap',
   },
