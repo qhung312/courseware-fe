@@ -113,7 +113,7 @@ const ExamArchiveDetailPage: React.FC = () => {
               </p>
             </>
           ) : (
-            <PDF file={file} />
+            <PDF file={file} title={exam?.name} pageClassName='border border-[#bbbcbc] shadow' />
           )}
         </div>
         <ToastContainer position='bottom-right' />
