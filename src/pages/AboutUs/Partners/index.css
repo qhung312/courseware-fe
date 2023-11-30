@@ -1,23 +1,23 @@
-.swiper {
+.partners-carousel .swiper {
   overflow: visible !important;
 }
 
-.swiper-wrapper {
+.partners-carousel .swiper-wrapper {
   overflow: visible !important;
 }
 
-.swiper-slide {
+.partners-carousel .swiper-slide {
   height: auto !important;
 }
 
-.swiper-pagination {
+.partners-carousel .swiper-pagination {
   inset: 0 !important;
   position: relative !important;
   height: fit-content;
-  margin-top: 16px;
+  margin-top: 32px !important;
 }
 
-.swiper-pagination-bullet {
+.partners-carousel .swiper-pagination-bullet {
   background-color: rgba(179, 185, 187, 0.5);
   opacity: 1;
   width: 28px;
@@ -27,6 +27,6 @@
   transition: all 1s ease;
 }
 
-.swiper-pagination-bullet-active {
+.partners-carousel .swiper-pagination-bullet-active {
   background-color: #4285f4;
 }

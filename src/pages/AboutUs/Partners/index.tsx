@@ -191,7 +191,6 @@ const Fessior: FC = () => {
     if (width >= 768) {
       textRefs.current.forEach((textRef) => {
         if (textRef && textRef.parentElement) {
-          console.log(textRef.parentElement.children[1], textRef);
           (textRef.parentElement.children[1] as HTMLElement).style.height = `${
             parseFloat(window.getComputedStyle(textRef as Element).height) + 120
           }px`;
@@ -329,17 +328,17 @@ const Fessior: FC = () => {
           <h2 className='mt-1 text-[24px] font-semibold leading-snug text-[#0B2878] lg:text-[32px] 3xl:text-[40px]'>
             Những dự án nổi bật
           </h2>
-          <div className='relative -mx-[30px] h-full overflow-hidden px-[30px]'>
+          <div className='partners-carousel relative -mx-[30px] h-full overflow-hidden px-[30px]'>
             <Swiper
               spaceBetween={60}
               slidesPerView={slidesPerView}
               slidesPerGroup={1}
               loop
               loopPreventsSlide
-              autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+              autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
               speed={1200}
               pagination={{
-                el: '.swiper-pagination',
+                el: '.projects-swiper-pagination',
                 clickable: true,
                 renderBullet: function (_index, className) {
                   return '<span class="' + className + '"></span>';
@@ -347,7 +346,7 @@ const Fessior: FC = () => {
                 type: 'bullets',
               }}
               modules={[Autoplay, Pagination]}
-              initialSlide={2}
+              initialSlide={0}
               className='mt-5 flex h-full'
             >
               {projects.map((project) => (
@@ -387,7 +386,7 @@ const Fessior: FC = () => {
               ))}
             </Swiper>
             <div className='relative w-full'>
-              <div className='swiper-pagination'></div>
+              <div className='projects-swiper-pagination swiper-pagination'></div>
             </div>
           </div>
         </section>
