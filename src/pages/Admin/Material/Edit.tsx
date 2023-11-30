@@ -24,6 +24,7 @@ const MaterialEdit = () => {
   const [subject, setSubject] = useState('');
   const [chapter, setChapter] = useState('');
   const [description, setDescription] = useState('');
+  const [isHidden, setIsHidden] = useState(false);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
@@ -51,7 +52,8 @@ const MaterialEdit = () => {
         name === material.name &&
           subject === material.subject._id &&
           chapter === (material.chapter?._id ?? '') &&
-          _.trim(description) === material.description
+          _.trim(description) === material.description &&
+          isHidden === material.isHidden
       );
     }
   });
@@ -62,8 +64,9 @@ const MaterialEdit = () => {
       description,
       subject,
       chapter,
+      isHidden,
     };
-    MaterialService.edit(name, queryBody, true)
+    MaterialService.edit(id, queryBody, true)
       .then(() => {
         toast.success('Edit successfully');
       })
@@ -78,7 +81,7 @@ const MaterialEdit = () => {
 
   useEffect(() => {
     setSave();
-  }, [name, subject, chapter, description, setSave]);
+  }, [name, subject, chapter, description, setSave, isHidden]);
 
   useEffect(() => {
     if (material) {
@@ -86,6 +89,7 @@ const MaterialEdit = () => {
       setDescription(material.description);
       setChapter(material?.chapter?._id ?? '');
       setSubject(material?.subject?._id ?? '');
+      setIsHidden(material.isHidden);
     }
   }, [material]);
 
@@ -244,9 +248,9 @@ const MaterialEdit = () => {
                     </p>
                     <input
                       type='checkbox'
-                      className='allow-checked h-7 w-7 cursor-not-allowed'
-                      checked={!material?.isHidden}
-                      disabled
+                      className='allow-checked h-7 w-7 cursor-pointer'
+                      checked={!isHidden}
+                      onChange={() => setIsHidden(!isHidden)}
                     />
                   </div>
                   <div className='flex flex-row-reverse gap-x-8'>
@@ -256,7 +260,10 @@ const MaterialEdit = () => {
                         !canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
                       }`}
                       disabled={canSave}
-                      onClick={() => handleOnSave()}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleOnSave();
+                      }}
                     >
                       <p className='whitespace-nowrap text-white'>Lưu thay đổi</p>
                     </button>

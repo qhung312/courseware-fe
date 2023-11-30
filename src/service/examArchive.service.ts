@@ -16,6 +16,7 @@ type EditArgument = {
   semester?: string;
   type?: string;
   description?: string;
+  isHidden?: boolean;
 };
 type GetAllExamArchiveReturnType = {
   total: number;

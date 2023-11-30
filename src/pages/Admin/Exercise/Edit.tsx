@@ -31,6 +31,7 @@ const EditExercisePage = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [chapter, setChapter] = useState('');
+  const [isHidden, setIsHidden] = useState(false);
 
   const [duration, setDuration] = useState<CountDown>({
     hour: 0,
@@ -102,6 +103,7 @@ const EditExercisePage = () => {
         name,
         subject,
         chapter,
+        isHidden,
         duration: getTime(duration),
         sampleSize,
         potentialQuestions: potentialQuestions,
@@ -111,6 +113,7 @@ const EditExercisePage = () => {
         name: exercise.name,
         subject: exercise?.subject?._id ?? '',
         chapter: exercise?.chapter?._id ?? '',
+        isHidden: exercise.isHidden,
         duration: exercise.duration,
         sampleSize: exercise.sampleSize,
         potentialQuestions: exercise.potentialQuestions,
@@ -121,10 +124,12 @@ const EditExercisePage = () => {
   });
 
   const handleOnSave = useDebounce(() => {
+    setLoading(true);
     const data = {
       name,
       subject,
       chapter,
+      isHidden,
       duration: getTime(duration),
       sampleSize,
       potentialQuestions: potentialQuestions.map((question) => question._id),
@@ -134,7 +139,7 @@ const EditExercisePage = () => {
     QuizService.edit(id, data)
       .then(() => toast.success('Chỉnh sửa thành công'))
       .catch((err) => toast.error(err.response.data.message))
-      .finally(() => fetchData);
+      .finally(() => fetchData());
   });
 
   useEffect(() => {
@@ -156,6 +161,7 @@ const EditExercisePage = () => {
     potentialQuestions,
     description,
     exercise,
+    isHidden,
     handleOnSetSave,
   ]);
 
@@ -164,6 +170,7 @@ const EditExercisePage = () => {
       setName(exercise.name);
       setSubject(exercise.subject._id);
       setChapter(exercise.chapter._id);
+      setIsHidden(exercise.isHidden);
       setDescription(exercise.description);
       setDuration(getCountDown(exercise.duration));
       setSampleSize(exercise?.sampleSize ?? 0);
@@ -554,9 +561,9 @@ const EditExercisePage = () => {
                       </p>
                       <input
                         type='checkbox'
-                        className='allow-checked h-7 w-7 cursor-not-allowed'
-                        checked={!exercise?.isHidden}
-                        disabled
+                        className='allow-checked h-7 w-7 cursor-pointer'
+                        checked={!isHidden}
+                        onChange={() => setIsHidden(!isHidden)}
                       />
                     </div>
                     <div className='flex flex-row-reverse gap-x-8'>
