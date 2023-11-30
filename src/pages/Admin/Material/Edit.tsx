@@ -91,26 +91,27 @@ const MaterialEdit = () => {
 
   useEffect(() => {
     // update options for chapter when the selected subject changes
-    if (!subject) {
+    if (subject === '') {
       setChapterOptions([]);
       setChapter('');
       return;
     }
-
-    ChapterService.getAll({ subject })
+    ChapterService.getAll({ subject: subject })
       .then((res) => {
         const { result: chapters } = res.data.payload;
-        const formattedData = chapters.map((chap) => ({
+        const listOption = chapters.map((chap) => ({
           value: chap._id,
           label: chap.name,
         }));
-        setChapterOptions(formattedData);
-        setChapter('');
+        setChapterOptions(listOption);
+        if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
+          setChapter('');
+        }
       })
       .catch((err) => {
-        console.error(err);
         toast.error(err.response.data.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject]);
 
   useEffect(() => {
@@ -236,21 +237,30 @@ const MaterialEdit = () => {
                     }}
                   />
                 </div>
-                <div className='flex w-full flex-row items-center justify-center gap-x-4'>
-                  <button
-                    type='submit'
-                    disabled={canSave}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleOnSave();
-                    }}
-                    className={`flex items-center rounded-lg px-6 py-1
-                  transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                    canSave ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
-                  }`}
-                  >
-                    <p className='font-medium text-white'>Lưu thay đổi</p>
-                  </button>
+                <div className='my-5 flex w-full flex-row justify-between'>
+                  <div className='flex w-full flex-row items-center justify-start gap-x-4'>
+                    <p className='flex text-sm font-medium lg:text-base 3xl:text-base'>
+                      Hiển thị với người dùng:
+                    </p>
+                    <input
+                      type='checkbox'
+                      className='allow-checked h-7 w-7 cursor-not-allowed'
+                      checked={!material?.isHidden}
+                      disabled
+                    />
+                  </div>
+                  <div className='flex flex-row-reverse gap-x-8'>
+                    <button
+                      className={`flex items-center rounded-lg px-6 py-1
+                      transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
+                        !canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
+                      }`}
+                      disabled={canSave}
+                      onClick={() => handleOnSave()}
+                    >
+                      <p className='whitespace-nowrap text-white'>Lưu thay đổi</p>
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

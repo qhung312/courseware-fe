@@ -208,15 +208,28 @@ const ViewExercisePage = () => {
                       ))}
                     </div>
                   </div>
-                  <div className='my-5 flex flex-row-reverse gap-x-8'>
-                    <Link
-                      to={`/admin/exercises/edit/${id}`}
-                      className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
-                    >
-                      <p className='p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                        Chỉnh sửa
+                  <div className='my-5 flex w-full flex-row justify-between'>
+                    <div className='flex w-full flex-row items-center justify-start gap-x-4'>
+                      <p className='flex text-sm font-medium lg:text-base 3xl:text-base'>
+                        Hiển thị với người dùng:
                       </p>
-                    </Link>
+                      <input
+                        type='checkbox'
+                        className='allow-checked h-7 w-7 cursor-not-allowed'
+                        checked={!exercises?.isHidden}
+                        disabled
+                      />
+                    </div>
+                    <div className='flex items-center justify-center'>
+                      <Link
+                        to={`/admin/exercises/edit/${id}`}
+                        className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                      >
+                        <p className='whitespace-nowrap p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
+                          Chỉnh sửa
+                        </p>
+                      </Link>
+                    </div>
                   </div>
                 </>
               )}

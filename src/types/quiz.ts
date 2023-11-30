@@ -8,6 +8,7 @@ export type Quiz = {
   description: string;
   subject: Subject;
   chapter: Chapter;
+  isHidden: boolean;
 
   duration: number;
   potentialQuestions?: Question[];

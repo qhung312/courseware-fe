@@ -149,6 +149,17 @@ const ExamView = () => {
                     disabled
                   />
                 </div>
+                <div className='flex w-full flex-row items-center justify-start gap-x-4'>
+                  <p className='flex text-sm font-medium lg:text-base 3xl:text-base'>
+                    Hiển thị với người dùng:
+                  </p>
+                  <input
+                    type='checkbox'
+                    className='allow-checked h-7 w-7 cursor-not-allowed'
+                    checked={!examArchive?.isHidden}
+                    disabled
+                  />
+                </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Đề Thi</p>
                   {url && (
