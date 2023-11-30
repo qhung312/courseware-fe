@@ -161,7 +161,7 @@ const HomePage = () => {
                 <div className='flex flex-row items-center justify-center gap-x-6'>
                   <div className='flex flex-col items-center justify-center'>
                     <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] md:text-2xl lg:text-3xl 3xl:text-4xl'>
-                      30000+
+                      20000+
                     </p>
                     <p className='whitespace-nowrap text-base font-bold md:text-xl lg:text-2xl 3xl:text-3xl'>
                       Sinh viên
@@ -169,7 +169,7 @@ const HomePage = () => {
                   </div>
                   <div className='flex flex-col items-center justify-center'>
                     <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] md:text-2xl lg:text-3xl 3xl:text-4xl'>
-                      7
+                      5
                     </p>
                     <p className='whitespace-nowrap text-base font-bold md:text-xl lg:text-2xl 3xl:text-3xl'>
                       Môn học
