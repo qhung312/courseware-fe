@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserProfileBanner from '../../assets/images/UserProfile.png';
+import UserProfileBanner from '../../assets/images/UserProfile.jpg';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
 

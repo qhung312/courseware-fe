@@ -47,6 +47,7 @@ const MaterialView = () => {
     MaterialService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
+        console.log('>>> result', result);
         setMaterial(result);
       })
       .catch((err) => {
@@ -138,6 +139,17 @@ const MaterialView = () => {
                   >
                     {material?.description ? material.description : 'Không có chú thích'}
                   </div>
+                </div>
+                <div className='flex w-full flex-row items-center justify-start gap-x-4'>
+                  <p className='flex text-sm font-medium lg:text-base 3xl:text-base'>
+                    Hiển thị với người dùng:
+                  </p>
+                  <input
+                    type='checkbox'
+                    className='allow-checked h-7 w-7 cursor-not-allowed'
+                    checked={!material?.isHidden}
+                    disabled
+                  />
                 </div>
                 <div className='flex w-full flex-1 flex-col'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Tài liệu</p>

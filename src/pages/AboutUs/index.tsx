@@ -5,7 +5,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import IntroductionPlaceHolder from '../../assets/images/Introduction-placeholder.jpg';
 import IntroductionImg from '../../assets/images/IntroductionPic.jpg';
 import MissionPlaceholder from '../../assets/images/Mission-small.png';
-import MissionImg from '../../assets/images/Mission.png';
+import MissionImg from '../../assets/images/Mission.jpg';
 import VisionPlaceholder from '../../assets/images/Vision-small.jpg';
 import VisionImg from '../../assets/images/Vision.jpg';
 import { Footer, LazyLoadImage } from '../../components';

@@ -70,6 +70,7 @@ export type ExamArchive = {
   subject: Subject;
   semester: Semester;
   type: ExamType;
+  isHidden: boolean;
   description: string;
   resource: string;
   createdBy: string;

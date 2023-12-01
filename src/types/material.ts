@@ -6,6 +6,7 @@ export type Material = {
   name: string;
   subject: Subject;
   chapter: Chapter;
+  isHidden: boolean;
 
   description: string;
   resource: string;

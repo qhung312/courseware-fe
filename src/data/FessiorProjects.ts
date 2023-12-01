@@ -4,7 +4,7 @@ export const projects = [
     description:
       'Mang đến các trò chơi trí tuệ, thư giãn cho người dùng. Qua việc hoàn thành các màn chơi, các bạn sẽ thu thập GCoins để tham gia đấu giá các phần quà hấp dẫn.',
     href: 'https://game.gdsc.app/',
-    imageSrc: require('../assets/images/Fessior-GDSCGame.png'),
+    imageSrc: require('../assets/images/Fessior-GDSCGame.jpg'),
     placeholderSrc: require('../assets/images/Fessior-GDSCGame-placeholder.png'),
   },
   {
@@ -12,7 +12,7 @@ export const projects = [
     description:
       'Website giới thiệu và tổ chức các hoạt động gây quỹ cho Quỹ học bổng và Giải thưởng Trần Văn Khê',
     href: 'https://quytranvankhe.org/',
-    imageSrc: require('../assets/images/Fessior-TranVanKhe.png'),
+    imageSrc: require('../assets/images/Fessior-TranVanKhe.jpg'),
     placeholderSrc: require('../assets/images/Fessior-TranVanKhe-placeholder.png'),
   },
   {
