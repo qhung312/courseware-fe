@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef } from 'react';
 
-import { Footer, LazyLoadImage } from '../../../components';
-import { useWindowDimensions } from '../../../hooks';
-import { Page } from '../../../layout';
+import { Footer, LazyLoadImage } from '../../../../components';
+import { useWindowDimensions } from '../../../../hooks';
+import { Page } from '../../../../layout';
 
 const GSAX: FC = () => {
   const { width } = useWindowDimensions();
@@ -25,11 +25,24 @@ const GSAX: FC = () => {
     }
   }, [width]);
 
+  useEffect(() => {
+    if (width >= 768) {
+      const heightDecider = document.querySelector('.height-decider');
+      const dependent = document.querySelector('.dependent');
+
+      if (heightDecider && dependent) {
+        (dependent as HTMLElement).style.height = `${parseFloat(
+          window.getComputedStyle(heightDecider).height
+        )}px`;
+      }
+    }
+  }, [width]);
+
   return (
     <Page title='Gia Sư Áo Xanh'>
       <LazyLoadImage
-        src={require('../../../assets/images/GSAX-Header.jpg')}
-        placeHolderSrc={require('../../../assets/images/GSAX-Header-placeholder.jpg')}
+        src={require('../../../../assets/images/GSAX-Header.jpg')}
+        placeHolderSrc={require('../../../../assets/images/GSAX-Header-placeholder.jpg')}
         alt='Banner của Gia Sư Áo Xanh'
         objectFit='cover'
         containerClassName='aspect-[2] h-auto md:aspect-[4] w-screen overflow-hidden'
@@ -81,8 +94,8 @@ const GSAX: FC = () => {
               </p>
             </div>
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2'
               objectFit='cover'
               containerClassName='w-full lg:min-w-[50%] lg:w-1/2'
@@ -95,8 +108,8 @@ const GSAX: FC = () => {
             md:gap-x-6 lg:flex-nowrap lg:gap-x-10 xl:gap-x-[60px] 3xl:gap-x-20'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX10.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX10-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX10.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX10-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 10'
               objectFit='cover'
               containerClassName='w-full lg:min-w-[50%] lg:w-1/2'
@@ -135,8 +148,8 @@ const GSAX: FC = () => {
               </p>
             </div>
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX8.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX8-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX8.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX8-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 8'
               objectFit='cover'
               containerClassName='w-full lg:min-w-[50%] lg:w-1/2'
@@ -149,8 +162,8 @@ const GSAX: FC = () => {
             md:gap-x-6 lg:flex-nowrap lg:gap-x-10 xl:gap-x-[60px] 3xl:gap-x-20'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX6.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX6-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX6.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX6-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 6'
               objectFit='cover'
               containerClassName='w-full lg:min-w-[50%] lg:w-1/2'
@@ -182,8 +195,8 @@ const GSAX: FC = () => {
             md:h-fit md:w-[65%] md:flex-row-reverse md:p-0'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2022_1.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2022_1-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2022_1.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2022_1-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2022 - 1'
               objectFit='cover'
               containerClassName='w-[160px] flex-shrink-0 mr-2 md:mr-0 
@@ -202,8 +215,8 @@ const GSAX: FC = () => {
             md:h-fit md:w-[65%] md:self-end md:p-0'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2022_2.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2022_2-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2022_2.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2022_2-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2022 - 2'
               objectFit='cover'
               containerClassName='w-[160px] flex-shrink-0 ml-2 md:ml-0 
@@ -220,8 +233,8 @@ const GSAX: FC = () => {
             md:h-fit md:w-[65%] md:flex-row-reverse md:p-0'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2022_3.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2022_3-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2022_3.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2022_3-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2022 - 3'
               objectFit='cover'
               containerClassName='w-[160px] flex-shrink-0 mr-2 md:mr-0 
@@ -238,11 +251,11 @@ const GSAX: FC = () => {
             md:h-fit md:w-3/4 md:flex-row-reverse md:self-end md:p-0'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2022_4.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2022_4-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2022_4.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2022_4-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2022 - 4'
               objectFit='cover'
-              containerClassName='float-right ml-2 md:ml-0 h-[160px] w-auto rounded-lg lg:h-[180px] xl:h-[200px] 3xl:h-[240px] md:float-none flex-shrink-0'
+              containerClassName='dependent float-right ml-2 h-[160px] md:ml-0 w-auto rounded-lg md:float-none flex-shrink-0'
               className='rounded-lg md:rounded-l-none'
             />
             <p className='text-justify text-[16px] leading-loose text-[#696984] md:p-5 lg:text-[20px] 3xl:text-[24px]'>
@@ -251,11 +264,11 @@ const GSAX: FC = () => {
               để hòa đồng cùng với cộng đồng hơn.
             </p>
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2022_5.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2022_5-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2022_5.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2022_5-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2022 - 5'
               objectFit='cover'
-              containerClassName='mt-2 md:mt-0 w-full aspect-[2] h-auto float-none flex-shrink-0
+              containerClassName='height-decider mt-2 md:mt-0 w-full aspect-[2] h-auto float-none flex-shrink-0
               md:w-[160px] lg:w-[180px] xl:w-[200px] 3xl:w-[240px] md:aspect-square md:float-left'
               className='rounded-lg md:rounded-r-none'
             />
@@ -265,8 +278,8 @@ const GSAX: FC = () => {
             md:flex md:h-fit md:w-[65%] md:flex-row-reverse md:p-0'
           >
             <LazyLoadImage
-              src={require('../../../assets/images/GSAX2022_6.jpg')}
-              placeHolderSrc={require('../../../assets/images/GSAX2022_6-placeholder.jpg')}
+              src={require('../../../../assets/images/GSAX2022_6.jpg')}
+              placeHolderSrc={require('../../../../assets/images/GSAX2022_6-placeholder.jpg')}
               alt='Gia Sư Áo Xanh 2022 - 6'
               objectFit='cover'
               containerClassName='w-[160px] flex-shrink-0 mr-2 md:mr-0 

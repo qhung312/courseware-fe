@@ -107,7 +107,7 @@ const HomePage = () => {
                   type: 'bullets',
                 }}
                 modules={[Autoplay, Pagination]}
-                initialSlide={2}
+                initialSlide={0}
                 className='flex h-full w-full flex-1'
               >
                 {data.map((item, index) => (
