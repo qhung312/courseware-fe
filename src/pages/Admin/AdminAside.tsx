@@ -89,7 +89,7 @@ const AdminAside: FC = () => {
   }, [pathname]);
 
   return (
-    <Aside subTitle='Admin Menu'>
+    <Aside>
       <div className='flex flex-col'>
         <AdminAsideLink
           path='subject'

@@ -2,6 +2,7 @@ import { ReactComponent as AboutUs } from '../../assets/svgs/AboutUsIcon.svg';
 import { ReactComponent as Activity } from '../../assets/svgs/ActivityIcon.svg';
 import { ReactComponent as Admin } from '../../assets/svgs/AdminIcon.svg';
 import { ReactComponent as Answer } from '../../assets/svgs/AnswerIcon.svg';
+import { ReactComponent as ArrowLeft } from '../../assets/svgs/ArrowLeftIcon.svg';
 import { ReactComponent as ArrowRightFill } from '../../assets/svgs/ArrowRightFillIcon.svg';
 import { ReactComponent as ArrowRight } from '../../assets/svgs/ArrowRightIcon.svg';
 import { ReactComponent as Book } from '../../assets/svgs/Book.svg';
@@ -15,6 +16,7 @@ import { ReactComponent as ChevronRight } from '../../assets/svgs/ChevronRightIc
 import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg';
 import { ReactComponent as ClipboardIcon } from '../../assets/svgs/ClipboardIcon.svg';
 import { ReactComponent as Clock } from '../../assets/svgs/ClockIcon.svg';
+import { ReactComponent as CloseIcon } from '../../assets/svgs/CloseIcon.svg';
 import { ReactComponent as CloseIconSnackbar } from '../../assets/svgs/CloseIconSnackbar.svg';
 import { ReactComponent as CloseQuote } from '../../assets/svgs/CloseQuoteIcon.svg';
 import { ReactComponent as ContentPaste } from '../../assets/svgs/ContentPasteIcon.svg';
@@ -79,6 +81,7 @@ export default {
   Activity,
   Admin,
   Answer,
+  ArrowLeft,
   ArrowRightFill,
   ArrowRight,
   Camera,
@@ -89,6 +92,7 @@ export default {
   ChevronLeft,
   ChevronRight,
   Clock,
+  CloseIcon,
   ContentPaste,
   Book,
   ChevronUp,

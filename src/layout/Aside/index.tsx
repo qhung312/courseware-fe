@@ -8,20 +8,19 @@ import useBoundStore from '../../store';
 
 interface AsideProps {
   title?: string;
-  subTitle?: string;
   description?: string;
   children?: ReactNode;
+  backgroundColor?: string;
 }
 
-const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children }) => {
-  const isAsideOpen = useBoundStore.use.isAsideOpen();
-  const toggleAside = useBoundStore.use.toggleAside();
-
+const Aside: React.FC<AsideProps> = ({ title, description, children }) => {
   const params = useParams();
   const { pathname } = useLocation();
   const pathTokens = pathname.split('/');
   const asideRef = useRef(null);
   const { width } = useWindowDimensions();
+  const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const toggleAside = useBoundStore.use.toggleAside();
 
   return (
     <>
@@ -29,6 +28,8 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
       <aside
         ref={asideRef}
         className={`with-nav-height fixed z-10 m-auto bg-white ${
+          pathname.includes('/admin') ? '' : 'md:bg-[#e9f2fa]'
+        } ${
           params?.subjectId || (pathTokens[1] === 'admin' && pathTokens.length >= 3)
             ? 'translate-x-[-100%]'
             : ''
@@ -36,8 +37,8 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
           !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
         } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
-        <div className='flex items-center justify-center p-6 3xl:p-12'>
-          <div className='h-full w-full space-y-6'>
+        <div className='flex items-center justify-center p-5 md:p-6 xl:py-8 3xl:px-7 3xl:py-10'>
+          <div className='h-full w-full space-y-7 md:space-y-4 xl:space-y-5 3xl:space-y-6'>
             {/* Title */}
             {title && width < 768 && (
               <span>
@@ -52,16 +53,22 @@ const Aside: React.FC<AsideProps> = ({ title, subTitle, description, children })
             )}
 
             {/* Sub-title */}
-            {subTitle && (
-              <div className='hidden flex-row items-center justify-between md:flex'>
-                <h2
-                  className='md:text-md hidden font-semibold transition duration-300 
-                  md:block lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl'
-                >
-                  {subTitle}
-                </h2>
-              </div>
-            )}
+            <div className='hidden flex-row items-center justify-between md:flex md:flex-row'>
+              <h2
+                className='md:text-md block font-medium transition duration-300 
+                  md:text-xl xl:text-2xl'
+              >
+                Môn học
+              </h2>
+              {/* <button
+                onClick={() => setIsAsideOpen(!isAsideOpen)}
+                className={`aspect-square rounded-full bg-[#4285F4]/70 p-2 hover:bg-[#4285F4] ${
+                  isDisplayToggleAside ? 'flex' : 'hidden'
+                }`}
+              >
+                <Icon.ArrowLeft className='aspect-square h-3 fill-white lg:h-4' />
+              </button> */}
+            </div>
 
             {/* Children */}
             {children}

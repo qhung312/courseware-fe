@@ -27,7 +27,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
   const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
 
   return (
-    <div className='relative flex flex-col rounded-lg bg-white p-4 lg:p-6 3xl:p-8'>
+    <div className='relative flex flex-col rounded-lg bg-white p-4 shadow-lg lg:p-6 3xl:p-8'>
       <div
         className='absolute right-4 top-4 flex space-x-1 md:space-x-2 lg:right-6 lg:top-6 
         lg:space-x-3 xl:space-x-4 2xl:space-x-5 3xl:right-8 3xl:top-8'

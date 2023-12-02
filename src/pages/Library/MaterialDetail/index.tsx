@@ -66,34 +66,39 @@ const MaterialDetailPage: React.FC = () => {
       }${material?.name ? ` - ${material.name}` : ''}`}
       description='From CTCT'
     >
-      <LibraryAside
-        title='Thư viện tài liệu'
-        subTitle='Tài liệu các môn học'
-        baseRoute='/library/material'
-      />
+      <LibraryAside title='Thư viện tài liệu' baseRoute='/library/material' />
 
       {/* Add space
         <div id='material-margin' /> */}
-      <Wrapper className={`with-nav-height flex w-full flex-col overflow-auto`} fullWidth>
+      <Wrapper
+        className={`with-nav-height flex w-full flex-col overflow-auto`}
+        fullWidth
+        backgroundColor='#fcfbf9'
+      >
         {/* Banner */}
-        <div className='hidden w-full bg-[#4285F4] px-6 py-2 text-white md:flex md:flex-col md:justify-between lg:px-7 lg:py-3 3xl:px-8 3xl:py-4'>
-          <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>{material?.name}</h1>
+        <div className='flex w-full flex-col justify-start gap-y-2 bg-transparent px-5 py-4 md:gap-y-6 md:px-8 md:py-6 lg:gap-y-3 lg:px-10 lg:py-8 xl:px-12 2xl:px-14 2xl:py-10'>
+          <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
+            {material?.name}
+          </h1>
+          <div className='flex w-full justify-start'>
+            <button
+              type='button'
+              onClick={() => {
+                navigate(-1);
+                toggleAside();
+              }}
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 p-3 text-white hover:bg-[#4285F4]'
+            >
+              <Icon.ChevronLeft className='aspect-square w-3 fill-white' />
+              <p className='whitespace-nowrap text-xl text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
+                Quay lại
+              </p>
+            </button>
+          </div>
         </div>
 
-        <div className='my-6 w-full space-y-5 px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
-          <button
-            type='button'
-            onClick={() => {
-              navigate(-1);
-              toggleAside();
-            }}
-            className='flex items-center space-x-2 hover:underline'
-          >
-            <Icon.ChevronLeft className='max-w-2 min-w-2 min-h-3 max-h-3 fill-black' />
-            <p className='w-[100px]'>Quay lại</p>
-          </button>
-
-          {/* PDF */}
+        {/* PDF */}
+        <div className='my-6 w-full space-y-5 bg-transparent px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
           {loadingPDF ? (
             <>
               <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>
