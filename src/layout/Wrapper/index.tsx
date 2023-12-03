@@ -1,17 +1,18 @@
 import { ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import useBoundStore from '../../store';
 
 type WrapperProps = {
   children: ReactNode;
   className?: string;
-  backgroundColor?: string;
 };
 
-const Wrapper: React.FC<WrapperProps> = ({ children, className, backgroundColor }) => {
+const Wrapper: React.FC<WrapperProps> = ({ children, className }) => {
   const { pathname } = useLocation();
   const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const params = useParams();
+  const pdfId = params?.pdfId ?? '';
   // const toggleAside = useBoundStore.use.toggleAside();
 
   // useEffect(() => {
@@ -24,11 +25,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className, backgroundColor 
   return (
     <div
       className={`with-nav-height flex flex-1 overflow-y-auto ${
-        backgroundColor
-          ? `bg-[${backgroundColor}]`
-          : pathname.includes('/admin')
-          ? 'bg-[#e0edfb]'
-          : 'bg-white'
+        pathname.includes('/admin') ? 'bg-[#e0edfb]' : pdfId !== '' ? `bg-[#fcfbf9]` : 'bg-white'
       }`}
     >
       <div

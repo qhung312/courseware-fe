@@ -74,10 +74,7 @@ const MaterialDetailPage: React.FC = () => {
 
       {/* Add space
         <div id='material-margin' /> */}
-      <Wrapper
-        className={`with-nav-height relative flex w-full flex-col overflow-auto`}
-        backgroundColor='#fcfbf9'
-      >
+      <Wrapper className={`with-nav-height relative flex w-full flex-col overflow-auto`}>
         <button
           onClick={openAside}
           className={`absolute left-10 top-4 rounded-full bg-[#4285F4]/70 p-[6px] hover:bg-[#4285F4] md:top-6 lg:top-8 2xl:top-10 ${
