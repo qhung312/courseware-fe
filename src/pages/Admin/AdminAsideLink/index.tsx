@@ -41,10 +41,10 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
   }
 
   return (
-    <div className='flex h-[fit-content] w-full flex-col bg-white'>
+    <div className='flex h-[fit-content] w-full flex-col bg-white transition-all duration-300 ease-linear'>
       <button
         className='z-20 flex w-full flex-row
-              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px] transition-all duration-300 ease-in-out'
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         onClick={() => handleClick(path)}
@@ -61,29 +61,17 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
             {`Quản lý ${titleName}`}
           </p>
         </div>
-        {isOpen ? (
-          <Icon.ChevronUp
-            fill={
-              pathname.includes(`/admin/${pathLink}`) ||
-              pathname.includes(`/admin/${pathLink}/create`) ||
-              isHover
-                ? '#4285F4'
-                : '#5B5B5B'
-            }
-            width={'20px'}
-          />
-        ) : (
-          <Icon.ChevronDown
-            fill={
-              pathname.includes(`/admin/${pathLink}/manage`) ||
-              pathname.includes(`/admin/${pathLink}/create`) ||
-              isHover
-                ? '#4285F4'
-                : '#5B5B5B'
-            }
-            width={'20px'}
-          />
-        )}
+        <Icon.ChevronUp
+          className={`${isOpen ? '' : 'rotate-180'} transition-all duration-300 ease-linear`}
+          fill={
+            pathname.includes(`/admin/${pathLink}`) ||
+            pathname.includes(`/admin/${pathLink}/create`) ||
+            isHover
+              ? '#4285F4'
+              : '#5B5B5B'
+          }
+          width={'20px'}
+        />
       </button>
       <nav
         className='flex flex-col pl-10 pr-5 transition-all ease-in-out'

@@ -9,7 +9,7 @@ import useBoundStore from '../../store';
 import Icon from '../Icon';
 import LoginButton from '../LoginButton';
 
-import SearchBar from './SearchBar';
+// import SearchBar from './SearchBar';
 
 const MediumHeader = () => {
   const style: CSSProperties = {
@@ -107,7 +107,7 @@ const MediumHeader = () => {
             height: 'calc(100vh - 72px)',
           }}
         >
-          <div className='relative flex w-full flex-row items-center justify-center'>
+          {/* <div className='relative flex w-full flex-row items-center justify-center'>
             <SearchBar
               options={[
                 {
@@ -129,7 +129,7 @@ const MediumHeader = () => {
               ]}
               value={{ label: '', value: '' }}
             />
-          </div>
+          </div> */}
           <nav className='flex w-full flex-col items-center gap-y-[12px]'>
             <NavLink
               to='/'

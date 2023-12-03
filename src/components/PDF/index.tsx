@@ -9,6 +9,7 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { OnItemClickArgs } from 'react-pdf/dist/cjs/shared/types';
 
 import { useDebounce } from '../../hooks';
+import useBoundStore from '../../store';
 import Icon from '../Icon';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -39,6 +40,12 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
   const canZoomOut = zoom > 0.4;
   const timeRef = useRef<NodeJS.Timeout>();
   const [hasOutline, setHasOutline] = useState(true);
+  const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const toggleAside = useBoundStore.use.toggleAside();
+
+  useEffect(() => {
+    setZoom(1);
+  }, [isAsideOpen]);
 
   const handleOnMouseIn = (isIn: boolean) => {
     if (timeRef.current) {
@@ -153,7 +160,10 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
               className={`flex flex-1 items-center whitespace-nowrap rounded-lg p-3 text-[#d4d4d5] md:p-1 lg:p-3 3xl:p-5 ${
                 !hasOutline ? 'cursor-not-allowed' : 'hover:bg-[#606063]'
               }`}
-              onClick={() => setIsShowOutline(!isShowOutline)}
+              onClick={() => {
+                setIsShowOutline(!isShowOutline);
+                if (isAsideOpen) toggleAside();
+              }}
               disabled={!hasOutline}
             >
               {hasOutline ? `${isShowOutline ? 'Ẩn' : 'Hiện'} mục lục` : 'Không có mục lục'}

@@ -11,7 +11,7 @@ interface RoomAsideProps {
   baseRoute: string;
 }
 
-const RoomAside: React.FC<RoomAsideProps> = ({ title, subTitle, description, baseRoute }) => {
+const RoomAside: React.FC<RoomAsideProps> = ({ title, description, baseRoute }) => {
   const subjects = useBoundStore.use.subjects();
   const getAllSubjects = useBoundStore.use.getAllSubjects();
   const { isLoading } = useQuery({
@@ -24,7 +24,7 @@ const RoomAside: React.FC<RoomAsideProps> = ({ title, subTitle, description, bas
   });
 
   return (
-    <Aside title={title} subTitle={subTitle} description={description}>
+    <Aside title={title} description={description}>
       <div className='flex flex-col space-y-4'>
         {!isLoading ? (
           subjects?.map((subject, index) => {

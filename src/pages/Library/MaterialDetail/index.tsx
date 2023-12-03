@@ -21,7 +21,7 @@ const MaterialDetailPage: React.FC = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [loadingPDF, setLoadingPDF] = useState(true);
   const isAsideOpen = useBoundStore.use.isAsideOpen();
-  const toggleAside = useBoundStore.use.toggleAside();
+  const openAside = useBoundStore.use.openAside();
 
   useLayoutEffect(() => {
     if (params?.pdfId && params?.pdfId !== '') {
@@ -68,32 +68,50 @@ const MaterialDetailPage: React.FC = () => {
     >
       <LibraryAside
         title='Thư viện tài liệu'
-        subTitle='Tài liệu các môn học'
         baseRoute='/library/material'
+        isDisplayToggleAside={true}
       />
 
       {/* Add space
         <div id='material-margin' /> */}
-      <Wrapper className={`with-nav-height flex w-full flex-col overflow-auto`} fullWidth>
+      <Wrapper className={`with-nav-height relative flex w-full flex-col overflow-auto`}>
+        <button
+          onClick={openAside}
+          className={`absolute left-10 top-4 rounded-full bg-[#4285F4] p-[6px] hover:bg-[#2571eb] md:top-6 lg:top-8 2xl:top-10 ${
+            !isAsideOpen ? 'block' : 'hidden'
+          }`}
+        >
+          <Icon.OpenAside className='aspect-square h-6 fill-white xl:h-7' />
+        </button>
         {/* Banner */}
-        <div className='hidden w-full bg-[#4285F4] px-6 py-2 text-white md:flex md:flex-col md:justify-between lg:px-7 lg:py-3 3xl:px-8 3xl:py-4'>
-          <h1 className='text-xl font-bold lg:text-2xl 3xl:text-3xl'>{material?.name}</h1>
+        <div
+          className={`flex w-full flex-col-reverse justify-start gap-y-6 bg-transparent py-4 px-5 md:flex-col md:py-6 lg:gap-y-3 lg:py-8 2xl:py-10 ${
+            isAsideOpen
+              ? 'md:px-8 lg:px-10 xl:px-12 2xl:px-14'
+              : 'md:px-32 lg:px-40 xl:px-44 3xl:px-48'
+          }`}
+        >
+          <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
+            {material?.name}
+          </h1>
+          <div className='flex w-full justify-start'>
+            <button
+              type='button'
+              onClick={() => {
+                navigate(-1);
+              }}
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white hover:bg-[#2571eb] md:p-3'
+            >
+              <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
+              <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
+                Quay lại
+              </p>
+            </button>
+          </div>
         </div>
 
-        <div className='my-6 w-full space-y-5 px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
-          <button
-            type='button'
-            onClick={() => {
-              navigate(-1);
-              toggleAside();
-            }}
-            className='flex items-center space-x-2 hover:underline'
-          >
-            <Icon.ChevronLeft className='max-w-2 min-w-2 min-h-3 max-h-3 fill-black' />
-            <p className='w-[100px]'>Quay lại</p>
-          </button>
-
-          {/* PDF */}
+        {/* PDF */}
+        <div className='my-6 w-full space-y-5 bg-transparent px-5 md:space-y-6 md:pt-0 lg:px-9 xl:space-y-7 xl:px-10 2xl:space-y-8 2xl:px-11'>
           {loadingPDF ? (
             <>
               <p className='mb-5 w-full px-6 lg:px-8 3xl:px-10'>

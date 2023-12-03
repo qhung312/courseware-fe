@@ -89,7 +89,7 @@ const AdminAside: FC = () => {
   }, [pathname]);
 
   return (
-    <Aside subTitle='Admin Menu'>
+    <Aside>
       <div className='flex flex-col'>
         <AdminAsideLink
           path='subject'
@@ -104,13 +104,6 @@ const AdminAside: FC = () => {
           isOpen={menuState.chapter}
           handleClick={handleClick}
           IconProp={Icon.ContentPaste}
-        />
-        <AdminAsideLink
-          path='question'
-          titleName='câu hỏi'
-          isOpen={menuState.question}
-          handleClick={handleClick}
-          IconProp={Icon.Test}
         />
         <AdminAsideLink
           path='material'
@@ -132,6 +125,13 @@ const AdminAside: FC = () => {
           isOpen={menuState.exercise}
           handleClick={handleClick}
           IconProp={Icon.Exercise}
+        />
+        <AdminAsideLink
+          path='question'
+          titleName='câu hỏi'
+          isOpen={menuState.question}
+          handleClick={handleClick}
+          IconProp={Icon.Test}
         />
       </div>
     </Aside>

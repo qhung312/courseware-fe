@@ -8,6 +8,7 @@ type GetAllExamArchiveArgument = {
   name?: string;
   subject?: string;
   semester?: string;
+  chapter?: string;
   type?: string;
 };
 type EditArgument = {

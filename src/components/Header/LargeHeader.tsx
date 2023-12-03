@@ -74,46 +74,32 @@ const LargeHeader = () => {
           <LargeLogoCTCT className='aspect-[107/60] h-[28px] w-auto  xl:h-[36px] 2xl:h-[42px]' />
         </NavLink>
         <nav className='z-20 flex w-full flex-row items-center justify-start transition-all duration-700 ease-out'>
-          {/* <NavLink
-            to='/'
-            end
-            className={`flex h-[100%] items-center justify-start border-b-[3px] 
-            px-[16px] py-4 hover:text-black 3xl:px-[32px] ${
-              pathname === '/'
-                ? 'border-[#4285F4] text-black'
-                : 'border-transparent text-[#5B5B5B]'
-            }`}
-          > */}
           <NavLink
             to='/'
             end
-            className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
+            className={`group flex h-[100%] items-center justify-start border-b-[3px] 
+            px-[16px] py-4 hover:text-black 3xl:px-[32px] ${
+              pathname === '/' ? 'border-[#4285F4] text-black' : 'border-transparent text-[#5B5B5B]'
+            }`}
           >
-            <p
-              className={`whitespace-nowrap border-b-[3px] bg-inherit px-2 py-1
-            3xl:px-3 3xl:py-2 ${
-              pathname === '/' ? 'border-[#4285F4] text-black' : 'border-transparent text-inherit'
-            } `}
-            >
+            <p className={`whitespace-nowrap bg-inherit px-2 py-1 text-inherit 3xl:px-3 3xl:py-2`}>
               Trang chủ
             </p>
           </NavLink>
           <div className='relative' ref={libraryRef}>
             <button
               type='button'
-              className={`flex h-[100%] items-center justify-start px-[16px] 
-            py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px] `}
+              className={`flex h-[100%] items-center justify-start border-b-[3px] 
+            px-[16px] py-4 hover:text-black 3xl:px-[32px] ${
+              pathname.includes('/library/material') || pathname.includes('/library/exam-archive')
+                ? 'border-[#4285F4] text-black'
+                : 'border-transparent text-[#5B5B5B]'
+            }`}
               onClick={throttledLibraryClick}
             >
               <div
-                className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-                py-1  lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
-                  pathname.includes('/library/material') ||
-                  pathname.includes('/library/exam-archive')
-                    ? 'border-[#4285F4] text-black'
-                    : 'border-transparent text-inherit'
-                }`}
+                className={`flex flex-row items-center justify-start gap-x-1 p-0 px-2 py-1
+                text-inherit  lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 `}
               >
                 <p className={`whitespace-nowrap bg-inherit text-inherit`}>Thư viện</p>
                 <Icon.ChevronUp
@@ -184,16 +170,16 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
+            border-b-[3px] px-[16px]  py-4 hover:text-black 3xl:px-[32px] ${
+              pathname.includes('/room/exercises') || pathname.includes('/room/tests')
+                ? 'border-[#4285F4] text-black'
+                : 'border-transparent text-[#5B5B5B]'
+            }`}
               onClick={throttledRoomClick}
             >
               <div
-                className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-            py-1 lg:gap-x-2 2xl:gap-x-3  3xl:px-3 3xl:py-2 ${
-              pathname.includes('/room/exercises') || pathname.includes('/room/tests')
-                ? 'border-[#4285F4] text-black'
-                : 'border-transparent text-inherit'
-            }`}
+                className={`flex flex-row items-center justify-start gap-x-1 p-0 px-2 py-1
+            text-inherit lg:gap-x-2 2xl:gap-x-3  3xl:px-3 3xl:py-2 `}
               >
                 <p className={`whitespace-nowrap bg-inherit text-inherit`}>Phòng thi</p>
                 <Icon.ChevronUp
@@ -257,18 +243,18 @@ const LargeHeader = () => {
             <button
               type='button'
               className={`flex h-[100%] items-center justify-start
-            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
+            border-b-[3px] px-[16px] py-4 hover:text-black 3xl:px-[32px] ${
+              pathname === '/about-us' ||
+              pathname.includes('/about-us/activities') ||
+              pathname === '/about-us/partners'
+                ? 'border-[#4285F4] text-black'
+                : 'border-transparent text-[#5B5B5B]'
+            }`}
               onClick={throttledAboutUsClick}
             >
               <div
-                className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-                py-1 lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
-                  pathname === '/about-us' ||
-                  pathname.includes('/about-us/activities') ||
-                  pathname === '/about-us/partners'
-                    ? 'border-[#4285F4] text-black'
-                    : 'border-transparent text-inherit'
-                }`}
+                className={`flex flex-row items-center justify-start gap-x-1 p-0 px-2 py-1
+                text-inherit lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 `}
               >
                 <p className='whitespace-nowrap bg-inherit text-inherit'>Về chúng tôi</p>
 
@@ -355,16 +341,16 @@ const LargeHeader = () => {
             <NavLink
               to='/admin'
               end
-              className={`flex h-[100%] items-center justify-start 
-            px-[16px] py-4 text-[#5B5B5B] hover:text-black 3xl:px-[32px]`}
+              className={`flex h-[100%] items-center justify-start border-b-[3px]
+            px-[16px] py-4 hover:text-black 3xl:px-[32px] ${
+              pathname.includes('/admin')
+                ? 'border-[#4285F4] text-black'
+                : 'border-transparent text-[#5B5B5B]'
+            }`}
             >
               <div
-                className={`flex flex-row items-center justify-start gap-x-1 border-b-[3px] p-0 px-2
-                py-1 lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 ${
-                  pathname.includes('/admin')
-                    ? 'border-[#4285F4] text-black'
-                    : 'border-transparent text-inherit'
-                }`}
+                className={`flex flex-row items-center justify-start gap-x-1 p-0 px-2 py-1
+                text-inherit lg:gap-x-2 2xl:gap-x-3 3xl:px-3 3xl:py-2 `}
               >
                 <p className='whitespace-nowrap bg-inherit text-inherit'>Admin</p>
               </div>
