@@ -141,8 +141,8 @@ const ExamArchivePage: React.FC = () => {
       <LibraryAside title='Thư viện đề thi' baseRoute='/library/exam-archive' />
 
       <Wrapper className='with-nav-height flex flex-1 flex-col'>
-        <div className='flex flex-col gap-y-4 px-5 py-4 md:gap-y-6 md:px-8 md:py-6 lg:gap-y-5 lg:px-10 lg:py-8 xl:gap-y-6 xl:px-12 2xl:gap-y-7 2xl:px-14 2xl:py-10'>
-          <div className='flex w-full items-start'>
+        <div className='flex flex-col gap-y-4 px-5 py-5 md:gap-y-6 md:px-8 md:py-7 lg:gap-y-7 lg:px-10 lg:py-8 xl:gap-y-8 xl:px-12 xl:py-9 2xl:gap-y-9 2xl:px-14 2xl:py-10'>
+          <div className='flex w-full items-start md:hidden'>
             <Link
               to='/library/exam-archive'
               className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] hover:underline md:hidden md:p-3'

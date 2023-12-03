@@ -170,11 +170,11 @@ const Main: React.FC = () => {
       <RoomAside title='Phòng thi' subTitle='Bài tập rèn luyện' baseRoute='/room/exercises' />
 
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='flex flex-col gap-y-4 px-5 py-4 md:gap-y-6 md:px-8 md:py-6 lg:gap-y-5 lg:px-10 lg:py-8 xl:gap-y-6 xl:px-12 2xl:gap-y-7 2xl:px-14 2xl:py-10'>
-          <div className='flex w-full items-start'>
+        <div className='flex flex-col gap-y-4 px-5 py-5 md:gap-y-6 md:px-8 md:py-7 lg:gap-y-7 lg:px-10 lg:py-8 xl:gap-y-8 xl:px-12 xl:py-9 2xl:gap-y-9 2xl:px-14 2xl:py-10'>
+          <div className='flex w-full items-start md:hidden'>
             <Link
               to='/room/exercises'
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] hover:underline md:hidden md:p-3'
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] hover:underline'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
               <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>

@@ -225,12 +225,6 @@ const Fessior: FC = () => {
             <h1 className='text-3xl text-[#9DCCFF] lg:text-4xl xl:text-5xl 3xl:text-6xl'>
               Fessior Community
             </h1>
-            <h2 className='text-xl text-white lg:text-2xl xl:text-3xl 3xl:text-4xl'>
-              “Bridge the Gap
-            </h2>
-            <h2 className='text-xl text-white lg:text-2xl xl:text-3xl 3xl:text-4xl'>
-              between Theory and Practice”
-            </h2>
           </div>
         </section>
 
