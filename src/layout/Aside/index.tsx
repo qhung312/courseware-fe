@@ -40,7 +40,7 @@ const Aside: React.FC<AsideProps> = ({
       <aside
         ref={asideRef}
         className={`with-nav-height fixed z-10 m-auto bg-white ${
-          pathname.includes('/admin') ? '' : 'md:bg-[#ebf5ff]'
+          pathname.includes('/admin') ? '' : 'border-r-[1px] border-[#dadce0]'
         } ${
           params?.subjectId || (pathTokens[1] === 'admin' && pathTokens.length >= 3)
             ? 'translate-x-[-100%]'

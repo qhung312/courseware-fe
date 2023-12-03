@@ -27,7 +27,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
   const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
 
   return (
-    <div className='relative flex flex-col rounded-lg bg-white p-4 shadow-xl md:shadow-lg lg:p-6 3xl:p-8'>
+    <div className='relative flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-4 lg:p-6 3xl:p-8'>
       <div
         className='absolute right-4 top-4 flex space-x-1 md:space-x-2 lg:right-6 lg:top-6 
         lg:space-x-3 xl:space-x-4 2xl:space-x-5 3xl:right-8 3xl:top-8'
@@ -47,7 +47,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
       <div className='flex flex-col gap-y-4 md:flex-col-reverse lg:gap-y-6 3xl:gap-y-8'>
         <div className='flex flex-row items-center justify-between'>
           <div className='flex h-fit flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none lg:gap-x-4 3xl:gap-x-6'>
-            <div className='hidden flex-1 flex-row items-center gap-x-2 md:flex'>
+            <div className='hidden flex-1 flex-row items-center gap-x-3 md:flex'>
               {isMaterial(document) ? (
                 <>
                   <Icon.Document className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
@@ -69,7 +69,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
             {isMaterial(document) ? null : (
               <>
                 <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' />
-                <div className='flex flex-1 flex-row items-center gap-x-2'>
+                <div className='flex flex-1 flex-row items-center gap-x-3'>
                   <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.type === ExamType.MIDTERM_EXAM ? 'Giữa kì' : 'Cuối kì'}

@@ -312,7 +312,7 @@ const Main: React.FC = () => {
                 quizzes?.map((quiz, index) => (
                   <div
                     key={`${quiz.name}-${index}`}
-                    className='flex flex-col rounded-lg bg-white p-3 shadow-xl md:p-4 lg:p-6 3xl:p-8'
+                    className='flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 shadow-xl md:p-4 lg:p-6 3xl:p-8'
                   >
                     <h4 className='mb-4 text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>
                       {quiz.name}
