@@ -145,7 +145,7 @@ const ExamArchivePage: React.FC = () => {
           <div className='flex w-full items-start md:hidden'>
             <Link
               to='/library/exam-archive'
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] hover:underline md:hidden md:p-3'
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white hover:bg-[#2571eb] hover:underline md:hidden md:p-3'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
               <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>

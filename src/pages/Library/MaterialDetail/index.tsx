@@ -77,7 +77,7 @@ const MaterialDetailPage: React.FC = () => {
       <Wrapper className={`with-nav-height relative flex w-full flex-col overflow-auto`}>
         <button
           onClick={openAside}
-          className={`absolute left-10 top-4 rounded-full bg-[#4285F4]/70 p-[6px] hover:bg-[#4285F4] md:top-6 lg:top-8 2xl:top-10 ${
+          className={`absolute left-10 top-4 rounded-full bg-[#4285F4] p-[6px] hover:bg-[#2571eb] md:top-6 lg:top-8 2xl:top-10 ${
             !isAsideOpen ? 'block' : 'hidden'
           }`}
         >
@@ -100,7 +100,7 @@ const MaterialDetailPage: React.FC = () => {
               onClick={() => {
                 navigate(-1);
               }}
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] md:p-3'
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white hover:bg-[#2571eb] md:p-3'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
               <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>

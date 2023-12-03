@@ -106,13 +106,6 @@ const AdminAside: FC = () => {
           IconProp={Icon.ContentPaste}
         />
         <AdminAsideLink
-          path='question'
-          titleName='câu hỏi'
-          isOpen={menuState.question}
-          handleClick={handleClick}
-          IconProp={Icon.Test}
-        />
-        <AdminAsideLink
           path='material'
           titleName='tài liệu'
           isOpen={menuState.material}
@@ -132,6 +125,13 @@ const AdminAside: FC = () => {
           isOpen={menuState.exercise}
           handleClick={handleClick}
           IconProp={Icon.Exercise}
+        />
+        <AdminAsideLink
+          path='question'
+          titleName='câu hỏi'
+          isOpen={menuState.question}
+          handleClick={handleClick}
+          IconProp={Icon.Test}
         />
       </div>
     </Aside>

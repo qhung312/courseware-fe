@@ -74,7 +74,7 @@ const Aside: React.FC<AsideProps> = ({
               </h2>
               <button
                 onClick={toggleAside}
-                className={`aspect-square rounded-full bg-[#4285F4]/70 p-2 hover:bg-[#4285F4] ${
+                className={`aspect-square rounded-full bg-[#4285F4] p-2 hover:bg-[#2571eb] ${
                   isDisplayToggleAside ? 'flex' : 'hidden'
                 }`}
               >
