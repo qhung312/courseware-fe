@@ -27,7 +27,7 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
             <img
               alt='User avatar'
               src={require('../../assets/images/AvatarPic.png')}
-              className='h-[180px] w-[180px] rounded-full bg-slate-600 md:h-[140px] md:w-[140px] lg:h-[160px] lg:w-[160px] 3xl:h-[200px] 3xl:w-[200px]'
+              className='h-[180px] w-[180px] rounded-full bg-slate-600 md:h-[160px] md:w-[160px] lg:h-[180px] lg:w-[180px] 3xl:h-[220px] 3xl:w-[220px]'
             />
           </div>
           {editAvatar && (

@@ -90,6 +90,7 @@ const MaterialPage: React.FC = () => {
   }, [params]);
 
   useEffect(() => {
+    setChapterFilterList([]);
     // update options for chapter when the selected subject changes
     if (id === '') {
       setChapterOption([]);

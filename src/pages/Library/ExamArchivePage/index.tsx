@@ -89,6 +89,7 @@ const ExamArchivePage: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
+    setChapterFilterList([]);
     // update options for chapter when the selected subject changes
     if (id === '') {
       setChapterOption([]);
