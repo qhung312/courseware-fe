@@ -316,8 +316,6 @@ const HomePage = () => {
                     loop
                     autoPlay
                     muted
-                    controls
-                    controlsList='nofullscreen'
                     className='z-[2] block h-full w-full rounded-lg object-cover'
                   >
                     <source
