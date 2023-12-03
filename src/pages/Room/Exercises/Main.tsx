@@ -253,7 +253,7 @@ const Main: React.FC = () => {
                       checked={chapter.isChoosing}
                       readOnly
                     />
-                    <p className='text-[18px] text-inherit md:text-[16px] lg:text-[18px]'>
+                    <p className='text-start text-[18px] text-inherit md:text-[16px] lg:text-[18px]'>
                       {chapter.label}
                     </p>
                   </button>
