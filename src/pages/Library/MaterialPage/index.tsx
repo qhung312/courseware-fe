@@ -162,17 +162,22 @@ const MaterialPage: React.FC = () => {
           <div className='flex w-full items-start'>
             <Link
               to='/library/material'
-              className='flex flex-row items-center gap-x-1 rounded-lg bg-[#4285F4]/70 py-1 px-2 hover:bg-[#4285F4] hover:underline md:hidden'
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] hover:underline md:hidden md:p-3'
             >
-              <Icon.ChevronLeft className='h-3 w-2 fill-white' />
-              <p className='text-[16px] font-semibold text-white'>Quay lại</p>
+              <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
+              <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
+                Quay lại
+              </p>
             </Link>
           </div>
           {/* Banner */}
-          <div className='flex w-full justify-start'>
+          <div className='flex w-full flex-col justify-start gap-x-1'>
             <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
               Tài liệu các môn học
             </h1>
+            <h2 className='block text-xl font-normal text-[#252641] md:hidden'>
+              Môn học: {subject?.name}
+            </h2>
           </div>
           <div className='flex w-full flex-col items-start justify-center gap-y-5'>
             <div

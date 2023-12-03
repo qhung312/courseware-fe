@@ -89,7 +89,7 @@ const ExamArchiveDetailPage: React.FC = () => {
         </button>
         {/* Banner */}
         <div
-          className={`flex w-full flex-col justify-start gap-y-2 bg-transparent py-4 px-5 md:gap-y-6 md:py-6 lg:gap-y-3 lg:py-8 2xl:py-10 ${
+          className={`flex w-full flex-col-reverse justify-start gap-y-2 bg-transparent py-4 px-5 md:flex-col md:gap-y-6 md:py-6 lg:gap-y-3 lg:py-8 2xl:py-10 ${
             isAsideOpen
               ? 'md:px-8 lg:px-10 xl:px-12 2xl:px-14'
               : 'md:px-32 lg:px-40 xl:px-44 3xl:px-48'
@@ -104,10 +104,10 @@ const ExamArchiveDetailPage: React.FC = () => {
               onClick={() => {
                 navigate(-1);
               }}
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 p-3 text-white hover:bg-[#4285F4]'
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] md:p-3'
             >
-              <Icon.ChevronLeft className='aspect-square w-3 fill-white' />
-              <p className='whitespace-nowrap text-xl text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
+              <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
+              <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
                 Quay lại
               </p>
             </button>

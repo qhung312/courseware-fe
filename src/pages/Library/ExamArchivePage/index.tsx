@@ -145,10 +145,12 @@ const ExamArchivePage: React.FC = () => {
           <div className='flex w-full items-start'>
             <Link
               to='/library/exam-archive'
-              className='flex flex-row items-center gap-x-1 rounded-lg bg-[#4285F4]/70 py-1 px-2 hover:bg-[#4285F4] hover:underline md:hidden'
+              className='flex items-center space-x-2 rounded-lg bg-[#4285F4]/60 px-2 py-1 text-white hover:bg-[#4285F4] hover:underline md:hidden md:p-3'
             >
-              <Icon.ChevronLeft className='h-3 w-2 fill-white' />
-              <p className='text-[16px] font-semibold text-white'>Quay lại</p>
+              <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
+              <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
+                Quay lại
+              </p>
             </Link>
           </div>
           {/* Banner */}
