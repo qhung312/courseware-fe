@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { Icon } from '../../components';
@@ -10,17 +10,29 @@ interface AsideProps {
   title?: string;
   description?: string;
   children?: ReactNode;
-  backgroundColor?: string;
+  isDisplayToggleAside?: boolean;
 }
 
-const Aside: React.FC<AsideProps> = ({ title, description, children }) => {
+const Aside: React.FC<AsideProps> = ({
+  title,
+  description,
+  children,
+  isDisplayToggleAside = false,
+}) => {
   const params = useParams();
+  const pdfId = params?.pdfId ?? '';
   const { pathname } = useLocation();
   const pathTokens = pathname.split('/');
   const asideRef = useRef(null);
   const { width } = useWindowDimensions();
   const isAsideOpen = useBoundStore.use.isAsideOpen();
   const toggleAside = useBoundStore.use.toggleAside();
+  const openAside = useBoundStore.use.openAside();
+
+  useEffect(() => {
+    if (pdfId === '') openAside();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pdfId]);
 
   return (
     <>
@@ -60,14 +72,14 @@ const Aside: React.FC<AsideProps> = ({ title, description, children }) => {
               >
                 Môn học
               </h2>
-              {/* <button
-                onClick={() => setIsAsideOpen(!isAsideOpen)}
+              <button
+                onClick={toggleAside}
                 className={`aspect-square rounded-full bg-[#4285F4]/70 p-2 hover:bg-[#4285F4] ${
                   isDisplayToggleAside ? 'flex' : 'hidden'
                 }`}
               >
                 <Icon.ArrowLeft className='aspect-square h-3 fill-white lg:h-4' />
-              </button> */}
+              </button>
             </div>
 
             {/* Children */}
@@ -77,28 +89,30 @@ const Aside: React.FC<AsideProps> = ({ title, description, children }) => {
       </aside>
 
       {/* Collapse Button */}
-      <div
-        id={isAsideOpen ? 'collapse-button-container' : 'open-button-container'}
-        className={`fixed top-[50%] z-10 hidden rounded-r-lg border-y border-r border-[#CCC] bg-white md:block ${
-          isAsideOpen
-            ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
-            : 'translate-x-0'
-        } transition-all duration-300`}
-      >
-        <button
-          id='collapse-button'
-          type='button'
-          onClick={toggleAside}
-          className='px-1 py-6 lg:py-8 3xl:py-10'
+      {pathname.includes('/admin') && (
+        <div
+          id={isAsideOpen ? 'collapse-button-container' : 'open-button-container'}
+          className={`fixed top-[50%] z-10 hidden rounded-r-lg border-y border-r border-[#CCC] bg-white md:block ${
+            isAsideOpen
+              ? 'md:translate-x-[264px] lg:translate-x-[332px] xl:translate-x-[400px] 3xl:translate-x-[500px] '
+              : 'translate-x-0'
+          } transition-all duration-300`}
         >
-          <Icon.Chevron
-            fill={'#5B5B5B'}
-            className={`h-4 w-auto transition-all duration-300 ${
-              isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'
-            }`}
-          />
-        </button>
-      </div>
+          <button
+            id='collapse-button'
+            type='button'
+            onClick={toggleAside}
+            className='px-1 py-6 lg:py-8 3xl:py-10'
+          >
+            <Icon.Chevron
+              fill={'#5B5B5B'}
+              className={`h-4 w-auto transition-all duration-300 ${
+                isAsideOpen ? 'rotate-[-90deg]' : 'rotate-90'
+              }`}
+            />
+          </button>
+        </div>
+      )}
     </>
   );
 };

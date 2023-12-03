@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import useBoundStore from '../../store';
@@ -6,21 +6,20 @@ import useBoundStore from '../../store';
 type WrapperProps = {
   children: ReactNode;
   className?: string;
-  fullWidth?: boolean;
   backgroundColor?: string;
 };
 
-const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth, backgroundColor }) => {
+const Wrapper: React.FC<WrapperProps> = ({ children, className, backgroundColor }) => {
   const { pathname } = useLocation();
   const isAsideOpen = useBoundStore.use.isAsideOpen();
-  const toggleAside = useBoundStore.use.toggleAside();
+  // const toggleAside = useBoundStore.use.toggleAside();
 
-  useEffect(() => {
-    if (isAsideOpen && fullWidth) {
-      toggleAside();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (isAsideOpen && fullWidth) {
+  //     toggleAside();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div
@@ -35,10 +34,8 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className, fullWidth, backg
       <div
         id='content-wrapper'
         className={`h-fit w-fit overflow-x-auto pl-0 transition-all duration-300 ${
-          isAsideOpen && !fullWidth
-            ? 'md:pl-[264px] lg:pl-[332px] xl:pl-[400px] 3xl:pl-[500px]'
-            : ''
-        } ${isAsideOpen && fullWidth ? 'blur-none md:blur-sm' : ''} ${className}`}
+          isAsideOpen ? 'md:pl-[264px] lg:pl-[332px] xl:pl-[400px] 3xl:pl-[500px]' : ''
+        } ${className}`}
       >
         {children}
       </div>

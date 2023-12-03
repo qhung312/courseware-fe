@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { ReactComponent as Tab } from '../../../assets/svgs/Tab.svg';
 import { DocumentCard, Icon } from '../../../components';
+import { useWindowDimensions } from '../../../hooks';
 import { Page } from '../../../layout';
 import Wrapper from '../../../layout/Wrapper';
 import ChapterService from '../../../service/chapter.service';
@@ -43,6 +44,7 @@ const PageSkeleton = () => (
 const MaterialPage: React.FC = () => {
   const params = useParams();
   const id = params?.subjectId ?? '';
+  const { width } = useWindowDimensions();
   const [chapterOption, setChapterOption] = useState<Option[]>([]);
   const [isOpenChapter, setIsOpenChapter] = useState(false);
   const [chapterFilterList, setChapterFilterList] = useState<Option[]>([]);
@@ -76,7 +78,12 @@ const MaterialPage: React.FC = () => {
   useLayoutEffect(() => {
     if (params?.subjectId && params?.subjectId !== '') {
       setMaterials(null);
-      MaterialService.getAll({ subject: params?.subjectId })
+
+      const chapterString = encodeURIComponent(
+        chapterFilterList.map((chapter) => chapter.value).join(',')
+      );
+
+      MaterialService.getAll({ subject: params?.subjectId, chapter: chapterString })
         .then((res) => {
           const { data } = res;
           const { payload } = data;
@@ -87,7 +94,7 @@ const MaterialPage: React.FC = () => {
           setTimeout(() => setMaterials([]), 300);
         });
     }
-  }, [params]);
+  }, [params, chapterFilterList]);
 
   useEffect(() => {
     setChapterFilterList([]);
@@ -152,13 +159,15 @@ const MaterialPage: React.FC = () => {
 
       <Wrapper className='flex flex-1 flex-col'>
         <div className='flex flex-col gap-y-4 px-5 py-4 md:gap-y-6 md:px-8 md:py-6 lg:gap-y-5 lg:px-10 lg:py-8 xl:gap-y-6 xl:px-12 2xl:gap-y-7 2xl:px-14 2xl:py-10'>
-          <Link
-            to='/room/exercises'
-            className='flex items-center space-x-2 hover:underline md:hidden'
-          >
-            <Icon.ChevronLeft className='max-w-2 min-w-2 min-h-3 max-h-3 fill-black' />
-            <p className='w-[100px]'>Quay lại</p>
-          </Link>
+          <div className='flex w-full items-start'>
+            <Link
+              to='/library/material'
+              className='flex flex-row items-center gap-x-1 rounded-lg bg-[#4285F4]/70 py-1 px-2 hover:bg-[#4285F4] hover:underline md:hidden'
+            >
+              <Icon.ChevronLeft className='h-3 w-2 fill-white' />
+              <p className='text-[16px] font-semibold text-white'>Quay lại</p>
+            </Link>
+          </div>
           {/* Banner */}
           <div className='flex w-full justify-start'>
             <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
@@ -166,34 +175,52 @@ const MaterialPage: React.FC = () => {
             </h1>
           </div>
           <div className='flex w-full flex-col items-start justify-center gap-y-5'>
-            <div className='relative flex w-full flex-col bg-transparent md:w-fit'>
+            <div
+              className={`relative flex w-full flex-col rounded-lg border-[1px] border-[#4285F4]/30 transition-all duration-300 ease-out md:w-fit md:border-[#4285F4] ${
+                isOpenChapter
+                  ? 'bg-transparent text-[#4285F4] md:rounded-b-none md:border-b-0 md:bg-[#4285F4] md:text-white'
+                  : 'border-[#4285F4]/30 bg-transparent text-[#252641]'
+              }' `}
+            >
               <button
                 onClick={() => setIsOpenChapter(!isOpenChapter)}
-                className={`flex flex-row items-center justify-between border-[1px] px-4 py-2 transition-all duration-300 md:justify-center md:gap-x-12 lg:gap-x-16 xl:gap-x-20 2xl:gap-x-24 ${
-                  isOpenChapter
-                    ? 'rounded-t-lg border-transparent bg-[#4285F4] text-white'
-                    : 'rounded-lg border-[#4285F4] bg-transparent text-[#252641] '
-                }`}
+                className={`flex flex-row items-center justify-between px-4 py-4 text-inherit md:justify-center md:gap-x-12 md:py-2 lg:gap-x-16 xl:gap-x-20 2xl:gap-x-24`}
               >
-                <div className='flex flex-row items-center justify-center gap-x-5 md:gap-x-3 xl:gap-x-4'>
-                  <Icon.OriginIcon
-                    className={`fill-[#4285F4]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
-                      isOpenChapter ? 'fill-white' : 'fill-[#252641]'
-                    }`}
-                  />
-                  <p className='text-xl text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
-                    <span className='block md:hidden'>Lọc</span> Theo chương
+                <div className='flex flex-row items-center justify-center gap-x-5 text-inherit md:gap-x-3 xl:gap-x-4'>
+                  {width > 768 || isOpenChapter ? (
+                    <Icon.OriginIcon
+                      className={`fill-[#4285F4]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
+                        isOpenChapter ? 'fill-[#4285F4] md:fill-white' : 'fill-[#252641]'
+                      }`}
+                    />
+                  ) : (
+                    <Icon.FilterIcon
+                      className={`fill-[#4285F4]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
+                        isOpenChapter ? 'fill-[#4285F4] md:fill-white' : 'fill-[#252641]'
+                      }`}
+                    />
+                  )}
+                  <p
+                    className={`text-xl text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px] ${
+                      isOpenChapter ? 'md:text-white' : ''
+                    }
+                  }`}
+                  >
+                    Theo chương
                   </p>
                 </div>
                 <Icon.ChevronUp
                   className={`aspect-[1/2] h-4 transition-all duration-300 ${
-                    isOpenChapter ? 'rotate-180 fill-white' : 'fill-[#252641]'
+                    isOpenChapter ? 'fill-[#4285F4] md:fill-white' : 'rotate-180 fill-[#252641]'
                   }`}
                 />
               </button>
+              <div className={`h-fit w-full px-4 ${isOpenChapter ? 'block md:hidden' : 'hidden'}`}>
+                <div className='h-[1px] w-full bg-[#4285F4]/30' />
+              </div>
               <div
                 ref={chapterFilterRef}
-                className={`absolute top-[100%] left-0 z-[2] w-full flex-col items-start gap-y-1 rounded-b-lg border-x-[1px] border-b-[1px] border-[#4285F4] bg-white py-3 px-6 text-[#252641] shadow-lg transition-all duration-300 ease-linear ${
+                className={`relative z-[2] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white py-3 px-4 text-[#252641] shadow-lg transition-all duration-700 ease-out md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] md:px-6 ${
                   isOpenChapter && chapterOption.length > 0 ? 'flex' : 'hidden'
                 }`}
               >
@@ -203,7 +230,12 @@ const MaterialPage: React.FC = () => {
                     key={chapter.value}
                     onClick={() => onCheckChapter(index)}
                   >
-                    <input type='checkbox' className='allow-checked' checked={chapter.isChoosing} />
+                    <input
+                      type='checkbox'
+                      className='allow-checked'
+                      checked={chapter.isChoosing}
+                      readOnly
+                    />
                     <p className='text-[18px] text-inherit md:text-[16px] lg:text-[18px]'>
                       {chapter.label}
                     </p>
@@ -211,33 +243,37 @@ const MaterialPage: React.FC = () => {
                 ))}
               </div>
             </div>
-            {chapterFilterList.length > 0 && (
-              <div className='flex flex-col gap-4 md:flex-row'>
-                <h3 className='text-xl md:text-lg lg:text-xl 2xl:text-[22px]'>3 Kết quả</h3>
-                <div className='flex flex-wrap gap-2'>
-                  {chapterFilterList.map((chapter) => (
-                    <div
-                      className='flex flex-row items-center justify-center gap-x-1 rounded-lg border-[1px] border-[#252641]/50 p-1'
-                      key={chapter.value}
-                    >
-                      <p className='text-xs lg:text-sm 3xl:text-base'>{chapter.label}</p>
-                      <button
-                        onClick={() => onCheckChapter(chapter.index)}
-                        className='flex items-center justify-center'
+            <div className='hidden gap-4 md:flex md:flex-row'>
+              <h3 className='text-xl md:text-lg lg:text-xl 2xl:text-[22px]'>
+                {materials?.length ?? 0} Kết quả
+              </h3>
+              {chapterFilterList.length > 0 && (
+                <div className='flex flex-col gap-4 md:flex-row'>
+                  <div className='flex flex-wrap gap-2'>
+                    {chapterFilterList.map((chapter) => (
+                      <div
+                        className='flex flex-row items-center justify-center gap-x-1 rounded-lg border-[1px] border-[#252641]/50 p-1'
+                        key={chapter.value}
                       >
-                        <Icon.CloseIcon className='aspect-square h-4 fill-[#DB4437]/90' />
-                      </button>
-                    </div>
-                  ))}
+                        <p className='text-xs lg:text-sm 3xl:text-base'>{chapter.label}</p>
+                        <button
+                          onClick={() => onCheckChapter(chapter.index)}
+                          className='flex items-center justify-center'
+                        >
+                          <Icon.CloseIcon className='aspect-square h-4 fill-[#DB4437]/90' />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={onDeleteChapter}
+                    className='text-xl text-[#252641] underline md:text-sm lg:text-[16px] 2xl:text-[18px]'
+                  >
+                    Xóa tất cả
+                  </button>
                 </div>
-                <button
-                  onClick={onDeleteChapter}
-                  className='text-xl text-[#252641] underline md:text-sm lg:text-[16px] 2xl:text-[18px]'
-                >
-                  Xóa tất cả
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Chapters */}

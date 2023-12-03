@@ -18,6 +18,7 @@ const ExamArchiveDetailPage: React.FC = () => {
   const navigate = useNavigate();
 
   const isAsideOpen = useBoundStore.use.isAsideOpen();
+  const openAside = useBoundStore.use.openAside();
 
   const [exam, setExam] = useState<ExamArchive | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -66,16 +67,34 @@ const ExamArchiveDetailPage: React.FC = () => {
       }${exam?.name ? ` - ${exam.name}` : ''}`}
       description='From CTCT'
     >
-      <LibraryAside title='Thư viện đề thi' baseRoute='/library/previous-exams' />
+      <LibraryAside
+        title='Thư viện đề thi'
+        baseRoute='/library/exam-archive'
+        isDisplayToggleAside={true}
+      />
 
       {/* Add space
         <div id='previous-exams-margin' /> */}
       <Wrapper
-        className={`with-nav-height flex w-full flex-col overflow-auto`}
+        className={`with-nav-height relative flex w-full flex-col overflow-auto`}
         backgroundColor='#fcfbf9'
       >
+        <button
+          onClick={openAside}
+          className={`absolute left-10 top-4 rounded-full bg-[#4285F4]/70 p-[6px] hover:bg-[#4285F4] md:top-6 lg:top-8 2xl:top-10 ${
+            !isAsideOpen ? 'block' : 'hidden'
+          }`}
+        >
+          <Icon.OpenAside className='aspect-square h-6 fill-white xl:h-7' />
+        </button>
         {/* Banner */}
-        <div className='flex w-full flex-col justify-start gap-y-2 bg-transparent px-5 py-4 md:gap-y-6 md:px-8 md:py-6 lg:gap-y-3 lg:px-10 lg:py-8 xl:px-12 2xl:px-14 2xl:py-10'>
+        <div
+          className={`flex w-full flex-col justify-start gap-y-2 bg-transparent py-4 px-5 md:gap-y-6 md:py-6 lg:gap-y-3 lg:py-8 2xl:py-10 ${
+            isAsideOpen
+              ? 'md:px-8 lg:px-10 xl:px-12 2xl:px-14'
+              : 'md:px-32 lg:px-40 xl:px-44 3xl:px-48'
+          }`}
+        >
           <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
             {exam?.name}
           </h1>

@@ -11,9 +11,15 @@ interface LibraryAsideProps {
   title?: string;
   description?: string;
   baseRoute: string;
+  isDisplayToggleAside?: boolean;
 }
 
-const LibraryAside: React.FC<LibraryAsideProps> = ({ title, description, baseRoute }) => {
+const LibraryAside: React.FC<LibraryAsideProps> = ({
+  title,
+  description,
+  baseRoute,
+  isDisplayToggleAside = false,
+}) => {
   const subjects = useBoundStore.use.subjects();
   const getAllSubjects = useBoundStore.use.getAllSubjects();
 
@@ -22,7 +28,7 @@ const LibraryAside: React.FC<LibraryAsideProps> = ({ title, description, baseRou
   }, [getAllSubjects]);
 
   return (
-    <Aside title={title} description={description}>
+    <Aside title={title} description={description} isDisplayToggleAside={isDisplayToggleAside}>
       <div className='flex flex-col space-y-4'>
         {subjects !== null ? (
           subjects?.map((subj: Subject) => {

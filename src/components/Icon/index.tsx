@@ -51,6 +51,7 @@ import { ReactComponent as LogoGmail } from '../../assets/svgs/LogoGmail.svg';
 import { ReactComponent as LogoLinkedin } from '../../assets/svgs/LogoLinkedin.svg';
 import { ReactComponent as Logout } from '../../assets/svgs/LogoutIcon.svg';
 import { ReactComponent as MailIcon } from '../../assets/svgs/MailIcon.svg';
+import { ReactComponent as OpenAside } from '../../assets/svgs/OpenAsideIcon.svg';
 import { ReactComponent as OpenBook } from '../../assets/svgs/OpenBookIcon.svg';
 import { ReactComponent as OpenQuote } from '../../assets/svgs/OpenQuoteIcon.svg';
 import { ReactComponent as OriginIcon } from '../../assets/svgs/OriginIcon.svg';
@@ -128,6 +129,7 @@ export default {
   Partner,
   Quiz,
   OriginIcon,
+  OpenAside,
   OpenBook,
   OpenQuote,
   CloseQuote,
