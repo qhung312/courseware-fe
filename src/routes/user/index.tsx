@@ -4,7 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
 import ComingSoonPage from '../../pages/ComingSoon';
-import NotFoundPage from '../../pages/NotFound';
+import BadEmailPage from '../../pages/Error/BadEmail';
+import NotFoundPage from '../../pages/Error/NotFound';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const ActivitiesPage = lazy(() => import('../../pages/AboutUs/Activities'));
@@ -212,6 +213,7 @@ const UserRoute = () => {
           />
           <Route path='tests' element={<ComingSoonPage />} />
         </Route>
+        <Route path='error/bad-email' element={<BadEmailPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </>

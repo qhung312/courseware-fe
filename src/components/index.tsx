@@ -12,6 +12,7 @@ import Loading from './Loading';
 import LoginButton from './LoginButton';
 import Markdown from './Markdown';
 import FinishModal from './Modal/FinishModal';
+import SignInModal from './Modal/SignInModal';
 import Pagination from './Pagination';
 import PDF from './PDF';
 import QuestionBoard from './QuestionBoard';
@@ -29,6 +30,7 @@ export {
   Icon,
   Markdown,
   FinishModal,
+  SignInModal,
   LazyLoadImage,
   Loading,
   LoginButton,

@@ -6,6 +6,7 @@ module.exports = {
       screens: {
         sml: { min: '320px', max: '640px' },
         '3xl': '1872px',
+        '4xl': '1920px',
       },
       container: {
         center: true,
@@ -41,9 +42,8 @@ module.exports = {
     function ({ addComponents }) {
       addComponents({
         '.container': {
-          maxWidth: '376px',
           '@screen sm': {
-            maxWidth: '500px',
+            maxWidth: '640px',
           },
           '@screen md': {
             maxWidth: '768px',
