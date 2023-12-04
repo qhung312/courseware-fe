@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Footer, Icon, LazyLoadImage } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
+import './index.css';
 
 const TSTTPage = () => {
   const { width } = useWindowDimensions();
@@ -18,9 +19,9 @@ const TSTTPage = () => {
   return (
     <Page title='Tiếp sức tới trường'>
       <main className='flex flex-col gap-y-5 overflow-y-auto lg:gap-y-10 2xl:gap-y-[54px] 3xl:gap-y-[60px]'>
-        <div className='w-full'>
+        <div className='block h-fit w-full'>
           <LazyLoadImage
-            containerClassName='block aspect-[52/25] md:aspect-[4/1]'
+            className='header block aspect-[52/25] md:aspect-[4/1]'
             src={require('../../../../assets/images/TSTT.jpg')}
             placeHolderSrc={require('../../../../assets/images/TSTT-placeholder.jpg')}
             alt='tstt_alt'

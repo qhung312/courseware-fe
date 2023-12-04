@@ -6,6 +6,7 @@ import { CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../../../comp
 import { RevisionClassData as data } from '../../../../data/CarouselData';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
+import './index.css';
 
 const LHOTTCPage = () => {
   const { width } = useWindowDimensions();
@@ -20,9 +21,9 @@ const LHOTTCPage = () => {
   return (
     <Page title='Lớp học ôn tập'>
       <main className='with-nav-height flex flex-col gap-y-5 overflow-y-auto text-[16px] md:text-[14px] lg:gap-y-10 lg:text-[18px] xl:text-[20px] 2xl:gap-y-[54px] 3xl:gap-y-[60px]'>
-        <div className='w-full'>
+        <div className='block h-fit w-full'>
           <LazyLoadImage
-            className='z-[1] block aspect-[52/25] md:aspect-[4/1]'
+            className='header z-[1] block aspect-[52/25] md:aspect-[4/1]'
             src={require('../../../../assets/images/LHOT_1.jpg')}
             placeHolderSrc={require('../../../../assets/images/LHOT_1-placeholder.jpg')}
             alt='tstt_alt'

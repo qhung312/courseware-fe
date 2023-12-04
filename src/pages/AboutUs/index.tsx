@@ -45,7 +45,7 @@ const AboutUsPage = () => {
         </div>
 
         {/* Section 1 */}
-        <div className='flex w-full flex-col space-y-16 py-8 md:justify-between md:py-12 lg:flex-row lg:space-y-0 lg:py-16 xl:py-24 2xl:py-[124px]'>
+        <div className='flex w-full flex-col space-y-16 py-8 md:justify-between md:gap-x-12 md:py-12 lg:flex-row lg:space-y-0 lg:py-16 xl:py-24 2xl:gap-x-20 2xl:py-[124px]'>
           <div className='space-y-3 md:max-w-md md:space-y-4 xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
             <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
               Giới thiệu
@@ -87,7 +87,7 @@ const AboutUsPage = () => {
         </div>
 
         {/* Section 3 */}
-        <div className='flex w-full flex-col-reverse py-8 md:flex-row md:justify-between md:py-12 lg:py-16 xl:py-24 2xl:py-[124px]'>
+        <div className='flex w-full flex-col-reverse py-8 md:flex-row md:justify-between md:gap-x-12 md:py-12 lg:py-16 xl:py-24 2xl:gap-x-20 2xl:py-[124px]'>
           <div className='flex flex-1 items-center'>
             <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
               <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
@@ -113,7 +113,7 @@ const AboutUsPage = () => {
         </div>
 
         {/* Section 4 */}
-        <div className='flex w-full flex-col-reverse py-8 md:flex-row md:justify-between md:py-12 lg:py-16 xl:py-24 2xl:py-[124px]'>
+        <div className='flex w-full flex-col-reverse py-8 md:flex-row md:justify-between md:gap-x-12 md:py-12 lg:py-16 xl:py-24 2xl:gap-x-20 2xl:py-[124px]'>
           <div className='flex flex-1 items-center'>
             <div className='w-full space-y-3 md:max-w-xs md:space-y-4 lg:max-w-md xl:max-w-xl xl:space-y-5 2xl:max-w-2xl '>
               <h2 className='text-center text-[28px] font-bold md:text-start md:uppercase lg:text-[32px] xl:text-[36px] 2xl:text-[40px]'>
