@@ -109,7 +109,7 @@ const Main: React.FC = () => {
       return;
     }
 
-    ChapterService.getAll({ subject: id }, true)
+    ChapterService.getAll({ subject: id })
       .then((res) => {
         const { result: chapters } = res.data.payload;
         setChapterOption(
