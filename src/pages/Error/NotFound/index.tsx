@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ReactComponent as NotFoundVector } from '../../assets/svgs/404.svg';
-import { Page } from '../../layout';
+import { ReactComponent as NotFoundVector } from '../../../assets/svgs/404.svg';
+import { Page } from '../../../layout';
 
 const NotFoundPage: React.FC = () => {
   return (
