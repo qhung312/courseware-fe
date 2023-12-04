@@ -79,7 +79,7 @@ const DesktopContactCard = forwardRef<HTMLDivElement, {}>((_props, ref) => {
   return (
     <div
       ref={ref}
-      className='relative mb-20 flex w-full flex-row items-center justify-between rounded-lg bg-[#0B2878] 
+      className='relative mb-20 flex w-full flex-row items-center justify-between rounded-lg bg-[#0B2878]
       text-white md:p-5 lg:px-[30px] xl:px-10 3xl:px-[60px]'
     >
       <div>
@@ -230,7 +230,7 @@ const Fessior: FC = () => {
 
         <section
           id='fessior-introduction'
-          className='mt-7 flex w-full flex-1 flex-row 
+          className='mt-7 flex w-full flex-1 flex-row
           flex-wrap gap-x-10 gap-y-5 md:items-start md:justify-between lg:mt-10 xl:mt-20 xl:gap-x-20 3xl:mt-[100px] 3xl:gap-x-[120px]'
         >
           <div ref={(el) => (textRefs.current[0] = el)} className='w-full md:w-[45%]'>
@@ -249,10 +249,10 @@ const Fessior: FC = () => {
               <Icon.LogoFessior className='h-auto w-[160px] fill-[#0F2D85] lg:w-[180px] xl:w-[200px]' />
             </div>
             <p className='mt-3 text-justify text-[16px] leading-loose text-[#696984] lg:text-[20px] 3xl:text-[24px]'>
-              Fessior là một ban thuộc câu lạc bộ Google Developer Student Club - Đại học Bách khoa,
-              ĐHQG TP.HCM. Sứ mệnh của Fessior là phát triển các dự án về công nghệ nhằm mang lại
-              những giá trị thiết thực cho xã hội và xây dựng nên một cộng đồng những sinh viên yêu
-              thích công nghệ.
+              Fessior Community là một cộng đồng thuộc câu lạc bộ Google Developer Student Club -
+              Đại học Bách khoa, ĐHQG TP.HCM. Sứ mệnh của Fessior Community là phát triển các dự án
+              về công nghệ nhằm mang lại những giá trị thiết thực cho xã hội và xây dựng nên một
+              cộng đồng những sinh viên yêu thích công nghệ.
             </p>
           </div>
 
@@ -313,7 +313,7 @@ const Fessior: FC = () => {
 
         <section
           id='fessior-projects'
-          className='-mx-6 mt-[72px] w-screen overflow-hidden rounded-t-lg bg-[#9DCCFF]/20 px-6 
+          className='-mx-6 mt-[72px] w-screen overflow-hidden rounded-t-lg bg-[#9DCCFF]/20 px-6
           pt-8 lg:-mx-10 lg:px-10 xl:-mx-20 xl:px-20 xl:pt-10 3xl:-mx-[100px] 3xl:px-[100px] 3xl:pt-[60px]'
         >
           <h3 className='text-[20px] font-semibold leading-relaxed lg:text-[24px] xl:text-[28px] 3xl:text-[32px]'>
