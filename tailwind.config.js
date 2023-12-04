@@ -6,6 +6,7 @@ module.exports = {
       screens: {
         sml: { min: '320px', max: '640px' },
         '3xl': '1872px',
+        '4xl': '1920px',
       },
       container: {
         center: true,

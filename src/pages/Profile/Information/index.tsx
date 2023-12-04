@@ -50,11 +50,11 @@ const UserInformation = () => {
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:rounded-[20px] md:px-10 md:pt-10 lg:px-[120px] xl:px-[240px] 2xl:px-[360px] 3xl:px-[460px]'>
           <div className='md:rounded-[20px] md:px-5 md:py-8 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:px-8 xl:px-10'>
             {updatedName ? (
-              <h1 className='text-xl font-semibold text-[#2252641] 2xl:text-2xl 3xl:text-[28px]'>
+              <h1 className='max-h-[32px] max-w-[80vw] overflow-hidden text-ellipsis text-xl font-semibold text-[#2252641] 2xl:text-2xl 3xl:text-[28px]'>
                 Thông tin của {updatedName}
               </h1>
             ) : (
-              <h1 className='text-xl font-semibold text-[#2252641] 2xl:text-2xl 3xl:text-[28px]'>
+              <h1 className='max-h-[32px] max-w-[80vw] overflow-hidden text-ellipsis text-xl font-semibold text-[#2252641] 2xl:text-2xl 3xl:text-[28px]'>
                 Thông tin của {user?.familyAndMiddleName || ''} {user?.givenName || 'người dùng'}
               </h1>
             )}

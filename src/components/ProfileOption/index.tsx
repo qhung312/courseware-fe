@@ -18,10 +18,10 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
 
   return (
     <div className='padding flex flex-col items-center bg-[#E3F2FD] pt-10 pb-4 md:relative md:pb-0 md:pt-0'>
-      <div className='hidden md:block md:h-[160px] lg:h-[188px] xl:h-fit'>
+      <div className='hidden md:block md:h-[160px] lg:h-[188px] xl:h-[232px] 2xl:h-[280px] 4xl:h-[20vw]'>
         <img className='h-full' alt='Banner' src={UserProfileBanner} />
       </div>
-      <div className='md:absolute md:left-5 md:bottom-5 lg:left-[40px] xl:left-[80px] 3xl:left-[148px]'>
+      <div className='flex flex-col items-center md:absolute md:left-5 md:bottom-5 lg:left-[40px] xl:left-[80px] 3xl:left-[148px]'>
         <div className='relative'>
           <div className='flex h-[180px] w-[180px] items-center justify-center rounded-full bg-white md:h-[160px] md:w-[160px] lg:h-[180px] lg:w-[180px] 3xl:h-[220px] 3xl:w-[220px]'>
             <img
@@ -52,12 +52,12 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
           )}
         </div>
         {updatedName && (
-          <p className='mt-3 text-center text-[28px] font-medium text-black md:text-[20px] lg:text-[24px] 2xl:text-2xl'>
+          <p className='mt-3 max-h-[32px] max-w-[80vw] overflow-hidden text-ellipsis text-center text-[28px] font-medium text-black md:max-w-[160px] md:text-[20px] lg:max-w-[300px] lg:text-[24px] 2xl:text-2xl'>
             {updatedName}
           </p>
         )}
         {(user?.givenName || user?.familyAndMiddleName) && !updatedName && (
-          <p className='mt-3 text-center text-[28px] font-medium text-black md:text-[20px] lg:text-[24px] 2xl:text-2xl'>
+          <p className='mt-3 max-h-[32px] max-w-[80vw] overflow-hidden text-ellipsis text-center text-[28px] font-medium text-black md:max-w-[160px] md:text-[20px] lg:max-w-[300px] lg:text-[24px] 2xl:text-2xl'>
             {user?.familyAndMiddleName || ''} {user?.givenName || ''}
           </p>
         )}
