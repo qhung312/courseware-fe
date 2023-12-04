@@ -3,7 +3,7 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import './index.css';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -20,6 +20,12 @@ import { Page } from '../../layout';
 const HomePage = () => {
   const { width } = useWindowDimensions();
   const [activitySlidesPerView, setActivitySlidesPerView] = useState<number>(1);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const timeline = (videoRef.current as HTMLVideoElement).querySelector('input[type="range"]');
+    console.log('timeline: ', timeline);
+  }, [videoRef]);
 
   useEffect(() => {
     const carousel = document.getElementById('homepage-carousel');
@@ -313,10 +319,15 @@ const HomePage = () => {
                 /> */}
                 <div className='relative z-[2] h-full w-full rounded-lg object-cover'>
                   <video
+                    id='videoRef'
+                    ref={videoRef}
                     loop
                     autoPlay
                     muted
+                    controls
+                    controlsList='nofullscreen nodownload'
                     className='z-[2] block h-full w-full rounded-lg object-cover'
+                    // onLoadedMetadata={handleLoadedMetadata}
                   >
                     <source
                       src={require('../../assets/video/introduction-video.mp4')}
