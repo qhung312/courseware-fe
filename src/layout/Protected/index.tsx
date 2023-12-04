@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { ReactComponent as Tab } from '../../assets/svgs/Tab.svg';
@@ -12,16 +12,35 @@ type ProtectedRouteProps = {
 
 const Protected: React.FC<ProtectedRouteProps> = ({ admin = false } = {}) => {
   const isAuthenticated = useBoundStore.use.isAuthenticated();
-  const { pathname } = useLocation();
   const user = useBoundStore.use.user();
+  const openModal = useBoundStore.use.openModal();
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      openModal();
+    }
+  }, [isAuthenticated, openModal]);
+
+  if (!isAuthenticated) {
+    return (
+      <>
+        <Navigate to='/' />
+      </>
+    );
+  }
 
   if (
-    !isAuthenticated ||
-    (admin &&
-      !user.isManager &&
-      !_.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN')))
+    admin &&
+    !user.isManager &&
+    !_.some(user.accessLevels, (accessLevel) => accessLevel.name.includes('ADMIN'))
   ) {
-    return <Navigate to='/' />;
+    return (
+      <>
+        <Navigate to='/' />
+      </>
+    );
   }
 
   return (
