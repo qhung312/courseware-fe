@@ -157,7 +157,7 @@ const MaterialPage: React.FC = () => {
     <Page title={`Tài liệu ${subject?.name ? subject?.name : ''}`}>
       <LibraryAside title='Thư viện tài liệu' baseRoute='/library/material' />
 
-      <Wrapper className='flex flex-1 flex-col'>
+      <Wrapper className='with-nav-height flex flex-1 flex-col'>
         <div className='flex flex-col gap-y-4 px-5 py-5 md:gap-y-6 md:px-8 md:py-7 lg:gap-y-7 lg:px-10 lg:py-8 xl:gap-y-8 xl:px-12 xl:py-9 2xl:gap-y-9 2xl:px-14 2xl:py-10'>
           <div className='flex w-full items-start md:hidden'>
             <Link
