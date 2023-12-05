@@ -37,6 +37,10 @@
   font-style: normal;
 }
 
+html {
+  height: 100vh;
+}
+
 body {
   width: 100vw;
   background-color: #ffffff;
@@ -139,28 +143,28 @@ code {
 }
 
 .with-nav-height {
-  min-height: calc(100vh - 72px);
-  height: calc(100vh - 72px);
+  min-height: calc(100dvh - 72px);
+  height: calc(100dvh - 72px);
 }
 
 @media (min-width: 768px) {
   .with-nav-height {
-    min-height: calc(100vh - 64px);
-    height: calc(100vh - 64px);
+    min-height: calc(100dvh - 64px);
+    height: calc(100dvh - 64px);
   }
 }
 
 @media (min-width: 1280px) {
   .with-nav-height {
-    min-height: calc(100vh - 67px);
-    height: calc(100vh - 67px);
+    min-height: calc(100dvh - 67px);
+    height: calc(100dvh - 67px);
   }
 }
 
 @media (min-width: 1872px) {
   .with-nav-height {
-    min-height: calc(100vh - 81px);
-    height: calc(100vh - 81px);
+    min-height: calc(100dvh - 81px);
+    height: calc(100dvh - 81px);
   }
 }
 
@@ -193,4 +197,9 @@ code {
 .markdown > * {
   all: revert;
   margin: 0;
+}
+
+.math-display {
+  width: 100%;
+  overflow: scroll;
 }

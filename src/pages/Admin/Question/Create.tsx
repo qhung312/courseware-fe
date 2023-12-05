@@ -268,7 +268,7 @@ const CreateQuestionPage = () => {
                       showInfo={false}
                     />
                     <div className='flex h-full w-full flex-row gap-x-4'>
-                      <div className='flex h-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+                      <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
                         <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
                         <div className='flex flex-col items-start justify-center gap-y-1'>
                           <div className='flex flex-row items-center gap-x-2'>

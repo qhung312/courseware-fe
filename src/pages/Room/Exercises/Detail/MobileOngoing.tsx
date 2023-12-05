@@ -26,7 +26,7 @@ const MobileOngoing: React.FC<{
 
   return (
     <div className='with-nav-height relative w-full overflow-y-auto overflow-x-hidden md:hidden'>
-      <div className='flex h-full w-full flex-col items-start justify-start bg-[#F2F2F2] p-5 md:hidden'>
+      <div className='flex h-fit w-full flex-col items-start justify-start bg-[#F2F2F2] p-5 md:hidden'>
         <div className='flex w-full flex-col'>
           <h1 className='text-2xl font-bold'>{quiz.fromQuiz.name}</h1>
           <h3 className='text-xl'>Môn: {quiz.fromQuiz.subject.name}</h3>
