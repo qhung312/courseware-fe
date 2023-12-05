@@ -314,26 +314,26 @@ const Main: React.FC = () => {
                     key={`${quiz.name}-${index}`}
                     className='flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 md:p-4 lg:p-6 3xl:p-8'
                   >
-                    <h4 className='mb-4 text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>
+                    <h4 className='mb-1 text-lg font-semibold md:mb-4 md:font-normal lg:text-xl 3xl:text-2xl'>
                       {quiz.name}
                     </h4>
                     <div className='flex flex-col gap-y-4 md:flex-col-reverse'>
                       <div className='flex flex-row items-center justify-between'>
-                        <div className='flex h-fit flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none lg:gap-x-4 3xl:gap-x-6'>
-                          <div className='hidden flex-1 flex-row items-center gap-x-1 md:flex'>
+                        <div className='flex h-fit w-full flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none md:justify-start lg:gap-x-4 3xl:gap-x-6'>
+                          <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
                             <Icon.Exercise className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {quiz.chapter.name}
                             </p>
                           </div>
                           <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' />
-                          <div className='flex flex-1 flex-row items-center gap-x-1'>
+                          <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
                             <Icon.Clock className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {parseDuration(quiz.duration)}
                             </p>
                           </div>
-                          <div className='flex flex-1 flex-row items-center gap-x-1'>
+                          <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
                             <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {`${quiz.sampleSize} câu`}
@@ -369,39 +369,43 @@ const Main: React.FC = () => {
                           </p>
                         </button>
                       </div>
-                      <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
-                        <p className='text-justify text-[#666]'>
-                          {isEmpty(quiz.description) ? 'Không có chú thích' : quiz.description}
-                        </p>
+                      {!isEmpty(quiz.description) && (
+                        <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
+                          <p className='text-justify text-[#666]'>
+                            {isEmpty(quiz.description) ? 'Không có chú thích' : quiz.description}
+                          </p>
+                        </div>
+                      )}
+                      <div className='flex w-full flex-row items-center justify-start md:hidden'>
+                        <button
+                          className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4]'
+                          disabled={sessionMutation.isLoading}
+                          onClick={() => {
+                            sessionQueriesResult[index]?.data === null
+                              ? sessionMutation.mutate(quiz._id, {
+                                  onSuccess: ({ data }, variables) => {
+                                    navigate(
+                                      `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
+                                    );
+                                    localStorage.removeItem(`quiz-${variables}-starList`);
+                                  },
+                                })
+                              : navigate(
+                                  `/room/exercises/${subject?._id}/quiz/${quiz._id}/session/${sessionQueriesResult[index]?.data?._id}`
+                                );
+                          }}
+                        >
+                          <p className='text-xs text-white lg:text-sm 3xl:text-base'>
+                            {sessionQueriesResult[index]?.isFetching ? (
+                              <Skeleton baseColor='#' />
+                            ) : sessionQueriesResult[index]?.data !== null ? (
+                              'Tiếp tục làm bài'
+                            ) : (
+                              'Làm bài'
+                            )}
+                          </p>
+                        </button>
                       </div>
-                      <button
-                        className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:hidden'
-                        disabled={sessionMutation.isLoading}
-                        onClick={() => {
-                          sessionQueriesResult[index]?.data === null
-                            ? sessionMutation.mutate(quiz._id, {
-                                onSuccess: ({ data }, variables) => {
-                                  navigate(
-                                    `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
-                                  );
-                                  localStorage.removeItem(`quiz-${variables}-starList`);
-                                },
-                              })
-                            : navigate(
-                                `/room/exercises/${subject?._id}/quiz/${quiz._id}/session/${sessionQueriesResult[index]?.data?._id}`
-                              );
-                        }}
-                      >
-                        <p className='text-xs text-white lg:text-sm 3xl:text-base'>
-                          {sessionQueriesResult[index]?.isFetching ? (
-                            <Skeleton baseColor='#' />
-                          ) : sessionQueriesResult[index]?.data !== null ? (
-                            'Tiếp tục làm bài'
-                          ) : (
-                            'Làm bài'
-                          )}
-                        </p>
-                      </button>
                     </div>
                   </div>
                 ))

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 
 import Icon from '../Icon';
@@ -10,7 +10,8 @@ interface CopyIconProps {
 const CopyIcon: React.FC<CopyIconProps> = ({ copyContent }) => {
   const [copied, setCopied] = useState(false);
 
-  const onCopy = () => {
+  const onCopy = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
     navigator.clipboard.writeText(copyContent);
     setCopied(true);
   };

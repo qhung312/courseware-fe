@@ -1,7 +1,7 @@
 // import { Tooltip } from 'react-tooltip';
 
 import { isEmpty } from 'lodash';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Icon } from '..';
 import { ExamArchive, ExamType, Material } from '../../types';
@@ -25,9 +25,13 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
 }) => {
   const { pathname } = useLocation();
   const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
+  const navigate = useNavigate();
 
   return (
-    <div className='relative flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-4 lg:p-6 3xl:p-8'>
+    <div
+      onClick={() => navigate(to)}
+      className='relative flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-4 hover:shadow-lg lg:p-6 3xl:p-8'
+    >
       <div
         className='absolute right-4 top-4 flex space-x-1 md:space-x-2 lg:right-6 lg:top-6 
         lg:space-x-3 xl:space-x-4 2xl:space-x-5 3xl:right-8 3xl:top-8'
@@ -44,10 +48,10 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
         </div> */}
       </div>
       <h4 className='mb-4 text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>{title}</h4>
-      <div className='flex flex-col gap-y-4 md:flex-col-reverse lg:gap-y-6 3xl:gap-y-8'>
+      <div className='flex flex-col-reverse gap-y-4 lg:gap-y-6 3xl:gap-y-8'>
         <div className='flex flex-row items-center justify-between'>
           <div className='flex h-fit flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none lg:gap-x-4 3xl:gap-x-6'>
-            <div className='hidden flex-1 flex-row items-center gap-x-3 md:flex'>
+            <div className='flex flex-1 flex-row items-center gap-x-3'>
               {isMaterial(document) ? (
                 <>
                   <Icon.Document className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
@@ -68,7 +72,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
             </div>
             {isMaterial(document) ? null : (
               <>
-                <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' />
+                <span className='mx-1 block h-6 w-0 border-l-2' />
                 <div className='flex flex-1 flex-row items-center gap-x-3'>
                   <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
@@ -78,24 +82,23 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
               </>
             )}
           </div>
-          <Link
-            to={to}
-            className='hidden rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:flex '
-          >
+          {/* <Link to={to} className='flex rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4]'>
             <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
-          </Link>
+          </Link> */}
         </div>
-        <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
-          <p className='text-justify text-[#666]'>
-            {isEmpty(description) ? 'Không có chú thích' : description}
-          </p>
-        </div>
-        <Link
+        {isEmpty(description) && (
+          <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
+            <p className='text-justify text-[#666]'>
+              {isEmpty(description) ? 'Không có chú thích' : description}
+            </p>
+          </div>
+        )}
+        {/* <Link
           to={to}
           className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:hidden'
         >
           <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

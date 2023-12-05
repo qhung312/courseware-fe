@@ -83,7 +83,7 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
 
   const setTool = useDebounce(() => {
     setIsShowTool(false);
-  }, 5000);
+  }, 3000);
 
   const handleOnScroll = useCallback(() => {
     setIsShowTool(true);
