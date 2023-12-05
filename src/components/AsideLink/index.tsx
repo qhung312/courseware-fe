@@ -31,7 +31,7 @@ const AsideLink: React.FC<AsideLinkProps> = ({ to, content, Icon }) => {
               className={
                 isActive
                   ? 'fill-[#666] group-hover:fill-white md:fill-white'
-                  : 'fill-[#666] group-hover:fill-white'
+                  : 'fill-[#4285F4] group-hover:fill-white'
               }
             />
             <p
