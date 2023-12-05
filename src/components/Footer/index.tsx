@@ -57,12 +57,14 @@ const Footer: FC = () => {
             >
               Giới thiệu
             </Link>
-            <Link
-              to='/about-us/activities'
+            <a
+              href={linkFacebookCTCT}
+              target='_blank'
               className='text-[14px] text-[#5b5b5b] hover:text-black md:text-[16px]'
+              rel='noreferrer'
             >
               Cộng đồng Chúng Ta Cùng Tiến
-            </Link>
+            </a>
           </div>
 
           <div className='flex h-fit flex-col justify-between gap-y-3 pl-0 md:gap-y-1 md:pl-[5%] lg:gap-y-2 lg:pl-0 2xl:gap-y-3 3xl:gap-y-4'>
