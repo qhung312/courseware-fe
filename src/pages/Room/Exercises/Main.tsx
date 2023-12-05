@@ -311,8 +311,22 @@ const Main: React.FC = () => {
               ) : (
                 quizzes?.map((quiz, index) => (
                   <div
+                    onClick={() => {
+                      sessionQueriesResult[index]?.data === null
+                        ? sessionMutation.mutate(quiz._id, {
+                            onSuccess: ({ data }, variables) => {
+                              navigate(
+                                `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
+                              );
+                              localStorage.removeItem(`quiz-${variables}-starList`);
+                            },
+                          })
+                        : navigate(
+                            `/room/exercises/${subject?._id}/quiz/${quiz._id}/session/${sessionQueriesResult[index]?.data?._id}`
+                          );
+                    }}
                     key={`${quiz.name}-${index}`}
-                    className='flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 md:p-4 lg:p-6 3xl:p-8'
+                    className='flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 hover:shadow-md md:p-4 lg:p-6 3xl:p-8'
                   >
                     <h4 className='mb-1 text-lg font-semibold md:mb-4 md:font-normal lg:text-xl 3xl:text-2xl'>
                       {quiz.name}
@@ -326,7 +340,7 @@ const Main: React.FC = () => {
                               {quiz.chapter.name}
                             </p>
                           </div>
-                          <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' />
+                          {/* <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' /> */}
                           <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
                             <Icon.Clock className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
@@ -334,7 +348,7 @@ const Main: React.FC = () => {
                             </p>
                           </div>
                           <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
-                            <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                            <Icon.List className='h-4 w-auto fill-[#666] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {`${quiz.sampleSize} câu`}
                             </p>
@@ -343,7 +357,8 @@ const Main: React.FC = () => {
                         <button
                           className='hidden rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:flex'
                           disabled={sessionMutation.isLoading}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             sessionQueriesResult[index]?.data === null
                               ? sessionMutation.mutate(quiz._id, {
                                   onSuccess: ({ data }, variables) => {
@@ -380,7 +395,8 @@ const Main: React.FC = () => {
                         <button
                           className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4]'
                           disabled={sessionMutation.isLoading}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             sessionQueriesResult[index]?.data === null
                               ? sessionMutation.mutate(quiz._id, {
                                   onSuccess: ({ data }, variables) => {
