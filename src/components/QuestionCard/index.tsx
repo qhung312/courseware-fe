@@ -393,7 +393,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
       </div>
       {status === QuizStatus.ENDED && showInfo === true && (
         <div className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
-          <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+          <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
             <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
             <div className='flex flex-col items-start justify-center gap-y-1'>
               <div className='flex flex-row items-center gap-x-2'>
@@ -413,7 +413,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
             <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
             <Markdown>{question.explanation}</Markdown>
           </div>
-          <form className='flex flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4'>
+          <form className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
             <div className='mb-2 flex flex-row items-center justify-between gap-x-2'>
               <div className='flex flex-row items-center gap-x-2'>
                 <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
