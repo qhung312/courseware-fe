@@ -10,15 +10,15 @@ const MobileOngoing: React.FC<{
   quiz: QuizSession;
   handleSubmit: () => void;
 }> = ({ quiz, handleSubmit }) => {
-  const pageSize = 4;
+  const pageSize = 5;
   const [page, setPage] = useState(1);
   const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
   const [timeLeft, setTimeLeft] = useState(Date.now() + quiz.timeLeft);
 
-  const currentSet = Array.from({ length: 4 }, (_, index) => (page - 1) * pageSize + index);
+  const currentSet = Array.from({ length: pageSize }, (_, index) => (page - 1) * pageSize + index);
 
   useEffect(() => {
-    setQuestionChunks(chunk(quiz.questions, 4));
+    setQuestionChunks(chunk(quiz.questions, pageSize));
     setTimeLeft(Date.now() + quiz.timeLeft);
   }, [quiz]);
 
@@ -72,7 +72,21 @@ const MobileOngoing: React.FC<{
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
+      <QuestionBoard
+        quiz={quiz}
+        currentSet={currentSet}
+        setCurrentSetIndex={(index: number) =>
+          setPage((prev) => {
+            const currentPage = Math.ceil(index / pageSize);
+
+            if (currentPage !== prev) {
+              return currentPage;
+            }
+            return prev;
+          })
+        }
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

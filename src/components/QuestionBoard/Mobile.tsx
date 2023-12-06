@@ -7,11 +7,12 @@ import { Icon, FinishModal } from '..';
 import { QuizSession, QuizStatus } from '../../types';
 import { calculateProgress } from '../../utils/helper';
 
-const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: number[] }> = ({
-  quiz,
-  submit,
-  currentSet,
-}) => {
+const Mobile: React.FC<{
+  quiz: QuizSession;
+  submit: () => void;
+  currentSet: number[];
+  setCurrentSetIndex: (index: number) => void;
+}> = ({ quiz, submit, currentSet, setCurrentSetIndex }) => {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +54,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
             {questionChunks[page - 1]?.map((question, index) => (
               <button
                 onClick={() => {
-                  setPage(Math.ceil(question.questionId / 40));
+                  setCurrentSetIndex(question.questionId);
                   document.getElementById(`question-${question.questionId}-card`)?.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start',
@@ -162,6 +163,7 @@ const Mobile: React.FC<{ quiz: QuizSession; submit: () => void; currentSet: numb
         </div>
       </div>
       <FinishModal
+        title={quiz.status === QuizStatus.ONGOING ? 'Hoàn thành bài làm' : 'Hoàn thành xem lại'}
         message={
           quiz.status === QuizStatus.ONGOING
             ? 'Bạn có chắc chắn muốn hoàn thành bài làm?'

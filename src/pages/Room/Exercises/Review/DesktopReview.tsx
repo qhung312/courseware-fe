@@ -1,10 +1,10 @@
 import { chunk } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
 import { QuizSession } from '../../../../types';
-import { calculateProgress, parseDuration } from '../../../../utils/helper';
+import { parseDuration } from '../../../../utils/helper';
 
 const DesktopReview: React.FC<{
   quiz: QuizSession;
@@ -12,16 +12,14 @@ const DesktopReview: React.FC<{
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
-  const pageSize = 4;
+  const pageSize = 5;
 
-  const currentSet = Array.from({ length: 4 }, (_a, index) => (page - 1) * pageSize + index);
+  const currentSet = Array.from({ length: pageSize }, (_a, index) => (page - 1) * pageSize + index);
   const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
 
   useEffect(() => {
-    setQuestionChunks(chunk(quiz.questions, 4));
+    setQuestionChunks(chunk(quiz.questions, pageSize));
   }, [quiz]);
-
-  const progress = useMemo(() => calculateProgress(quiz.questions), [quiz]);
 
   return (
     <main
@@ -62,8 +60,8 @@ const DesktopReview: React.FC<{
             </div>
             <div className='w-fit rounded-lg border-2 border-[#49BBDD]/30 p-3 lg:p-4 3xl:p-5'>
               <p className='text-sm font-medium lg:text-base 3xl:text-xl'>
-                Tiến độ:{' '}
-                <span className='text-[#4285F4]'>{`${progress.percentage}% (${progress.current}/${progress.total})`}</span>
+                Điểm số:{' '}
+                <span className='text-[#4285F4]'>{(quiz.standardizedScore ?? 0).toFixed(2)}</span>
               </p>
             </div>
           </div>
@@ -86,7 +84,21 @@ const DesktopReview: React.FC<{
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={() => navigate(-1)} />
+      <QuestionBoard
+        quiz={quiz}
+        currentSet={currentSet}
+        setCurrentSetIndex={(index: number) =>
+          setPage((prev) => {
+            const currentPage = Math.ceil(index / pageSize);
+
+            if (currentPage !== prev) {
+              return currentPage;
+            }
+            return prev;
+          })
+        }
+        handleSubmit={() => navigate(-1)}
+      />
     </main>
   );
 };

@@ -41,7 +41,6 @@ const Main: React.FC = () => {
   const onCheckChapter = (index: number) => {
     let chapterList = chapterOption;
     chapterList[index].isChoosing = !chapterList[index].isChoosing;
-    console.log(chapterList);
     setChapterOption(chapterList);
     setChapterFilterList(chapterOption.filter((chapter) => chapter.isChoosing));
   };
@@ -54,7 +53,6 @@ const Main: React.FC = () => {
       isChoosing: false,
       index: chapter.index,
     }));
-    console.log(chapterList);
     setChapterOption(chapterList);
   };
 
@@ -71,7 +69,7 @@ const Main: React.FC = () => {
       });
       return data.payload.result;
     },
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
   const sessionQueriesResult = useQueries({
@@ -83,6 +81,7 @@ const Main: React.FC = () => {
             const { data } = await QuizSessionService.getByQuizId(quizId);
             return data.payload;
           },
+          refetchOnWindowFocus: false,
         }))
       : [],
   });
