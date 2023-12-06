@@ -158,7 +158,7 @@ const MaterialPage: React.FC = () => {
       <LibraryAside title='Thư viện tài liệu' baseRoute='/library/material' />
 
       <Wrapper className='with-nav-height flex flex-1 flex-col'>
-        <div className='flex flex-col gap-y-4 px-5 py-5 md:gap-y-6 md:px-8 md:py-7 lg:gap-y-7 lg:px-10 lg:py-8 xl:gap-y-8 xl:px-12 xl:py-9 2xl:gap-y-9 2xl:px-14 2xl:py-10'>
+        <div className='flex flex-col px-5 py-5 md:px-8 md:py-7 lg:px-10 lg:py-8 xl:px-12 xl:py-9 2xl:px-14 2xl:py-10'>
           <div className='flex w-full items-start md:hidden'>
             <Link
               to='/library/material'
@@ -171,7 +171,7 @@ const MaterialPage: React.FC = () => {
             </Link>
           </div>
           {/* Banner */}
-          <div className='flex w-full flex-col justify-start gap-x-1'>
+          <div className='mt-4 flex w-full flex-col items-start justify-start md:mt-0'>
             <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
               Tài liệu các môn học
             </h1>
@@ -179,7 +179,7 @@ const MaterialPage: React.FC = () => {
               Môn học: {subject?.name}
             </h2>
           </div>
-          <div className='flex w-full flex-col items-start justify-center gap-y-5'>
+          <div className='mt-4 flex w-full flex-col items-start justify-center gap-y-5 md:mt-5 lg:mt-6 xl:mt-7 2xl:mt-9'>
             <div
               className={`relative flex w-full flex-col rounded-lg border-[1px] border-[#4285F4]/30 transition-all duration-300 ease-out md:w-fit md:border-[#4285F4] ${
                 isOpenChapter
@@ -282,7 +282,7 @@ const MaterialPage: React.FC = () => {
           </div>
 
           {/* Chapters */}
-          <div className='space-y-2 md:space-y-4 lg:space-y-5 xl:space-y-6 2xl:space-y-7'>
+          <div className='mt-3 flex-1 space-y-2 md:mt-4 lg:mt-5 lg:space-y-3 xl:mt-6 2xl:mt-7 3xl:space-y-4'>
             {/* Skeleton Loading */}
             {!materials && <PageSkeleton />}
 
