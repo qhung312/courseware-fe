@@ -117,7 +117,7 @@ const LargeHeader = () => {
               </div>
             </button>
             <nav
-              className='absolute z-10 mt-1 flex w-[120%] flex-col 
+              className='absolute z-10 mt-1 flex w-fit min-w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300 ease-linear'
               style={{
@@ -196,7 +196,7 @@ const LargeHeader = () => {
               </div>
             </button>
             <nav
-              className='absolute z-10 mt-1 flex w-[120%] flex-col 
+              className='absolute z-10 mt-1 flex w-fit min-w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300'
               style={{
@@ -274,7 +274,7 @@ const LargeHeader = () => {
               </div>
             </button>
             <nav
-              className='absolute z-10 mt-1 flex w-[120%] flex-col 
+              className='absolute z-10 mt-1 flex w-fit min-w-[120%] flex-col 
             items-center justify-center rounded-lg bg-[#FBFCFF]
             transition-all duration-300'
               style={{

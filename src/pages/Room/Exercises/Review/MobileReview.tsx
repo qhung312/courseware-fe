@@ -7,15 +7,15 @@ import { QuizSession } from '../../../../types';
 import { parseDuration } from '../../../../utils/helper';
 
 const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
-  const pageSize = 4;
+  const pageSize = 5;
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
-  const currentSet = Array.from({ length: 4 }, (_a, index) => (page - 1) * pageSize + index);
+  const currentSet = Array.from({ length: pageSize }, (_a, index) => (page - 1) * pageSize + index);
   const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
 
   useEffect(() => {
-    setQuestionChunks(chunk(quiz.questions, 4));
+    setQuestionChunks(chunk(quiz.questions, pageSize));
   }, [quiz]);
 
   return (
@@ -35,9 +35,7 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
             <span className='h-6 w-0 border-l-[0.5px] border-[#666]' />
             <div className='flex flex-row items-center gap-x-1'>
               <Icon.List className='h-4 w-auto' fill='#49BBBD' />
-              <p className='text-sm'>
-                {quiz.standardizedScore ? quiz.standardizedScore : '0'} điểm
-              </p>
+              <p className='text-sm'>{(quiz.standardizedScore ?? 0).toFixed(2)} điểm</p>
             </div>
           </div>
 
@@ -65,7 +63,21 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={() => navigate(-1)} />
+      <QuestionBoard
+        quiz={quiz}
+        setCurrentSetIndex={(index: number) =>
+          setPage((prev) => {
+            const currentPage = Math.ceil(index / pageSize);
+
+            if (currentPage !== prev) {
+              return currentPage;
+            }
+            return prev;
+          })
+        }
+        currentSet={currentSet}
+        handleSubmit={() => navigate(-1)}
+      />
     </div>
   );
 };

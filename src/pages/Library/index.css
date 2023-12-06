@@ -1,5 +1,5 @@
-[type='checkbox']:not(:checked),
-[type='checkbox']:checked {
+input[type='checkbox']:not(:checked),
+input[type='checkbox']:checked {
   height: 16px;
   width: 16px;
   border-radius: 4px;

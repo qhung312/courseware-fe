@@ -9,15 +9,15 @@ const DesktopOngoing: React.FC<{
   quiz: QuizSession;
   handleSubmit: () => void;
 }> = ({ quiz, handleSubmit }) => {
-  const pageSize = 4;
+  const pageSize = 5;
 
   const [page, setPage] = useState(1);
   const [questionChunks, setQuestionChunks] = useState(chunk(quiz.questions, 4));
 
-  const currentSet = Array.from({ length: 4 }, (_, index) => (page - 1) * pageSize + index);
+  const currentSet = Array.from({ length: pageSize }, (_, index) => (page - 1) * pageSize + index);
 
   useEffect(() => {
-    setQuestionChunks(chunk(quiz.questions, 4));
+    setQuestionChunks(chunk(quiz.questions, pageSize));
   }, [quiz]);
 
   const calculateProgress = useMemo(() => {
@@ -102,7 +102,21 @@ const DesktopOngoing: React.FC<{
           />
         </div>
       </div>
-      <QuestionBoard quiz={quiz} currentSet={currentSet} handleSubmit={handleSubmit} />
+      <QuestionBoard
+        quiz={quiz}
+        setCurrentSetIndex={(index: number) =>
+          setPage((prev) => {
+            const currentPage = Math.ceil(index / pageSize);
+
+            if (currentPage !== prev) {
+              return currentPage;
+            }
+            return prev;
+          })
+        }
+        currentSet={currentSet}
+        handleSubmit={handleSubmit}
+      />
     </main>
   );
 };

@@ -1,12 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import _, { debounce } from 'lodash';
-import { ChangeEvent, Dispatch, SetStateAction, memo, useCallback, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import './index.css';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Markdown } from '..';
+import { useWindowDimensions } from '../../hooks';
 import QuizSessionService from '../../service/quizSession.service';
 import { QuestionType, type ConcreteQuestion, UserAnswer } from '../../types/question';
 import { QuizStatus } from '../../types/quiz';
@@ -113,7 +123,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                       : ''
                   }`}
                   style={{ borderRadius: '9999px' }}
-                  type='checkbox'
+                  type='radio'
                   name={`question-${question.questionId}`}
                   value={option.key || -1}
                   multiple={status === QuizStatus.ENDED}
@@ -128,7 +138,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   htmlFor={`question-${question.questionId}-answer-${option.key}`}
                   className='absolute left-1/2 flex items-center justify-center'
                 >
-                  <p className='-ml-[100%] h-full text-xs text-inherit md:text-sm'>
+                  <p className='-ml-[100%] h-full text-sm text-inherit md:text-base'>
                     {MULTIPLE_CHOICE_LABELS[index]}
                   </p>
                 </label>
@@ -151,7 +161,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
               <div className='relative flex items-center'>
                 <input
                   id={`question-${question.questionId}-answer-${option.key}`}
-                  className={`${
+                  className={`question-checkbox ${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
                       : question.answerKeys?.includes(option.key)
@@ -220,6 +230,8 @@ type Props = {
 
 const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Props) => {
   const params = useParams();
+  const { width } = useWindowDimensions();
+
   const [stringAnswer, setStringAnswer] = useState<string>(
     String(question.userAnswerField || question.answerField)
   );
@@ -229,6 +241,17 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
   const [note, setNote] = useState<string>(question.userNote || '');
   const [saved, setSaved] = useState<boolean>(true);
   const [starList, setStarList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
+
+  const answerBox = useRef<HTMLDivElement>(null);
+  const noteBox = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (width >= 768 && noteBox.current && answerBox.current) {
+      noteBox.current.style.height = `${parseFloat(
+        window.getComputedStyle(answerBox.current).height
+      )}px`;
+    }
+  }, [width]);
 
   const noteMutation = useMutation({
     mutationFn: async ({
@@ -392,7 +415,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
         </div>
       </div>
       {status === QuizStatus.ENDED && showInfo === true && (
-        <div className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
+        <div ref={answerBox} className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
           <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
             <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
             <div className='flex flex-col items-start justify-center gap-y-1'>
@@ -413,7 +436,10 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
             <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
             <Markdown>{question.explanation}</Markdown>
           </div>
-          <form className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
+          <form
+            ref={noteBox}
+            className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'
+          >
             <div className='mb-2 flex flex-row items-center justify-between gap-x-2'>
               <div className='flex flex-row items-center gap-x-2'>
                 <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
