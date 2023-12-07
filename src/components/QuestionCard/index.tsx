@@ -36,7 +36,6 @@ type InputAnswerProps = {
 
 const InputAnswer = memo(function Component({ status, question, helpers }: InputAnswerProps) {
   const { stringAnswer, numberAnswer, setNumberAnswer } = helpers;
-  console.log(question.questionId, numberAnswer);
   const params = useParams();
   const queryClient = useQueryClient();
 
@@ -139,13 +138,15 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   htmlFor={`question-${question.questionId}-answer-${option.key}`}
                   className='absolute left-1/2 flex items-center justify-center'
                 >
-                  <p className='-ml-[100%] h-full text-sm text-inherit md:text-base'>
+                  <p className='-ml-[100%] h-full text-sm text-inherit md:text-base 3xl:text-2xl'>
                     {MULTIPLE_CHOICE_LABELS[index]}
                   </p>
                 </label>
               </div>
               <label htmlFor={`question-${question.questionId}-answer-${option.key}`}>
-                <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
+                <Markdown className='text-sm lg:text-base xl:text-lg 3xl:text-2xl'>
+                  {option.description}
+                </Markdown>
               </label>
             </div>
           ))}
@@ -193,7 +194,9 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 </span>
               </div>
               <label htmlFor={`question-${question.questionId}-answer-${option.key}`}>
-                <Markdown className='text-sm md:text-base'>{option.description}</Markdown>
+                <Markdown className='text-sm lg:text-base xl:text-lg 3xl:text-2xl'>
+                  {option.description}
+                </Markdown>
               </label>
             </div>
           ))}
@@ -247,10 +250,18 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
   const noteBox = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (width >= 768 && noteBox.current && answerBox.current) {
-      noteBox.current.style.height = `${parseFloat(
-        window.getComputedStyle(answerBox.current).height
-      )}px`;
+    if (width >= 768) {
+      setTimeout(() => {
+        if (noteBox.current && answerBox.current) {
+          noteBox.current.style.height = `${parseFloat(
+            window.getComputedStyle(answerBox.current).height
+          )}px`;
+        }
+      }, 200);
+    } else {
+      if (noteBox.current) {
+        noteBox.current.style.height = 'auto';
+      }
     }
   }, [width]);
 
@@ -416,7 +427,10 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
         </div>
       </div>
       {status === QuizStatus.ENDED && showInfo === true && (
-        <div ref={answerBox} className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
+        <div
+          ref={answerBox}
+          className='flex h-fit   w-full flex-col gap-y-4 md:flex-row md:gap-x-4'
+        >
           <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
             <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
             <div className='flex flex-col items-start justify-center gap-y-1'>
