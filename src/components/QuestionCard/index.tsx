@@ -36,6 +36,7 @@ type InputAnswerProps = {
 
 const InputAnswer = memo(function Component({ status, question, helpers }: InputAnswerProps) {
   const { stringAnswer, numberAnswer, setNumberAnswer } = helpers;
+  console.log(question.questionId, numberAnswer);
   const params = useParams();
   const queryClient = useQueryClient();
 
@@ -113,7 +114,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                     )();
                   }}
                   disabled={status !== QuizStatus.ONGOING}
-                  className={`${
+                  className={`question-radio ${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
                       : question.answerKeys?.includes(option.key)
@@ -123,7 +124,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                       : ''
                   }`}
                   style={{ borderRadius: '9999px' }}
-                  type='radio'
+                  type='checkbox'
                   name={`question-${question.questionId}`}
                   value={option.key || -1}
                   multiple={status === QuizStatus.ENDED}
