@@ -310,22 +310,8 @@ const Main: React.FC = () => {
               ) : (
                 quizzes?.map((quiz, index) => (
                   <div
-                    onClick={() => {
-                      sessionQueriesResult[index]?.data === null
-                        ? sessionMutation.mutate(quiz._id, {
-                            onSuccess: ({ data }, variables) => {
-                              navigate(
-                                `/room/exercises/${subject?._id}/quiz/${variables}/session/${data.payload._id}`
-                              );
-                              localStorage.removeItem(`quiz-${variables}-starList`);
-                            },
-                          })
-                        : navigate(
-                            `/room/exercises/${subject?._id}/quiz/${quiz._id}/session/${sessionQueriesResult[index]?.data?._id}`
-                          );
-                    }}
                     key={`${quiz.name}-${index}`}
-                    className='flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 hover:shadow-md md:p-4 lg:p-6 3xl:p-8'
+                    className='flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 hover:shadow-md md:p-4 lg:p-6 3xl:p-8'
                   >
                     <h4 className='mb-1 text-lg font-semibold md:mb-4 md:font-normal lg:text-xl 3xl:text-2xl'>
                       {quiz.name}
