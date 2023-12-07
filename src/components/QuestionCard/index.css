@@ -2,11 +2,15 @@ label {
   cursor: pointer;
 }
 
-input[type='radio'] {
+input[type='checkbox'].question-radio:not(:checked),
+input[type='checkbox'].question-checkbox:not(:checked) {
+  background-color: white;
+}
+
+input[type='checkbox'].question-radio {
   /* Add if not using autoprefixer */
   appearance: none;
   /* For iOS < 15 to remove gradient background */
-  background-color: #fff;
   /* Not removed via appearance */
   margin: 0;
   font: inherit;
@@ -21,7 +25,6 @@ input[type='radio'] {
 
 input[type='checkbox'].question-checkbox {
   appearance: none;
-  background-color: #fff;
   /* Not removed via appearance */
   margin: 0;
   font: inherit;
@@ -34,25 +37,25 @@ input[type='checkbox'].question-checkbox {
   transition: all 300ms ease-out;
 }
 
-input[type='radio'] ~ *,
+input[type='checkbox'].question-radio ~ *,
 input[type='checkbox'].question-checkbox ~ * {
   cursor: pointer;
 }
 
 @media (min-width: 768px) {
-  input[type='radio'],
+  input[type='checkbox'].question-radio,
   input[type='checkbox'].question-checkbox {
     width: auto;
     height: 2em;
   }
 }
 
-input[type='radio']:focus,
+input[type='checkbox'].question-radio:focus,
 input[type='checkbox'].question-checkbox:focus {
   outline: none; /*to remove the square border on focus*/
 }
 
-input[type='radio']:checked ~ label,
+input[type='checkbox'].question-radio:checked ~ label,
 input[type='checkbox'].question-checkbox:checked ~ label {
   color: white;
   font-weight: 500;
