@@ -146,7 +146,7 @@ const MaterialEdit = () => {
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
-            Chỉnh sửa đề thi
+            Chỉnh sửa tài liệu
           </p>
         </div>
         <div className='w-full p-4'>
