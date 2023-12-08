@@ -236,13 +236,14 @@ const Main: React.FC = () => {
               </div>
               <div
                 ref={chapterFilterRef}
-                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white py-3 px-4 text-[#252641] shadow-lg transition-all duration-700 ease-out md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] md:px-6 ${
-                  isOpenChapter && chapterOption.length > 0 ? 'flex' : 'hidden'
-                }`}
+                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white text-[#252641] shadow-lg transition-all duration-700 ease-out 
+                  md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] ${
+                    isOpenChapter && chapterOption.length > 0 ? 'flex' : 'hidden'
+                  }`}
               >
                 {chapterOption.map((chapter, index) => (
                   <button
-                    className='flex w-full flex-row items-center justify-start gap-x-2 md:gap-x-3'
+                    className='flex w-full flex-row items-center justify-start gap-x-2 py-1 px-4 hover:bg-[#9CCDFF]/30 md:gap-x-3 md:px-6'
                     key={chapter.value}
                     onClick={() => onCheckChapter(index)}
                   >
@@ -259,7 +260,7 @@ const Main: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className='hidden gap-4 md:flex md:flex-row'>
+            <div className='hidden items-center gap-4 md:flex md:flex-row'>
               <h3 className='text-xl md:text-lg lg:text-xl 2xl:text-[22px]'>
                 {quizzes?.length ?? 0} Kết quả
               </h3>
@@ -268,7 +269,7 @@ const Main: React.FC = () => {
                   <div className='flex flex-wrap gap-2'>
                     {chapterFilterList.map((chapter) => (
                       <div
-                        className='flex flex-row items-center justify-center gap-x-1 rounded-lg border-[1px] border-[#252641]/50 p-1'
+                        className='flex flex-row items-center justify-center gap-x-0.5 rounded-lg border-[1px] border-[#252641]/50 p-2'
                         key={chapter.value}
                       >
                         <p className='text-xs lg:text-sm 3xl:text-base'>{chapter.label}</p>
@@ -276,7 +277,7 @@ const Main: React.FC = () => {
                           onClick={() => onCheckChapter(chapter.index)}
                           className='flex items-center justify-center'
                         >
-                          <Icon.CloseIcon className='aspect-square h-4 fill-[#DB4437]/90' />
+                          <Icon.CloseIcon className='h-5 w-auto fill-[#DB4437]/90' />
                         </button>
                       </div>
                     ))}
@@ -304,43 +305,43 @@ const Main: React.FC = () => {
                 />
               ) : quizzes?.length === 0 ? (
                 <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
-                  <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                  <NoData className='mx-auto mb-7 h-auto w-[150px] xl:w-[250px]' />
                   <p className='w-full text-center'>Không tìm thấy bài tập</p>
                 </div>
               ) : (
                 quizzes?.map((quiz, index) => (
                   <div
                     key={`${quiz.name}-${index}`}
-                    className='flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 hover:shadow-md md:p-4 lg:p-6 3xl:p-8'
+                    className='flex flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-3 hover:shadow-[0px_10px_40px_0px_rgba(66,133,244,0.1)] md:p-4 lg:p-6 3xl:p-8'
                   >
-                    <h4 className='mb-1 text-lg font-semibold md:mb-4 md:font-normal lg:text-xl 3xl:text-2xl'>
+                    <h4 className='mb-1 text-lg font-semibold md:mb-2 md:font-medium lg:mb-3 lg:text-xl 3xl:mb-4 3xl:text-2xl'>
                       {quiz.name}
                     </h4>
                     <div className='flex flex-col gap-y-4 md:flex-col-reverse'>
                       <div className='flex flex-row items-center justify-between'>
-                        <div className='flex h-fit w-full flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none md:justify-start lg:gap-x-4 3xl:gap-x-6'>
+                        <div className='flex h-fit w-full flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none md:justify-start md:gap-x-0'>
                           <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
-                            <Icon.Exercise className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                            <Icon.Exercise className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {quiz.chapter.name}
                             </p>
                           </div>
-                          {/* <span className='mx-1 hidden h-6 w-0 border-l-2 md:block' /> */}
-                          <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
-                            <Icon.Clock className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                          <div className='ml-0 flex w-fit flex-row items-center gap-x-1 md:ml-8 md:flex-1'>
+                            <Icon.Clock className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {parseDuration(quiz.duration)}
                             </p>
                           </div>
-                          <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
-                            <Icon.List className='h-4 w-auto fill-[#666] lg:h-5 3xl:h-6' />
+                          <span className='mx-1 hidden h-6 w-0 border-l md:ml-4 md:block' />
+                          <div className='flex w-fit flex-row items-center gap-x-1 md:ml-4 md:flex-1'>
+                            <Icon.List className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {`${quiz.sampleSize} câu`}
                             </p>
                           </div>
                         </div>
                         <button
-                          className='hidden rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:flex'
+                          className='hidden rounded-lg bg-[#4285F4] px-7 py-2 md:flex'
                           disabled={sessionMutation.isLoading}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -371,14 +372,14 @@ const Main: React.FC = () => {
                       </div>
                       {!isEmpty(quiz.description) && (
                         <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
-                          <p className='text-justify text-[#666]'>
+                          <p className='text-justify text-[#696984] md:text-inherit'>
                             {isEmpty(quiz.description) ? 'Không có chú thích' : quiz.description}
                           </p>
                         </div>
                       )}
                       <div className='flex w-full flex-row items-center justify-start md:hidden'>
                         <button
-                          className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4]'
+                          className='flex w-fit rounded-lg bg-[#4285F4] px-7 py-2'
                           disabled={sessionMutation.isLoading}
                           onClick={(e) => {
                             e.stopPropagation();

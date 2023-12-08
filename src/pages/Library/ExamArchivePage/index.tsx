@@ -210,13 +210,14 @@ const ExamArchivePage: React.FC = () => {
               </div>
               <div
                 ref={semseterRef}
-                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white py-3 px-4 text-[#252641] shadow-lg transition-all duration-700 ease-out md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] md:px-6 ${
+                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white text-[#252641] shadow-lg transition-all duration-700 ease-out 
+                md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] ${
                   isOpenSemeseter && semesterOption.length > 0 ? 'flex' : 'hidden'
                 }`}
               >
                 {semesterOption.map((chapter, index) => (
                   <button
-                    className='flex w-full flex-row items-center justify-start gap-x-2 md:gap-x-3'
+                    className='flex w-full flex-row items-center justify-start gap-x-2 py-1 px-4 hover:bg-[#9CCDFF]/30 md:gap-x-3 md:px-6'
                     key={chapter.value}
                     onClick={() => onCheckSemester(index)}
                   >
@@ -288,7 +289,7 @@ const ExamArchivePage: React.FC = () => {
             {/* If exam archives is empty */}
             {examArchives?.length === 0 && (
               <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
-                <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                <NoData className='mx-auto mb-7 h-auto w-[150px] xl:w-[250px]' />
                 <p className='w-full text-center'>Không tìm thấy đề thi</p>
               </div>
             )}

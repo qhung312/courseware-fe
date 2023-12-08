@@ -201,5 +201,5 @@ code {
 
 .math-display {
   width: 100%;
-  overflow: scroll;
+  overflow-x: auto;
 }

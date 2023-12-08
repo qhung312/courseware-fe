@@ -66,35 +66,25 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
         <Link
           to='/profile'
           className={`w-full max-w-[160px] rounded-[12px] lg:max-w-[160px] 3xl:max-w-[200px] ${
-            option === 1
-              ? 'bg-[#4285f4] text-white'
-              : 'bg-[#BBBBBB]/50 text-[#696969] hover:bg-[#9DCCFF]'
+            option === 1 ? 'bg-[#4285f4] text-white' : 'bg-white text-[#696969] hover:bg-[#9DCCFF]'
           } py-3 text-center font-medium md:text-[16px] 3xl:text-xl`}
         >
-          <p className={`hidden lg:block ${option === 1 ? 'text-white' : 'text-[#696969]'}`}>
-            Thông tin cá nhân
-          </p>
-          <p className={`lg:hidden ${option === 1 ? 'text-white' : 'text-[#696969]'}`}>Thông tin</p>
+          <p className={`hidden lg:block ${option === 1 ? 'text-white' : ''}`}>Thông tin cá nhân</p>
+          <p className={`lg:hidden ${option === 1 ? 'text-white' : ''}`}>Thông tin</p>
         </Link>
         <Link
           to='/profile/history'
           className={`w-full max-w-[160px] rounded-[12px] lg:max-w-[160px] 3xl:max-w-[200px] ${
-            option === 2
-              ? 'bg-[#4285f4] text-white'
-              : 'bg-[#BBBBBB]/50 text-[#696969] hover:bg-[#9DCCFF]'
+            option === 2 ? 'bg-[#4285f4] text-white' : 'bg-white hover:bg-[#9DCCFF]'
           } py-3 text-center font-medium md:text-[16px] 3xl:text-xl`}
         >
-          <p className={`hidden lg:block ${option === 2 ? 'text-white' : 'text-[#696969]'}`}>
-            Lịch sử hoạt động
-          </p>
-          <p className={`lg:hidden ${option === 2 ? 'text-white' : 'text-[#696969]'}`}>Lịch sử</p>
+          <p className={`hidden lg:block ${option === 2 ? 'text-white' : ''}`}>Lịch sử hoạt động</p>
+          <p className={`lg:hidden ${option === 2 ? 'text-white' : ''}`}>Lịch sử</p>
         </Link>
         <Link
           to='/profile/statistic'
           className={`w-full max-w-[160px] rounded-[12px] lg:max-w-[160px] 3xl:max-w-[200px] ${
-            option === 3
-              ? 'bg-[#4285f4] text-white'
-              : 'bg-[#BBBBBB]/50 text-[#696969] hover:bg-[#9DCCFF]'
+            option === 3 ? 'bg-[#4285f4] text-white' : 'bg-white hover:bg-[#9DCCFF]'
           } py-3 text-center font-medium md:text-[16px] 3xl:text-xl`}
         >
           Thống kê

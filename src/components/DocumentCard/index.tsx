@@ -30,7 +30,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
   return (
     <div
       onClick={() => navigate(to)}
-      className='relative flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-4 hover:shadow-md lg:p-6 3xl:p-8'
+      className='relative flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-4 hover:shadow-[0px_10px_40px_0px_rgba(66,133,244,0.1)] lg:p-6 3xl:p-8'
     >
       <div
         className='absolute right-4 top-4 flex space-x-1 md:space-x-2 lg:right-6 lg:top-6 
@@ -54,14 +54,14 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
             <div className='flex flex-1 flex-row items-center gap-x-3'>
               {isMaterial(document) ? (
                 <>
-                  <Icon.Document className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                  <Icon.Document className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.chapter ? document.chapter.name : 'Chương không xác định'}
                   </p>
                 </>
               ) : (
                 <>
-                  <Icon.Test className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                  <Icon.Test className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.semester
                       ? `Học kì ${document.semester.slice(-3)}`
@@ -74,7 +74,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
               <>
                 <span className='mx-1 block h-6 w-0 border-l-2' />
                 <div className='flex flex-1 flex-row items-center gap-x-3'>
-                  <Icon.List className='h-4 w-auto lg:h-5 3xl:h-6' fill='#666' />
+                  <Icon.List className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.type === ExamType.MIDTERM_EXAM ? 'Giữa kì' : 'Cuối kì'}
                   </p>

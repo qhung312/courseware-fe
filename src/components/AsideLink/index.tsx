@@ -19,7 +19,7 @@ const AsideLink: React.FC<AsideLinkProps> = ({ to, content, Icon }) => {
           bg-opacity-30 px-5 py-3 transition-all duration-300 
           hover:bg-[#4285F4] hover:bg-opacity-90 
           md:bg-[#4285F4] md:bg-opacity-90 3xl:px-6 3xl:py-4`
-          : `group flex flex-1 items-center justify-between rounded-lg border-0 border-[#dadce0] bg-[#9DCCFF]/30 px-5 py-4 transition-all duration-300
+          : `group flex flex-1 items-center justify-between rounded-lg border-0 border-[#4285F4] bg-[#9DCCFF]/30 px-5 py-4 transition-all duration-300
           hover:bg-[#4285F4]/80 md:border-[1px] md:bg-white md:bg-transparent 
           md:py-3 3xl:px-6 3xl:py-4`
       }
@@ -30,8 +30,8 @@ const AsideLink: React.FC<AsideLinkProps> = ({ to, content, Icon }) => {
             <Icon
               className={
                 isActive
-                  ? 'fill-[#666] group-hover:fill-white md:fill-white'
-                  : 'fill-[#4285F4] group-hover:fill-white'
+                  ? 'fill-white group-hover:fill-white'
+                  : 'fill-[#252641] group-hover:fill-white'
               }
             />
             <p

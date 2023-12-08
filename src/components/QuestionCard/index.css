@@ -50,7 +50,7 @@ input[type='checkbox'].question-checkbox ~ * {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   input[type='checkbox'].question-radio,
   input[type='checkbox'].question-checkbox {
     width: auto;
