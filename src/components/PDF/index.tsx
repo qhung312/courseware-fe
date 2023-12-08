@@ -124,7 +124,7 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
   return (
     <div
       id='pdfWrapperRef'
-      className='flex w-full flex-col gap-y-1 text-base font-medium md:text-sm lg:text-base 2xl:text-xl'
+      className='flex w-full flex-col gap-y-1 text-sm font-medium md:text-sm lg:text-base 2xl:text-lg'
       ref={pdfWrapperRef}
     >
       {width && (
@@ -151,13 +151,13 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
           <div
             className={`fixed bottom-0 left-[50%] z-10 flex translate-x-[-50%] translate-y-[-50%] flex-row justify-center gap-x-2 rounded-lg border-[1px] border-[#0c0c0d] bg-[#38383d] p-2 text-[#d4d4d5] transition-all duration-200 hover:text-[#efeff0] ${
               isShowTool || isMouseIn ? 'opacity-100' : 'opacity-0'
-            } xl:p-3`}
+            }`}
             onMouseEnter={() => handleOnMouseIn(true)}
             onMouseLeave={() => handleOnMouseIn(false)}
           >
             <button
               type='button'
-              className={`flex flex-1 items-center whitespace-nowrap rounded-lg p-3 text-[#d4d4d5] md:p-1 lg:p-3 3xl:p-5 ${
+              className={`flex flex-1 items-center whitespace-nowrap rounded-lg p-1 text-[#d4d4d5] md:p-1 lg:p-2 3xl:p-3 ${
                 !hasOutline ? 'cursor-not-allowed' : 'hover:bg-[#606063]'
               }`}
               onClick={() => {
@@ -171,26 +171,26 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
             <button
               type='button'
               onClick={onZoomOut}
-              className='rounded-lg p-3 hover:bg-[#606063] md:p-1 lg:p-3 3xl:p-5'
+              className='rounded-lg p-1 hover:bg-[#606063] md:p-1 lg:p-2 3xl:p-3'
               disabled={zoom < 0.4}
             >
               <Icon.ZoomOutIcon
                 fill='#c3c3c5'
-                className='h-7 w-7 md:h-5 md:w-5 lg:h-6 lg:w-6 3xl:h-7 3xl:w-7'
+                className='h-5 w-5 md:h-4 md:w-4 lg:h-5 lg:w-5 2xl:h-6 2xl:w-6'
               />
             </button>
-            <span className='flex flex-1 items-center justify-center rounded-lg bg-[#4a4a4f] p-3 text-[#f9f9fa] md:p-1 lg:p-3 3xl:p-5'>{`${Math.floor(
+            <span className='flex flex-1 items-center justify-center rounded-lg bg-[#4a4a4f] p-1 text-[#f9f9fa] md:p-1 lg:p-2 3xl:p-3'>{`${Math.floor(
               zoom * 100
             )}%`}</span>
             <button
               type='button'
               onClick={onZoomIn}
-              className='rounded-lg p-3 hover:bg-[#606063] md:p-1 lg:p-3 3xl:p-5'
+              className='rounded-lg p-1 hover:bg-[#606063] md:p-1 lg:p-2 3xl:p-3'
               disabled={zoom > 2}
             >
               <Icon.ZoomInIcon
                 fill='#c3c3c5'
-                className='h-7 w-7 md:h-5 md:w-5 lg:h-6 lg:w-6 3xl:h-7 3xl:w-7'
+                className='h-5 w-5 md:h-4 md:w-4 lg:h-5 lg:w-5 2xl:h-6 2xl:w-6'
               />
             </button>
           </div>
