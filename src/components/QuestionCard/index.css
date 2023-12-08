@@ -50,6 +50,14 @@ input[type='checkbox'].question-checkbox ~ * {
   }
 }
 
+@media (min-width: 1024px) {
+  input[type='checkbox'].question-radio,
+  input[type='checkbox'].question-checkbox {
+    width: auto;
+    height: 2.5em;
+  }
+}
+
 input[type='checkbox'].question-radio:focus,
 input[type='checkbox'].question-checkbox:focus {
   outline: none; /*to remove the square border on focus*/
