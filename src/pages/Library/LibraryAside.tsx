@@ -36,7 +36,7 @@ const LibraryAside: React.FC<LibraryAsideProps> = ({
               <AsideLink
                 to={`${baseRoute}/${subj._id}`}
                 content={subj.name}
-                Icon={Icon.Book}
+                Icon={Icon.Exercise}
                 key={subj._id}
               />
             );

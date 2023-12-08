@@ -39,14 +39,12 @@ const Aside: React.FC<AsideProps> = ({
       {/* Aside */}
       <aside
         ref={asideRef}
-        className={`with-nav-height fixed z-10 m-auto bg-white ${
-          pathname.includes('/admin') ? '' : 'border-r-[1px] border-[#dadce0]'
-        } ${
+        className={`with-nav-height fixed z-10 m-auto ${
           params?.subjectId || (pathTokens[1] === 'admin' && pathTokens.length >= 3)
             ? 'translate-x-[-100%]'
             : ''
-        } ${
-          !isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'
+        } ${!isAsideOpen ? 'md:translate-x-[-100%]' : 'md:translate-x-0'} ${
+          pathTokens[1] === 'admin' ? 'bg-white' : 'bg-[#9DCCFF]/20'
         } w-full overflow-y-auto transition-all duration-300 md:w-[264px] lg:w-[332px] xl:w-[400px] 3xl:w-[500px]`}
       >
         <div className='flex items-center justify-center p-5 md:p-6 xl:py-8 3xl:px-7 3xl:py-10'>

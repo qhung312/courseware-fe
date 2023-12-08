@@ -171,10 +171,10 @@ const Statistic = () => {
             </nav>
           </div> */}
           <div className='relative w-[60%] p-5'>
-            <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block' />
-            <div className='absolute top-0 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#23BDEE] md:block' />
+            <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#4285F4] md:block' />
+            <div className='absolute top-0 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#4285F4] md:block' />
             <div className='show-scrollbar relative z-10 hidden h-fit rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
-              <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-base 2xl:text-xl'>
+              <h1 className='mb-6 text-center text-2xl font-semibold md:text-lg lg:text-xl 2xl:text-2xl'>
                 Điểm trung bình bài tập
               </h1>
               {subjectGrade.length === 0 ? (
@@ -188,7 +188,7 @@ const Statistic = () => {
                 </div>
               ) : (
                 <nav
-                  className='flex flex-wrap items-center justify-center gap-x-10 gap-y-6 px-[20px] transition-all ease-in-out'
+                  className='flex flex-wrap items-start justify-center gap-x-10 gap-y-6 px-[20px] transition-all ease-in-out'
                   style={{
                     maxHeight: 'fit-content',
                     overflow: 'hidden',
@@ -200,9 +200,9 @@ const Statistic = () => {
                         size={160}
                         progress={subject.score}
                         trackWidth={20}
-                        trackColor='rgba(187, 187, 187, 0.50)'
+                        trackColor='rgba(187, 187, 187, 0.3)'
                         indicatorWidth={20}
-                        indicatorColor='rgba(66, 133, 244, 0.50)'
+                        indicatorColor='rgb(66, 133, 244)'
                         indicatorCap='square'
                         label='Loadind...'
                         labelColor='#333'
@@ -211,7 +211,7 @@ const Statistic = () => {
                       />
                       <Link
                         to={'/profile/statistic/' + subject._id}
-                        className='h-fit w-[160px] rounded-[12px] bg-[#9DCCFF] py-2 px-2 text-center font-bold text-white hover:bg-[#9DCCFF]/[.8]'
+                        className='h-fit w-[160px] rounded-[12px] bg-[#4285F4] py-2 px-2 text-center font-bold text-white hover:bg-[#4285F4]/[.8]'
                       >
                         {subject.name}
                       </Link>

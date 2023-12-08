@@ -91,8 +91,8 @@ const HomePage = () => {
               </div>
               <div id='homepage-carousel' className='relative h-full w-full lg:w-1/2'>
                 <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#4285F4] lg:hidden' />
-                <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[90px] rounded-lg bg-[#A0C3FF] lg:hidden' />
-                <div className='absolute -bottom-8 left-0 z-0 aspect-square w-[20px] rounded-full bg-[#A0C3FF] lg:hidden' />
+                <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[90px] rounded-lg bg-[#4285F4] lg:hidden' />
+                <div className='absolute -bottom-8 left-0 z-0 aspect-square w-[20px] rounded-full bg-[#4285F4] lg:hidden' />
 
                 <Swiper
                   spaceBetween={20}
@@ -157,13 +157,13 @@ const HomePage = () => {
                       Cộng đồng không ngừng&nbsp;
                     </p>
                     <p className='text-center text-lg font-bold lg:text-2xl 3xl:text-3xl'>
-                      <span className='whitespace-nowrap text-[#00A3FF]'>phát triển</span> và{' '}
-                      <span className='whitespace-nowrap text-[#00A3FF]'>mở rộng</span>
+                      <span className='whitespace-nowrap text-[#4285F4]'>phát triển</span> và{' '}
+                      <span className='whitespace-nowrap text-[#4285F4]'>mở rộng</span>
                     </p>
                   </div>
                   <div className='flex flex-row items-center justify-center gap-x-6'>
                     <div className='flex flex-col items-center justify-center'>
-                      <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] md:text-2xl lg:text-3xl 3xl:text-4xl'>
+                      <p className='whitespace-nowrap text-xl font-bold text-[#4285F4] md:text-2xl lg:text-3xl 3xl:text-4xl'>
                         20000+
                       </p>
                       <p className='whitespace-nowrap text-base font-bold md:text-xl lg:text-2xl 3xl:text-3xl'>
@@ -171,7 +171,7 @@ const HomePage = () => {
                       </p>
                     </div>
                     <div className='flex flex-col items-center justify-center'>
-                      <p className='whitespace-nowrap text-xl font-bold text-[#00A3FF] md:text-2xl lg:text-3xl 3xl:text-4xl'>
+                      <p className='whitespace-nowrap text-xl font-bold text-[#4285F4] md:text-2xl lg:text-3xl 3xl:text-4xl'>
                         5
                       </p>
                       <p className='whitespace-nowrap text-base font-bold md:text-xl lg:text-2xl 3xl:text-3xl'>
@@ -234,7 +234,7 @@ const HomePage = () => {
                           objectFit='cover'
                         />
                         <div
-                          className='absolute bottom-2 left-2 rounded-lg bg-[#49BBBD] p-2 
+                          className='absolute bottom-2 left-2 rounded-lg bg-[#4285F4] p-2 
                         lg:left-5 lg:bottom-5 lg:p-3 3xl:p-4'
                         >
                           <p className='text-base font-semibold text-white lg:text-2xl 3xl:text-3xl'>
@@ -307,8 +307,8 @@ const HomePage = () => {
                 </div>
 
                 <div className='relative h-fit w-full flex-1 xl:h-full'>
-                  <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-top-3 lg:-left-3 lg:w-[90px] 3xl:-top-5 3xl:-left-5 3xl:w-[140px]' />
-                  <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[52px] rounded-lg bg-[#23BDEE] lg:-bottom-3 lg:-right-3 lg:w-[90px] 3xl:-bottom-5 3xl:-right-5 3xl:w-[140px]' />
+                  <div className='absolute -top-2 -left-2 z-0 aspect-square w-[52px] rounded-lg bg-[#4285F4] lg:-top-3 lg:-left-3 lg:w-[90px] 3xl:-top-5 3xl:-left-5 3xl:w-[140px]' />
+                  <div className='absolute -bottom-2 -right-2 z-0 aspect-square w-[52px] rounded-lg bg-[#4285F4] lg:-bottom-3 lg:-right-3 lg:w-[90px] 3xl:-bottom-5 3xl:-right-5 3xl:w-[140px]' />
                   {/* <img
                   src={require('../../assets/images/stubVideo.png')}
                   alt='video'

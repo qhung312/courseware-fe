@@ -225,13 +225,14 @@ const MaterialPage: React.FC = () => {
               </div>
               <div
                 ref={chapterFilterRef}
-                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white py-3 px-4 text-[#252641] shadow-lg transition-all duration-700 ease-out md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] md:px-6 ${
+                className={`relative z-[11] w-full flex-col items-start rounded-b-lg border-0 border-[#4285F4] bg-white text-[#252641] shadow-lg transition-all duration-700 ease-out 
+                md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] ${
                   isOpenChapter && chapterOption.length > 0 ? 'flex' : 'hidden'
                 }`}
               >
                 {chapterOption.map((chapter, index) => (
                   <button
-                    className='flex w-full flex-row items-center justify-start gap-x-2 md:gap-x-3'
+                    className='flex w-full flex-row items-center justify-start gap-x-2 py-1 px-4 hover:bg-[#9CCDFF]/30 md:gap-x-3 md:px-6'
                     key={chapter.value}
                     onClick={() => onCheckChapter(index)}
                   >
@@ -248,7 +249,7 @@ const MaterialPage: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className='hidden gap-4 md:flex md:flex-row'>
+            <div className='hidden items-center gap-4 md:flex md:flex-row'>
               <h3 className='text-xl md:text-lg lg:text-xl 2xl:text-[22px]'>
                 {materials?.length ?? 0} Kết quả
               </h3>
@@ -257,7 +258,7 @@ const MaterialPage: React.FC = () => {
                   <div className='flex flex-wrap gap-2'>
                     {chapterFilterList.map((chapter) => (
                       <div
-                        className='flex flex-row items-center justify-center gap-x-1 rounded-lg border-[1px] border-[#252641]/50 p-1'
+                        className='flex flex-row items-center justify-center gap-x-0.5 rounded-lg border-[1px] border-[#252641]/50 p-2'
                         key={chapter.value}
                       >
                         <p className='text-xs lg:text-sm 3xl:text-base'>{chapter.label}</p>
@@ -265,7 +266,7 @@ const MaterialPage: React.FC = () => {
                           onClick={() => onCheckChapter(chapter.index)}
                           className='flex items-center justify-center'
                         >
-                          <Icon.CloseIcon className='aspect-square h-4 fill-[#DB4437]/90' />
+                          <Icon.CloseIcon className='h-5 w-auto fill-[#DB4437]/90' />
                         </button>
                       </div>
                     ))}
@@ -289,7 +290,7 @@ const MaterialPage: React.FC = () => {
             {/* If material is empty */}
             {materials?.length === 0 && (
               <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
-                <NoData width={200} className='mx-auto w-[200px] p-7 xl:w-[300px]' />
+                <NoData className='mx-auto mb-7 h-auto w-[150px] xl:w-[250px]' />
                 <p className='w-full text-center'>Không tìm thấy tài liệu</p>
               </div>
             )}

@@ -90,7 +90,7 @@ const AdminAside: FC = () => {
 
   return (
     <Aside>
-      <div className='flex flex-col'>
+      <div className='flex flex-col bg-white'>
         <AdminAsideLink
           path='subject'
           titleName='môn'
