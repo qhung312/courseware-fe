@@ -90,7 +90,19 @@ const MediumHeader = () => {
           px-[20px] py-[16px] md:hidden'
           style={{ boxShadow: isOverlayOpen ? '0px 0px 10px 0px rgba(0, 0, 0, 0.1)' : 'none' }}
         >
-          <NavLink to='/' className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]'>
+          <NavLink
+            to='/'
+            onClick={() =>
+              setTimeout(() => {
+                isOverlayOpen && playSegments([60, 30], true);
+                setIsOverlayOpen(false);
+                setIsLibraryOpen(false);
+                setIsRoomOpen(false);
+                setIsAboutUsOpen(false);
+              }, 500)
+            }
+            className='aspect-[107/60] h-[40px] w-auto xl:h-[48px]'
+          >
             <MediumLogoCTCT />
           </NavLink>
           <button type='button' onClick={throttledOnClick}>
@@ -519,7 +531,6 @@ const MediumHeader = () => {
               <>
                 <NavLink
                   to='/profile'
-                  end
                   className='flex w-full flex-row items-center justify-start
                 gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
                   style={({ isActive, isPending }) => ({
