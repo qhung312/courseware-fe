@@ -1,27 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import _, { debounce } from 'lodash';
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import './index.css';
+import { ChangeEvent, Dispatch, SetStateAction, memo, useCallback, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Markdown } from '..';
-import { useWindowDimensions } from '../../hooks';
 import QuizSessionService from '../../service/quizSession.service';
 import { QuestionType, type ConcreteQuestion, UserAnswer } from '../../types/question';
 import { QuizStatus } from '../../types/quiz';
 import { MULTIPLE_CHOICE_LABELS } from '../../utils/helper';
 import Icon from '../Icon';
+
+import './index.css';
 
 type InputAnswerProps = {
   status: QuizStatus;
@@ -113,7 +104,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                     )();
                   }}
                   disabled={status !== QuizStatus.ONGOING}
-                  className={`question-radio ${
+                  className={`question checkbox ${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
                       : question.answerKeys?.includes(option.key)
@@ -163,7 +154,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
               <div className='relative flex items-center'>
                 <input
                   id={`question-${question.questionId}-answer-${option.key}`}
-                  className={`question-checkbox ${
+                  className={`question checkbox ${
                     status === QuizStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
                       : question.answerKeys?.includes(option.key)
@@ -234,7 +225,6 @@ type Props = {
 
 const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Props) => {
   const params = useParams();
-  const { width } = useWindowDimensions();
 
   const [stringAnswer, setStringAnswer] = useState<string>(
     String(question.userAnswerField || question.answerField)
@@ -248,22 +238,6 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
 
   const answerBox = useRef<HTMLDivElement>(null);
   const noteBox = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (width >= 768) {
-      setTimeout(() => {
-        if (noteBox.current && answerBox.current) {
-          noteBox.current.style.height = `${parseFloat(
-            window.getComputedStyle(answerBox.current).height
-          )}px`;
-        }
-      }, 200);
-    } else {
-      if (noteBox.current) {
-        noteBox.current.style.height = 'auto';
-      }
-    }
-  }, [width]);
 
   const noteMutation = useMutation({
     mutationFn: async ({
@@ -427,10 +401,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
         </div>
       </div>
       {status === QuizStatus.ENDED && showInfo === true && (
-        <div
-          ref={answerBox}
-          className='flex h-fit   w-full flex-col gap-y-4 md:flex-row md:gap-x-4'
-        >
+        <div ref={answerBox} className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
           <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
             <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
             <div className='flex flex-col items-start justify-center gap-y-1'>
@@ -453,7 +424,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
           </div>
           <form
             ref={noteBox}
-            className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'
+            className='flex min-h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'
           >
             <div className='mb-2 flex flex-row items-center justify-between gap-x-2'>
               <div className='flex flex-row items-center gap-x-2'>
