@@ -320,20 +320,20 @@ const Main: React.FC = () => {
                     <div className='flex flex-col gap-y-4 md:flex-col-reverse'>
                       <div className='flex flex-row items-center justify-between'>
                         <div className='flex h-fit w-full flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none md:justify-start md:gap-x-0'>
-                          <div className='flex w-fit flex-row items-center gap-x-1 md:flex-1'>
+                          <div className='flex w-fit flex-row items-center gap-x-2 md:flex-1'>
                             <Icon.Exercise className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {quiz.chapter.name}
                             </p>
                           </div>
-                          <div className='ml-0 flex w-fit flex-row items-center gap-x-1 md:ml-8 md:flex-1'>
+                          <div className='ml-0 flex w-fit flex-row items-center gap-x-2 md:ml-8 md:flex-1'>
                             <Icon.Clock className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {parseDuration(quiz.duration)}
                             </p>
                           </div>
                           <span className='mx-1 hidden h-6 w-0 border-l md:ml-4 md:block' />
-                          <div className='flex w-fit flex-row items-center gap-x-1 md:ml-4 md:flex-1'>
+                          <div className='flex w-fit flex-row items-center gap-x-2 md:ml-4 md:flex-1'>
                             <Icon.List className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {`${quiz.sampleSize} câu`}
