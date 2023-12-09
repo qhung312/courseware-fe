@@ -60,6 +60,9 @@ const Mobile: React.FC<{
                     block: 'start',
                     inline: 'start',
                   });
+                  setTimeout(() => {
+                    setIsOpen(false);
+                  }, 400);
                 }}
                 key={`mobile-${question.questionId}-list-${quiz._id}`}
                 className={`flex h-10 w-10 items-center justify-center ${

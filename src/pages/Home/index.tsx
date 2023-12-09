@@ -139,7 +139,7 @@ const HomePage = () => {
                   alt='banner'
                   placeHolderSrc={require('../../assets/images/Banner-placeholder.jpg')}
                   containerClassName='w-full h-full'
-                  className='inset-0 h-full w-[calc(100vw+60px)] max-w-[1000%] flex-shrink-0 object-bottom 
+                  className='inset-0 h-full w-[150vw] max-w-[1000%] flex-shrink-0 object-bottom
                 md:w-full md:max-w-none md:object-[50%_70%]'
                   objectFit='cover'
                 />

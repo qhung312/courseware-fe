@@ -54,10 +54,10 @@ const Statistic = () => {
               onClick={throttledExerciseGradeClick}
             >
               <div className='flex flex-row items-center justify-start gap-x-[16px]'>
-                <Icon.EducationHat fill={isExerciseGradeOpen ? '#49BBBD' : '#4285f4'} />
+                <Icon.EducationHat fill={'#4285F4'} />
                 <p
                   className={`text-xl font-medium ${
-                    isExerciseGradeOpen ? 'text-[#49BBBD]' : 'text-[#252641]'
+                    isExerciseGradeOpen ? 'text-[#4285F4]' : 'text-[#252641]'
                   }`}
                 >
                   Điểm trung bình bài tập
@@ -93,9 +93,9 @@ const Statistic = () => {
                       size={160}
                       progress={subject.score}
                       trackWidth={20}
-                      trackColor='rgba(187, 187, 187, 0.50)'
+                      trackColor='rgba(187, 187, 187, 0.3)'
                       indicatorWidth={20}
-                      indicatorColor='rgba(73, 187, 189, 0.50)'
+                      indicatorColor='rgb(66, 133, 244)'
                       indicatorCap='square'
                       label='Loadind...'
                       labelColor='#333'
@@ -104,7 +104,7 @@ const Statistic = () => {
                     />
                     <Link
                       to={'/profile/statistic/' + subject._id}
-                      className='h-fit w-[160px] rounded-[12px] bg-[#49BBBD] py-2 px-2 text-center font-bold text-white hover:bg-[#49BBBD]/[.8]'
+                      className='h-fit w-[160px] rounded-[12px] bg-[#4285F4] py-2 px-2 text-center font-bold text-white hover:bg-[#4285F4]/[.8]'
                     >
                       {subject.name}
                     </Link>
