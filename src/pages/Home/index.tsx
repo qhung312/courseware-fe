@@ -131,7 +131,7 @@ const HomePage = () => {
                 </div>
               </div>
             </section>
-            <section className='relative -mx-4 flex w-screen overflow-hidden rounded-lg md:w-full'>
+            <section className='relative flex w-full overflow-hidden rounded-lg'>
               <div className='absolute top-0 left-0 right-0 bottom-0 z-0 w-full'>
                 <div className='absolute z-[8] h-full w-full bg-[#4285F4]/70' />
                 <LazyLoadImage
@@ -144,10 +144,10 @@ const HomePage = () => {
                   objectFit='cover'
                 />
               </div>
-              <div className='relative z-10 flex w-full flex-row flex-wrap items-center justify-between gap-y-[60px] gap-x-10 p-5'>
+              <div className='relative z-10 flex w-full flex-row flex-wrap items-center justify-between gap-y-5 gap-x-10 p-5'>
                 <h2
-                  className='flex-1 whitespace-nowrap text-center 
-                text-2xl font-semibold text-white md:font-bold lg:text-3xl 3xl:text-5xl'
+                  className='-mx-5 flex-1 whitespace-nowrap text-center text-xl
+                  font-semibold text-white md:text-2xl md:font-bold lg:text-3xl 3xl:text-5xl'
                 >
                   "Không Một Ai Bị Bỏ Lại Phía Sau"
                 </h2>
