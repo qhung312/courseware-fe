@@ -30,7 +30,8 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
   return (
     <div
       onClick={() => navigate(to)}
-      className='relative flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white p-4 hover:shadow-[0px_10px_40px_0px_rgba(66,133,244,0.1)] lg:p-6 3xl:p-8'
+      className='relative flex cursor-pointer flex-col rounded-lg border-[1px] border-[#dadce0] bg-white px-4 py-3 
+      hover:shadow-[0px_10px_40px_0px_rgba(66,133,244,0.1)] lg:px-6 lg:py-4 3xl:px-8 3xl:py-6'
     >
       <div
         className='absolute right-4 top-4 flex space-x-1 md:space-x-2 lg:right-6 lg:top-6 
