@@ -17,12 +17,13 @@ const Detail: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { data: quiz, isLoading } = useQuery({
+  const { data: quiz, isFetching } = useQuery({
     queryKey: ['quiz', params.quizId, params.sessionId],
     queryFn: async () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
     },
+    refetchOnWindowFocus: false,
   });
   const { width } = useWindowDimensions();
   const queryClient = useQueryClient();
@@ -53,7 +54,7 @@ const Detail: React.FC = () => {
     };
   }, [params, navigate, queryClient, pathname]);
 
-  if (isLoading || !quiz || submit.isLoading) {
+  if (isFetching || !quiz || submit.isLoading) {
     return <Loading />;
   }
 
