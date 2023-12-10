@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Loading } from '../../../components';
 import QuizSessionService from '../../../service/quizSession.service';
@@ -13,8 +14,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Exercises: React.FC = () => {
   const params = useParams();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const { data: quiz, isLoading } = useQuery({
+  const { data: quiz, isFetching } = useQuery({
     enabled: !!params?.quizId,
     queryKey: ['quiz', params.quizId, params.sessionId],
     queryFn: async () => {
@@ -22,20 +26,43 @@ const Exercises: React.FC = () => {
       return data.payload;
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnReconnect: 'always',
   });
+
+  const submit = useMutation({
+    mutationFn: async () => {
+      await QuizSessionService.submit(params.sessionId as string);
+      queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
+    },
+    onError: () => {
+      toast.error('Đã có lỗi trong lúc nộp bài!');
+    },
+  });
+
+  useEffect(() => {
+    if (
+      quiz?.status === 'ENDED' &&
+      pathname ===
+        `/room/exercises/${params.subjectId}/quiz/${params.quizId}/session/${params.sessionId}`
+    ) {
+      navigate(
+        `/room/exercises/${params.subjectId}/quiz/${params.quizId}/review/session/${params.sessionId}`,
+        { replace: true }
+      );
+    }
+  }, [quiz, navigate, params, pathname]);
 
   return (
     <>
       {params?.quizId === undefined ? (
         <Main />
-      ) : isLoading ? (
+      ) : isFetching ? (
         <Loading />
       ) : quiz ? (
         quiz.status === 'ENDED' ? (
           <Review quiz={quiz} />
         ) : (
-          <Detail quiz={quiz} />
+          <Detail quiz={quiz} handleSubmit={submit} />
         )
       ) : null}
       <ToastContainer position='bottom-right' draggable={false} />

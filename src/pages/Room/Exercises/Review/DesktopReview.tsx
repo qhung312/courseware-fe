@@ -97,7 +97,7 @@ const DesktopReview: React.FC<{
             return prev;
           })
         }
-        handleSubmit={() => navigate(-1)}
+        handleReview={() => navigate(-1)}
       />
     </main>
   );

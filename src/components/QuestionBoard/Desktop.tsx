@@ -1,3 +1,4 @@
+import { UseMutationResult } from '@tanstack/react-query';
 import _, { chunk } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
@@ -12,8 +13,9 @@ const Desktop: React.FC<{
   quiz: QuizSession;
   currentSet: number[];
   setCurrentSetIndex: (index: number) => void;
-  submit: () => void;
-}> = ({ quiz, submit, currentSet, setCurrentSetIndex }) => {
+  submit?: UseMutationResult<void, unknown, void, unknown>;
+  handleReview?: () => void;
+}> = ({ quiz, submit, currentSet, setCurrentSetIndex, handleReview }) => {
   const params = useParams();
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +28,9 @@ const Desktop: React.FC<{
   const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
 
   const onFinish = () => {
-    setIsOpen(true);
+    if (!submit?.isLoading) {
+      setIsOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -159,7 +163,8 @@ const Desktop: React.FC<{
               <button
                 onClick={onFinish}
                 type='button'
-                className='flex-2 flex w-fit rounded-lg bg-[#49CCCF] p-2'
+                className='flex-2 flex w-fit rounded-lg bg-[#49CCCF] p-2 disabled:opacity-75'
+                disabled={submit?.isLoading}
               >
                 <p className='text text-base font-semibold text-white'>
                   Hoàn thành {quiz.status === 'ONGOING' ? 'bài làm' : 'xem lại'}
@@ -208,8 +213,9 @@ const Desktop: React.FC<{
             : 'Bạn có chắc chắn muốn hoàn thành xem lại?'
         }
         isOpen={isOpen}
+        isLoading={!!submit && submit.isLoading}
         handleOpen={setIsOpen}
-        accept={submit}
+        accept={handleReview || submit?.mutate}
         cancel={() => setIsOpen(false)}
       />
     </>

@@ -1,4 +1,7 @@
+import { UseMutationResult, useQuery } from '@tanstack/react-query';
+
 import { useWindowDimensions } from '../../hooks';
+import QuizSessionService from '../../service/quizSession.service';
 import { QuizSession } from '../../types';
 
 import Desktop from './Desktop';
@@ -8,9 +11,24 @@ const QuestionBoard: React.FC<{
   quiz: QuizSession;
   currentSet: number[];
   setCurrentSetIndex: (index: number) => void;
-  handleSubmit: () => void;
-}> = ({ quiz, currentSet, handleSubmit, setCurrentSetIndex }) => {
+  handleSubmit?: UseMutationResult<void, unknown, void, unknown>;
+  handleReview?: () => void;
+}> = ({ quiz: placeholderQuiz, currentSet, handleSubmit, setCurrentSetIndex, handleReview }) => {
   const { width } = useWindowDimensions();
+  const { data: quiz } = useQuery({
+    queryKey: ['quiz', placeholderQuiz.fromQuiz._id, placeholderQuiz._id, 'question board'],
+    queryFn: async () => {
+      const { data } = await QuizSessionService.getById(placeholderQuiz._id as string);
+      return data.payload;
+    },
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    placeholderData: placeholderQuiz,
+  });
+
+  if (!quiz) {
+    return null;
+  }
 
   if (width < 768) {
     return (
@@ -19,6 +37,7 @@ const QuestionBoard: React.FC<{
         currentSet={currentSet}
         setCurrentSetIndex={setCurrentSetIndex}
         submit={handleSubmit}
+        handleReview={handleReview}
       />
     );
   }
@@ -29,6 +48,7 @@ const QuestionBoard: React.FC<{
       currentSet={currentSet}
       setCurrentSetIndex={setCurrentSetIndex}
       submit={handleSubmit}
+      handleReview={handleReview}
     />
   );
 };
