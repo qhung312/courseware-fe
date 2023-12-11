@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon } from '../../components';
@@ -12,13 +12,6 @@ const linkFaceBookGDSC = 'https://www.facebook.com/dscxhcmut';
 
 const Footer: FC = () => {
   const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    const stub = document.getElementById('stub') as HTMLElement;
-    const navbar = document.getElementById('navbar') as HTMLElement;
-
-    stub.style.marginBottom = `${navbar.clientHeight}px`;
-  }, [width]);
 
   return (
     <footer className='flex w-full flex-col bg-white'>

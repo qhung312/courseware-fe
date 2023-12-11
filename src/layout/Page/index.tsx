@@ -19,7 +19,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
 
     return (
       <div
-        className='with-nav-height w-screen overflow-y-auto'
+        className='with-nav-height w-screen'
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       >
