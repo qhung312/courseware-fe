@@ -1,6 +1,4 @@
 // import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
-import { useEffect } from 'react';
-
 import { Footer, Icon, LazyLoadImage } from '../../../../components';
 import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
@@ -8,13 +6,6 @@ import './index.css';
 
 const TSTTPage = () => {
   const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    const stub = document.getElementById('stub') as HTMLElement;
-    const navbar = document.getElementById('navbar') as HTMLElement;
-
-    stub.style.marginBottom = `${navbar.clientHeight}px`;
-  }, [width]);
 
   return (
     <Page title='Tiếp sức tới trường'>

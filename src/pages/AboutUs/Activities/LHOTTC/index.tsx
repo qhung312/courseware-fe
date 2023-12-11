@@ -1,5 +1,4 @@
 // import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
-import { useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
 import { CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../../../components';
@@ -10,13 +9,6 @@ import './index.css';
 
 const LHOTTCPage = () => {
   const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    const stub = document.getElementById('stub') as HTMLElement;
-    const navbar = document.getElementById('navbar') as HTMLElement;
-
-    stub.style.marginBottom = `${navbar.clientHeight}px`;
-  }, [width]);
 
   return (
     <Page title='Lớp học ôn tập'>
