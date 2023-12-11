@@ -1,21 +1,9 @@
 // import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
-import { useEffect } from 'react';
-
 import { Footer, LazyLoadImage } from '../../../../components';
-import { useWindowDimensions } from '../../../../hooks';
 import { Page } from '../../../../layout';
 import './index.css';
 
 const SCTTMPage = () => {
-  const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    const stub = document.getElementById('stub') as HTMLElement;
-    const navbar = document.getElementById('navbar') as HTMLElement;
-
-    stub.style.marginBottom = `${navbar.clientHeight}px`;
-  }, [width]);
-
   return (
     <Page title='Sách cũ tri thức mới'>
       <main className='with-nav-height flex flex-col gap-y-5 overflow-y-auto text-[16px] md:text-[14px] lg:gap-y-10 lg:text-[18px] xl:text-[20px] 2xl:gap-y-[54px] 3xl:gap-y-[60px]'>
