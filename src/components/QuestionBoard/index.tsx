@@ -15,6 +15,7 @@ const QuestionBoard: React.FC<{
   handleReview?: () => void;
 }> = ({ quiz: placeholderQuiz, currentSet, handleSubmit, setCurrentSetIndex, handleReview }) => {
   const { width } = useWindowDimensions();
+  console.log(['quiz', placeholderQuiz.fromQuiz._id, placeholderQuiz._id, 'question board']);
   const { data: quiz } = useQuery({
     queryKey: ['quiz', placeholderQuiz.fromQuiz._id, placeholderQuiz._id, 'question board'],
     queryFn: async () => {
@@ -22,7 +23,6 @@ const QuestionBoard: React.FC<{
       return data.payload;
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
     placeholderData: placeholderQuiz,
   });
 
