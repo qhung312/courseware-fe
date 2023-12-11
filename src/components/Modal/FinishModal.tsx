@@ -51,21 +51,21 @@ const FinishModal: FC<{
                 <div className='mt-4 flex w-full flex-row items-center justify-end gap-x-6'>
                   <button
                     type='button'
-                    className='inline-flex justify-center rounded-md border border-transparent bg-[#4285F4]/80 
-                    px-4 py-2  hover:bg-[#4285F4] focus:outline-none disabled:bg-[#4285F4] disabled:opacity-75'
-                    onClick={accept}
-                    disabled={isLoading}
-                  >
-                    <p className='text-base font-semibold text-white'>Có</p>
-                  </button>
-                  <button
-                    type='button'
                     className='inline-flex justify-center rounded-md border border-transparent bg-[#DB4437]/80 
                     px-4 py-2  hover:bg-[#DB4437] focus:outline-none disabled:bg-[#DB4437] disabled:opacity-75'
                     onClick={cancel}
                     disabled={isLoading}
                   >
                     <p className='text-base font-semibold text-white'>Không</p>
+                  </button>
+                  <button
+                    type='button'
+                    className='inline-flex justify-center rounded-md border border-transparent bg-[#4285F4]/80 
+                    px-4 py-2  hover:bg-[#4285F4] focus:outline-none disabled:bg-[#4285F4] disabled:opacity-75'
+                    onClick={accept}
+                    disabled={isLoading}
+                  >
+                    <p className='text-base font-semibold text-white'>Có</p>
                   </button>
                 </div>
               </Dialog.Panel>
