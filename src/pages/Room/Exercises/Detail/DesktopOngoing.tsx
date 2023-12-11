@@ -1,3 +1,4 @@
+import { UseMutationResult } from '@tanstack/react-query';
 import { chunk, reduce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -7,7 +8,7 @@ import { parseDuration } from '../../../../utils/helper';
 
 const DesktopOngoing: React.FC<{
   quiz: QuizSession;
-  handleSubmit: () => void;
+  handleSubmit: UseMutationResult<void, unknown, void, unknown>;
 }> = ({ quiz, handleSubmit }) => {
   const pageSize = 5;
 

@@ -54,8 +54,6 @@ const InputNumber: React.FC<InputNumberProps> = ({
     );
   }, [width]);
 
-  console.log(controllerWidth, inputPadding);
-
   useEffect(() => {
     if (processedValue !== '') {
       const numberValue = Number(processedValue);

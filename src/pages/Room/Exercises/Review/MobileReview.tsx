@@ -76,7 +76,7 @@ const MobileReview: React.FC<{ quiz: QuizSession }> = ({ quiz }) => {
           })
         }
         currentSet={currentSet}
-        handleSubmit={() => navigate(-1)}
+        handleReview={() => navigate(-1)}
       />
     </div>
   );

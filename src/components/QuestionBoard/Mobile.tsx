@@ -1,3 +1,4 @@
+import { UseMutationResult } from '@tanstack/react-query';
 import _, { chunk } from 'lodash';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -9,10 +10,11 @@ import { calculateProgress } from '../../utils/helper';
 
 const Mobile: React.FC<{
   quiz: QuizSession;
-  submit: () => void;
   currentSet: number[];
   setCurrentSetIndex: (index: number) => void;
-}> = ({ quiz, submit, currentSet, setCurrentSetIndex }) => {
+  handleReview?: () => void;
+  submit?: UseMutationResult<void, unknown, void, unknown>;
+}> = ({ quiz, submit, currentSet, setCurrentSetIndex, handleReview }) => {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +27,9 @@ const Mobile: React.FC<{
   const questionChunks = chunk(quiz.questions, 40);
 
   const onFinish = () => {
-    setIsModalOpen(true);
+    if (!submit?.isLoading) {
+      setIsModalOpen(true);
+    }
   };
 
   return (
@@ -104,6 +108,7 @@ const Mobile: React.FC<{
           <div className='flex w-full flex-1 flex-row items-center justify-between'>
             <button
               onClick={onFinish}
+              disabled={submit?.isLoading}
               type='button'
               className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'
             >
@@ -174,7 +179,8 @@ const Mobile: React.FC<{
         }
         isOpen={isModalOpen}
         handleOpen={setIsModalOpen}
-        accept={submit}
+        accept={handleReview || submit?.mutate}
+        isLoading={!!submit && submit.isLoading}
         cancel={() => setIsModalOpen(false)}
       />
     </>

@@ -44,7 +44,12 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
       return data.payload;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
+      await queryClient.invalidateQueries([
+        'quiz',
+        params.quizId,
+        params.sessionId,
+        'question board',
+      ]);
     },
     onError: () => {
       toast.error('Lưu câu trả lời thất bại');

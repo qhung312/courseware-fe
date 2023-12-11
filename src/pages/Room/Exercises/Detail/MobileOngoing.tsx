@@ -1,3 +1,4 @@
+import { UseMutationResult } from '@tanstack/react-query';
 import { chunk } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
@@ -8,7 +9,7 @@ import { calculateProgress, parseDuration } from '../../../../utils/helper';
 
 const MobileOngoing: React.FC<{
   quiz: QuizSession;
-  handleSubmit: () => void;
+  handleSubmit: UseMutationResult<void, unknown, void, unknown>;
 }> = ({ quiz, handleSubmit }) => {
   const pageSize = 5;
   const [page, setPage] = useState(1);

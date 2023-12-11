@@ -6,9 +6,10 @@ const FinishModal: FC<{
   message: string;
   isOpen: boolean;
   handleOpen: Dispatch<SetStateAction<boolean>>;
-  accept: () => void;
+  isLoading: boolean;
+  accept?: () => void;
   cancel: () => void;
-}> = ({ title, message, isOpen, handleOpen, accept, cancel }) => {
+}> = ({ title, message, isOpen, handleOpen, accept, cancel, isLoading }) => {
   function closeModal() {
     handleOpen(false);
   }
@@ -51,16 +52,18 @@ const FinishModal: FC<{
                   <button
                     type='button'
                     className='inline-flex justify-center rounded-md border border-transparent bg-[#4285F4]/80 
-                    px-4 py-2  hover:bg-[#4285F4] focus:outline-none'
+                    px-4 py-2  hover:bg-[#4285F4] focus:outline-none disabled:bg-[#4285F4] disabled:opacity-75'
                     onClick={accept}
+                    disabled={isLoading}
                   >
                     <p className='text-base font-semibold text-white'>Có</p>
                   </button>
                   <button
                     type='button'
                     className='inline-flex justify-center rounded-md border border-transparent bg-[#DB4437]/80 
-                    px-4 py-2  hover:bg-[#DB4437] focus:outline-none'
+                    px-4 py-2  hover:bg-[#DB4437] focus:outline-none disabled:bg-[#DB4437] disabled:opacity-75'
                     onClick={cancel}
+                    disabled={isLoading}
                   >
                     <p className='text-base font-semibold text-white'>Không</p>
                   </button>
