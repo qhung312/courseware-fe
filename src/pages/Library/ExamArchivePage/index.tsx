@@ -82,6 +82,7 @@ const ExamArchivePage: React.FC = () => {
 
       ExamArchiveService.getAll({ subject: id, semester: encodeURIComponent(semesterString) })
         .then((res) => {
+          console.log(res.data);
           setExamArchives(res.data.payload.result);
         })
         .catch((err) => {
@@ -303,7 +304,6 @@ const ExamArchivePage: React.FC = () => {
                   window.location.origin + `/library/exam-archive/${subject?._id}/pdf/${exam._id}`
                 }
                 subTitle={''}
-                description={exam?.description ? exam?.description : 'Không có chú thích'}
               />
             ))}
           </div>
