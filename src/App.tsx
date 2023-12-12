@@ -6,6 +6,7 @@ import { AdministratorRoute, UserRoute } from './routes';
 import { socket } from './socket';
 import useBoundStore from './store';
 import { SocketEvent } from './types';
+import './config/firebase';
 
 const App = () => {
   const setToken = useBoundStore.use.setToken();
