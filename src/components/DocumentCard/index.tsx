@@ -48,7 +48,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
           <Tooltip anchorSelect='.share-anchor' />
         </div> */}
       </div>
-      <div className='mb-4 w-full pr-[10%] text-start text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>
+      <div className='mb-4 w-full pr-[8%] text-start text-lg font-semibold md:font-normal lg:text-xl 3xl:text-2xl'>
         <p className='flex flex-wrap leading-5 lg:leading-7'>{title}</p>
       </div>
       <div className='flex flex-col-reverse gap-y-4 lg:gap-y-6 3xl:gap-y-8'>
