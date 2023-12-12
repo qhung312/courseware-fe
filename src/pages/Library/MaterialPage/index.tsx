@@ -87,6 +87,7 @@ const MaterialPage: React.FC = () => {
         .then((res) => {
           const { data } = res;
           const { payload } = data;
+          console.log(payload);
           setTimeout(() => setMaterials(payload.result), 300);
         })
         .catch((err) => {
@@ -304,7 +305,6 @@ const MaterialPage: React.FC = () => {
                   window.location.origin + `/library/material/${subject?._id}/pdf/${material._id}`
                 }
                 subTitle={''}
-                description={material?.description ? material?.description : 'Không có chú thích'}
               />
             ))}
           </div>

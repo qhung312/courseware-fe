@@ -1,6 +1,6 @@
 // import { Tooltip } from 'react-tooltip';
 
-import { isEmpty } from 'lodash';
+// import { isEmpty } from 'lodash';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Icon } from '..';
@@ -11,18 +11,11 @@ interface DocumentCardProps {
   document: Material | ExamArchive;
   title: string;
   subTitle?: string;
-  description: string;
   to: string;
   copyContent?: any;
 }
 
-const DocumentCard: React.FC<DocumentCardProps> = ({
-  document,
-  title,
-  description,
-  to,
-  copyContent,
-}) => {
+const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyContent }) => {
   const { pathname } = useLocation();
   const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
   const navigate = useNavigate();
@@ -89,11 +82,9 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
             <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
           </Link> */}
         </div>
-        {isEmpty(description) && (
+        {document?.description !== '' && (
           <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
-            <p className='text-justify text-[#666]'>
-              {isEmpty(description) ? 'Không có chú thích' : description}
-            </p>
+            <p className='text-justify text-[#666]'>{document.description}</p>
           </div>
         )}
         {/* <Link
