@@ -336,7 +336,7 @@ const HomePage = () => {
                         objectFit: 'cover',
                         borderRadius: '8px',
                       }}
-                      src='https://www.youtube.com/embed/kxVChG6MYAc?si=u8cr7pZpSAoqfpBq'
+                      src='https://www.youtube.com/embed/RbTYxTFi_AQ?si=W8rZeOBXZcZjNfbB'
                       title='YouTube video player'
                       allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                       allowFullScreen={false}
