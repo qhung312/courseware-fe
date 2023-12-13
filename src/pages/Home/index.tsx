@@ -255,7 +255,7 @@ const HomePage = () => {
                 <span className='text-[#4285F4]'>Lắng nghe</span> và{' '}
                 <span className='text-[#4285F4]'>chia sẻ</span>
               </h2>
-              <div className='flex w-full flex-row flex-wrap items-start justify-center gap-y-10 gap-x-6 overflow-visible lg:gap-x-10 3xl:gap-x-20'>
+              <div className='flex h-fit w-full flex-1 flex-row flex-wrap items-start justify-center gap-y-10 gap-x-6 overflow-visible lg:gap-x-10 3xl:gap-x-20'>
                 <div
                   id='feedback-carousel'
                   className='relative -mx-[20px] h-full w-[calc(100%+40px)] overflow-hidden px-[20px] md:w-[48%] md:flex-[0.9] xl:w-[53%] xl:flex-[1.1]'
@@ -314,8 +314,8 @@ const HomePage = () => {
                   alt='video'
                   className='relative z-[2] h-full w-full rounded-lg object-cover'
                 /> */}
-                  <div className='relative z-[2] h-full w-full rounded-lg object-cover'>
-                    <video
+                  <div className='relative z-[2] aspect-[5/3] w-full rounded-lg object-cover'>
+                    {/* <video
                       loop
                       autoPlay
                       muted
@@ -327,7 +327,20 @@ const HomePage = () => {
                         src={require('../../assets/video/introduction-video.mp4')}
                         type='video/mp4'
                       />
-                    </video>
+                    </video> */}
+                    <iframe
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: '8px',
+                      }}
+                      src='https://www.youtube.com/embed/kxVChG6MYAc?si=u8cr7pZpSAoqfpBq'
+                      title='YouTube video player'
+                      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                      allowFullScreen={false}
+                    ></iframe>
                   </div>
                 </div>
               </div>
