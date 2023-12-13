@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -6,6 +7,7 @@ import { AdministratorRoute, UserRoute } from './routes';
 import { socket } from './socket';
 import useBoundStore from './store';
 import { SocketEvent } from './types';
+
 import './config/firebase';
 
 const App = () => {
@@ -60,13 +62,16 @@ const App = () => {
   }, []);
 
   if (loading) return <Loading />;
+  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
   return (
     <>
       <Suspense fallback={null}>
-        <Routes>
-          <Route path='/admin/*' element={<AdministratorRoute />} />
-          <Route path='*' element={<UserRoute />} />
-        </Routes>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}>
+          <Routes>
+            <Route path='/admin/*' element={<AdministratorRoute />} />
+            <Route path='*' element={<UserRoute />} />
+          </Routes>
+        </GoogleOAuthProvider>
       </Suspense>
     </>
   );
