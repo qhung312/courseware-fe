@@ -62,7 +62,7 @@ const App = () => {
   }, []);
 
   if (loading) return <Loading />;
-  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
+  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
   return (
     <>
       <Suspense fallback={null}>
