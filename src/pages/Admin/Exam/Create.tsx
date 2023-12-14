@@ -34,7 +34,6 @@ const ExamCreate = () => {
     loading;
 
   useEffect(() => {
-    // fetch subject on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

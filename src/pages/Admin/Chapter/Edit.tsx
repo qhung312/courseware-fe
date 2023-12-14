@@ -59,12 +59,10 @@ const ChapterEdit = () => {
     }
   }, [chapter]);
 
-  // re-render save button
   useEffect(() => {
     setSave();
   }, [chapter, description, name, setSave]);
 
-  //fetch initial data
   useEffect(() => {
     fetchData();
   }, [fetchData]);

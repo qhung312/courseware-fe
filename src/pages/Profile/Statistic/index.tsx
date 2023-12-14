@@ -1,4 +1,4 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -12,13 +12,8 @@ import { Page } from '../../../layout';
 import UserService, { GetAllSubjectStatisticReturnType } from '../../../service/user.service';
 
 const Statistic = () => {
-  // const [isTestGradeOpen, setIsTestGradeOpen] = useState(false);
   const [isExerciseGradeOpen, setIsExerciseGradeOpen] = useState(true);
   const [subjectGrade, setSubjectGrade] = useState<GetAllSubjectStatisticReturnType[]>([]);
-
-  // const onTestGradeStatisticOpen = () => {
-  //   setIsTestGradeOpen(true);
-  // };
 
   const onExerciseGradeStatisticOpen = () => {
     setIsExerciseGradeOpen(true);
@@ -33,8 +28,6 @@ const Statistic = () => {
         console.log(err);
       });
   }, []);
-
-  // const throttledTestGradeClick = useThrottle(onTestGradeStatisticOpen);
 
   const throttledExerciseGradeClick = useThrottle(onExerciseGradeStatisticOpen);
 

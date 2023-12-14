@@ -48,7 +48,6 @@ const CreateChapterPage = () => {
   };
 
   useEffect(() => {
-    // fetch subjects on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

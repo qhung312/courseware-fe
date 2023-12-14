@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserProfileBanner from '../../assets/images/UserProfile.jpg';
@@ -14,7 +13,6 @@ interface Option {
 
 const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: Option) => {
   const user = useBoundStore.use.user();
-  // const [photo, setPhoto] = useState<string>(user?.picture || '');
 
   return (
     <div className='padding flex flex-col items-center bg-[#E3F2FD] pt-10 pb-4 md:relative md:pb-0 md:pt-0'>
@@ -44,7 +42,6 @@ const ProfileOption = ({ option, editAvatar = false, setAvatar, updatedName }: O
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
                     setAvatar(URL.createObjectURL(e.target.files[0]));
-                    // setPhoto(URL.createObjectURL(e.target.files[0]));
                   }
                 }}
               />

@@ -94,7 +94,6 @@ const MaterialEdit = () => {
   }, [material]);
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (subject === '') {
       setChapterOptions([]);
       setChapter('');
@@ -119,7 +118,6 @@ const MaterialEdit = () => {
   }, [subject]);
 
   useEffect(() => {
-    // fetch subject on first load
     SubjectService.getAll({})
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

@@ -1,4 +1,3 @@
-// import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
 import { Carousel } from 'react-responsive-carousel';
 
 import { CarouselIndicator, Footer, Icon, LazyLoadImage } from '../../../../components';

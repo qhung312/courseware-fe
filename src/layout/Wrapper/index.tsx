@@ -13,14 +13,6 @@ const Wrapper: React.FC<WrapperProps> = ({ children, className }) => {
   const isAsideOpen = useBoundStore.use.isAsideOpen();
   const params = useParams();
   const pdfId = params?.pdfId ?? '';
-  // const toggleAside = useBoundStore.use.toggleAside();
-
-  // useEffect(() => {
-  //   if (isAsideOpen && fullWidth) {
-  //     toggleAside();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <div

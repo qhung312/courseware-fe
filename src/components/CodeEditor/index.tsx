@@ -30,7 +30,6 @@ const BaseEditor = ({
   placeholder,
   readOnly,
 }: BaseEditorProps) => {
-  console.log('render ', id);
   return (
     <CodeMirror
       id={id}

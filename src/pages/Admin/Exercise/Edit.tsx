@@ -197,7 +197,6 @@ const EditExercisePage = () => {
   }, []);
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (subject === '') {
       setChapterOptions([]);
       setChapter('');
@@ -222,11 +221,6 @@ const EditExercisePage = () => {
   }, [subject]);
 
   useEffect(() => {
-    console.log('chapter: ', chapter);
-  }, [chapter]);
-
-  useEffect(() => {
-    // update options for filter chapter when filter subject changes
     if (filterSubject === '') {
       setFilterChapterOptions([]);
       setFilterChapter('');

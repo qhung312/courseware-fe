@@ -43,7 +43,6 @@ const CreateQuestionPage = () => {
   const createDisabled = name.trim().length === 0 || subject === '' || chapter === '' || loading;
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (subject === '') {
       setChapterOptions([]);
       setChapter('');
@@ -67,7 +66,6 @@ const CreateQuestionPage = () => {
   }, [subject]);
 
   useEffect(() => {
-    // fetch subjects on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

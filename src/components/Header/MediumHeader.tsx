@@ -9,8 +9,6 @@ import useBoundStore from '../../store';
 import Icon from '../Icon';
 import LoginButton from '../LoginButton';
 
-// import SearchBar from './SearchBar';
-
 const MediumHeader = () => {
   const style: CSSProperties = {
     height: '32px',

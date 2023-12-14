@@ -53,7 +53,6 @@ const MaterialPage: React.FC = () => {
   const onCheckChapter = (index: number) => {
     let chapterList = chapterOption;
     chapterList[index].isChoosing = !chapterList[index].isChoosing;
-    console.log(chapterList);
     setChapterOption(chapterList);
     setChapterFilterList(chapterOption.filter((chapter) => chapter.isChoosing));
   };
@@ -66,7 +65,6 @@ const MaterialPage: React.FC = () => {
       isChoosing: false,
       index: chapter.index,
     }));
-    console.log(chapterList);
     setChapterOption(chapterList);
   };
 
@@ -87,7 +85,6 @@ const MaterialPage: React.FC = () => {
         .then((res) => {
           const { data } = res;
           const { payload } = data;
-          console.log(payload);
           setTimeout(() => setMaterials(payload.result), 300);
         })
         .catch((err) => {
@@ -99,7 +96,6 @@ const MaterialPage: React.FC = () => {
 
   useEffect(() => {
     setChapterFilterList([]);
-    // update options for chapter when the selected subject changes
     if (id === '') {
       setChapterOption([]);
       return;

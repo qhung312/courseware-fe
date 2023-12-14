@@ -87,7 +87,6 @@ const MaterialList = () => {
   }, [page, filterName, filterSubject, filterChapter, fetchMaterial]);
 
   useEffect(() => {
-    // fetch subjects on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
@@ -107,7 +106,6 @@ const MaterialList = () => {
   }, []);
 
   useEffect(() => {
-    // fetch all chapters when the selected subject changes
     if (filterSubject === '') {
       setFilterChapterOptions([]);
       setFilterChapter('');

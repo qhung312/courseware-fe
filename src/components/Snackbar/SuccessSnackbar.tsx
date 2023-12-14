@@ -1,6 +1,4 @@
-// import { ReactComponent as CloseIcon } from 'assets/icons/close_icon_snackbar.svg';
-// import { ReactComponent as DeleteIcon } from 'assets/icons/delete_icon_snackbar.svg';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import Icon from '../../components/Icon';
 

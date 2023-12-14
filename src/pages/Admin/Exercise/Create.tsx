@@ -174,7 +174,6 @@ const CreateExercisePage = () => {
   }, []);
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (subject === '') {
       setChapterOptions([]);
       setChapter('');
@@ -198,7 +197,6 @@ const CreateExercisePage = () => {
   }, [subject]);
 
   useEffect(() => {
-    // update options for filter chapter when filter subject changes
     if (filterSubject === '') {
       setFilterChapterOptions([]);
       setFilterChapter('');

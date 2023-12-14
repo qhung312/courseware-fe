@@ -10,15 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Create .env file
-        run: |
-          touch .env
-          echo REACT_APP_ENVIRONMENT=development >> .env
-          echo REACT_APP_API_URL=${{ vars.REACT_APP_API_URL }} >> .env
-
       - run: |
           npm ci 
-          ./node_modules/.bin/env-cmd -f .env npm run build
+          REACT_APP_ENVIRONMENT=development REACT_APP_API_URL=${{ vars.REACT_APP_API_URL }} REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }} npm run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

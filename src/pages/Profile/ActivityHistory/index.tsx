@@ -1,4 +1,4 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
@@ -60,7 +60,6 @@ const ActivityHistory = () => {
       .then((res) => {
         const { results: allActivities, count, total } = res.data.payload;
         setActivities(allActivities);
-        console.log(allActivities);
         setTotalActivity({
           currentTotal: total,
           viewMaterial: count?.VIEW_MATERIAL,

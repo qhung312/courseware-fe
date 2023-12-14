@@ -31,7 +31,6 @@ const EditQuestionPage = () => {
   const [chapterOptions, setChapterOptions] = useState<Option[]>([]);
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
-  // Variable use to save edition of user
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [chapter, setChapter] = useState('');
@@ -154,7 +153,6 @@ const EditQuestionPage = () => {
   }, [question]);
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (subject === '') {
       setChapterOptions([]);
       setChapter('');
@@ -171,7 +169,6 @@ const EditQuestionPage = () => {
         if (listOption.length === 0 || !listOption.find((option) => option.value === chapter)) {
           setChapter('');
         }
-        console.log('update subject chapters list first');
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -180,7 +177,6 @@ const EditQuestionPage = () => {
   }, [subject]);
 
   useEffect(() => {
-    // fetch subject on first load
     SubjectService.getAll({})
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
