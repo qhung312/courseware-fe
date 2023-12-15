@@ -12,12 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: npm ci
+      - run: rm -rf node_modules && yarn install --frozen-lockfile
       - run: >
           REACT_APP_ENVIRONMENT=development
           REACT_APP_API_URL=${{ vars.REACT_APP_API_URL_DEV }}
           REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID_DEV }}
-          npm run build
+          yarn run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

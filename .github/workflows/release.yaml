@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: npm ci
+      - run: rm -rf node_modules && yarn install --frozen-lockfile
       - run: >
           REACT_APP_ENVIRONMENT=production
           REACT_APP_API_URL=${{ vars.REACT_APP_API_URL_PRODUCTION }}
@@ -19,7 +19,7 @@ jobs:
           REACT_APP_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}
           REACT_APP_FIREBASE_PROJECT_ID=${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
           REACT_APP_FIREBASE_STORAGE_BUCKET=${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
-          npm run build
+          yarn run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
