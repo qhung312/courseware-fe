@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 if (process.env.REACT_APP_ENVIRONMENT === 'production') {
-  console.log('Analytics enabled!');
   const app = initializeApp(firebaseConfig);
   getAnalytics(app);
+  console.log('Analytics enabled!');
 }
