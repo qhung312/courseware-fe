@@ -10,13 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: |
-          npm ci 
-          REACT_APP_ENVIRONMENT=development REACT_APP_API_URL=${{ vars.REACT_APP_API_URL }} REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }} npm run build
+      - run: npm ci
+      - run: >
+          REACT_APP_ENVIRONMENT=development
+          REACT_APP_API_URL=${{ vars.REACT_APP_API_URL_DEV }}
+          REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID_DEV }}
+          npm run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CTCT_PRODUCTION }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CTCT_WEB_DEV }}'
           projectId: ctct-web-dev
           channelId: live
