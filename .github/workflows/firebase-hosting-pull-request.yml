@@ -11,14 +11,18 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@v3
 
-      - run: rm -rf node_modules && yarn install --frozen-lockfile
-      - run: >
+      - name: Installing dependencies
+        run: rm -rf node_modules && yarn install --frozen-lockfile
+
+      - name: Building project
+        run: >
           REACT_APP_ENVIRONMENT=development
           REACT_APP_API_URL=${{ vars.REACT_APP_API_URL_DEV }}
           REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID_DEV }}
           yarn run build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploying to Firebase Hosting Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CTCT_WEB_DEV }}'

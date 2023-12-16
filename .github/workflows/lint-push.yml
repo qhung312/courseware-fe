@@ -1,0 +1,18 @@
+name: Lint Code in Pushes and PRs
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: rm -rf node_modules && yarn install --frozen-lockfile
+
+      - name: Lint code
+        run: yarn run lint
+
+      - name: Lint commit message
+        run: yarn run commitlint --from HEAD~1 --to HEAD --verbose
