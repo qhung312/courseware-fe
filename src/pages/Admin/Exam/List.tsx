@@ -105,7 +105,6 @@ const ExamList = () => {
   }, [page, filterName, filterSubject, filterSemester, filterExamType, fetchExamArchive]);
 
   useEffect(() => {
-    // fetch all subjects on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

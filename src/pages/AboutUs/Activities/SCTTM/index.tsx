@@ -1,4 +1,3 @@
-// import LHOTTTPlaceHolder from '../../../../assets/images/LHOT-placeholder.jpg';
 import { Footer, LazyLoadImage } from '../../../../components';
 import { Page } from '../../../../layout';
 import './index.css';

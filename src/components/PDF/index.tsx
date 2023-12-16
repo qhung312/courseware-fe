@@ -1,16 +1,15 @@
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-// eslint-disable-next-line import/order
 import { Document, Outline, Page, pdfjs } from 'react-pdf';
-
-import './index.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { OnItemClickArgs } from 'react-pdf/dist/cjs/shared/types';
 
 import { useDebounce } from '../../hooks';
 import useBoundStore from '../../store';
 import Icon from '../Icon';
+
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+import './index.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const options = {
@@ -143,7 +142,6 @@ const PDF: React.FC<PDFProps> = ({ renderMode, className, pageClassName, file })
               onItemClick={onItemClick}
               className={`with-nav-height ${isShowOutline ? '' : 'hidden'}`}
               onLoadSuccess={(outline) => {
-                console.log('>> outline: ', outline);
                 setHasOutline(outline != null);
               }}
             />

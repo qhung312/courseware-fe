@@ -94,7 +94,6 @@ const ExamEdit = () => {
   }, [name, subject, type, semester, description, isHidden, setSave]);
 
   useEffect(() => {
-    // fetch subject on first load
     SubjectService.getAll({})
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

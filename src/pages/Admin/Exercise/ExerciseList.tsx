@@ -107,7 +107,6 @@ const ExerciseListPage = () => {
   }, [filterName, filterSubject, filterChapter, page, fetchExercises]);
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (filterSubject === '') {
       setFilterChapterOptions([]);
       setFilterChapter('');
@@ -132,7 +131,6 @@ const ExerciseListPage = () => {
   }, [filterSubject]);
 
   useEffect(() => {
-    // fetch subjects on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;

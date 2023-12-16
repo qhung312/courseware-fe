@@ -77,7 +77,6 @@ const deleteById = (id: string) => {
 };
 
 const edit = (id: string, data: EditArgument) => {
-  console.log('data edit: ', data);
   const bodyQuery = `${API_URL}admin/quiz/${id}`;
 
   return axios.patch<Response<Quiz>>(bodyQuery, data);

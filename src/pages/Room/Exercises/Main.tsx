@@ -102,7 +102,6 @@ const Main: React.FC = () => {
     : undefined;
 
   useEffect(() => {
-    // update options for chapter when the selected subject changes
     if (id === '') {
       setChapterOption([]);
       return;

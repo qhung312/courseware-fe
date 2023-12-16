@@ -1,6 +1,3 @@
-// import { Tooltip } from 'react-tooltip';
-
-// import { isEmpty } from 'lodash';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Icon } from '..';

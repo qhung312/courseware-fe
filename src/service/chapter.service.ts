@@ -53,7 +53,6 @@ const edit = (id: string, admin = false, name = '', description = '') => {
   return axios.patch<Response<Chapter>>(queryString, queryBody);
 };
 
-// const ChapterService = { getAll, getAllPaginated, getById, edit };
 const create = (name: string, subject: string, description: string) => {
   const queryString = `${API_URL}admin/chapter/`;
 

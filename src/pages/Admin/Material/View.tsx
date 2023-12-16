@@ -5,7 +5,6 @@ import './index.css';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
-// import { useDebounce } from '../../../hooks';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import MaterialService from '../../../service/material.service';

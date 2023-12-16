@@ -52,10 +52,8 @@ const ExamArchivePage: React.FC = () => {
   const onCheckSemester = (index: number) => {
     let semesterList = semesterOption;
     semesterList[index].isChoosing = !semesterList[index].isChoosing;
-    console.log(semesterList);
     setSemesteOption(semesterList);
     setSemesterFilterList(semesterOption.filter((semester) => semester.isChoosing));
-    console.log('Chapter list: ', semesterList);
   };
 
   const onDeleteSemester = () => {
@@ -78,11 +76,9 @@ const ExamArchivePage: React.FC = () => {
     if (id) {
       setExamArchives(null);
       const semesterString = semesterFilterList.map((chapter) => chapter.value).join(',');
-      // console.log('chapter string: ', semesterString);
 
       ExamArchiveService.getAll({ subject: id, semester: encodeURIComponent(semesterString) })
         .then((res) => {
-          console.log(res.data);
           setExamArchives(res.data.payload.result);
         })
         .catch((err) => {

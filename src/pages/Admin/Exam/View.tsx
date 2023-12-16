@@ -47,7 +47,6 @@ const ExamView = () => {
     ExamArchiveService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
-        console.log(result);
         setExamArchive(result);
       })
       .catch((err) => {

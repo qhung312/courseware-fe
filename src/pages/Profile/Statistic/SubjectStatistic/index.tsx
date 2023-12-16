@@ -1,8 +1,7 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-// import DemoLineChart from '../../../../assets/images/DemoLineChart.png';
 import { ReactComponent as NoChartData } from '../../../../assets/svgs/NoChart.svg';
 import { Footer } from '../../../../components';
 import Icon from '../../../../components/Icon';
@@ -59,14 +58,11 @@ const SubjectStatistic = () => {
   };
 
   function getEpochTimestamps() {
-    // Get the current date
     const currentDate = new Date();
 
-    // Calculate the date of a week ago
     const weekAgoDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
     weekAgoDate.setHours(0, 0, 0, 0);
 
-    // Convert dates to epoch timestamps (milliseconds since January 1, 1970)
     const currentEpochTimestamp = currentDate.getTime();
     const weekAgoEpochTimestamp = weekAgoDate.getTime();
 
@@ -81,12 +77,11 @@ const SubjectStatistic = () => {
     const timeChange1 = forward ? 8 * 24 * 60 * 60 * 1000 : -24 * 60 * 60 * 1000;
     const timeChange2 = forward ? 24 * 60 * 60 * 1000 : -8 * 24 * 60 * 60 * 1000;
     const newCurrentDate = new Date(currentDate.getTime() + timeChange1);
-    // Calculate the date of a week ago
+
     const weekAgoDate = new Date(currentDate.getTime() + timeChange2);
     weekAgoDate.setHours(0, 0, 0, 0);
     newCurrentDate.setHours(23, 59, 59, 999);
 
-    // Convert dates to epoch timestamps (milliseconds since January 1, 1970)
     const currentEpochTimestamp = newCurrentDate.getTime();
     const weekAgoEpochTimestamp = weekAgoDate.getTime();
 
@@ -167,7 +162,6 @@ const SubjectStatistic = () => {
             <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
               <button
                 className='group rounded-full p-2 hover:bg-[#4285F4]/[.8]'
-                // disabled={quizHistory.length === 0}
                 onClick={() => getEpochTimestampsForQuery(queryPeriod.weekAgoEpochTimestamp, false)}
               >
                 <Icon.Chevron fill='#4285f4' className='-rotate-90 group-hover:fill-white' />

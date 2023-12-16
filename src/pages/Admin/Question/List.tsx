@@ -108,7 +108,6 @@ const QuestionListPage = () => {
   }, [page, filterName, filterSubject, filterChapter, fetchQuestions]);
 
   useEffect(() => {
-    // fetch all subjects on first load
     SubjectService.getAll({}, true)
       .then((res) => {
         const { result: allSubjects } = res.data.payload;
@@ -125,7 +124,6 @@ const QuestionListPage = () => {
   }, []);
 
   useEffect(() => {
-    // fetch all chapters when the selected subject changes
     if (filterSubject === '') {
       setFilterChapterOptions([]);
       setFilterChapter('');
