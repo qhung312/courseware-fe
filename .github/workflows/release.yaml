@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting on merge
+name: Release
 'on': workflow_dispatch
 
 jobs:
