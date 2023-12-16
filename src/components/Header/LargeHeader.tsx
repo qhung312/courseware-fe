@@ -56,6 +56,10 @@ const LargeHeader = () => {
   };
 
   const onProfileClick = () => setIsProfileDrop(!isProfileDrop);
+  const onLogout = () => {
+    logout();
+    setIsProfileDrop(false);
+  };
 
   const throttledLibraryClick = useThrottle(onLibraryClick);
   const throttledRoomClick = useThrottle(onRoomClick);
@@ -411,7 +415,7 @@ const LargeHeader = () => {
               </NavLink>
               <button
                 className='bg-inherit px-[16px] py-[8px] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
-                onClick={logout}
+                onClick={onLogout}
               >
                 <p
                   className='whitespace-nowrap bg-inherit px-2 py-1 text-[14px] font-bold text-[#B42926] 3xl:px-3
