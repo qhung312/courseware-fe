@@ -14,6 +14,10 @@ jobs:
       - name: Get changed files
         id: get_changed_files
         uses: tj-actions/changed-files@v39
+        with:
+          files: |
+            src/**/*.{js,jsx,ts,tsx,json}
+            .github/workflows/**
 
       - name: Check number of changed files
         run: |
