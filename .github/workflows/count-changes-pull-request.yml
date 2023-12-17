@@ -16,10 +16,9 @@ jobs:
         uses: tj-actions/changed-files@v39
 
       - name: Check number of changed files
-        run: >
+        run: |
           echo "Number of changed files: ${{ steps.get_changed_files.outputs.all_changed_files_count }}"
-          if [ ${{ steps.get_changed_files.outputs.all_changed_files_count }} -gt 15 ]; 
-          then
+          if [ ${{ steps.get_changed_files.outputs.all_changed_files_count }} -gt 15 ]; then
             echo "Too many changed files. Please limit your PR to 15 files or less."
             exit 1
           fi
