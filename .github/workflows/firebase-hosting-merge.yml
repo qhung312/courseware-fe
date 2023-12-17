@@ -13,6 +13,23 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@v3
 
+      - name: Check for changes
+        id: check_for_changes
+        uses: tj-actions/changed-files@v39
+        with:
+          files: |
+            src/**
+            public/**
+            .firebaserc
+            firebase.json
+            .github/workflows/firebase-hosting-merge.yml
+
+      - run: |
+          if [ ${{ steps.check_for_changes.outputs.all_changed_and_modified_files_count }} -eq 0 ]; then
+            echo "There are no changes to deploy. Exiting..."
+            exit 1
+          fi
+
       - name: Installing dependencies
         run: rm -rf node_modules && yarn install --frozen-lockfile
 

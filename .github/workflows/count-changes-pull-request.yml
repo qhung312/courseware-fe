@@ -15,14 +15,16 @@ jobs:
         id: get_changed_files
         uses: tj-actions/changed-files@v39
         with:
-          files: |
-            src/**/*.{js,jsx,ts,tsx,json}
-            .github/workflows/**
+          files_ignore: |
+            yarn.lock
+            package-lock.json
+            package.json
 
       - name: Check number of changed files
         run: |
-          echo "Number of changed files: ${{ steps.get_changed_files.outputs.all_changed_files_count }}"
-          if [ ${{ steps.get_changed_files.outputs.all_changed_files_count }} -gt 15 ]; then
+          let "all_changed_files = ${{ steps.get_changed_files.outputs.added_files_count }} + ${{ steps.get_changed_files.outputs.all_modified_files_count }}"
+          echo $all_changed_files
+          if [ $all_changed_files -gt 15 ]; then
             echo "Too many changed files. Please limit your PR to 15 files or less."
             exit 1
           fi
