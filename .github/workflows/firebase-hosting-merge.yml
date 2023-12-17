@@ -27,7 +27,7 @@ jobs:
           echo ${{ steps.check_for_changes.outputs.all_changed_and_modified_files }}
           if [ ${{ steps.check_for_changes.outputs.all_changed_and_modified_files_count }} -eq 0 ]; then
             echo "There are no changes to deploy. Exiting..."
-            exit 1
+            exit 0
           fi
 
       - name: Installing dependencies
