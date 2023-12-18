@@ -4,21 +4,49 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  build_and_preview:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+  check-for-dependent-changes:
     runs-on: ubuntu-latest
+    outputs:
+      number_of_files_change: ${{ steps.check_for_changes.outputs.count }}
     steps:
       - name: Checkout main
         uses: actions/checkout@v3
 
-      - run: rm -rf node_modules && yarn install --frozen-lockfile
+      - name: Check for changes
+        id: check_for_changes
+        uses: tj-actions/changed-files@v39
+        with:
+          files: |
+            src/**
+            public/**
+            .firebaserc
+            firebase.json
+
       - run: >
+          echo "count=
+          ${{ steps.check_for_changes.outputs.all_changed_and_modified_files_count }}" 
+          >> "$GITHUB_OUTPUT"
+
+  build_and_preview:
+    needs: check-for-dependent-changes
+    if: ${{ needs.check-for-dependent-changes.outputs.number_of_files_change > 0 && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v3
+
+      - name: Installing dependencies
+        run: rm -rf node_modules && yarn install --frozen-lockfile
+
+      - name: Building project
+        run: >
           REACT_APP_ENVIRONMENT=development
           REACT_APP_API_URL=${{ vars.REACT_APP_API_URL_DEV }}
           REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID_DEV }}
           yarn run build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploying to Firebase Hosting Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CTCT_WEB_DEV }}'
