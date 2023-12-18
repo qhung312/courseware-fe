@@ -17,8 +17,7 @@ jobs:
         with:
           files_ignore: |
             yarn.lock
-            package-lock.json
-            package.json
+            **/*.{json,md,svg,png,jpg,jpeg}
 
       - name: Check number of changed files
         run: |
