@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Header, Loading } from '../../components';
 import { Protected } from '../../layout';
-import ComingSoonPage from '../../pages/ComingSoon';
+// import ComingSoonPage from '../../pages/ComingSoon';
 import BadEmailPage from '../../pages/Error/BadEmail';
 import NotFoundPage from '../../pages/Error/NotFound';
 
@@ -24,6 +24,7 @@ const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
 const ExamArchivePage = lazy(() => import('../../pages/Library/ExamArchivePage'));
 const ExamArchiveDetail = lazy(() => import('../../pages/Library/ExamArchiveDetail'));
 const ExercisesPage = lazy(() => import('../../pages/Room/Exercises'));
+const MockTestPage = lazy(() => import('../../pages/Room/MockTest/IntroductionPage'));
 
 const UserRoute = () => {
   return (
@@ -211,7 +212,16 @@ const UserRoute = () => {
               </Suspense>
             }
           />
-          <Route path='tests' element={<ComingSoonPage />} />
+          <Route path='tests'>
+            <Route
+              path=''
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MockTestPage />
+                </Suspense>
+              }
+            />
+          </Route>
         </Route>
         <Route path='error/bad-email' element={<BadEmailPage />} />
         <Route path='*' element={<NotFoundPage />} />
