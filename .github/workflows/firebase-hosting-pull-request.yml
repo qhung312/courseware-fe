@@ -4,11 +4,12 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  build_and_preview:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+  check-for-dependent-changes:
     runs-on: ubuntu-latest
+    outputs:
+      number_of_files_change: ${{ steps.check_for_changes.outputs.count }}
     steps:
-      - name: Checkout latest commit
+      - name: Checkout main
         uses: actions/checkout@v3
 
       - name: Check for changes
@@ -21,12 +22,18 @@ jobs:
             .firebaserc
             firebase.json
 
-      - run: |
-          echo ${{ steps.check_for_changes.outputs.all_changed_and_modified_files }}
-          if [ ${{ steps.check_for_changes.outputs.all_changed_and_modified_files_count }} -eq 0 ]; then
-            echo "There are no changes to deploy. Exiting..."
-            exit 0
-          fi
+      - run: >
+          echo "count=
+          ${{ steps.check_for_changes.outputs.all_changed_and_modified_files_count }}" 
+          >> "$GITHUB_OUTPUT"
+
+  build_and_preview:
+    needs: check-for-dependent-changes
+    if: ${{ needs.check-for-dependent-changes.outputs.number_of_files_change > 0 && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v3
 
       - name: Installing dependencies
         run: rm -rf node_modules && yarn install --frozen-lockfile
