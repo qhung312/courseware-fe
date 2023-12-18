@@ -7,7 +7,7 @@ jobs:
   check-for-dependent-changes:
     runs-on: ubuntu-latest
     outputs:
-      number_of_files_change: ${{ steps.check_for_changes.outputs.count }}
+      number_of_files_change: ${{ steps.get_number_of_files_changed.outputs.count }}
     steps:
       - name: Checkout main
         uses: actions/checkout@v3
@@ -22,7 +22,9 @@ jobs:
             .firebaserc
             firebase.json
 
-      - run: >
+      - name: Set output
+        id: get_number_of_files_changed
+        run: >
           echo "count=
           ${{ steps.check_for_changes.outputs.all_changed_and_modified_files_count }}" 
           >> "$GITHUB_OUTPUT"
