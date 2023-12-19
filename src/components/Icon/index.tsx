@@ -6,6 +6,7 @@ import { ReactComponent as ArrowLeft } from '../../assets/svgs/ArrowLeftIcon.svg
 import { ReactComponent as ArrowRightFill } from '../../assets/svgs/ArrowRightFillIcon.svg';
 import { ReactComponent as ArrowRight } from '../../assets/svgs/ArrowRightIcon.svg';
 import { ReactComponent as Book } from '../../assets/svgs/Book.svg';
+import { ReactComponent as CalendarIcon } from '../../assets/svgs/CalendarIcon.svg';
 import { ReactComponent as Camera } from '../../assets/svgs/CameraIcon.svg';
 import { ReactComponent as CheckIcon } from '../../assets/svgs/CheckIcon.svg';
 import { ReactComponent as Checkmark } from '../../assets/svgs/CheckmarkIcon.svg';
@@ -28,6 +29,7 @@ import { ReactComponent as DeleteModalIcon } from '../../assets/svgs/DeleteModal
 import { ReactComponent as DescriptionIcon } from '../../assets/svgs/DescriptionIcon.svg';
 import { ReactComponent as DevelopmentIcon } from '../../assets/svgs/DevelopmentIcon.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
+import { ReactComponent as DocumentPageIcon } from '../../assets/svgs/DocumentPageIcon.svg';
 import { ReactComponent as Edit } from '../../assets/svgs/EditIcon.svg';
 import { ReactComponent as EducationHat } from '../../assets/svgs/EducationHatIcon.svg';
 import { ReactComponent as EqualizerIcon } from '../../assets/svgs/EqualizerIcon.svg';
@@ -35,6 +37,7 @@ import { ReactComponent as Exercise } from '../../assets/svgs/ExerciseIcon.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/svgs/FacebookIcon.svg';
 import { ReactComponent as LogoFessior } from '../../assets/svgs/FessiorLogo.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/FilterIcon.svg';
+import { ReactComponent as FiveWingStarIcon } from '../../assets/svgs/FiveSwingStarIcon.svg';
 import { ReactComponent as LogoGoogle } from '../../assets/svgs/GoogleIcon.svg';
 import { ReactComponent as Help } from '../../assets/svgs/HelpIcon.svg';
 import { ReactComponent as Home } from '../../assets/svgs/HomeIcon.svg';
@@ -70,6 +73,7 @@ import { ReactComponent as StarLit } from '../../assets/svgs/StarLitIcon.svg';
 import { ReactComponent as Subject } from '../../assets/svgs/SubjectIcon.svg';
 import { ReactComponent as Test } from '../../assets/svgs/TestIcon.svg';
 import { ReactComponent as Upload } from '../../assets/svgs/UploadIcon.svg';
+import { ReactComponent as UpRightArrowIcon } from '../../assets/svgs/UpRightArrowIcon.svg';
 import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.svg';
 import { ReactComponent as ViewIcon } from '../../assets/svgs/ViewIcon.svg';
 import { ReactComponent as XMark } from '../../assets/svgs/XMarkIcon.svg';
@@ -85,6 +89,7 @@ export default {
   ArrowLeft,
   ArrowRightFill,
   ArrowRight,
+  CalendarIcon,
   Camera,
   CheckIcon,
   Checkmark,
@@ -107,11 +112,13 @@ export default {
   LogoLinkedin,
   DevelopmentIcon,
   Document,
+  DocumentPageIcon,
   Edit,
   EducationHat,
   EqualizerIcon,
   FacebookIcon,
   FilterIcon,
+  FiveWingStarIcon,
   LocationIcon,
   LogoCTCT,
   LogoGDSC,
@@ -155,5 +162,6 @@ export default {
   YoutubeIcon,
   ZoomInIcon,
   ZoomOutIcon,
+  UpRightArrowIcon,
   LiveHelpIcon,
 };
