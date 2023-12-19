@@ -21,9 +21,8 @@ jobs:
 
       - name: Check number of changed files
         run: |
-          let "all_changed_files = ${{ steps.get_changed_files.outputs.added_files_count }} + ${{ steps.get_changed_files.outputs.all_modified_files_count }}"
-          echo $all_changed_files
-          if [ $all_changed_files -gt 15 ]; then
+          echo ${{ steps.get_changed_files.outputs.all_modified_files_count }}
+          if [ ${{ steps.get_changed_files.outputs.all_modified_files_count }} -gt 15 ]; then
             echo "Too many changed files. Please limit your PR to 15 files or less."
             exit 1
           fi
