@@ -93,9 +93,7 @@ export function parseDuration(duration: number) {
   const seconds = Math.floor((duration % 60000) / 1000);
 
   if (hours > 0) {
-    return `${hours} giờ ${minutes < 10 ? `0${minutes}` : minutes} phút ${
-      seconds < 10 ? `0${seconds}` : seconds
-    } giây`;
+    return `${hours} giờ ${minutes < 10 ? `0${minutes}` : minutes} phút`;
   } else if (minutes > 0) {
     return `${minutes} phút ${seconds < 10 ? `0${seconds}` : seconds} giây`;
   }

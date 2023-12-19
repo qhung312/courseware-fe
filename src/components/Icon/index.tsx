@@ -30,6 +30,7 @@ import { ReactComponent as DescriptionIcon } from '../../assets/svgs/Description
 import { ReactComponent as DevelopmentIcon } from '../../assets/svgs/DevelopmentIcon.svg';
 import { ReactComponent as Document } from '../../assets/svgs/DocumentIcon.svg';
 import { ReactComponent as DocumentPageIcon } from '../../assets/svgs/DocumentPageIcon.svg';
+import { ReactComponent as DoneAll } from '../../assets/svgs/DoneAllIcon.svg';
 import { ReactComponent as Edit } from '../../assets/svgs/EditIcon.svg';
 import { ReactComponent as EducationHat } from '../../assets/svgs/EducationHatIcon.svg';
 import { ReactComponent as EqualizerIcon } from '../../assets/svgs/EqualizerIcon.svg';
@@ -139,6 +140,7 @@ export default {
   OpenAside,
   OpenBook,
   OpenQuote,
+  DoneAll,
   CloseQuote,
   UserAnswer,
   Result,

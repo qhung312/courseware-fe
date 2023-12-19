@@ -2,9 +2,8 @@ import { Link } from 'react-router-dom';
 
 import { Footer, Icon, LazyLoadImage } from '../../../components';
 import { Page } from '../../../layout';
-// import './index.css';
 
-const MockTestPage = () => {
+const Main = () => {
   return (
     <Page title='Thi thử'>
       <main className='flex flex-col gap-y-5 overflow-y-auto text-[16px] md:text-[14px] lg:gap-y-12 lg:text-[18px] xl:text-[20px] 2xl:gap-y-16 3xl:gap-y-20'>
@@ -39,7 +38,7 @@ const MockTestPage = () => {
                 </p>
               </div>
               <div className='grid w-full grid-cols-1 gap-y-5 gap-x-10 lg:grid-cols-2 lg:gap-x-8 lg:py-4 2xl:gap-x-10 2xl:py-8'>
-                <div className='flex flex-row items-center rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
+                <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
                   <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#49BBBD]/30 lg:h-[72px] 2xl:h-20'>
                     <Icon.UpRightArrowIcon className='h-6 w-auto fill-[#49BBBD] xl:h-[30px]' />
                   </div>
@@ -47,7 +46,7 @@ const MockTestPage = () => {
                     Cải thiện kĩ năng làm bài
                   </p>
                 </div>
-                <div className='flex flex-row items-center rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
+                <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
                   <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#9DCCFF]/30 lg:h-[72px] 2xl:h-20'>
                     <Icon.Pen className='h-6 w-auto fill-[#9DCCFF] xl:h-[30px]' />
                   </div>
@@ -55,7 +54,7 @@ const MockTestPage = () => {
                     Làm quen với môi trường thi cử
                   </p>
                 </div>
-                <div className='flex flex-row items-center rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
+                <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
                   <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#9DCCFF]/30 lg:h-[72px] 2xl:h-20'>
                     <Icon.FiveWingStarIcon className='h-6 w-auto fill-[#9DCCFF] xl:h-[30px]' />
                   </div>
@@ -63,7 +62,7 @@ const MockTestPage = () => {
                     Nâng cao điểm thi thật
                   </p>
                 </div>
-                <div className='flex flex-row items-center rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
+                <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
                   <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#49BBBD]/30 lg:h-[72px] 2xl:h-20'>
                     <Icon.DocumentPageIcon className='h-6 w-auto fill-[#49BBBD] xl:h-[30px]' />
                   </div>
@@ -111,7 +110,7 @@ const MockTestPage = () => {
                 </div>
               </div>
               <div className='flex w-full flex-row items-center justify-between'>
-                <Link to='/room/tests/detail' className='flex cursor-pointer'>
+                <Link to='/room/tests/midterm' className='flex cursor-pointer'>
                   <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
                     Chi tiết
                   </p>
@@ -154,7 +153,7 @@ const MockTestPage = () => {
                 </div>
               </div>
               <div className='flex w-full flex-row items-center justify-between'>
-                <Link to='/room/tests/detail/0' className='flex cursor-pointer'>
+                <Link to='/room/tests/final' className='flex cursor-pointer'>
                   <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
                     Chi tiết
                   </p>
@@ -175,4 +174,4 @@ const MockTestPage = () => {
   );
 };
 
-export default MockTestPage;
+export default Main;

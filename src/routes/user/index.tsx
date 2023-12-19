@@ -24,7 +24,8 @@ const MaterialDetail = lazy(() => import('../../pages/Library/MaterialDetail'));
 const ExamArchivePage = lazy(() => import('../../pages/Library/ExamArchivePage'));
 const ExamArchiveDetail = lazy(() => import('../../pages/Library/ExamArchiveDetail'));
 const ExercisesPage = lazy(() => import('../../pages/Room/Exercises'));
-const MockTestPage = lazy(() => import('../../pages/Room/MockTest/IntroductionPage'));
+const MainTestPage = lazy(() => import('../../pages/Room/MockTest/Main'));
+const DetailMockTestPage = lazy(() => import('../../pages/Room/MockTest/Detail'));
 
 const UserRoute = () => {
   return (
@@ -217,7 +218,23 @@ const UserRoute = () => {
               path=''
               element={
                 <Suspense fallback={<Loading />}>
-                  <MockTestPage />
+                  <MainTestPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='midterm/:subjectId?'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <DetailMockTestPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='final/:subjectId?'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <DetailMockTestPage />
                 </Suspense>
               }
             />
