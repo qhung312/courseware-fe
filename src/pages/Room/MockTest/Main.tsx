@@ -39,32 +39,32 @@ const Main = () => {
               </div>
               <div className='grid w-full grid-cols-1 gap-y-5 gap-x-10 lg:grid-cols-2 lg:gap-x-8 lg:py-4 2xl:gap-x-10 2xl:py-8'>
                 <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
-                  <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#49BBBD]/30 lg:h-[72px] 2xl:h-20'>
-                    <Icon.UpRightArrowIcon className='h-6 w-auto fill-[#49BBBD] xl:h-[30px]' />
+                  <div className='flex aspect-square h-[60px] items-center justify-center rounded bg-[#49BBBD]/30 lg:h-[72px] 2xl:h-20 3xl:h-[90px]'>
+                    <Icon.UpRightArrowIcon className='h-6 w-auto fill-[#49BBBD] 3xl:h-[30px]' />
                   </div>
                   <p className='flex w-full justify-center whitespace-nowrap text-center text-[18px] leading-7 text-[#696984] md:flex-wrap md:whitespace-normal lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-10'>
                     Cải thiện kĩ năng làm bài
                   </p>
                 </div>
                 <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
-                  <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#9DCCFF]/30 lg:h-[72px] 2xl:h-20'>
-                    <Icon.Pen className='h-6 w-auto fill-[#9DCCFF] xl:h-[30px]' />
+                  <div className='flex aspect-square h-[60px] items-center justify-center rounded bg-[#9DCCFF]/30 lg:h-[72px] 2xl:h-20 3xl:h-[90px]'>
+                    <Icon.Pen className='h-6 w-auto fill-[#9DCCFF] 3xl:h-[30px]' />
                   </div>
                   <p className='flex w-full justify-center whitespace-nowrap text-center text-[18px] leading-7 text-[#696984] md:flex-wrap md:whitespace-normal lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-10'>
                     Làm quen với môi trường thi cử
                   </p>
                 </div>
                 <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
-                  <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#9DCCFF]/30 lg:h-[72px] 2xl:h-20'>
-                    <Icon.FiveWingStarIcon className='h-6 w-auto fill-[#9DCCFF] xl:h-[30px]' />
+                  <div className='flex aspect-square h-[60px] items-center justify-center rounded bg-[#9DCCFF]/30 lg:h-[72px] 2xl:h-20 3xl:h-[90px]'>
+                    <Icon.FiveWingStarIcon className='h-6 w-auto fill-[#9DCCFF] 3xl:h-[30px]' />
                   </div>
                   <p className='flex w-full justify-center whitespace-nowrap text-center text-[18px] leading-7 text-[#696984] md:flex-wrap md:whitespace-normal lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-10'>
                     Nâng cao điểm thi thật
                   </p>
                 </div>
                 <div className='flex flex-row items-center gap-x-2 rounded-[20px] p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:h-auto md:gap-x-3 lg:gap-x-4 2xl:gap-x-5 2xl:p-6'>
-                  <div className='flex aspect-square h-[60px] items-center justify-center rounded-lg bg-[#49BBBD]/30 lg:h-[72px] 2xl:h-20'>
-                    <Icon.DocumentPageIcon className='h-6 w-auto fill-[#49BBBD] xl:h-[30px]' />
+                  <div className='flex aspect-square h-[60px] items-center justify-center rounded bg-[#49BBBD]/30 lg:h-[72px] 2xl:h-20 3xl:h-[90px]'>
+                    <Icon.DocumentPageIcon className='h-6 w-auto fill-[#49BBBD] 3xl:h-[30px]' />
                   </div>
                   <p className='flex w-full justify-center whitespace-nowrap text-center text-[18px] leading-7 text-[#696984] md:flex-wrap md:whitespace-normal lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-10'>
                     Ôn tập kiến thức đại cương
