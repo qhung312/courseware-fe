@@ -1,17 +1,24 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Footer, Icon, LazyLoadImage } from '../../../components';
-import { Page } from '../../../layout';
+import { Footer, Icon, LazyLoadImage, Select } from '../../../../components';
+import { Page } from '../../../../layout';
+import { SEMESTER_OPTIONS } from '../../../../types';
+import { getCurrentSemester } from '../../../../utils/helper';
+
+import './index.css';
 
 const Main = () => {
+  const [semester, setSemester] = useState(getCurrentSemester());
+
   return (
     <Page title='Thi thử'>
       <main className='flex flex-col gap-y-5 overflow-y-auto text-[16px] md:text-[14px] lg:gap-y-12 lg:text-[18px] xl:text-[20px] 2xl:gap-y-16 3xl:gap-y-20'>
         <div className='w-full'>
           <LazyLoadImage
             className='header z-[1] block aspect-[52/25] md:aspect-[4/1]'
-            src={require('../../../assets/images/MockTest_1.jpg')}
-            placeHolderSrc={require('../../../assets/images/MockTest_1-placeholder.jpg')}
+            src={require('../../../../assets/images/MockTest_1.jpg')}
+            placeHolderSrc={require('../../../../assets/images/MockTest_1-placeholder.jpg')}
             alt='tstt_alt'
             objectFit='cover'
           />
@@ -75,15 +82,31 @@ const Main = () => {
           </div>
         </div>
         <div className='flex w-full flex-col items-start gap-y-5 bg-[#9DCCFF]/20 px-5 pt-10 pb-16 md:gap-y-6 md:px-12 lg:gap-y-8 lg:px-24 lg:pt-12 lg:pb-20 2xl:gap-y-10 2xl:px-32 2xl:pt-16 2xl:pb-24 3xl:px-40 3xl:pt-20 3xl:pb-28'>
-          <h2 className='text-start text-2xl font-semibold text-black lg:text-3xl 2xl:text-4xl'>
-            Các đợt thi thử
-          </h2>
+          <div
+            id='mock-test'
+            className='flex w-full flex-1 flex-row items-center justify-between gap-x-5 md:gap-x-20'
+          >
+            <h2 className='text-start text-2xl font-semibold text-black lg:text-3xl 2xl:text-4xl'>
+              Các đợt thi thử
+            </h2>
+            <Select
+              options={SEMESTER_OPTIONS}
+              onChange={(v) => {
+                if (v !== null) {
+                  setSemester(v.label.slice(-3));
+                }
+              }}
+              value={SEMESTER_OPTIONS.find((x) => x.label.includes(semester)) ?? null}
+              placeholder='Chọn học kì'
+            />
+          </div>
+
           <div className='grid w-full grid-cols-1 justify-between gap-y-5 md:grid-cols-2 md:gap-x-12 lg:gap-x-16 2xl:gap-x-20'>
             <div className='flex flex-col gap-y-7 rounded-[20px] bg-white p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:gap-y-6 lg:gap-y-8 lg:p-6 2xl:gap-y-12 2xl:p-8'>
               <LazyLoadImage
                 className='header z-[1] block aspect-[2/1] h-auto rounded-[20px]'
-                src={require('../../../assets/images/MockTest_2.jpg')}
-                placeHolderSrc={require('../../../assets/images/MockTest_2-placeholder.jpg')}
+                src={require('../../../../assets/images/MockTest_2.jpg')}
+                placeHolderSrc={require('../../../../assets/images/MockTest_2-placeholder.jpg')}
                 containerClassName='h-auto'
                 alt='tstt_alt'
                 objectFit='cover'
@@ -110,7 +133,7 @@ const Main = () => {
                 </div>
               </div>
               <div className='flex w-full flex-row items-center justify-between'>
-                <Link to='/room/tests/midterm' className='flex cursor-pointer'>
+                <Link to={`/room/tests/midterm/${semester}`} className='flex cursor-pointer'>
                   <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
                     Chi tiết
                   </p>
@@ -126,8 +149,8 @@ const Main = () => {
             <div className='flex flex-col gap-y-7 rounded-[20px] bg-white p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:gap-y-6 lg:gap-y-8 lg:p-6 2xl:gap-y-12 2xl:p-8'>
               <LazyLoadImage
                 className='header z-[1] block aspect-[2/1] h-auto rounded-[20px]'
-                src={require('../../../assets/images/MockTest_3.jpg')}
-                placeHolderSrc={require('../../../assets/images/MockTest_3-placeholder.jpg')}
+                src={require('../../../../assets/images/MockTest_3.jpg')}
+                placeHolderSrc={require('../../../../assets/images/MockTest_3-placeholder.jpg')}
                 alt='tstt_alt'
                 objectFit='cover'
               />
@@ -153,7 +176,7 @@ const Main = () => {
                 </div>
               </div>
               <div className='flex w-full flex-row items-center justify-between'>
-                <Link to='/room/tests/final' className='flex cursor-pointer'>
+                <Link to={`/room/tests/final/${semester}`} className='flex cursor-pointer'>
                   <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
                     Chi tiết
                   </p>

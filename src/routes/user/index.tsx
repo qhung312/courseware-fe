@@ -223,7 +223,7 @@ const UserRoute = () => {
               }
             />
             <Route
-              path='midterm/:subjectId?'
+              path='midterm/:semester/:subjectId?'
               element={
                 <Suspense fallback={<Loading />}>
                   <DetailMockTestPage />
@@ -231,7 +231,7 @@ const UserRoute = () => {
               }
             />
             <Route
-              path='final/:subjectId?'
+              path='final/:semester/:subjectId?'
               element={
                 <Suspense fallback={<Loading />}>
                   <DetailMockTestPage />

@@ -147,3 +147,18 @@ export const calculateProgress = (questions: ConcreteQuestion[]) => {
     correctPercentage: Math.round((totalCorrect / questions.length) * 100),
   };
 };
+
+export const getCurrentSemester = () => {
+  const now = new Date().toLocaleDateString('vi-VN', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  const [, month, year] = now.split('/');
+
+  return `${Number(year) - (Number(month) >= 9 && Number(month) <= 12 ? 0 : 1)}${
+    Number(month) >= 9 && Number(month) <= 12 ? 1 : Number(month) >= 1 && Number(month) <= 6 ? 2 : 3
+  }`;
+};

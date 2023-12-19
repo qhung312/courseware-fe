@@ -253,7 +253,7 @@ const DetailTest: FC = () => {
         <RoomAside
           title={`Thi thử ${testName}`}
           subTitle='Phòng thi'
-          baseRoute={`/room/tests/${typeOfTest}`}
+          baseRoute={`/room/tests/${typeOfTest}/${params.semester}`}
         />
         <Wrapper className='flex flex-1 flex-col'>
           <main className='flex flex-col px-5 py-4 md:px-8 md:py-6 lg:px-10 lg:py-8 xl:px-12 2xl:px-14 2xl:py-10'>
@@ -279,7 +279,7 @@ const DetailTest: FC = () => {
       <RoomAside
         title={`Thi thử ${testName} - ${currentSubject.name}`}
         subTitle='Phòng thi'
-        baseRoute={`/room/tests/${typeOfTest}`}
+        baseRoute={`/room/tests/${typeOfTest}/${params.semester}`}
       />
       <Wrapper className='h-fit min-h-full w-full leading-normal'>
         <main
