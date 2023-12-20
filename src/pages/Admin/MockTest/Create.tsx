@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FilePond } from 'react-filepond';
+import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
 // import './index.css';
@@ -8,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
 import { Page, Wrapper } from '../../../layout';
-import ExamArchiveService from '../../../service/examArchive.service';
+import MockTestService from '../../../service/mockTest.service';
 import SubjectService from '../../../service/subject.service';
 import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
@@ -19,18 +18,17 @@ const MockTestCreate = () => {
   const [semester, setSemester] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [duration, setDuration] = useState<{ start: number; end: number }>({ start: 0, end: 0 });
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
-  const fileUploaderRef = useRef<FilePond>(null);
   const submitDisabled =
     name === '' ||
     subject === '' ||
     type === '' ||
     semester === '' ||
-    uploadedFiles.length === 0 ||
+    duration.end <= duration.start ||
+    duration.start <= Date.now() ||
     loading;
 
   useEffect(() => {
@@ -51,25 +49,32 @@ const MockTestCreate = () => {
       });
   }, []);
 
-  const createExamArchive = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const createMockTest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLoading(true);
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('', uploadedFiles[0]);
-    formData.append('subject', subject);
-    formData.append('type', type);
-    formData.append('semester', semester);
-    ExamArchiveService.create(formData)
+    const data = {
+      name,
+      description,
+      registrationStartedAt: duration.start,
+      registrationEndedAt: duration.end,
+      subject,
+      semester,
+      type,
+      slots: [],
+    };
+    MockTestService.create(data)
       .then((_) => {
-        toast.success('Tạo đề thi thành công');
+        toast.success('Tạo đợt thi thử thành công');
         setName('');
         setSubject('');
         setType('');
         setSemester('');
         setDescription('');
-        setUploadedFiles([]);
-        fileUploaderRef.current?.removeFiles();
+        setDuration({ start: 0, end: 0 });
+        const inputStartedDate = document.getElementById('started-date') as HTMLInputElement;
+        inputStartedDate.value = '';
+        const inputEndedDate = document.getElementById('ended-date') as HTMLInputElement;
+        inputEndedDate.value = '';
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -151,6 +156,41 @@ const MockTestCreate = () => {
                   />
                 </div>
               </div>
+
+              <div className='flex w-full gap-x-4'>
+                <div className='flex flex-1 flex-col'>
+                  <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
+                    Thời gian bắt đầu
+                  </p>
+                  <input
+                    type='datetime-local'
+                    id='started-date'
+                    name='started-date'
+                    onChange={({ target }) => {
+                      setDuration({ ...duration, start: new Date(target.value).getTime() });
+                    }}
+                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
+                  lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                  />
+                </div>
+                <div className='flex flex-1 flex-col'>
+                  <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
+                    Thời gian kết thúc
+                  </p>
+                  <input
+                    type='datetime-local'
+                    id='ended-date'
+                    name='ended-date'
+                    onChange={({ target }) =>
+                      setDuration({ ...duration, end: new Date(target.value).getTime() })
+                    }
+                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
+                  lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                  />
+                </div>
+                <div className='flex-1' />
+              </div>
+
               <div className='flex w-full flex-col items-start justify-center'>
                 <label className='mb-2 w-full' htmlFor='exam-description'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chú thích</p>
@@ -168,24 +208,11 @@ const MockTestCreate = () => {
                 />
               </div>
 
-              <div className='flex w-full flex-col'>
-                <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                  Đăng tải đề thi
-                </p>
-                <FilePond
-                  ref={fileUploaderRef}
-                  onupdatefiles={(files) => {
-                    setUploadedFiles(files[0] ? [files[0].file as File] : []);
-                  }}
-                  allowMultiple={false}
-                  labelIdle='Kéo & Thả hoặc <span class="filepond--label-action">Chọn đề thi</span>'
-                />
-              </div>
               <div className='flex w-full flex-row items-center justify-center gap-x-4'>
                 <button
                   type='submit'
                   disabled={submitDisabled}
-                  onClick={createExamArchive}
+                  onClick={createMockTest}
                   className={`flex items-center rounded-lg px-6 py-1
                   transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
                     submitDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
@@ -204,8 +231,15 @@ const MockTestCreate = () => {
                     setType('');
                     setSemester('');
                     setDescription('');
-                    setUploadedFiles([]);
-                    fileUploaderRef.current?.removeFiles();
+                    setDuration({ start: 0, end: 0 });
+                    const inputStartedDate = document.getElementById(
+                      'started-date'
+                    ) as HTMLInputElement;
+                    inputStartedDate.value = '';
+                    const inputEndedDate = document.getElementById(
+                      'ended-date'
+                    ) as HTMLInputElement;
+                    inputEndedDate.value = '';
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>
