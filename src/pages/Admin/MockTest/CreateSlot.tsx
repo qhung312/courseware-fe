@@ -90,7 +90,7 @@ const CreateSlot = () => {
       mockTestId
     )
       .then((_res) => {
-        toast.success('Tạo bài tập rèn luyện thành công');
+        toast.success('Tạo ca thi thành công');
         setName('');
         setLimit(0);
         setDuration({ start: 0, end: 0 });

@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Icon } from '../../../components';
 import { Option } from '../../../components/Header/SearchBar';
 import { Page, Wrapper } from '../../../layout';
+import ChapterService from '../../../service/chapter.service';
 import MockTestService from '../../../service/mockTest.service';
 import SubjectService from '../../../service/subject.service';
 import { Slots } from '../../../types/mockTest';
@@ -18,6 +19,7 @@ const ViewSlot = () => {
   const [slot, setSlot] = useState<Slots>();
   const [loading, setLoading] = useState(false);
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
+  const [chapterOptionsAll, setChapterOptionsAll] = useState<Option[]>([]);
 
   useEffect(() => {
     SubjectService.getAll({}, true)
@@ -42,15 +44,8 @@ const ViewSlot = () => {
     MockTestService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
-        setSlot(
-          result?.slots[parseInt(slotId) || 0] || {
-            name: '',
-            description: '',
-            duration: 0,
-            sampleSize: 0,
-            potentialQuestions: [],
-          }
-        );
+        const slotInfo = result?.slots.find((el) => el.slotId === parseInt(slotId));
+        setSlot(slotInfo);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -59,6 +54,21 @@ const ViewSlot = () => {
         setLoading(false);
       });
   }, [id, slotId]);
+
+  useEffect(() => {
+    ChapterService.getAll({ subject: '' })
+      .then((res) => {
+        const { result: chapters } = res.data.payload;
+        const listOption = chapters.map((chap) => ({
+          value: chap._id,
+          label: chap.name,
+        }));
+        setChapterOptionsAll(listOption);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  }, []);
 
   return (
     <Page>
@@ -125,7 +135,7 @@ const ViewSlot = () => {
                         Số người đăng ký
                       </p>
                       <div className='flex w-full flex-1 items-center rounded-lg border border-[#CCC] bg-[#efefef4d]  p-1 text-xs font-medium text-[#252641] lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                        {slot?.registeredUsers.length}/{slot?.userLimit}
+                        {slot?.registeredUsers?.length || 0}/{slot?.userLimit}
                       </div>
                     </div>
                     <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
@@ -160,7 +170,7 @@ const ViewSlot = () => {
                           Môn
                         </p>
                         <p className='flex flex-[1.2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
-                          Cập nhật gần nhất
+                          Chương
                         </p>
                         <p className='flex flex-[1.5] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
                           Thời gian tạo
@@ -180,7 +190,8 @@ const ViewSlot = () => {
                               ''}
                           </p>
                           <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                            {new Date(question?.lastUpdatedAt || '').toLocaleString()}
+                            {chapterOptionsAll.find((sub) => sub.value === question?.chapter)
+                              ?.label || ''}
                           </p>
                           <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
                             {new Date(question?.createdAt).toLocaleString()}
@@ -192,7 +203,7 @@ const ViewSlot = () => {
                   <div className='my-5 flex w-full flex-row justify-end'>
                     <div className='flex items-center justify-center'>
                       <Link
-                        to={`/admin/exercises/edit/${id}`}
+                        to={`/admin/mock-test/slot/edit/${id}/${slotId}`}
                         className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
                       >
                         <p className='whitespace-nowrap p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>

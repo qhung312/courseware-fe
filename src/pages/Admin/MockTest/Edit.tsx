@@ -350,6 +350,15 @@ const MockTestEdit = () => {
                           {new Date(slot?.endedAt).toLocaleString() || 'Chưa có thời gian'}
                         </p>
                         <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
+                          <Link
+                            to={`/admin/mock-test/slot/edit/${mockTest?._id}/${slot.slotId}`}
+                            className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                          >
+                            <Icon.Edit
+                              fill='white'
+                              className='h-4 w-4 lg:h-5 lg:w-5 3xl:h-6 3xl:w-6'
+                            />
+                          </Link>
                           <button
                             className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
                             onClick={(e) => {

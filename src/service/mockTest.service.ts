@@ -106,6 +106,10 @@ const createSlot = (data: CreateSlotArgument, mockTestId: string) => {
   return axios.post<Response<MockTest>>(`${API_URL}admin/exam/${mockTestId}/slot`, data);
 };
 
+const editSlot = (data: CreateSlotArgument, mockTestId: string, slotNumber: number) => {
+  return axios.patch<Response<MockTest>>(`${API_URL}admin/exam/${mockTestId}/slot/${slotNumber}`, data);
+};
+
 const deleteSlot = (mockTestId: string, slotNumber: number) => {
   return axios.delete<Response<MockTest>>(`${API_URL}admin/exam/${mockTestId}/slot/${slotNumber}`);
 };
@@ -119,6 +123,7 @@ const MockTestService = {
   editGeneralInformation,
   createSlot,
   deleteSlot,
+  editSlot,
 };
 
 export default MockTestService;
