@@ -16,6 +16,7 @@ import CreateSlot from '../../pages/Admin/MockTest/CreateSlot';
 import MockTestEdit from '../../pages/Admin/MockTest/Edit';
 import MockTestList from '../../pages/Admin/MockTest/List';
 import MockTestView from '../../pages/Admin/MockTest/View';
+import ViewSlot from '../../pages/Admin/MockTest/ViewSlot';
 import EditQuestionPage from '../../pages/Admin/Question/Edit';
 import ViewQuestionPage from '../../pages/Admin/Question/View';
 import SubjectEdit from '../../pages/Admin/Subject/Edit';
@@ -304,6 +305,14 @@ const AdministratorRoute = () => {
                 element={
                   <Suspense fallback={<Loading />}>
                     <CreateSlot />
+                  </Suspense>
+                }
+              />
+              <Route
+                path='view/:id/:slotId'
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ViewSlot />
                   </Suspense>
                 }
               />

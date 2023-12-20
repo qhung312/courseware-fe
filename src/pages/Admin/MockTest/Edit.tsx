@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Icon, Select } from '../../../components';
+import DeleteModal from '../../../components/Modal/DeleteModal';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
@@ -33,6 +34,22 @@ const MockTestEdit = () => {
 
   const [canSave, setCanSave] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [slotToDelete, setSlotToDelete] = useState<number | null>(null);
+
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDeleteSlot = (slotNumber: number) => {
+    if (mockTest?._id !== null) {
+      MockTestService.deleteSlot(mockTest?._id || '', slotNumber)
+        .then((_res) => {
+          toast.success('Xóa ca thi thử thành công');
+          setMockTest(_res.data.payload);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    }
+  };
 
   const formattedDate = (date: number) => {
     const d = new Date(date);
@@ -127,6 +144,12 @@ const MockTestEdit = () => {
 
   return (
     <Page>
+      <DeleteModal
+        text='Bạn có chắc chắn muốn xóa ca thi này?'
+        onClose={() => setDeleteModal(false)}
+        show={deleteModal}
+        onDelete={() => onDeleteSlot(slotToDelete ?? -1)}
+      />
       <Wrapper className='flex flex-1 flex-col'>
         <div className='w-full bg-[#4285F4]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
@@ -308,10 +331,11 @@ const MockTestEdit = () => {
                       <div className='flex flex-1' />
                     </div>
                     {slots.map((slot) => (
-                      <div
+                      <Link
+                        to={`/admin/mock-test/slot/view/${mockTest?._id}/${slot.slotId}`}
                         key={slot.slotId}
-                        className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60
-                      px-6 py-2 lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
+                        className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60 px-6
+                      py-2 hover:bg-[#F1F1F1] lg:py-4 lg:px-8 3xl:px-10 3xl:py-6'
                       >
                         <p className='flex flex-[2.5] text-xs font-medium lg:text-sm 3xl:text-base'>
                           {slot?.name || 'Chưa có tên'}
@@ -328,15 +352,11 @@ const MockTestEdit = () => {
                         <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
                           <button
                             className='flex items-center justify-center rounded-full bg-[#DB4437]/90 p-2 hover:bg-[#DB4437]'
-                            // onClick={() => {
-                            //   const newPotentialQuestions = JSON.parse(
-                            //     JSON.stringify(potentialQuestions)
-                            //   ) as Question[];
-                            //   newPotentialQuestions.splice(index, 1);
-                            //   setPotentialQuestions(newPotentialQuestions);
-                            //   if ((newPotentialQuestions?.length ?? 0) < sampleSize)
-                            //     setSampleSize(newPotentialQuestions?.length ?? 0);
-                            // }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSlotToDelete(slot.slotId);
+                              setDeleteModal(true);
+                            }}
                           >
                             <Icon.Delete
                               fill='white'
@@ -344,7 +364,7 @@ const MockTestEdit = () => {
                             />
                           </button>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>

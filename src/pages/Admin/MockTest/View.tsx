@@ -162,10 +162,11 @@ const MockTestView = () => {
                       </p>
                     </div>
                     {mockTest?.slots?.map((slot) => (
-                      <div
+                      <Link
+                        to={`/admin/mock-test/slot/view/${mockTest._id}/${slot.slotId}`}
                         key={slot.slotId}
                         className='flex flex-1 flex-shrink-0 flex-row items-center gap-x-4 border-b border-b-[#CCC]/60
-                        px-6 py-2 lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
+                        px-6 py-2 hover:bg-[#F1F1F1] lg:py-4 lg:px-8 3xl:py-6 3xl:px-10'
                       >
                         <p className='flex flex-[2.5] text-xs font-medium lg:text-sm 3xl:text-base'>
                           {slot.name}
@@ -174,12 +175,12 @@ const MockTestView = () => {
                           {slot?.registeredUsers.length}/{slot?.userLimit}
                         </p>
                         <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {new Date(slot?.endedAt).toLocaleString()}
-                        </p>
-                        <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
                           {new Date(slot?.startedAt).toLocaleString()}
                         </p>
-                      </div>
+                        <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
+                          {new Date(slot?.endedAt).toLocaleString()}
+                        </p>
+                      </Link>
                     ))}
                   </div>
                 </div>
