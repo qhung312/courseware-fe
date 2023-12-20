@@ -30,6 +30,7 @@ const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
 const ExamCreate = lazy(() => import('../../pages/Admin/Exam/Create'));
 const ExamList = lazy(() => import('../../pages/Admin/Exam/List'));
+const CreateMockTestPage = lazy(() => import('../../pages/Admin/MockTest/Create'));
 
 const AdministratorRoute = () => {
   return (
@@ -240,6 +241,40 @@ const AdministratorRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <CreateChapterPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterView />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterEdit />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route path='mock-test'>
+            <Route
+              path='manage'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChapterListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='create'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <CreateMockTestPage />
                 </Suspense>
               }
             />
