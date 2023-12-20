@@ -93,9 +93,7 @@ export function parseDuration(duration: number) {
   const seconds = Math.floor((duration % 60000) / 1000);
 
   if (hours > 0) {
-    return `${hours} giờ ${minutes < 10 ? `0${minutes}` : minutes} phút ${
-      seconds < 10 ? `0${seconds}` : seconds
-    } giây`;
+    return `${hours} giờ ${minutes < 10 ? `0${minutes}` : minutes} phút`;
   } else if (minutes > 0) {
     return `${minutes} phút ${seconds < 10 ? `0${seconds}` : seconds} giây`;
   }
@@ -148,4 +146,19 @@ export const calculateProgress = (questions: ConcreteQuestion[]) => {
     percentage: Math.round((current / questions.length) * 100),
     correctPercentage: Math.round((totalCorrect / questions.length) * 100),
   };
+};
+
+export const getCurrentSemester = () => {
+  const now = new Date().toLocaleDateString('vi-VN', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  const [, month, year] = now.split('/');
+
+  return `${Number(year) - (Number(month) >= 9 && Number(month) <= 12 ? 0 : 1)}${
+    Number(month) >= 9 && Number(month) <= 12 ? 1 : Number(month) >= 1 && Number(month) <= 6 ? 2 : 3
+  }`;
 };

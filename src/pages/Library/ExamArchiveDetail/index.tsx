@@ -104,7 +104,7 @@ const ExamArchiveDetailPage: React.FC = () => {
               className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white hover:bg-[#2571eb] md:p-1 lg:p-2 2xl:p-3'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
-              <p className='whitespace-nowrap text-[16px] text-inherit md:text-sm lg:text-[16px] 2xl:text-[18px]'>
+              <p className='whitespace-nowrap text-[16px] font-semibold text-inherit 2xl:text-[20px]'>
                 Quay lại
               </p>
             </button>
