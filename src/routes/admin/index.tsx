@@ -12,6 +12,8 @@ import EditExercisePage from '../../pages/Admin/Exercise/Edit';
 import ViewExercisePage from '../../pages/Admin/Exercise/View';
 import MaterialEdit from '../../pages/Admin/Material/Edit';
 import MaterialView from '../../pages/Admin/Material/View';
+import CreateSlot from '../../pages/Admin/MockTest/CreateSlot';
+import MockTestEdit from '../../pages/Admin/MockTest/Edit';
 import MockTestList from '../../pages/Admin/MockTest/List';
 import MockTestView from '../../pages/Admin/MockTest/View';
 import EditQuestionPage from '../../pages/Admin/Question/Edit';
@@ -292,10 +294,20 @@ const AdministratorRoute = () => {
               path='edit/:id'
               element={
                 <Suspense fallback={<Loading />}>
-                  <ChapterEdit />
+                  <MockTestEdit />
                 </Suspense>
               }
             />
+            <Route path='slot'>
+              <Route
+                path='create/:id'
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <CreateSlot />
+                  </Suspense>
+                }
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>

@@ -30,6 +30,15 @@ const MockTestCreate = () => {
     duration.start <= Date.now() ||
     loading;
 
+  const formattedDate = (date: number) => {
+    const d = new Date(date);
+    const dateString = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`;
+    const monthString = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`;
+    const hourString = d.getHours() < 10 ? `0${d.getHours()}` : `${d.getHours()}`;
+    const minuteString = d.getMinutes() < 10 ? `0${d.getMinutes()}` : `${d.getMinutes()}`;
+    return `${d.getFullYear()}-${monthString}-${dateString}T${hourString}:${minuteString}`;
+  };
+
   useEffect(() => {
     SubjectService.getAll({}, true)
       .then((res) => {
@@ -70,10 +79,6 @@ const MockTestCreate = () => {
         setSemester('');
         setDescription('');
         setDuration({ start: 0, end: 0 });
-        const inputStartedDate = document.getElementById('started-date') as HTMLInputElement;
-        inputStartedDate.value = '';
-        const inputEndedDate = document.getElementById('ended-date') as HTMLInputElement;
-        inputEndedDate.value = '';
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -159,12 +164,13 @@ const MockTestCreate = () => {
               <div className='flex w-full gap-x-4'>
                 <div className='flex flex-1 flex-col'>
                   <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                    Thời gian bắt đầu
+                    Bắt đầu đăng ký
                   </p>
                   <input
                     type='datetime-local'
                     id='started-date'
                     name='started-date'
+                    value={duration.start === 0 ? '' : formattedDate(duration.start)}
                     onChange={({ target }) => {
                       setDuration({ ...duration, start: new Date(target.value).getTime() });
                     }}
@@ -174,12 +180,13 @@ const MockTestCreate = () => {
                 </div>
                 <div className='flex flex-1 flex-col'>
                   <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                    Thời gian kết thúc
+                    Kết thúc đăng ký
                   </p>
                   <input
                     type='datetime-local'
                     id='ended-date'
                     name='ended-date'
+                    value={duration.end === 0 ? '' : formattedDate(duration.end)}
                     onChange={({ target }) =>
                       setDuration({ ...duration, end: new Date(target.value).getTime() })
                     }
@@ -231,14 +238,6 @@ const MockTestCreate = () => {
                     setSemester('');
                     setDescription('');
                     setDuration({ start: 0, end: 0 });
-                    const inputStartedDate = document.getElementById(
-                      'started-date'
-                    ) as HTMLInputElement;
-                    inputStartedDate.value = '';
-                    const inputEndedDate = document.getElementById(
-                      'ended-date'
-                    ) as HTMLInputElement;
-                    inputEndedDate.value = '';
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>

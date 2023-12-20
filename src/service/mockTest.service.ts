@@ -15,6 +15,14 @@ type CreateMockTestArgument = {
   slots?: never[];
 };
 
+type CreateSlotArgument = {
+  name: string;
+  userLimit: number;
+  questions: string[];
+  startedAt: number;
+  endedAt: number;
+};
+
 type GetAllMockTestArgument = {
   name?: string;
   subject?: string;
@@ -22,14 +30,18 @@ type GetAllMockTestArgument = {
   chapter?: string;
   type?: string;
 };
-// type EditArgument = {
-//   name?: string;
-//   subject?: string;
-//   semester?: string;
-//   type?: string;
-//   description?: string;
-//   isHidden?: boolean;
-// };
+
+type EditMockTestArgument = {
+  name?: string;
+  subject?: string;
+  semester?: string;
+  type?: string;
+  description?: string;
+  isHidden?: boolean;
+  registrationStartedAt?: number;
+  registrationEndedAt?: number;
+};
+
 type GetAllMockTestReturnType = {
   total: number;
   result: MockTest[];
@@ -84,11 +96,15 @@ const deleteById = (mockTestId: string) => {
   return axios.delete<Response<MockTest>>(`${API_URL}admin/exam/${mockTestId}`);
 };
 
-// const edit = (examId: string, data: EditArgument, admin = false) => {
-//   const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
+const editGeneralInformation = (mockTestId: string, data: EditMockTestArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}exam/${mockTestId}`;
 
-//   return axios.patch<Response<ExamArchive>>(queryString, data);
-// };
+  return axios.patch<Response<MockTest>>(queryString, data);
+};
+
+const createSlot = (data: CreateSlotArgument, mockTestId: string) => {
+  return axios.post<Response<MockTest>>(`${API_URL}admin/exam/${mockTestId}/slot`, data);
+};
 
 const MockTestService = {
   getAll,
@@ -96,7 +112,8 @@ const MockTestService = {
   getById,
   create,
   deleteById,
-  // edit,
+  editGeneralInformation,
+  createSlot,
 };
 
 export default MockTestService;

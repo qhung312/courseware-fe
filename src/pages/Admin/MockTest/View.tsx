@@ -110,7 +110,7 @@ const MockTestView = () => {
                 </div>
                 <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Thời gian bắt đầu</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Bắt đầu đăng ký</p>
                     <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                       <span>
                         {new Date(
@@ -120,7 +120,7 @@ const MockTestView = () => {
                     </div>
                   </div>
                   <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Thời gian kết thúc</p>
+                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Kết thúc đăng ký</p>
                     <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                       <span>
                         {new Date(mockTest?.registrationEndedAt || '2000-01-01').toLocaleString() ||
@@ -171,7 +171,7 @@ const MockTestView = () => {
                           {slot.name}
                         </p>
                         <p className='flex flex-[2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {slot?.userLimit}
+                          {slot?.registeredUsers.length}/{slot?.userLimit}
                         </p>
                         <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
                           {new Date(slot?.endedAt).toLocaleString()}
