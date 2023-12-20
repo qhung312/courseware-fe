@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
 // import './index.css';
 import { ToastContainer, toast } from 'react-toastify';

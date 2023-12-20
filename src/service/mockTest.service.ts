@@ -2,7 +2,6 @@ import { API_URL } from '../config';
 import { MockTest } from '../types/mockTest';
 import { axios } from '../utils/custom-axios';
 
-import type { ExamArchive } from '../types/examArchive';
 import type { Response } from '../types/response';
 
 type CreateMockTestArgument = {
@@ -16,7 +15,7 @@ type CreateMockTestArgument = {
   slots?: never[];
 };
 
-type GetAllExamArchiveArgument = {
+type GetAllMockTestArgument = {
   name?: string;
   subject?: string;
   semester?: string;
@@ -31,21 +30,21 @@ type GetAllExamArchiveArgument = {
 //   description?: string;
 //   isHidden?: boolean;
 // };
-type GetAllExamArchiveReturnType = {
+type GetAllMockTestReturnType = {
   total: number;
-  result: ExamArchive[];
+  result: MockTest[];
 };
-const getAll = (query: GetAllExamArchiveArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam?pagination=false\
+const getAll = (query: GetAllMockTestArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}exam?pagination=false\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.semester ? `&semester=${query.semester}` : ''}\
 ${query.type ? `&type=${query.type}` : ''}`;
 
-  return axios.get<Response<GetAllExamArchiveReturnType>>(queryString);
+  return axios.get<Response<GetAllMockTestReturnType>>(queryString);
 };
 
-type GetAllExamArchivePaginatedArgument = {
+type GetAllMockTestPaginatedArgument = {
   name?: string;
   subject?: string;
   semester?: string;
@@ -53,14 +52,14 @@ type GetAllExamArchivePaginatedArgument = {
   pageNumber?: number;
   pageSize?: number;
 };
-type GetAllExamArchivePaginatedReturnType = {
+type GetAllMockTestPaginatedReturnType = {
   total: number;
   pageCount: number;
   pageSize: number;
-  result: ExamArchive[];
+  result: MockTest[];
 };
-const getAllPaginated = (query: GetAllExamArchivePaginatedArgument, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam?pagination=true\
+const getAllPaginated = (query: GetAllMockTestPaginatedArgument, admin = false) => {
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}exam?pagination=true\
 ${query.name ? `&name=${query.name}` : ''}\
 ${query.subject ? `&subject=${query.subject}` : ''}\
 ${query.semester ? `&semester=${query.semester}` : ''}\
@@ -68,22 +67,22 @@ ${query.type ? `&type=${query.type}` : ''}\
 ${query.pageNumber !== undefined ? `&pageNumber=${query.pageNumber}` : ''}\
 ${query.pageSize !== undefined ? `&pageSize=${query.pageSize}` : ''}`;
 
-  return axios.get<Response<GetAllExamArchivePaginatedReturnType>>(queryString);
+  return axios.get<Response<GetAllMockTestPaginatedReturnType>>(queryString);
 };
 
 const getById = (examId: string, admin = false) => {
-  const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
+  const queryString = `${API_URL}${admin ? 'admin/' : ''}exam/${examId}`;
 
-  return axios.get<Response<ExamArchive>>(queryString);
+  return axios.get<Response<MockTest>>(queryString);
 };
 
 const create = (data: CreateMockTestArgument) => {
   return axios.post<Response<MockTest>>(`${API_URL}admin/exam`, data);
 };
 
-// const deleteById = (examId: string) => {
-//   return axios.delete<Response<ExamArchive>>(`${API_URL}admin/previous_exam/${examId}`);
-// };
+const deleteById = (mockTestId: string) => {
+  return axios.delete<Response<MockTest>>(`${API_URL}admin/exam/${mockTestId}`);
+};
 
 // const edit = (examId: string, data: EditArgument, admin = false) => {
 //   const queryString = `${API_URL}${admin ? 'admin/' : ''}previous_exam/${examId}`;
@@ -91,13 +90,13 @@ const create = (data: CreateMockTestArgument) => {
 //   return axios.patch<Response<ExamArchive>>(queryString, data);
 // };
 
-const MocTestService = {
+const MockTestService = {
   getAll,
   getAllPaginated,
   getById,
   create,
-  // deleteById,
+  deleteById,
   // edit,
 };
 
-export default MocTestService;
+export default MockTestService;

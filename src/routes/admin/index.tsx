@@ -12,6 +12,8 @@ import EditExercisePage from '../../pages/Admin/Exercise/Edit';
 import ViewExercisePage from '../../pages/Admin/Exercise/View';
 import MaterialEdit from '../../pages/Admin/Material/Edit';
 import MaterialView from '../../pages/Admin/Material/View';
+import MockTestList from '../../pages/Admin/MockTest/List';
+import MockTestView from '../../pages/Admin/MockTest/View';
 import EditQuestionPage from '../../pages/Admin/Question/Edit';
 import ViewQuestionPage from '../../pages/Admin/Question/View';
 import SubjectEdit from '../../pages/Admin/Subject/Edit';
@@ -266,7 +268,7 @@ const AdministratorRoute = () => {
               path='manage'
               element={
                 <Suspense fallback={<Loading />}>
-                  <ChapterListPage />
+                  <MockTestList />
                 </Suspense>
               }
             />
@@ -282,7 +284,7 @@ const AdministratorRoute = () => {
               path='view/:id'
               element={
                 <Suspense fallback={<Loading />}>
-                  <ChapterView />
+                  <MockTestView />
                 </Suspense>
               }
             />
