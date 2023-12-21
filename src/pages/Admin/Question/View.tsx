@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Icon, Markdown, QuestionCard } from '../../../components';
 import { MarkdownEditor, ExpressionEditor } from '../../../components/CodeEditor';
 import { Page, Wrapper } from '../../../layout';
 import './index.css';
 import QuestionService from '../../../service/question.service';
-import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
+import { ConcreteQuestion, Question, QuestionType, SessionStatus } from '../../../types';
 import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const ViewQuestionPage = () => {
@@ -260,7 +260,7 @@ const ViewQuestionPage = () => {
                     </p>
                     <QuestionCard
                       question={preview}
-                      status={QuizStatus.ENDED}
+                      status={SessionStatus.ENDED}
                       questionNumber={1}
                       showInfo={false}
                     />
@@ -291,7 +291,6 @@ const ViewQuestionPage = () => {
             )}
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

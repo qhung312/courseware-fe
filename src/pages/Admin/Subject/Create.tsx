@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Page, Wrapper } from '../../../layout';
 import SubjectService from '../../../service/subject.service';
@@ -93,7 +93,6 @@ const CreateSubjectPage = () => {
             </main>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

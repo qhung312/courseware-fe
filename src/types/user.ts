@@ -49,13 +49,14 @@ export type AccessLevel = {
 };
 
 export type User = {
+  _id: string;
   googleId: string;
   accessLevels: AccessLevel[];
   isManager: boolean;
   familyAndMiddleName: string;
   givenName: string;
   picture: string;
-  dateOfBirth: number;
+  dateOfBirth?: number;
   email: string;
   studentId: string;
   major: string;

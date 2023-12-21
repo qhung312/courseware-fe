@@ -1,6 +1,7 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Footer } from '../../../components';
 import Icon from '../../../components/Icon';
@@ -12,28 +13,33 @@ import { User } from '../../../types';
 
 const UserInformation = () => {
   const user = useBoundStore.use.user();
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [userProfile, setUserProfile] = useState<User>(user);
   const [updatedName, setUpdatedName] = useState('');
   console.log(userProfile);
 
+  const getUserProfile = useBoundStore.use.getUserProfile();
+
   const formattedDate = new Date(userProfile?.dateOfBirth || '2000-01-01')
     .toISOString()
     .split('T')[0];
 
-  const updateProfile = () => {
-    UserService.editUserProfile(userProfile)
-      .then((res) => {
-        toast.success('Cập nhật thông tin thành công');
-        setUserProfile(res.data.payload);
-        setUpdatedName(
-          (userProfile?.familyAndMiddleName || '') + ' ' + (userProfile?.givenName || '')
-        );
-        setIsEditMode(false);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
+  const updateProfile = async () => {
+    try {
+      const { data } = await UserService.editUserProfile(userProfile);
+      await getUserProfile();
+      toast.success('Cập nhật thông tin thành công');
+      setUserProfile(data.payload);
+      setUpdatedName(
+        (data.payload?.familyAndMiddleName || '') + ' ' + (data.payload?.givenName || '')
+      );
+      setIsEditMode(false);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        toast.error(err.response?.data.message);
+      }
+    }
   };
 
   return (
@@ -179,7 +185,8 @@ const UserInformation = () => {
                   onChange={(e) =>
                     setUserProfile({
                       ...userProfile,
-                      dateOfBirth: new Date(e.target.value).getTime(),
+                      dateOfBirth:
+                        e.target.value === '' ? undefined : new Date(e.target.value).getTime(),
                     })
                   }
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
@@ -284,7 +291,6 @@ const UserInformation = () => {
         </div>
         <Footer />
       </main>
-      <ToastContainer position='bottom-right' />
     </Page>
   );
 };

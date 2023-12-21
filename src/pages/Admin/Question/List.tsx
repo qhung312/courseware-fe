@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate } from 'react-router-dom';
 import { SingleValue } from 'react-select';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { ReactComponent as NoData } from '../../../assets/svgs/NoData.svg';
 import { Icon, Pagination, Select } from '../../../components';
@@ -315,7 +315,6 @@ const QuestionListPage = () => {
             </main>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

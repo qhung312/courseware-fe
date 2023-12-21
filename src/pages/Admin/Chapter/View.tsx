@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
@@ -127,7 +127,6 @@ const ChapterView = () => {
             </div>
           )}
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

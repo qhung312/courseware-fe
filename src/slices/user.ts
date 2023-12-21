@@ -17,6 +17,7 @@ export interface TUserSlice extends TUserActions {
 }
 
 export const initialState: TUserState = {
+  _id: '',
   googleId: '',
   accessLevels: [],
   isManager: false,
@@ -44,6 +45,7 @@ export const UserSlice: StateCreator<
       set((state) => ({
         user: {
           ...state.user,
+          _id: data.payload?._id,
           googleId: data.payload?.googleId,
           accessLevels: data.payload?.accessLevels,
           isManager: data.payload?.isManager,

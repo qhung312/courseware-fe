@@ -1,4 +1,8 @@
-import { ConcreteQuestion, ExamType, Question, Semester, Subject, User } from './';
+import { ConcreteQuestion, ExamType, Question, Semester, SessionStatus, Subject, User } from './';
+
+export interface Student extends Omit<User, '_id'> {
+  userId: string;
+}
 
 export type Exam = {
   _id: string;
@@ -16,9 +20,10 @@ export type Exam = {
     slotId: number;
 
     name: string;
-    registeredUsers: User[];
+    registeredUsers: Student[];
     userLimit: number;
-    questions: Question[];
+    questions?: Question[];
+    questionCount?: number;
 
     startedAt: number;
     endedAt: number;
@@ -32,18 +37,13 @@ export type Exam = {
   deletedAt?: number;
 };
 
-export enum ExamSessionStatus {
-  ONGOING = 'ONGOING',
-  ENDED = 'ENDED',
-}
-
 export type ExamSession = {
   _id: string;
   userId: string;
-  status: ExamSessionStatus;
+  status: SessionStatus;
 
   duration: number;
-  timeLeft?: number;
+  timeLeft: number;
   startedAt: number;
   endedAt?: number;
 
@@ -52,4 +52,11 @@ export type ExamSession = {
   slotId: number;
 
   questions: ConcreteQuestion[];
+};
+
+export type Summary = {
+  registeredCount: number;
+  startedCount: number;
+  completedCount: number;
+  completedScores: number[];
 };

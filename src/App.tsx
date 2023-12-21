@@ -1,6 +1,7 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { Loading } from './components';
 import { AdministratorRoute, UserRoute } from './routes';
@@ -9,6 +10,7 @@ import useBoundStore from './store';
 import { SocketEvent } from './types';
 
 import './config/firebase';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const setToken = useBoundStore.use.setToken();
@@ -72,6 +74,7 @@ const App = () => {
           </Routes>
         </GoogleOAuthProvider>
       </Suspense>
+      <ToastContainer position='bottom-right' draggable={false} />
     </>
   );
 };

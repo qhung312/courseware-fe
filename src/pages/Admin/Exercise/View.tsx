@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Icon, InputNumber } from '../../../components';
 import { Page, Wrapper } from '../../../layout';
@@ -236,7 +236,6 @@ const ViewExercisePage = () => {
             </main>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

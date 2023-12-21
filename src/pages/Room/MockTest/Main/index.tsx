@@ -1,15 +1,59 @@
-import { useState } from 'react';
+import './index.css';
+
+import { useQueries } from '@tanstack/react-query';
+import { useCallback, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
 import { Footer, Icon, LazyLoadImage, Select } from '../../../../components';
 import { Page } from '../../../../layout';
+import ExamService from '../../../../service/exam.service';
 import { SEMESTER_OPTIONS } from '../../../../types';
 import { getCurrentSemester } from '../../../../utils/helper';
 
-import './index.css';
-
 const Main = () => {
   const [semester, setSemester] = useState(getCurrentSemester());
+
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ['midterm exam', semester],
+        queryFn: async () => {
+          const { data } = await ExamService.getAll({ type: 'midterm', semester: semester });
+
+          return data.payload;
+        },
+        refetchOnWindowFocus: false,
+        refetchInterval: 60000,
+      },
+      {
+        queryKey: ['final exam', semester],
+        queryFn: async () => {
+          const { data } = await ExamService.getAll({ type: 'final', semester: semester });
+
+          return data.payload;
+        },
+        refetchOnWindowFocus: false,
+        staleTime: 60000,
+      },
+    ],
+  });
+
+  const isMidtermExamOpen = useCallback(() => {
+    return (
+      results[0].data?.total &&
+      Date.now() >= results[0].data?.result[0].registrationStartedAt &&
+      Date.now() <= results[0].data?.result[0].slots.slice(-1)[0]?.endedAt
+    );
+  }, [results]);
+
+  const isFinalExamOpen = useCallback(() => {
+    return (
+      results[1].data?.total &&
+      Date.now() >= results[1].data?.result[0].registrationStartedAt &&
+      Date.now() <= results[1].data?.result[0].slots.slice(-1)[0]?.endedAt
+    );
+  }, [results]);
 
   return (
     <Page title='Thi thử'>
@@ -107,44 +151,58 @@ const Main = () => {
                 className='header z-[1] block aspect-[2/1] h-auto rounded-[20px]'
                 src={require('../../../../assets/images/MockTest_2.jpg')}
                 placeHolderSrc={require('../../../../assets/images/MockTest_2-placeholder.jpg')}
-                containerClassName='h-auto'
+                containerClassName='h-auto aspect-[2/1]'
                 alt='tstt_alt'
                 objectFit='cover'
               />
+
               <div className='flex w-full flex-1 flex-col items-start gap-y-4 md:gap-y-3 lg:gap-y-4 2xl:gap-y-5'>
                 <h3 className='text-start text-xl font-medium text-[#2F327D] lg:text-[28px] 2xl:text-[32px]'>
                   Thi thử Giữa Kì
                 </h3>
-                <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#7BCFA9] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
-                  <div className='aspect-square w-5 rounded-full bg-[#33B679] lg:w-7 2xl:w-8 3xl:w-9' />
-                  <p className='text-start text-[16px] font-semibold leading-5 text-white lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Đang diễn ra
-                  </p>
-                </div>
-                <p className='flex flex-1 items-center text-start text-[16px] font-normal leading-7 text-[#696984] lg:text-[18px] lg:leading-8 2xl:text-[22px] 2xl:leading-10'>
+                {results[0].isLoading ? (
+                  <Skeleton
+                    baseColor='#9DCCFF'
+                    containerClassName='w-full py-1 2xl:py-1.5'
+                    width='100%'
+                    className='h-5 lg:h-8 2xl:h-9'
+                    style={{
+                      lineHeight: 'unset',
+                    }}
+                  />
+                ) : isMidtermExamOpen() ? (
+                  <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#7BCFA9] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
+                    <div className='aspect-square w-5 rounded-full bg-[#33B679] lg:w-7 2xl:w-8 3xl:w-9' />
+                    <p className='text-start text-[16px] font-semibold leading-5 text-white lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Đang diễn ra
+                    </p>
+                  </div>
+                ) : (
+                  <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#F2F2F2] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
+                    <div className='aspect-square w-5 rounded-full bg-[#CCCCCC] lg:w-7 2xl:w-8 3xl:w-9' />
+                    <p className='text-start text-[16px] font-semibold leading-5 text-[#252641] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Chưa mở
+                    </p>
+                  </div>
+                )}
+
+                <p
+                  className='flex flex-1 items-start text-start text-[16px] font-normal leading-7 text-[#696984] 
+                  lg:text-[18px] lg:leading-8 2xl:text-[22px] 2xl:leading-10'
+                >
                   Đăng ký thi thử giữa kỳ online là cơ hội để đánh giá kiến thức và kỹ năng của mình
                   qua những câu hỏi ôn tập bám sát thực tế.
                 </p>
-                <div className='flex w-full items-center justify-start gap-x-1 lg:gap-x-2 2xl:gap-x-3'>
-                  <Icon.CalendarIcon className='aspect-square w-5 fill-[#49BBBD] 2xl:w-6' />
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#2D3436] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Mở từ xx/xx/xxxx đến xx/xx/xxxx
-                  </p>
-                </div>
               </div>
-              <div className='flex w-full flex-row items-center justify-between'>
-                <Link to={`/room/tests/midterm/${semester}`} className='flex cursor-pointer'>
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Chi tiết
-                  </p>
-                </Link>
-                <div className='flex flex-row items-center gap-x-1 lg:gap-x-2 2xl:gap-x-3'>
-                  <Icon.Exercise className='aspect-[6/5] w-5 fill-[#49BBBD] 2xl:w-6' />
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#696984] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    5 môn học
-                  </p>
+              {isMidtermExamOpen() ? (
+                <div className='flex w-full flex-row items-center justify-between'>
+                  <Link to={`/room/tests/midterm/${semester}`} className='flex cursor-pointer'>
+                    <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Chi tiết
+                    </p>
+                  </Link>
                 </div>
-              </div>
+              ) : null}
             </div>
             <div className='flex flex-col gap-y-7 rounded-[20px] bg-white p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:gap-y-6 lg:gap-y-8 lg:p-6 2xl:gap-y-12 2xl:p-8'>
               <LazyLoadImage
@@ -152,42 +210,54 @@ const Main = () => {
                 src={require('../../../../assets/images/MockTest_3.jpg')}
                 placeHolderSrc={require('../../../../assets/images/MockTest_3-placeholder.jpg')}
                 alt='tstt_alt'
+                containerClassName='h-auto aspect-[2/1]'
                 objectFit='cover'
               />
               <div className='flex w-full flex-col items-start gap-y-4 md:gap-y-3 lg:gap-y-4 2xl:gap-y-5'>
                 <h3 className='text-start text-xl font-medium text-[#2F327D] lg:text-[28px] 2xl:text-[32px]'>
                   Thi thử Cuối Kì
                 </h3>
-                <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#F2F2F2] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
-                  <div className='aspect-square w-5 rounded-full bg-[#CCCCCC] lg:w-7 2xl:w-8 3xl:w-9' />
-                  <p className='text-start text-[16px] font-semibold leading-5 text-[#252641] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Chưa mở
-                  </p>
-                </div>
-                <p className='text-start text-[16px] font-normal leading-7 text-[#696984] lg:text-[18px] lg:leading-8 2xl:text-[22px] 2xl:leading-10'>
-                  Tham gia thi thử cuối kì để co sự chuẩn bị tốt nhất cho kỳ thi sắp tới qua những
+
+                {results[1].isLoading ? (
+                  <Skeleton
+                    baseColor='#9DCCFF'
+                    containerClassName='w-full py-1 2xl:py-1.5'
+                    width='100%'
+                    className='h-5 lg:h-8 2xl:h-9'
+                    style={{
+                      lineHeight: 'unset',
+                    }}
+                  />
+                ) : isFinalExamOpen() ? (
+                  <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#7BCFA9] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
+                    <div className='aspect-square w-5 rounded-full bg-[#33B679] lg:w-7 2xl:w-8 3xl:w-9' />
+                    <p className='text-start text-[16px] font-semibold leading-5 text-white lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Đang diễn ra
+                    </p>
+                  </div>
+                ) : (
+                  <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#F2F2F2] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
+                    <div className='aspect-square w-5 rounded-full bg-[#CCCCCC] lg:w-7 2xl:w-8 3xl:w-9' />
+                    <p className='text-start text-[16px] font-semibold leading-5 text-[#252641] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Chưa mở
+                    </p>
+                  </div>
+                )}
+
+                <p className='flex-1 text-start text-[16px] font-normal leading-7 text-[#696984] lg:text-[18px] lg:leading-8 2xl:text-[22px] 2xl:leading-10'>
+                  Tham gia thi thử cuối kì để có sự chuẩn bị tốt nhất cho kỳ thi sắp tới qua những
                   câu hỏi, bài tập nhằm kiểm tra kiến thức của bản thân.
                 </p>
-                <div className='flex w-full items-center justify-start gap-x-1 lg:gap-x-2 2xl:gap-x-3'>
-                  <Icon.CalendarIcon className='aspect-square w-5 fill-[#999999] 2xl:w-6' />
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#2D3436] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Dự kiến mở vào xx/xx/xxxx
-                  </p>
-                </div>
               </div>
-              <div className='flex w-full flex-row items-center justify-between'>
-                <Link to={`/room/tests/final/${semester}`} className='flex cursor-pointer'>
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Chi tiết
-                  </p>
-                </Link>
-                <div className='flex flex-row items-center gap-x-1 lg:gap-x-2 2xl:gap-x-3'>
-                  <Icon.Exercise className='aspect-[6/5] w-5 fill-[#999999] 2xl:w-6' />
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#696984] lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    5 môn học
-                  </p>
+              {isFinalExamOpen() ? (
+                <div className='flex w-full flex-row items-center justify-between'>
+                  <Link to={`/room/tests/final/${semester}`} className='flex cursor-pointer'>
+                    <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Chi tiết
+                    </p>
+                  </Link>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>

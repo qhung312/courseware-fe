@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -134,7 +134,6 @@ const CreateChapterPage = () => {
             </main>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );
