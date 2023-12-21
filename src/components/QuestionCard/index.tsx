@@ -6,16 +6,17 @@ import { toast } from 'react-toastify';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Markdown } from '..';
+import ExamSessionService from '../../service/examSession.service';
 import QuizSessionService from '../../service/quizSession.service';
+import { SessionStatus } from '../../types';
 import { QuestionType, type ConcreteQuestion, UserAnswer } from '../../types/question';
-import { QuizStatus } from '../../types/quiz';
 import { MULTIPLE_CHOICE_LABELS } from '../../utils/helper';
 import Icon from '../Icon';
 
 import './index.css';
 
 type InputAnswerProps = {
-  status: QuizStatus;
+  status: SessionStatus;
   question: ConcreteQuestion;
   helpers: {
     stringAnswer: string;
@@ -40,16 +41,15 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
       questionId: string;
       answer: UserAnswer;
     }) => {
+      if (params['*']?.includes('tests')) {
+        const { data } = await ExamSessionService.saveAnswer(sessionId, questionId, answer);
+        return data.payload;
+      }
       const { data } = await QuizSessionService.saveAnswer(sessionId, questionId, answer);
       return data.payload;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries([
-        'quiz',
-        params.quizId,
-        params.sessionId,
-        'question board',
-      ]);
+      await queryClient.invalidateQueries([params.sessionId, 'question board']);
     },
     onError: () => {
       toast.error('Lưu câu trả lời thất bại');
@@ -108,9 +108,9 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                       500
                     )();
                   }}
-                  disabled={status !== QuizStatus.ONGOING}
+                  disabled={status !== SessionStatus.ONGOING}
                   className={`question checkbox ${
-                    status === QuizStatus.ONGOING
+                    status === SessionStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
                       : question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
@@ -122,10 +122,10 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   type='checkbox'
                   name={`question-${question.questionId}`}
                   value={option.key || -1}
-                  multiple={status === QuizStatus.ENDED}
+                  multiple={status === SessionStatus.ENDED}
                   checked={
                     numberAnswer[0] === option.key ||
-                    (status === QuizStatus.ENDED &&
+                    (status === SessionStatus.ENDED &&
                       question.answerKeys &&
                       question.answerKeys[0] === option.key)
                   }
@@ -160,7 +160,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 <input
                   id={`question-${question.questionId}-answer-${option.key}`}
                   className={`question checkbox ${
-                    status === QuizStatus.ONGOING
+                    status === SessionStatus.ONGOING
                       ? 'checked:bg-[#4285F4]'
                       : question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
@@ -168,7 +168,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                       ? 'checked:bg-[#DB4437]'
                       : ''
                   }`}
-                  disabled={status !== QuizStatus.ONGOING}
+                  disabled={status !== SessionStatus.ONGOING}
                   onChange={optimizedSetMultipleValueAnswer}
                   name={`question-${question.questionId}`}
                   type='checkbox'
@@ -176,7 +176,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   value={option.key || -1}
                   checked={
                     numberAnswer.includes(option.key) ||
-                    (status === QuizStatus.ENDED && question.answerKeys?.includes(option.key))
+                    (status === SessionStatus.ENDED && question.answerKeys?.includes(option.key))
                   }
                 />
                 <span className='absolute left-1/2 flex items-center justify-center'>
@@ -210,7 +210,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
           <input
             id={`question-${question.questionId}-answer-field`}
             type='text'
-            disabled={status !== QuizStatus.ONGOING}
+            disabled={status !== SessionStatus.ONGOING}
             placeholder='Nhập câu trả lời'
             value={stringAnswer || ''}
           />
@@ -223,12 +223,21 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
 
 type Props = {
   question: ConcreteQuestion;
-  status: QuizStatus;
+  status: SessionStatus;
   questionNumber: number;
   showInfo?: boolean;
+  showExplanation?: boolean;
+  showNote?: boolean;
 };
 
-const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Props) => {
+const QuestionCard = ({
+  question,
+  status,
+  questionNumber,
+  showInfo = true,
+  showExplanation = true,
+  showNote = true,
+}: Props) => {
   const params = useParams();
 
   const [stringAnswer, setStringAnswer] = useState<string>(
@@ -239,7 +248,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
   );
   const [note, setNote] = useState<string>(question.userNote || '');
   const [saved, setSaved] = useState<boolean>(true);
-  const [starList, setStarList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
+  const [starList, setStarList] = useLocalStorage<number[]>(`${params.sessionId}-starList`, []);
 
   const answerBox = useRef<HTMLDivElement>(null);
   const noteBox = useRef<HTMLFormElement>(null);
@@ -339,7 +348,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
           <div className='flex flex-row items-center gap-x-2'>
             <div
               className={`flex h-5 w-5 items-center justify-center rounded-full p-1 ${
-                status === QuizStatus.ENDED ? '' : 'hidden'
+                status === SessionStatus.ENDED ? '' : 'hidden'
               } ${
                 question.isCorrect === undefined
                   ? 'border border-[#49CCCF] bg-transparent'
@@ -363,7 +372,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
               onClick={() => {
                 setStarList((prev) => prev.concat(questionNumber));
               }}
-              disabled={status === QuizStatus.ENDED || starList.includes(questionNumber)}
+              disabled={status === SessionStatus.ENDED || starList.includes(questionNumber)}
               className={`absolute transition-all duration-300 ${
                 starList.includes(questionNumber) ? '-z-10 opacity-0' : ''
               }`}
@@ -375,7 +384,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
               onClick={() => {
                 setStarList((prev) => prev.filter((star) => star !== questionNumber));
               }}
-              disabled={status === QuizStatus.ENDED || !starList.includes(questionNumber)}
+              disabled={status === SessionStatus.ENDED || !starList.includes(questionNumber)}
               className={`relative transition-all duration-300 ${
                 starList.includes(questionNumber) ? '' : '-z-10 opacity-0'
               }`}
@@ -405,7 +414,7 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
           />
         </div>
       </div>
-      {status === QuizStatus.ENDED && showInfo === true && (
+      {status === SessionStatus.ENDED && showInfo === true && (
         <div ref={answerBox} className='flex h-full w-full flex-col gap-y-4 md:flex-row md:gap-x-4'>
           <div className='flex h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'>
             <h3 className='mb-2 text-xl font-semibold'>Đáp án</h3>
@@ -423,43 +432,49 @@ const QuestionCard = ({ question, status, questionNumber, showInfo = true }: Pro
                 </p>
               </div>
             </div>
-            <span className='my-4 border-t border-[#666]' />
-            <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
-            <Markdown>{question.explanation}</Markdown>
+            {showExplanation ? (
+              <>
+                <span className='my-4 border-t border-[#666]' />
+                <h3 className='mb-2 text-xl font-semibold'>Giải thích</h3>
+                <Markdown>{question.explanation}</Markdown>
+              </>
+            ) : null}
           </div>
-          <form
-            ref={noteBox}
-            className='flex min-h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'
-          >
-            <div className='mb-2 flex flex-row items-center justify-between gap-x-2'>
-              <div className='flex flex-row items-center gap-x-2'>
-                <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
-                <h3 className='text-xl font-semibold'>Ghi chú</h3>
+          {showNote ? (
+            <form
+              ref={noteBox}
+              className='flex min-h-full w-full flex-1 flex-col rounded-lg border border-[#49CCCF] bg-white p-4 md:w-1/2'
+            >
+              <div className='mb-2 flex flex-row items-center justify-between gap-x-2'>
+                <div className='flex flex-row items-center gap-x-2'>
+                  <Icon.Pen fill='#49CCCF' className='h-5 w-auto' />
+                  <h3 className='text-xl font-semibold'>Ghi chú</h3>
+                </div>
+
+                <button
+                  type='submit'
+                  disabled={saved}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setSaved(true);
+                    debouncedNoteMutate({
+                      body: note,
+                      sessionId: params.sessionId as string,
+                      questionId: String(question.questionId),
+                    });
+                  }}
+                >
+                  <p className={`${saved ? 'font-normal' : 'font-semibold text-[#4284F4]'}`}>Lưu</p>
+                </button>
               </div>
 
-              <button
-                type='submit'
-                disabled={saved}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setSaved(true);
-                  debouncedNoteMutate({
-                    body: note,
-                    sessionId: params.sessionId as string,
-                    questionId: String(question.questionId),
-                  });
-                }}
-              >
-                <p className={`${saved ? 'font-normal' : 'font-semibold text-[#4284F4]'}`}>Lưu</p>
-              </button>
-            </div>
-
-            <textarea
-              className='h-full w-full resize-none focus:outline-none'
-              value={note}
-              onChange={handleNoteChange}
-            />
-          </form>
+              <textarea
+                className='h-full w-full resize-none focus:outline-none'
+                value={note}
+                onChange={handleNoteChange}
+              />
+            </form>
+          ) : null}
         </div>
       )}
     </>

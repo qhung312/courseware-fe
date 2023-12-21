@@ -5,26 +5,30 @@ import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Icon, FinishModal } from '..';
-import { QuizSession, QuizStatus } from '../../types';
+import { ExamSession, QuizSession, SessionStatus } from '../../types';
 import { calculateProgress } from '../../utils/helper';
 
 const Mobile: React.FC<{
-  quiz: QuizSession;
+  quiz?: QuizSession;
+  exam?: ExamSession;
   currentSet: number[];
   setCurrentSetIndex: (index: number) => void;
   handleReview?: () => void;
   submit?: UseMutationResult<void, unknown, void, unknown>;
-}> = ({ quiz, submit, currentSet, setCurrentSetIndex, handleReview }) => {
+}> = ({ quiz, exam, submit, currentSet, setCurrentSetIndex, handleReview }) => {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
-  const [starList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
+  const [starList] = useLocalStorage<number[]>(`${params.sessionId}-starList`, []);
 
-  const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
+  const result = useMemo(
+    () => calculateProgress(quiz ? quiz.questions : exam?.questions ?? []),
+    [quiz, exam]
+  );
 
-  const maxPage = Math.ceil(quiz.questions.length / 40);
-  const questionChunks = chunk(quiz.questions, 40);
+  const maxPage = Math.ceil(quiz ? quiz.questions.length : exam?.questions?.length ?? 0 / 40);
+  const questionChunks = chunk(quiz ? quiz.questions : exam?.questions, 40);
 
   const onFinish = () => {
     if (!submit?.isLoading) {
@@ -68,7 +72,7 @@ const Mobile: React.FC<{
                     setIsOpen(false);
                   }, 400);
                 }}
-                key={`mobile-${question.questionId}-list-${quiz._id}`}
+                key={`mobile-${question.questionId}-list-${quiz ? quiz._id : exam?._id}`}
                 className={`flex h-10 w-10 items-center justify-center ${
                   question.isCorrect !== undefined
                     ? question.isCorrect
@@ -94,7 +98,8 @@ const Mobile: React.FC<{
                       [question.userAnswerKeys, question.userAnswerField],
                       (v) => !_.isEmpty(v)
                     ) ||
-                    quiz.status === QuizStatus.ENDED ||
+                    quiz?.status === SessionStatus.ENDED ||
+                    exam?.status === SessionStatus.ENDED ||
                     starList.includes((page - 1) * 40 + index + 1)
                       ? 'text-white'
                       : ''
@@ -113,7 +118,8 @@ const Mobile: React.FC<{
               className='flex-2 flex rounded-lg bg-[#49CCCF] px-4 py-2'
             >
               <p className='text-base font-semibold text-white'>
-                Hoàn thành {quiz.status === 'ENDED' ? 'xem lại' : 'bài làm'}
+                Hoàn thành{' '}
+                {quiz?.status === 'ENDED' || exam?.status === 'ENDED' ? 'xem lại' : 'bài làm'}
               </p>
             </button>
             <ul className='flex flex-row items-center justify-center gap-x-4'>
@@ -146,7 +152,7 @@ const Mobile: React.FC<{
               </li>
             </ul>
           </div>
-          {quiz.status === 'ENDED' ? (
+          {quiz?.status === 'ENDED' || exam?.status === 'ENDED' ? (
             <>
               <div className='flex w-full flex-row items-center gap-x-4 rounded-lg bg-white px-4 py-5 shadow-2xl shadow-[#2F327D]/10'>
                 <div className='flex h-16 w-16 flex-row items-center justify-center rounded-lg bg-[#49CCCF]/30'>
@@ -171,9 +177,13 @@ const Mobile: React.FC<{
         </div>
       </div>
       <FinishModal
-        title={quiz.status === QuizStatus.ONGOING ? 'Hoàn thành bài làm' : 'Hoàn thành xem lại'}
+        title={
+          quiz?.status === SessionStatus.ONGOING || exam?.status === SessionStatus.ONGOING
+            ? 'Hoàn thành bài làm'
+            : 'Hoàn thành xem lại'
+        }
         message={
-          quiz.status === QuizStatus.ONGOING
+          quiz?.status === SessionStatus.ONGOING || exam?.status === SessionStatus.ONGOING
             ? 'Bạn có chắc chắn muốn hoàn thành bài làm?'
             : 'Bạn có chắc chắn muốn hoàn thành xem lại?'
         }

@@ -20,7 +20,7 @@ export type Quiz = {
   deletedAt?: number;
 };
 
-export enum QuizStatus {
+export enum SessionStatus {
   ONGOING = 'ONGOING',
   ENDED = 'ENDED',
 }
@@ -28,7 +28,7 @@ export enum QuizStatus {
 export type QuizSession = {
   _id: string;
   userId: string;
-  status: QuizStatus;
+  status: SessionStatus;
   createdAt: number;
   duration: number;
   startedAt: number;

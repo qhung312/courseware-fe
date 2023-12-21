@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SingleValue } from 'react-select';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Icon, InputNumber, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -578,7 +578,6 @@ const EditExercisePage = () => {
             </main>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

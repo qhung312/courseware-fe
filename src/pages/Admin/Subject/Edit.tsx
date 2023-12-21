@@ -2,8 +2,7 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -157,7 +156,6 @@ const SubjectEdit = () => {
             )}
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

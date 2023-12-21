@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom/client';
 import { registerPlugin } from 'react-filepond';
 import { pdfjs } from 'react-pdf';
 import { BrowserRouter } from 'react-router-dom';
-import { ParallaxProvider } from 'react-scroll-parallax';
 
 import App from './App';
 
@@ -24,13 +23,11 @@ const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <ParallaxProvider>
-    <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </QueryClientProvider>
-    </StrictMode>
-  </ParallaxProvider>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </StrictMode>
 );

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import {
   Icon,
@@ -20,7 +20,7 @@ import './index.css';
 import ChapterService from '../../../service/chapter.service';
 import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
-import { ConcreteQuestion, Question, QuestionType, QuizStatus } from '../../../types';
+import { ConcreteQuestion, Question, QuestionType, SessionStatus } from '../../../types';
 import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const EditQuestionPage = () => {
@@ -483,7 +483,7 @@ const EditQuestionPage = () => {
                     </p>
                     <QuestionCard
                       question={preview}
-                      status={QuizStatus.ENDED}
+                      status={SessionStatus.ENDED}
                       questionNumber={1}
                       showInfo={false}
                     />
@@ -514,7 +514,6 @@ const EditQuestionPage = () => {
             )}
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

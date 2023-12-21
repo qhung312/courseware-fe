@@ -1,7 +1,7 @@
 import { ViewUpdate } from '@codemirror/view';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import {
   Icon,
@@ -20,7 +20,7 @@ import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
 
 import './index.css';
-import { ConcreteQuestion, QuestionType, QuizStatus } from '../../../types';
+import { ConcreteQuestion, QuestionType, SessionStatus } from '../../../types';
 import { MULTIPLE_CHOICE_LABELS } from '../../../utils/helper';
 
 const CreateQuestionPage = () => {
@@ -261,7 +261,7 @@ const CreateQuestionPage = () => {
                   <div className='flex flex-col gap-y-4'>
                     <QuestionCard
                       question={preview}
-                      status={QuizStatus.ENDED}
+                      status={SessionStatus.ENDED}
                       questionNumber={1}
                       showInfo={false}
                     />
@@ -424,7 +424,6 @@ const CreateQuestionPage = () => {
             </main>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

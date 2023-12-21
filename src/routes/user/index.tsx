@@ -26,6 +26,7 @@ const ExamArchiveDetail = lazy(() => import('../../pages/Library/ExamArchiveDeta
 const ExercisesPage = lazy(() => import('../../pages/Room/Exercises'));
 const MainTestPage = lazy(() => import('../../pages/Room/MockTest/Main'));
 const DetailMockTestPage = lazy(() => import('../../pages/Room/MockTest/Detail'));
+const MockTestPage = lazy(() => import('../../pages/Room/MockTest'));
 
 const UserRoute = () => {
   return (
@@ -235,6 +236,22 @@ const UserRoute = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <DetailMockTestPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='session/:sessionId'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MockTestPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='review/session/:sessionId'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MockTestPage />
                 </Suspense>
               }
             />

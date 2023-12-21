@@ -6,26 +6,32 @@ import { useParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Icon, FinishModal } from '..';
-import { QuizSession, QuizStatus } from '../../types';
+import { ExamSession, QuizSession, SessionStatus } from '../../types';
 import { calculateProgress, parseCountdown } from '../../utils/helper';
 
 const Desktop: React.FC<{
-  quiz: QuizSession;
+  quiz?: QuizSession;
+  exam?: ExamSession;
   currentSet: number[];
   setCurrentSetIndex: (index: number) => void;
   submit?: UseMutationResult<void, unknown, void, unknown>;
   handleReview?: () => void;
-}> = ({ quiz, submit, currentSet, setCurrentSetIndex, handleReview }) => {
+}> = ({ quiz, exam, submit, currentSet, setCurrentSetIndex, handleReview }) => {
   const params = useParams();
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(Date.now() + quiz.timeLeft);
-  const [starList] = useLocalStorage<number[]>(`quiz-${params.quizId}-starList`, []);
+  const [timeLeft, setTimeLeft] = useState(
+    Date.now() + (quiz ? Number(quiz?.timeLeft) : Number(exam?.timeLeft))
+  );
+  const [starList] = useLocalStorage<number[]>(`${params.sessionId}-starList`, []);
 
-  const maxPage = Math.ceil(quiz.questions.length / 40);
-  const questionChunks = chunk(quiz.questions, 40);
+  const maxPage = Math.ceil(quiz ? quiz.questions.length : exam?.questions?.length ?? 0 / 40);
+  const questionChunks = chunk(quiz ? quiz.questions : exam?.questions, 40);
 
-  const result = useMemo(() => calculateProgress(quiz.questions), [quiz]);
+  const result = useMemo(
+    () => calculateProgress(quiz ? quiz.questions : exam?.questions ?? []),
+    [quiz, exam]
+  );
 
   const onFinish = () => {
     if (!submit?.isLoading) {
@@ -34,8 +40,8 @@ const Desktop: React.FC<{
   };
 
   useEffect(() => {
-    setTimeLeft(Date.now() + quiz.timeLeft);
-  }, [quiz]);
+    setTimeLeft(Date.now() + (quiz ? Number(quiz?.timeLeft) : Number(exam?.timeLeft)));
+  }, [quiz, exam]);
 
   return (
     <>
@@ -47,9 +53,11 @@ const Desktop: React.FC<{
         <div className='flex flex-col items-start justify-center space-y-4 lg:space-y-7 3xl:space-y-9'>
           <div
             className={`flex w-full flex-1 flex-row flex-wrap items-center justify-between gap-x-3 gap-y-3 rounded-lg 
-          lg:gap-x-4 3xl:gap-x-5 ${quiz.status === 'ENDED' ? '' : 'bg-white p-4 3xl:p-5'}`}
+            lg:gap-x-4 3xl:gap-x-5 ${
+              quiz?.status === 'ENDED' || exam?.status === 'ENDED' ? '' : 'bg-white p-4 3xl:p-5'
+            }`}
           >
-            {quiz.status === 'ENDED' ? (
+            {quiz?.status === 'ENDED' || exam?.status === 'ENDED' ? (
               <>
                 <div
                   className='flex flex-1 flex-row items-center gap-x-4 rounded-lg border border-[#49CCCF] bg-white
@@ -122,7 +130,7 @@ const Desktop: React.FC<{
                         inline: 'start',
                       });
                   }}
-                  key={`desktop-${question.questionId}-list-${quiz._id}`}
+                  key={`desktop-${question.questionId}-list-${quiz ? quiz._id : exam?._id}`}
                   className={`flex h-10 w-10 items-center justify-center 3xl:h-[52px] 3xl:w-[52px] ${
                     starList.includes((page - 1) * 40 + index + 1)
                       ? 'bg-[#FBCB43]'
@@ -148,7 +156,8 @@ const Desktop: React.FC<{
                         [question.userAnswerKeys, question.userAnswerField],
                         (v) => !_.isEmpty(v)
                       ) ||
-                      quiz.status === QuizStatus.ENDED ||
+                      quiz?.status === SessionStatus.ENDED ||
+                      exam?.status === SessionStatus.ENDED ||
                       starList.includes((page - 1) * 40 + index + 1)
                         ? 'text-white'
                         : ''
@@ -167,7 +176,8 @@ const Desktop: React.FC<{
                 disabled={submit?.isLoading}
               >
                 <p className='text text-base font-semibold text-white'>
-                  Hoàn thành {quiz.status === 'ONGOING' ? 'bài làm' : 'xem lại'}
+                  Hoàn thành{' '}
+                  {quiz?.status === 'ONGOING' || exam?.status === 'ONGOING' ? 'bài làm' : 'xem lại'}
                 </p>
               </button>
               {questionChunks.length > 1 && (
@@ -206,9 +216,13 @@ const Desktop: React.FC<{
         </div>
       </div>
       <FinishModal
-        title={quiz.status === QuizStatus.ONGOING ? 'Hoàn thành bài làm' : 'Hoàn thành xem lại'}
+        title={
+          quiz?.status === 'ONGOING' || exam?.status === 'ONGOING'
+            ? 'Hoàn thành bài làm'
+            : 'Hoàn thành xem lại'
+        }
         message={
-          quiz.status === QuizStatus.ONGOING
+          quiz?.status === 'ONGOING' || exam?.status === 'ONGOING'
             ? 'Bạn có chắc chắn muốn hoàn thành bài làm?'
             : 'Bạn có chắc chắn muốn hoàn thành xem lại?'
         }

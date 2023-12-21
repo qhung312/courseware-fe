@@ -3,7 +3,7 @@ import { FilePond } from 'react-filepond';
 // eslint-disable-next-line import/order
 import { Link } from 'react-router-dom';
 import './index.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Icon, Select } from '../../../components';
 import { Option } from '../../../components/Select';
@@ -214,7 +214,6 @@ const MaterialCreate = () => {
             </form>
           </div>
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );

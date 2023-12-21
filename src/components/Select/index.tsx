@@ -38,7 +38,12 @@ const Placeholder = ({
   );
 };
 
-const CustomSelect = ({ options, onChange, ...props }: Props<Option, false, GroupBase<Option>>) => {
+const CustomSelect = ({
+  options,
+  onChange,
+  isDisabled: disabled,
+  ...props
+}: Props<Option, false, GroupBase<Option>>) => {
   return (
     <Select
       options={options}
@@ -47,6 +52,7 @@ const CustomSelect = ({ options, onChange, ...props }: Props<Option, false, Grou
       classNamePrefix='react-select'
       className='react-select__container'
       menuPlacement='auto'
+      isDisabled={disabled}
       isClearable
       styles={{
         control: (baseStyle, { isFocused }) => ({
@@ -54,9 +60,16 @@ const CustomSelect = ({ options, onChange, ...props }: Props<Option, false, Grou
           outline: isFocused ? '2px auto #4285F4' : 'unset',
           boxSizing: 'content-box',
         }),
+        indicatorsContainer: (baseStyle, { isDisabled }) => ({
+          ...baseStyle,
+          display: isDisabled ? 'none' : baseStyle.display,
+        }),
       }}
       classNames={{
-        container: () => 'flex flex-1 w-full rounded-lg border border-[#CCC]',
+        container: () =>
+          `flex flex-1 w-full rounded-lg border border-[#CCC] ${
+            disabled ? 'bg-[rgba(239,239,239,0.3)]' : ''
+          }`,
         control: () =>
           'flex flex-1 rounded-lg items-center justify-center  p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base',
         placeholder: () => 'h-full text-gray-400',

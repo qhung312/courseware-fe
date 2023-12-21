@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Loading } from '../../../components';
 import QuizSessionService from '../../../service/quizSession.service';
@@ -9,8 +9,6 @@ import QuizSessionService from '../../../service/quizSession.service';
 import Detail from './Detail';
 import Main from './Main';
 import Review from './Review';
-
-import 'react-toastify/dist/ReactToastify.css';
 
 const Exercises: React.FC = () => {
   const params = useParams();
@@ -65,7 +63,6 @@ const Exercises: React.FC = () => {
           <Detail quiz={quiz} handleSubmit={submit} />
         )
       ) : null}
-      <ToastContainer position='bottom-right' draggable={false} />
     </>
   );
 };

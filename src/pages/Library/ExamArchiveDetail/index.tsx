@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Icon } from '../../../components';
 import PDF from '../../../components/PDF';
@@ -134,7 +134,6 @@ const ExamArchiveDetailPage: React.FC = () => {
             <PDF file={file} title={exam?.name} pageClassName='border border-[#bbbcbc] shadow' />
           )}
         </div>
-        <ToastContainer position='bottom-right' />
       </Wrapper>
     </Page>
   );
