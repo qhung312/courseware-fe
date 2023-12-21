@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { some } from 'lodash';
+import { isNil, some } from 'lodash';
 import { FC, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -21,6 +21,7 @@ const DetailTest: FC = () => {
   const testName = typeOfTest === 'midterm' ? 'Giữa Kì' : 'Cuối Kì';
 
   const { data: exams, isLoading } = useQuery({
+    placeholderData: [],
     queryKey: ['exams', typeOfTest, params.semester, params.subjectId],
     enabled: !!params.subjectId,
     queryFn: async () => {
@@ -35,7 +36,7 @@ const DetailTest: FC = () => {
   });
 
   const { mutateAsync: register, isLoading: isRegistering } = useMutation({
-    mutationKey: ['register', exams?.[0]._id],
+    mutationKey: ['register', exams?.[0]?._id],
     mutationFn: async (slotId: number) => {
       await ExamService.register(exams?.[0]._id || '', slotId);
     },
@@ -49,7 +50,7 @@ const DetailTest: FC = () => {
   });
 
   const { mutateAsync: unregister, isLoading: isUnregistering } = useMutation({
-    mutationKey: ['unregister', exams?.[0]._id],
+    mutationKey: ['unregister', exams?.[0]?._id],
     mutationFn: async () => {
       await ExamService.unregister(exams?.[0]._id || '');
     },
@@ -72,38 +73,42 @@ const DetailTest: FC = () => {
           slot.registeredUsers.find((registeredUser) => registeredUser.userId === user._id)
         )
       : undefined;
-  const registrationStartedAt = exams ? exams[0].registrationStartedAt : 0;
-  const registrationEndedAt = exams ? exams[0].registrationEndedAt : 0;
+  const registrationStartedAt = exams && exams[0] ? exams[0].registrationStartedAt : 0;
+  const registrationEndedAt = exams && exams[0] ? exams[0].registrationEndedAt : 0;
   const registrationStartedDate = useMemo(
     () =>
-      new Date(registrationStartedAt || 0)
-        .toLocaleString('vi-VN', {
-          hour: '2-digit',
-          minute: '2-digit',
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
+      registrationStartedAt
+        ? new Date(registrationStartedAt)
+            .toLocaleString('vi-VN', {
+              hour: '2-digit',
+              minute: '2-digit',
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
 
-          hourCycle: 'h23',
-          hour12: false,
-        })
-        .replace(' ', ', '),
+              hourCycle: 'h23',
+              hour12: false,
+            })
+            .replace(' ', ', ')
+        : null,
     [registrationStartedAt]
   );
   const registrationEndedDate = useMemo(
     () =>
-      new Date(registrationEndedAt || 0)
-        .toLocaleString('vi-VN', {
-          hour: '2-digit',
-          minute: '2-digit',
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
+      registrationEndedAt
+        ? new Date(registrationEndedAt)
+            .toLocaleString('vi-VN', {
+              hour: '2-digit',
+              minute: '2-digit',
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
 
-          hourCycle: 'h23',
-          hour12: false,
-        })
-        .replace(' ', ', '),
+              hourCycle: 'h23',
+              hour12: false,
+            })
+            .replace(' ', ', ')
+        : null,
     [registrationEndedAt]
   );
 
@@ -188,12 +193,14 @@ const DetailTest: FC = () => {
           >
             <Icon.CalendarIcon className='h-6 w-6 fill-[#252641]' />
             <p className='text-[16px] lg:text-[18px] 3xl:text-[20px]'>
-              Mở đăng ký từ {registrationStartedDate} đến {registrationEndedDate}
+              {isNil(registrationStartedDate) || isNil(registrationEndedDate)
+                ? 'Chưa mở đăng ký'
+                : `Mở đăng ký từ ${registrationStartedDate} đến ${registrationEndedDate}`}
             </p>
           </div>
 
           <div className='mt-10 grid grid-cols-1 gap-y-6 gap-x-10 2xl:grid-cols-2'>
-            {exams
+            {exams && exams[0]
               ? exams[0].slots.map((slot) => (
                   <SlotCard
                     key={slot.slotId}
