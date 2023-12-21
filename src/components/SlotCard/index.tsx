@@ -339,7 +339,7 @@ const SlotCard: FC<SlotCardProps> = ({
 
           {slotStatus === SlotStatus.ONGOING && !isRegistered ? (
             <div className='block text-[12px] text-[#E57368] md:text-[14px] lg:hidden'>
-              !Bạn không thể làm bài vì chưa đăng ký ca thi này
+              Bạn không thể làm bài vì chưa đăng ký ca thi này!
             </div>
           ) : null}
 
@@ -364,7 +364,7 @@ const SlotCard: FC<SlotCardProps> = ({
           />
           {slotStatus === SlotStatus.ONGOING && !isRegistered ? (
             <div className='hidden text-[14px] text-[#E57368] lg:block'>
-              !Bạn không thể làm bài vì chưa đăng ký ca thi này
+              Bạn không thể làm bài vì chưa đăng ký ca thi này!
             </div>
           ) : null}
         </div>
