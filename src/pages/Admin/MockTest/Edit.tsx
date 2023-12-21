@@ -302,7 +302,7 @@ const MockTestEdit = () => {
                       className='flex text-base lg:text-lg 3xl:text-xl'
                       htmlFor='search_question'
                     >
-                      Các câu hỏi có thể ra
+                      Các ca thi hiện có
                     </label>
                     <div className='flex flex-[2] flex-row items-center gap-x-8'>
                       <Link
