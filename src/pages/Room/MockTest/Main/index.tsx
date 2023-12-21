@@ -1,7 +1,7 @@
 import './index.css';
 
 import { useQueries } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
@@ -38,6 +38,22 @@ const Main = () => {
       },
     ],
   });
+
+  const isMidtermExamOpen = useCallback(() => {
+    return (
+      results[0].data?.total &&
+      Date.now() >= results[0].data?.result[0].registrationStartedAt &&
+      Date.now() <= results[0].data?.result[0].slots.slice(-1)[0]?.endedAt
+    );
+  }, [results]);
+
+  const isFinalExamOpen = useCallback(() => {
+    return (
+      results[1].data?.total &&
+      Date.now() >= results[1].data?.result[0].registrationStartedAt &&
+      Date.now() <= results[1].data?.result[0].slots.slice(-1)[0]?.endedAt
+    );
+  }, [results]);
 
   return (
     <Page title='Thi thử'>
@@ -154,9 +170,7 @@ const Main = () => {
                       lineHeight: 'unset',
                     }}
                   />
-                ) : results[0].data?.total &&
-                  Date.now() >= results[0].data?.result[0].registrationStartedAt &&
-                  Date.now() <= results[0].data?.result[0].registrationEndedAt ? (
+                ) : isMidtermExamOpen() ? (
                   <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#7BCFA9] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
                     <div className='aspect-square w-5 rounded-full bg-[#33B679] lg:w-7 2xl:w-8 3xl:w-9' />
                     <p className='text-start text-[16px] font-semibold leading-5 text-white lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
@@ -180,13 +194,15 @@ const Main = () => {
                   qua những câu hỏi ôn tập bám sát thực tế.
                 </p>
               </div>
-              <div className='flex w-full flex-row items-center justify-between'>
-                <Link to={`/room/tests/midterm/${semester}`} className='flex cursor-pointer'>
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Chi tiết
-                  </p>
-                </Link>
-              </div>
+              {isMidtermExamOpen() ? (
+                <div className='flex w-full flex-row items-center justify-between'>
+                  <Link to={`/room/tests/midterm/${semester}`} className='flex cursor-pointer'>
+                    <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Chi tiết
+                    </p>
+                  </Link>
+                </div>
+              ) : null}
             </div>
             <div className='flex flex-col gap-y-7 rounded-[20px] bg-white p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:gap-y-6 lg:gap-y-8 lg:p-6 2xl:gap-y-12 2xl:p-8'>
               <LazyLoadImage
@@ -212,7 +228,7 @@ const Main = () => {
                       lineHeight: 'unset',
                     }}
                   />
-                ) : results[1].data?.total ? (
+                ) : isFinalExamOpen() ? (
                   <div className='flex flex-row items-center gap-x-4 rounded-full bg-[#7BCFA9] py-1 pl-2 pr-4 2xl:py-[6px] 2xl:pr-6'>
                     <div className='aspect-square w-5 rounded-full bg-[#33B679] lg:w-7 2xl:w-8 3xl:w-9' />
                     <p className='text-start text-[16px] font-semibold leading-5 text-white lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
@@ -233,13 +249,15 @@ const Main = () => {
                   câu hỏi, bài tập nhằm kiểm tra kiến thức của bản thân.
                 </p>
               </div>
-              <div className='flex w-full flex-row items-center justify-between'>
-                <Link to={`/room/tests/final/${semester}`} className='flex cursor-pointer'>
-                  <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
-                    Chi tiết
-                  </p>
-                </Link>
-              </div>
+              {isFinalExamOpen() ? (
+                <div className='flex w-full flex-row items-center justify-between'>
+                  <Link to={`/room/tests/final/${semester}`} className='flex cursor-pointer'>
+                    <p className='text-start text-[16px] font-normal leading-7 text-[#696984] underline lg:text-[20px] lg:leading-8 2xl:text-[24px] 2xl:leading-9'>
+                      Chi tiết
+                    </p>
+                  </Link>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
