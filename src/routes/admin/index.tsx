@@ -12,6 +12,12 @@ import EditExercisePage from '../../pages/Admin/Exercise/Edit';
 import ViewExercisePage from '../../pages/Admin/Exercise/View';
 import MaterialEdit from '../../pages/Admin/Material/Edit';
 import MaterialView from '../../pages/Admin/Material/View';
+import CreateSlot from '../../pages/Admin/MockTest/CreateSlot';
+import MockTestEdit from '../../pages/Admin/MockTest/Edit';
+import EditSlot from '../../pages/Admin/MockTest/EditSlot';
+import MockTestList from '../../pages/Admin/MockTest/List';
+import MockTestView from '../../pages/Admin/MockTest/View';
+import ViewSlot from '../../pages/Admin/MockTest/ViewSlot';
 import EditQuestionPage from '../../pages/Admin/Question/Edit';
 import ViewQuestionPage from '../../pages/Admin/Question/View';
 import SubjectEdit from '../../pages/Admin/Subject/Edit';
@@ -30,6 +36,7 @@ const MaterialList = lazy(() => import('../../pages/Admin/Material/List'));
 const MaterialCreate = lazy(() => import('../../pages/Admin/Material/Create'));
 const ExamCreate = lazy(() => import('../../pages/Admin/Exam/Create'));
 const ExamList = lazy(() => import('../../pages/Admin/Exam/List'));
+const CreateMockTestPage = lazy(() => import('../../pages/Admin/MockTest/Create'));
 
 const AdministratorRoute = () => {
   return (
@@ -259,6 +266,66 @@ const AdministratorRoute = () => {
                 </Suspense>
               }
             />
+          </Route>
+          <Route path='mock-test'>
+            <Route
+              path='manage'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MockTestList />
+                </Suspense>
+              }
+            />
+            <Route
+              path='create'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <CreateMockTestPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path='view/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MockTestView />
+                </Suspense>
+              }
+            />
+            <Route
+              path='edit/:id'
+              element={
+                <Suspense fallback={<Loading />}>
+                  <MockTestEdit />
+                </Suspense>
+              }
+            />
+            <Route path='slot'>
+              <Route
+                path='create/:id'
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <CreateSlot />
+                  </Suspense>
+                }
+              />
+              <Route
+                path='view/:id/:slotId'
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ViewSlot />
+                  </Suspense>
+                }
+              />
+              <Route
+                path='edit/:id/:slotId'
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <EditSlot />
+                  </Suspense>
+                }
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>

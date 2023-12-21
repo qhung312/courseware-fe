@@ -15,6 +15,7 @@ const UserInformation = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [userProfile, setUserProfile] = useState<User>(user);
   const [updatedName, setUpdatedName] = useState('');
+  console.log(userProfile);
 
   const formattedDate = new Date(userProfile?.dateOfBirth || '2000-01-01')
     .toISOString()

@@ -8,13 +8,22 @@ import useBoundStore from '../../store';
 import AdminAsideLink from './AdminAsideLink';
 
 type AdminAsideState = {
-  isActive: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | 'chapter' | null;
+  isActive:
+    | 'material'
+    | 'exam'
+    | 'exercise'
+    | 'question'
+    | 'subject'
+    | 'chapter'
+    | 'mockTest'
+    | null;
   material: boolean;
   exam: boolean;
   exercise: boolean;
   question: boolean;
   subject: boolean;
   chapter: boolean;
+  mockTest: boolean;
 };
 
 const AdminAside: FC = () => {
@@ -26,6 +35,7 @@ const AdminAside: FC = () => {
     question: false,
     subject: false,
     chapter: false,
+    mockTest: false,
   });
   const { pathname } = useLocation();
   const pathState = useBoundStore.use.pathState();
@@ -37,7 +47,7 @@ const AdminAside: FC = () => {
   const setPage = useBoundStore.use.setPage();
 
   const handleClick = (
-    type: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | 'chapter'
+    type: 'material' | 'exam' | 'exercise' | 'question' | 'subject' | 'chapter' | 'mockTest'
   ) => {
     setMenuState((prevState) => {
       const newState = { ...prevState };
@@ -84,6 +94,9 @@ const AdminAside: FC = () => {
     } else if (pathname.includes('admin/chapter')) {
       setMenuState((prevState) => ({ ...prevState, isActive: 'chapter' }));
       setPathState('chapter');
+    } else if (pathname.includes('admin/mockTest')) {
+      setMenuState((prevState) => ({ ...prevState, isActive: 'mockTest' }));
+      setPathState('mockTest');
     } else setPathState(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
@@ -132,6 +145,13 @@ const AdminAside: FC = () => {
           isOpen={menuState.question}
           handleClick={handleClick}
           IconProp={Icon.Test}
+        />
+        <AdminAsideLink
+          path='mockTest'
+          titleName='thi thử'
+          isOpen={menuState.mockTest}
+          handleClick={handleClick}
+          IconProp={Icon.MockTestIcon}
         />
       </div>
     </Aside>

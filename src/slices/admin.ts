@@ -6,14 +6,22 @@ export interface TAdminFilterSlice {
   filterChapter: string;
   filterSemster: string;
   page: number;
-  pathState: 'subject' | 'chapter' | 'question' | 'material' | 'exam' | 'exercise' | null;
+  pathState:
+    | 'subject'
+    | 'chapter'
+    | 'question'
+    | 'material'
+    | 'exam'
+    | 'exercise'
+    | 'mockTest'
+    | null;
   setFilterName: (option: string) => void;
   setFilterSubject: (option: string) => void;
   setFilterChapter: (option: string) => void;
   setFilterSemester: (option: string) => void;
   setPage: (option: number) => void;
   setPathState: (
-    path: 'subject' | 'chapter' | 'question' | 'material' | 'exam' | 'exercise' | null
+    path: 'subject' | 'chapter' | 'question' | 'material' | 'exam' | 'exercise' | 'mockTest' | null
   ) => void;
 }
 
