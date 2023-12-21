@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Footer, Icon, LazyLoadImage, Select } from '../../../../components';
 import { Page } from '../../../../layout';
 import ExamService from '../../../../service/exam.service';
-import { SEMESTER_OPTIONS } from '../../../../types';
+import { Exam, SEMESTER_OPTIONS } from '../../../../types';
 import { getCurrentSemester } from '../../../../utils/helper';
 
 const Main = () => {
@@ -39,20 +39,44 @@ const Main = () => {
     ],
   });
 
+  const getTimeRange = (exams: Exam[]) => {
+    if (exams.length === 0) {
+      return [0, 0];
+    }
+    const start = exams.reduce((acc, cur) => {
+      if (cur.registrationStartedAt < acc) {
+        return cur.registrationStartedAt;
+      }
+
+      return acc;
+    }, Infinity);
+    const end = exams.reduce((acc, cur) => {
+      if (cur.slots.slice(-1)[0]?.endedAt > acc) {
+        return cur.slots.slice(-1)[0]?.endedAt;
+      }
+
+      return acc;
+    }, 0);
+
+    return [start, end];
+  };
+
   const isMidtermExamOpen = useCallback(() => {
-    return (
-      results[0].data?.total &&
-      Date.now() >= results[0].data?.result[0].registrationStartedAt &&
-      Date.now() <= results[0].data?.result[0].slots.slice(-1)[0]?.endedAt
-    );
+    if (!results[0].data) {
+      return false;
+    }
+
+    const timeRange = getTimeRange(results[0].data.result);
+    return results[0].data.total && Date.now() >= timeRange[0] && Date.now() <= timeRange[1];
   }, [results]);
 
   const isFinalExamOpen = useCallback(() => {
-    return (
-      results[1].data?.total &&
-      Date.now() >= results[1].data?.result[0].registrationStartedAt &&
-      Date.now() <= results[1].data?.result[0].slots.slice(-1)[0]?.endedAt
-    );
+    if (!results[1].data) {
+      return false;
+    }
+
+    const timeRange = getTimeRange(results[1].data.result);
+    return results[1].data.total && Date.now() >= timeRange[0] && Date.now() <= timeRange[1];
   }, [results]);
 
   return (
@@ -202,6 +226,23 @@ const Main = () => {
                     </p>
                   </Link>
                 </div>
+              ) : results[0].data?.result[0] &&
+                Date.now() < getTimeRange(results[0].data?.result)[0] ? (
+                <p>
+                  Mở đăng ký vào{' '}
+                  {new Date(results[0].data?.result?.[0].registrationStartedAt)
+                    .toLocaleString('vi-VN', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+
+                      hourCycle: 'h23',
+                      hour12: false,
+                    })
+                    .replace(' ', ', ')}
+                </p>
               ) : null}
             </div>
             <div className='flex flex-col gap-y-7 rounded-[20px] bg-white p-4 shadow-[0px_20px_50px_0px_rgba(47,50,125,0.1)] md:gap-y-6 lg:gap-y-8 lg:p-6 2xl:gap-y-12 2xl:p-8'>
@@ -257,6 +298,23 @@ const Main = () => {
                     </p>
                   </Link>
                 </div>
+              ) : results[1].data?.result[0] &&
+                Date.now() < getTimeRange(results[1].data?.result)[0] ? (
+                <p>
+                  Mở đăng ký vào{' '}
+                  {new Date(results[1].data?.result?.[0].registrationStartedAt)
+                    .toLocaleString('vi-VN', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+
+                      hourCycle: 'h23',
+                      hour12: false,
+                    })
+                    .replace(' ', ', ')}
+                </p>
               ) : null}
             </div>
           </div>

@@ -49,6 +49,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
       return data.payload;
     },
     onSuccess: async () => {
+      await queryClient.invalidateQueries([params.sessionId]);
       await queryClient.invalidateQueries([params.sessionId, 'question board']);
     },
     onError: () => {
