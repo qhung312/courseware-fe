@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -16,7 +16,9 @@ const MockTest: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: exam, isFetching } = useQuery({
+  const [isEnding, setIsEnding] = useState(false);
+
+  const { data: exam, isLoading } = useQuery({
     enabled: !!params?.sessionId,
     queryKey: ['exam-session', params.sessionId],
     queryFn: async () => {
@@ -43,17 +45,16 @@ const MockTest: FC = () => {
       exam?.status === SessionStatus.ENDED &&
       pathname === `/room/tests/session/${params.sessionId}`
     ) {
-      console.log('here');
       navigate(`/room/tests/review/session/${params.sessionId}`, { replace: true });
     }
   }, [exam, navigate, params, pathname]);
 
-  if (isFetching || !exam) {
+  if (isLoading || !submit.isLoading || isEnding || !exam) {
     return <Loading />;
   }
 
   return exam.status === SessionStatus.ONGOING ? (
-    <Ongoing exam={exam} handleSubmit={submit} />
+    <Ongoing exam={exam} handleSubmit={submit} setIsEnding={setIsEnding} />
   ) : (
     <Review exam={exam} />
   );

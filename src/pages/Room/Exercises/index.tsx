@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -15,10 +15,11 @@ const Exercises: React.FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [isEnding, setIsEnding] = useState(false);
 
-  const { data: quiz, isFetching } = useQuery({
+  const { data: quiz, isLoading } = useQuery({
     enabled: !!params?.quizId,
-    queryKey: ['quiz', params.quizId, params.sessionId],
+    queryKey: [params.sessionId],
     queryFn: async () => {
       const { data } = await QuizSessionService.getById(params.sessionId as string);
       return data.payload;
@@ -30,7 +31,7 @@ const Exercises: React.FC = () => {
   const submit = useMutation({
     mutationFn: async () => {
       await QuizSessionService.submit(params.sessionId as string);
-      queryClient.invalidateQueries(['quiz', params.quizId, params.sessionId]);
+      queryClient.invalidateQueries([params.sessionId]);
     },
     onError: () => {
       toast.error('Đã có lỗi trong lúc nộp bài!');
@@ -54,13 +55,13 @@ const Exercises: React.FC = () => {
     <>
       {params?.quizId === undefined ? (
         <Main />
-      ) : isFetching ? (
+      ) : isLoading || submit.isLoading || isEnding ? (
         <Loading />
       ) : quiz ? (
         quiz.status === 'ENDED' ? (
           <Review quiz={quiz} />
         ) : (
-          <Detail quiz={quiz} handleSubmit={submit} />
+          <Detail quiz={quiz} handleSubmit={submit} setIsEnding={setIsEnding} />
         )
       ) : null}
     </>

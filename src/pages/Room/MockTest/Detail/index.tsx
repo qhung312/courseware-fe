@@ -205,6 +205,7 @@ const DetailTest: FC = () => {
                   <SlotCard
                     key={slot.slotId}
                     {...slot}
+                    registrationStartedAt={exams[0].registrationStartedAt}
                     registrationEndedAt={exams[0].registrationEndedAt}
                     examId={exams[0]._id}
                     questionCount={slot.questionCount || 0}
