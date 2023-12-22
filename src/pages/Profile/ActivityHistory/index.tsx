@@ -32,6 +32,7 @@ const ActivityHistory = () => {
     viewMaterial: 0,
     viewExercise: 0,
     viewPreviousExam: 0,
+    viewExamSession: 0,
   });
 
   const onFilterClick = () => {
@@ -56,6 +57,7 @@ const ActivityHistory = () => {
     if (filterOption === 1) type = 'VIEW_MATERIAL';
     else if (filterOption === 2) type = 'START_QUIZ_SESSION';
     else if (filterOption === 3) type = 'VIEW_PREVIOUS_EXAM';
+    else if (filterOption === 4) type = 'START_EXAM_SESSION';
     UserService.getUserActivity({ activityType: type, pageSize: 5, pageNumber: page })
       .then((res) => {
         const { results: allActivities, count, total } = res.data.payload;
@@ -65,6 +67,7 @@ const ActivityHistory = () => {
           viewMaterial: count?.VIEW_MATERIAL,
           viewExercise: count?.START_QUIZ_SESSION,
           viewPreviousExam: count?.VIEW_PREVIOUS_EXAM,
+          viewExamSession: count?.START_EXAM_SESSION,
         });
       })
       .catch((err) => {
@@ -241,6 +244,39 @@ const ActivityHistory = () => {
                   {totalActivity.viewPreviousExam} hoạt động
                 </p>
               </button>
+              <button
+                className='flex w-full flex-row items-center justify-between
+                border-t-[1px] border-[#D9D9D9] py-3'
+                onClick={() => {
+                  if (filterOption === 4) setFilterOption(0);
+                  else setFilterOption(4);
+                  setPage(1);
+                }}
+              >
+                <div className='flex items-center'>
+                  {filterOption === 4 ? (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#49BBBD]'>
+                      <Icon.CheckIcon fill='#49BBBD' />
+                    </div>
+                  ) : (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#D9D9D9]' />
+                  )}
+                  <p
+                    className={`font-medium ${
+                      filterOption === 4 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                    }`}
+                  >
+                    Thi thử
+                  </p>
+                </div>
+                <p
+                  className={`text-[14px] font-medium ${
+                    filterOption === 4 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                  }`}
+                >
+                  {totalActivity.viewExamSession} hoạt động
+                </p>
+              </button>
             </nav>
           </div>
           <div className='hidden h-fit w-[29%] rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:block'>
@@ -299,6 +335,19 @@ const ActivityHistory = () => {
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Đề thi</h3>
               <p className='2xl:text-base'>{totalActivity.viewPreviousExam} hoạt động</p>
+            </button>
+            <button
+              className={`mt-3 flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
+                filterOption === 4 && 'bg-[#9DCCFF]/[.3]'
+              }`}
+              onClick={() => {
+                if (filterOption === 4) setFilterOption(0);
+                else setFilterOption(4);
+                setPage(1);
+              }}
+            >
+              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
+              <p className='2xl:text-base'>{totalActivity.viewExamSession} hoạt động</p>
             </button>
           </div>
           {loading && (
@@ -366,6 +415,11 @@ const ActivityHistory = () => {
                           (user?.givenName || '') +
                           ' đã bắt đầu làm Bài tập rèn luyện môn ' +
                           (activity?.quizSessionId?.fromQuiz?.subject?.name || '')
+                        : activity.type === 'START_EXAM_SESSION'
+                        ? (user?.familyAndMiddleName || '') +
+                          ' ' +
+                          (user?.givenName || '') +
+                          ' đã tham gia thi thử'
                         : ''}
                     </h2>
                     <div className='mt-3 flex justify-between'>

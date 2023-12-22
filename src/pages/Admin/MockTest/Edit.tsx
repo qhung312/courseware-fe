@@ -90,7 +90,18 @@ const MockTestEdit = () => {
   }, [id]);
 
   const handleOnSave = useDebounce((): void => {
-    const formData = { name, description, subject, type, semester, isHidden };
+    const registrationStartedAt = duration.start;
+    const registrationEndedAt = duration.end;
+    const formData = {
+      name,
+      description,
+      subject,
+      type,
+      semester,
+      isHidden,
+      registrationStartedAt,
+      registrationEndedAt,
+    };
 
     MockTestService.editGeneralInformation(id, formData, true)
       .then(() => {
@@ -256,7 +267,6 @@ const MockTestEdit = () => {
                         duration.start === 0 ? '2000-01-01T00:01' : formattedDate(duration.start)
                       }
                       onChange={({ target }) => {
-                        console.log(target.value);
                         setDuration({ ...duration, start: new Date(target.value).getTime() });
                       }}
                       className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium

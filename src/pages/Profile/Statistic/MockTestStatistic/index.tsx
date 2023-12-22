@@ -10,7 +10,7 @@ import { Page } from '../../../../layout';
 import SubjectService from '../../../../service/subject.service';
 import UserService, {
   GetAllQuizHistoryProps,
-  SubjectQuizHistoryReturnType,
+  SubjectMockTestHistoryReturnType,
 } from '../../../../service/user.service';
 import RenderLineChart from '../SubjectStatistic/LineChart';
 
@@ -20,13 +20,13 @@ export interface ChartData {
   count: number;
 }
 
-type SubjectQuizHistoryReturnTypeWithDate = SubjectQuizHistoryReturnType & {
+type SubjectMockTestHistoryReturnTypeWithDate = SubjectMockTestHistoryReturnType & {
   dateString: string;
 };
 
 const MockTestStatistic = () => {
   const params = useParams();
-  const [quizHistory, setQuizHistory] = useState<SubjectQuizHistoryReturnType[]>([]);
+  const [mockTestHistory, setMockTestHistory] = useState<SubjectMockTestHistoryReturnType[]>([]);
   const [lineChartData, setLineChartData] = useState<ChartData[]>([]);
   const [queryPeriod, setQueryPeriod] = useState(getEpochTimestamps());
   const [subjectName, setSubjectName] = useState<string>('');
@@ -108,11 +108,11 @@ const MockTestStatistic = () => {
       startAt: queryPeriod.weekAgoEpochTimestamp.toString(),
       endAt: queryPeriod.currentEpochTimestamp.toString(),
     };
-    UserService.getAllSubjectQuizHistory(queryProps)
+    UserService.getAllSubjectMockTestHistory(queryProps)
       .then((res) => {
         const { result } = res.data.payload;
-        setQuizHistory(result);
-        const newResult: SubjectQuizHistoryReturnTypeWithDate[] = result.map((item) => {
+        setMockTestHistory(result);
+        const newResult: SubjectMockTestHistoryReturnTypeWithDate[] = result.map((item) => {
           return {
             ...item,
             dateString: epochToDateString(item.endedAt, false),
@@ -202,7 +202,7 @@ const MockTestStatistic = () => {
                 Điểm
               </p> */}
               {/* <img src={DemoLineChart} alt='Demo Line Chart' className='h-fit w-full md:w-[70vw]' /> */}
-              {quizHistory.length === 0 ? (
+              {mockTestHistory.length === 0 ? (
                 <div className='lg:mt-[-16px]'>
                   <div className='z-10 rounded-[20px] bg-white px-4 py-3 md:p-5 xl:p-6 2xl:p-7'>
                     <NoChartData
@@ -234,7 +234,7 @@ const MockTestStatistic = () => {
               <div className='flex items-center gap-x-2 md:flex-[6]'>
                 <div className='h-4 w-4 rounded-full bg-[#49BBBD] md:bg-[#4285F4] 3xl:h-5 3xl:w-5' />
                 <p className='font-medium text-[#49BBBD] md:text-[18px] md:text-[#4285F4] lg:text-xl 3xl:text-[28px]'>
-                  Danh sách các bài kiểm tra
+                  Danh sách các đợt thi thử
                 </p>
               </div>
               <p className='hidden md:block md:flex-[3] md:text-[18px] md:text-[#4285F4] lg:text-xl 3xl:text-[28px]'>
@@ -245,12 +245,12 @@ const MockTestStatistic = () => {
               </p>
             </div>
             <div className='mt-3 w-full md:hidden'>
-              {quizHistory.map((test, index) => (
+              {mockTestHistory.map((test, index) => (
                 <div className='flex flex-col border-t-[1px] border-t-[#D9D9D9] pt-3' key={index}>
                   <div className='flex justify-between'>
-                    <p className='font-medium text-[#252641]'>{test?.fromQuiz?.name || 'Quiz'}</p>
+                    <p className='font-medium text-[#252641]'>{test?.fromExam?.name || 'Quiz'}</p>
                     <Link
-                      to={`/room/exercises/${test?.fromQuiz?.subject?._id}/quiz/${test?._id}/review/session/${test?._id}`}
+                      to={`/room/tests/review/session/${test?._id}`}
                       className='font-semibold text-[#252641] underline hover:text-[#4285f4]'
                     >
                       Xem lại
@@ -271,7 +271,7 @@ const MockTestStatistic = () => {
               ))}
             </div>
             <div className='mt-3 hidden w-full md:block'>
-              {quizHistory.map((test, index) => (
+              {mockTestHistory.map((test, index) => (
                 <div
                   className='flex flex-col border-t-[1px] border-t-[#D9D9D9] pt-3 pb-3'
                   key={index}
@@ -279,7 +279,7 @@ const MockTestStatistic = () => {
                   <div className='flex justify-between'>
                     <div className='flex w-[80%] items-center justify-between'>
                       <p className='flex-[6] pl-5 font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
-                        {test?.fromQuiz?.name || 'Quiz'}
+                        {test?.fromExam?.name || 'Quiz'}
                       </p>
                       <p className='flex-[3] font-medium text-[#252641] lg:text-[18px] 3xl:text-2xl'>
                         {test.endedAt ? epochToDateString(test.endedAt, true) : 'Chưa cập nhật'}
@@ -290,7 +290,7 @@ const MockTestStatistic = () => {
                       </p>
                     </div>
                     <Link
-                      to={`/room/exercises/${test?.fromQuiz?.subject?._id}/quiz/${test?._id}/review/session/${test?._id}`}
+                      to={`/room/tests/review/session/${test?._id}`}
                       className='font-semibold text-[#252641] underline hover:text-[#4285f4] lg:text-[18px] 3xl:text-2xl'
                     >
                       Xem lại
