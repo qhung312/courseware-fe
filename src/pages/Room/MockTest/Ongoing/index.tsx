@@ -1,5 +1,5 @@
 import { UseMutationResult, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -14,7 +14,8 @@ import MobileOngoing from './MobileOngoing';
 const Detail: React.FC<{
   exam: ExamSession;
   handleSubmit: UseMutationResult<void, unknown, void, unknown>;
-}> = ({ exam, handleSubmit }) => {
+  setIsEnding: Dispatch<SetStateAction<boolean>>;
+}> = ({ exam, handleSubmit, setIsEnding }) => {
   const params = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -24,6 +25,7 @@ const Detail: React.FC<{
   useEffect(() => {
     const onEndExamSession = () => {
       toast.success('Đã nộp bài!');
+      setIsEnding(true);
       queryClient.invalidateQueries(['exam', params.examId, params.sessionId]);
     };
 
@@ -32,7 +34,7 @@ const Detail: React.FC<{
     return () => {
       socket.off(SocketEvent.END_EXAM_SESSION, onEndExamSession);
     };
-  }, [params, navigate, queryClient, pathname]);
+  }, [params, navigate, queryClient, pathname, setIsEnding]);
 
   return (
     <Page

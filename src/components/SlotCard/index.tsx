@@ -120,6 +120,7 @@ type SlotCardProps = {
   registeredUsers: Student[];
   userLimit: number;
   questionCount: number;
+  registrationStartedAt: number;
   registrationEndedAt: number;
 
   startedAt: number;
@@ -136,6 +137,7 @@ const SlotCard: FC<SlotCardProps> = ({
   startedAt,
   endedAt,
   registeredUsers,
+  registrationStartedAt,
   registrationEndedAt,
   questionCount,
   userLimit,
@@ -186,7 +188,13 @@ const SlotCard: FC<SlotCardProps> = ({
     let intervalId: NodeJS.Timer;
     const now = Date.now();
 
-    if (now < startedAt) {
+    if (now < registrationStartedAt) {
+      setSlotStatus(SlotStatus.PREPARING);
+
+      intervalId = setInterval(() => {
+        setSlotStatus(SlotStatus.OPEN);
+      }, registrationStartedAt - now);
+    } else if (now < startedAt) {
       if (isRegistered) {
         setSlotStatus(SlotStatus.REGISTERED);
       } else {
@@ -216,7 +224,7 @@ const SlotCard: FC<SlotCardProps> = ({
     return () => {
       clearInterval(intervalId);
     };
-  }, [startedAt, endedAt, isRegistered, registrationEndedAt, examSession]);
+  }, [startedAt, endedAt, isRegistered, registrationStartedAt, registrationEndedAt, examSession]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onClick = useCallback(
