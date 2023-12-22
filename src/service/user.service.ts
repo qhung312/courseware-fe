@@ -134,6 +134,9 @@ const deleteUserActivity = (activityId: string) =>
 
 const getAllSubjectStatistic = () => axios.get<StatisticsResponse>(`${API_URL}me/statistics/quiz/`);
 
+const getAllMockTestStatistic = () =>
+  axios.get<StatisticsResponse>(`${API_URL}me/statistics/exam/`);
+
 const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
   const queryString = `${API_URL}quiz_session?pagination=false&status=ENDED&subject=${
     query.subjectId
@@ -144,13 +147,23 @@ const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
   return axios.get<Response<GetAllQuizHistoryReturnType>>(queryString);
 };
 
+const getAllSubjectMockTestHistory = (query: GetAllQuizHistoryProps) => {
+  const queryString = `${API_URL}exam?pagination=false&status=ENDED&subject=${query.subjectId}${
+    query.startAt ? `&endedAtMin=${query.startAt}` : ''
+  }${query.endAt ? `&endedAtMax=${query.endAt}` : ''}`;
+
+  return axios.get<Response<GetAllQuizHistoryReturnType>>(queryString);
+};
+
 const UserService = {
   getUserProfile,
   editUserProfile,
   getUserActivity,
   deleteUserActivity,
   getAllSubjectStatistic,
+  getAllMockTestStatistic,
   getAllSubjectQuizHistory,
+  getAllSubjectMockTestHistory,
 };
 
 export default UserService;

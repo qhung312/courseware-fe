@@ -12,8 +12,7 @@ import UserService, {
   GetAllQuizHistoryProps,
   SubjectQuizHistoryReturnType,
 } from '../../../../service/user.service';
-
-import RenderLineChart from './LineChart';
+import RenderLineChart from '../SubjectStatistic/LineChart';
 
 export interface ChartData {
   dateString: string;
@@ -25,7 +24,7 @@ type SubjectQuizHistoryReturnTypeWithDate = SubjectQuizHistoryReturnType & {
   dateString: string;
 };
 
-const SubjectStatistic = () => {
+const MockTestStatistic = () => {
   const params = useParams();
   const [quizHistory, setQuizHistory] = useState<SubjectQuizHistoryReturnType[]>([]);
   const [lineChartData, setLineChartData] = useState<ChartData[]>([]);
@@ -308,4 +307,4 @@ const SubjectStatistic = () => {
   );
 };
 
-export default SubjectStatistic;
+export default MockTestStatistic;
