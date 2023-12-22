@@ -54,6 +54,20 @@ export type ActivityReturnType = {
       };
     };
   };
+  examSessionId: {
+    _id: string;
+    status: string;
+    fromExam: {
+      _id: string;
+      name: string;
+      subject: {
+        _id: string;
+        name: string;
+      };
+      semester: string;
+      type: string;
+    };
+  };
   createdAt: number;
 };
 
