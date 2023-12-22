@@ -2,20 +2,16 @@ import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SingleValue } from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { Icon, Select } from '../../../components';
+import { Icon } from '../../../components';
 import { Option } from '../../../components/Select';
 import { useDebounce } from '../../../hooks';
 import { Page, Wrapper } from '../../../layout';
 import ChapterService from '../../../service/chapter.service';
 import MockTestService from '../../../service/mockTest.service';
-import QuestionService from '../../../service/question.service';
 import SubjectService from '../../../service/subject.service';
 import { SlotQuestion, Slots } from '../../../types/mockTest';
-
-type OptionWithQuestion = Option & { question: SlotQuestion };
 
 const EditSlot = () => {
   const navigate = useNavigate();
@@ -31,13 +27,8 @@ const EditSlot = () => {
 
   const [potentialQuestions, setPotentialQuestions] = useState<SlotQuestion[]>([]);
 
-  const [filterSubject, setFilterSubject] = useState('');
-  const [filterChapter, setFilterChapter] = useState('');
-
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptionsAll, setChapterOptionsAll] = useState<Option[]>([]);
-  const [questionOptions, setQuestionOptions] = useState<SlotQuestion[]>([]);
-  const [filterChapterOptions, setFilterChapterOptions] = useState<Option[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [canSave, setCanSave] = useState(false);
@@ -50,32 +41,6 @@ const EditSlot = () => {
     const minuteString = d.getMinutes() < 10 ? `0${d.getMinutes()}` : `${d.getMinutes()}`;
     return `${d.getFullYear()}-${monthString}-${dateString}T${hourString}:${minuteString}`;
   };
-
-  const fetchQuestions = useDebounce(() => {
-    setLoading(true);
-    QuestionService.getAll(
-      {
-        subject: filterSubject === '' ? undefined : filterSubject,
-        chapter: filterChapter === '' ? undefined : filterChapter,
-      },
-      true
-    )
-      .then((res) => {
-        const { result } = res.data.payload;
-        const allQuestions = result.map((question) => {
-          return {
-            ...question,
-            subject: question.subject?._id ?? '',
-            chapter: question.chapter?._id ?? '',
-          };
-        });
-        setQuestionOptions(allQuestions);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      })
-      .finally(() => setLoading(false));
-  });
 
   const fetchData = useCallback(() => {
     setLoading(true);
@@ -144,10 +109,6 @@ const EditSlot = () => {
   });
 
   useEffect(() => {
-    fetchQuestions();
-  }, [filterSubject, filterChapter, fetchQuestions]);
-
-  useEffect(() => {
     fetchData();
   }, [fetchData]);
 
@@ -209,42 +170,6 @@ const EditSlot = () => {
         toast.error(err.response.data.message);
       });
   }, [subject]);
-
-  useEffect(() => {
-    if (filterSubject === '') {
-      setFilterChapterOptions([]);
-      setFilterChapter('');
-      return;
-    }
-
-    ChapterService.getAll({ subject: filterSubject })
-      .then((res) => {
-        const { result: allFilterChapters } = res.data.payload;
-        setFilterChapterOptions(
-          allFilterChapters.map((chap) => ({
-            value: chap._id,
-            label: chap.name,
-          }))
-        );
-        setFilterChapter('');
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  }, [filterSubject]);
-
-  const onSelectAddQuestion = (value: SingleValue<Option>) => {
-    if (value !== null) {
-      const duplicate = potentialQuestions.find(
-        (x) => x._id === (value as OptionWithQuestion).question._id
-      );
-      if (!duplicate) {
-        setPotentialQuestions([...potentialQuestions, (value as OptionWithQuestion).question]);
-      } else {
-        toast.error('Câu hỏi đã được thêm');
-      }
-    }
-  };
 
   return (
     <Page>
@@ -318,7 +243,6 @@ const EditSlot = () => {
                           duration.start === 0 ? '2000-01-01T00:01' : formattedDate(duration.start)
                         }
                         onChange={({ target }) => {
-                          console.log(target.value);
                           setDuration({ ...duration, start: new Date(target.value).getTime() });
                         }}
                         className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
@@ -367,54 +291,6 @@ const EditSlot = () => {
                       >
                         Các câu hỏi có thể ra
                       </label>
-                      <div className='flex flex-[2] flex-row items-center gap-x-8'>
-                        <Select
-                          options={questionOptions.map((question) => {
-                            return {
-                              value: question._id,
-                              label: question.name,
-                              question: question,
-                            } as OptionWithQuestion;
-                          })}
-                          placeholder='Chọn câu hỏi'
-                          value={null}
-                          onChange={onSelectAddQuestion}
-                        />
-                        <Select
-                          options={subjectOptions}
-                          placeholder='Chọn môn'
-                          value={subjectOptions.find((x) => x.value === filterSubject) ?? null}
-                          onChange={(v) => {
-                            if (v !== null) {
-                              setFilterSubject(v.value);
-                            }
-                          }}
-                        />
-                        <Select
-                          options={filterChapterOptions}
-                          placeholder='Chọn chương'
-                          value={
-                            filterChapterOptions.find((x) => x.value === filterChapter) ?? null
-                          }
-                          onChange={(v) => {
-                            if (v !== null) {
-                              setFilterChapter(v.value);
-                            }
-                          }}
-                        />
-                        <button
-                          className={`flex flex-[0.5] ${
-                            filterSubject !== '' || filterChapter !== '' ? 'opacity-1' : 'opacity-0'
-                          }`}
-                          disabled={filterSubject !== '' && filterChapter !== ''}
-                          onClick={() => {
-                            setFilterSubject('');
-                            setFilterChapter('');
-                          }}
-                        >
-                          <p className='text-xs lg:text-sm 3xl:text-base'>Xoá bộ lọc</p>
-                        </button>
-                      </div>
                     </div>
                     <div>
                       <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>

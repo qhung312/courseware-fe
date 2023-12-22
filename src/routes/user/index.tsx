@@ -6,6 +6,7 @@ import { Protected } from '../../layout';
 // import ComingSoonPage from '../../pages/ComingSoon';
 import BadEmailPage from '../../pages/Error/BadEmail';
 import NotFoundPage from '../../pages/Error/NotFound';
+import MockTestStatistic from '../../pages/Profile/Statistic/MockTestStatistic';
 
 const AboutUsPage = lazy(() => import('../../pages/AboutUs'));
 const ActivitiesPage = lazy(() => import('../../pages/AboutUs/Activities'));
@@ -135,10 +136,18 @@ const UserRoute = () => {
             }
           />
           <Route
-            path='statistic/:subjectId'
+            path='statistic/exercise/:subjectId'
             element={
               <Suspense fallback={<Loading />}>
                 <SubjectStatisticPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='statistic/mock-test/:subjectId'
+            element={
+              <Suspense fallback={<Loading />}>
+                <MockTestStatistic />
               </Suspense>
             }
           />

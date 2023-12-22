@@ -17,7 +17,6 @@ const UserInformation = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [userProfile, setUserProfile] = useState<User>(user);
   const [updatedName, setUpdatedName] = useState('');
-  console.log(userProfile);
 
   const getUserProfile = useBoundStore.use.getUserProfile();
 
@@ -216,8 +215,9 @@ const UserInformation = () => {
                   onChange={(e) => {
                     setUserProfile({ ...userProfile, gender: e.target.value });
                   }}
+                  defaultValue={''}
                 >
-                  <option value='' selected disabled className='hidden'></option>
+                  <option value='' disabled className='hidden'></option>
                   <option value='MALE'>Nam</option>
                   <option value='FEMALE'>Nữ</option>
                   <option value='OTHER'>Khác</option>

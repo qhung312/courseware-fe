@@ -54,6 +54,20 @@ export type ActivityReturnType = {
       };
     };
   };
+  examSessionId: {
+    _id: string;
+    status: string;
+    fromExam: {
+      _id: string;
+      name: string;
+      subject: {
+        _id: string;
+        name: string;
+      };
+      semester: string;
+      type: string;
+    };
+  };
   createdAt: number;
 };
 
@@ -64,6 +78,7 @@ type GetAllActivityReturnType = {
     VIEW_MATERIAL: number;
     VIEW_PREVIOUS_EXAM: number;
     START_QUIZ_SESSION: number;
+    START_EXAM_SESSION: number;
   };
 };
 
@@ -102,6 +117,50 @@ export type SubjectQuizHistoryReturnType = {
   endedAt: number;
 };
 
+export type SubjectMockTestHistoryReturnType = {
+  _id: string;
+  userId: string;
+  status: string;
+  duration: number;
+  startedAt: number;
+  standardizedScore: number;
+  fromExam: {
+    _id: string;
+    name: string;
+    description: string;
+    subject: {
+      _id: string;
+      name: string;
+      description: string;
+      createdBy: string;
+      createdAt: number;
+      lastUpdatedAt: number;
+      __v: number;
+    };
+    semester: string;
+    type: string;
+    registrationStartedAt: number;
+    registrationEndedAt: number;
+    slots: [
+      {
+        slotId: number;
+        name: string;
+        userLimit: number;
+        startedAt: number;
+        endedAt: number;
+        _id: string;
+      }
+    ];
+    createdBy: string;
+    createdAt: number;
+    lastUpdatedAt: number;
+    isHidden: boolean;
+    __v: number;
+  };
+  slotId: number;
+  endedAt: number;
+};
+
 interface StatisticsResponse {
   success: boolean;
   code: number;
@@ -112,6 +171,11 @@ interface StatisticsResponse {
 interface GetAllQuizHistoryReturnType {
   total: number;
   result: SubjectQuizHistoryReturnType[];
+}
+
+interface GetAllMockTestHistoryReturnType {
+  total: number;
+  result: SubjectMockTestHistoryReturnType[];
 }
 
 const getUserProfile = () => axios.get<Response<User>>(`${API_URL}me`);
@@ -134,6 +198,9 @@ const deleteUserActivity = (activityId: string) =>
 
 const getAllSubjectStatistic = () => axios.get<StatisticsResponse>(`${API_URL}me/statistics/quiz/`);
 
+const getAllMockTestStatistic = () =>
+  axios.get<StatisticsResponse>(`${API_URL}me/statistics/exam/`);
+
 const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
   const queryString = `${API_URL}quiz_session?pagination=false&status=ENDED&subject=${
     query.subjectId
@@ -144,13 +211,25 @@ const getAllSubjectQuizHistory = (query: GetAllQuizHistoryProps) => {
   return axios.get<Response<GetAllQuizHistoryReturnType>>(queryString);
 };
 
+const getAllSubjectMockTestHistory = (query: GetAllQuizHistoryProps) => {
+  const queryString = `${API_URL}exam_session?pagination=false&status=ENDED&subject=${
+    query.subjectId
+  }${query.startAt ? `&endedAtMin=${query.startAt}` : ''}${
+    query.endAt ? `&endedAtMax=${query.endAt}` : ''
+  }`;
+
+  return axios.get<Response<GetAllMockTestHistoryReturnType>>(queryString);
+};
+
 const UserService = {
   getUserProfile,
   editUserProfile,
   getUserActivity,
   deleteUserActivity,
   getAllSubjectStatistic,
+  getAllMockTestStatistic,
   getAllSubjectQuizHistory,
+  getAllSubjectMockTestHistory,
 };
 
 export default UserService;

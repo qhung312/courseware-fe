@@ -32,6 +32,7 @@ const ActivityHistory = () => {
     viewMaterial: 0,
     viewExercise: 0,
     viewPreviousExam: 0,
+    viewExamSession: 0,
   });
 
   const onFilterClick = () => {
@@ -56,6 +57,7 @@ const ActivityHistory = () => {
     if (filterOption === 1) type = 'VIEW_MATERIAL';
     else if (filterOption === 2) type = 'START_QUIZ_SESSION';
     else if (filterOption === 3) type = 'VIEW_PREVIOUS_EXAM';
+    else if (filterOption === 4) type = 'START_EXAM_SESSION';
     UserService.getUserActivity({ activityType: type, pageSize: 5, pageNumber: page })
       .then((res) => {
         const { results: allActivities, count, total } = res.data.payload;
@@ -65,6 +67,7 @@ const ActivityHistory = () => {
           viewMaterial: count?.VIEW_MATERIAL,
           viewExercise: count?.START_QUIZ_SESSION,
           viewPreviousExam: count?.VIEW_PREVIOUS_EXAM,
+          viewExamSession: count?.START_EXAM_SESSION,
         });
       })
       .catch((err) => {
@@ -241,6 +244,39 @@ const ActivityHistory = () => {
                   {totalActivity.viewPreviousExam} hoạt động
                 </p>
               </button>
+              <button
+                className='flex w-full flex-row items-center justify-between
+                border-t-[1px] border-[#D9D9D9] py-3'
+                onClick={() => {
+                  if (filterOption === 4) setFilterOption(0);
+                  else setFilterOption(4);
+                  setPage(1);
+                }}
+              >
+                <div className='flex items-center'>
+                  {filterOption === 4 ? (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#49BBBD]'>
+                      <Icon.CheckIcon fill='#49BBBD' />
+                    </div>
+                  ) : (
+                    <div className='mr-2 h-5 w-5 rounded-full border-[1px] border-[#D9D9D9]' />
+                  )}
+                  <p
+                    className={`font-medium ${
+                      filterOption === 4 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                    }`}
+                  >
+                    Thi thử
+                  </p>
+                </div>
+                <p
+                  className={`text-[14px] font-medium ${
+                    filterOption === 4 ? 'text-[#49BBBD]' : 'text-[#252641]'
+                  }`}
+                >
+                  {totalActivity.viewExamSession} hoạt động
+                </p>
+              </button>
             </nav>
           </div>
           <div className='hidden h-fit w-[29%] rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:block'>
@@ -300,6 +336,19 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Đề thi</h3>
               <p className='2xl:text-base'>{totalActivity.viewPreviousExam} hoạt động</p>
             </button>
+            <button
+              className={`mt-3 flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
+                filterOption === 4 && 'bg-[#9DCCFF]/[.3]'
+              }`}
+              onClick={() => {
+                if (filterOption === 4) setFilterOption(0);
+                else setFilterOption(4);
+                setPage(1);
+              }}
+            >
+              <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
+              <p className='2xl:text-base'>{totalActivity.viewExamSession} hoạt động</p>
+            </button>
           </div>
           {loading && (
             <>
@@ -320,28 +369,30 @@ const ActivityHistory = () => {
             <div className='lg:mt-[-16px] lg:min-h-[600px] lg:w-[69%]'>
               {activities.map((activity, index) => (
                 <div className='mt-4' key={index}>
-                  <Link
-                    to={
-                      activity.type === 'VIEW_MATERIAL'
-                        ? `/library/material/${activity?.materialId?.subject?._id || ''}/pdf/${
-                            activity?.materialId?._id || ''
-                          }`
-                        : activity.type === 'VIEW_PREVIOUS_EXAM'
-                        ? `/library/exam-archive/${
-                            activity?.previousExamId?.subject?._id || ''
-                          }/pdf/${activity?.previousExamId?._id || ''}`
-                        : activity.type === 'START_QUIZ_SESSION'
-                        ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?.fromQuiz._id}/review/session/${activity?.quizSessionId?._id}`
-                        : '/'
-                    }
-                    className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'
-                  >
+                  <div className='flex flex-col rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'>
                     <p className='text-xl text-[rgba(45,52,54,0.7)] md:text-base 3xl:text-xl'>
                       {activity.createdAt
                         ? epochToDateString(activity.createdAt)
                         : '00 thàng 00 năm 0000'}
                     </p>
-                    <h2 className='mt-1 text-2xl text-[#2D3436] md:text-xl 3xl:text-2xl'>
+                    <Link
+                      to={
+                        activity.type === 'VIEW_MATERIAL'
+                          ? `/library/material/${activity?.materialId?.subject?._id || ''}/pdf/${
+                              activity?.materialId?._id || ''
+                            }`
+                          : activity.type === 'VIEW_PREVIOUS_EXAM'
+                          ? `/library/exam-archive/${
+                              activity?.previousExamId?.subject?._id || ''
+                            }/pdf/${activity?.previousExamId?._id || ''}`
+                          : activity.type === 'START_QUIZ_SESSION'
+                          ? `/room/exercises/${activity?.quizSessionId?.fromQuiz?.subject?._id}/quiz/${activity?.quizSessionId?.fromQuiz._id}/review/session/${activity?.quizSessionId?._id}`
+                          : activity.type === 'START_EXAM_SESSION'
+                          ? `/room/tests/review/session/${activity?.examSessionId?._id || ''}`
+                          : '/'
+                      }
+                      className='mt-1 text-2xl text-[#2D3436] md:text-xl 3xl:text-2xl'
+                    >
                       {activity.type === 'VIEW_PREVIOUS_EXAM'
                         ? (user?.familyAndMiddleName || '') +
                           ' ' +
@@ -366,9 +417,15 @@ const ActivityHistory = () => {
                           (user?.givenName || '') +
                           ' đã bắt đầu làm Bài tập rèn luyện môn ' +
                           (activity?.quizSessionId?.fromQuiz?.subject?.name || '')
+                        : activity.type === 'START_EXAM_SESSION'
+                        ? (user?.familyAndMiddleName || '') +
+                          ' ' +
+                          (user?.givenName || '') +
+                          ' đã tham gia thi thử môn ' +
+                          (activity?.examSessionId?.fromExam?.subject?.name || '')
                         : ''}
-                    </h2>
-                    <div className='mt-3 flex justify-between'>
+                    </Link>
+                    <div className='mt-3 flex justify-between' onClick={(e) => e.preventDefault()}>
                       <div className='flex items-center'>
                         <Icon.OpenBook />
                         <p className='ml-2 text-[#5B5B5B] xl:text-base 2xl:text-[18px]'>
@@ -381,6 +438,11 @@ const ActivityHistory = () => {
                             ? activity?.materialId?.subject?.name || ''
                             : activity.type === 'START_QUIZ_SESSION'
                             ? activity?.quizSessionId?.fromQuiz?.chapter?.name || ''
+                            : activity.type === 'START_EXAM_SESSION'
+                            ? 'Học kì ' +
+                              (activity?.examSessionId?.fromExam?.semester
+                                ? activity?.examSessionId?.fromExam?.semester.slice(9, 12)
+                                : '')
                             : ''}
                         </p>
                       </div>
@@ -402,6 +464,10 @@ const ActivityHistory = () => {
                               ? `${API_URL}room/exercises/${
                                   activity?.quizSessionId?.fromQuiz?.subject?._id || ''
                                 }/quiz/${activity?.quizSessionId?._id || ''}`
+                              : activity.type === 'START_EXAM_SESSION'
+                              ? `${API_URL}room/tests/review/session/${
+                                  activity?.examSessionId?._id || ''
+                                }`
                               : API_URL
                           }
                         />
@@ -418,7 +484,7 @@ const ActivityHistory = () => {
                         </button>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 </div>
               ))}
               <div className='mt-9' />
