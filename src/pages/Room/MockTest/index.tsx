@@ -49,7 +49,7 @@ const MockTest: FC = () => {
     }
   }, [exam, navigate, params, pathname]);
 
-  if (isLoading || !submit.isLoading || isEnding || !exam) {
+  if (isLoading || submit.isLoading || isEnding || !exam) {
     return <Loading />;
   }
 
