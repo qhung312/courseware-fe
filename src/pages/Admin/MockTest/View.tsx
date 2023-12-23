@@ -183,10 +183,10 @@ const MockTestView = () => {
                           {slot?.registeredUsers?.length || 0}/{slot?.userLimit}
                         </p>
                         <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {new Date(slot?.startedAt).toLocaleString()}
+                          {formattedDate(slot?.startedAt)}
                         </p>
                         <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {new Date(slot?.endedAt).toLocaleString()}
+                          {formattedDate(slot?.endedAt)}
                         </p>
                       </Link>
                     ))}

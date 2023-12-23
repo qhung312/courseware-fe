@@ -66,6 +66,16 @@ const EditSlot = () => {
     } else setDuration({ ...duration, end: new Date(targetDate || 0).getTime() });
   };
 
+  const formattedDate = (date: number) => {
+    const d = new Date(date);
+    const dateString = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`;
+    const monthString = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`;
+    const hourString = d.getHours() < 10 ? `0${d.getHours()}` : `${d.getHours()}`;
+    const minuteString = d.getMinutes() < 10 ? `0${d.getMinutes()}` : `${d.getMinutes()}`;
+    const secondString = d.getSeconds() < 10 ? `0${d.getSeconds()}` : `${d.getSeconds()}`;
+    return `${dateString}/${monthString}/${d.getFullYear()} ${hourString}:${minuteString}:${secondString}`;
+  };
+
   const fetchData = useCallback(() => {
     setLoading(true);
     MockTestService.getById(id, true)
@@ -360,7 +370,7 @@ const EditSlot = () => {
                               ?.label || ''}
                           </p>
                           <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                            {new Date(question.createdAt).toLocaleString()}
+                            {formattedDate(question?.createdAt)}
                           </p>
                           <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
                             <button
