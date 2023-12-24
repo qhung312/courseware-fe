@@ -3,10 +3,13 @@ import { StateCreator } from 'zustand';
 export interface TAppSlice {
   isAsideOpen: boolean;
   isSignInModalOpen: boolean;
+  isBadEmailModalOpen: boolean;
   toggleAside: () => void;
   openAside: () => void;
-  openModal: () => void;
-  closeModal: () => void;
+  openSignInModal: () => void;
+  closeSignInModal: () => void;
+  openBadEmailModal: () => void;
+  closeBadEmailModal: () => void;
 }
 
 export const AppSlice: StateCreator<TAppSlice, [['zustand/devtools', never]], [], TAppSlice> = (
@@ -14,8 +17,11 @@ export const AppSlice: StateCreator<TAppSlice, [['zustand/devtools', never]], []
 ) => ({
   isAsideOpen: true,
   isSignInModalOpen: false,
+  isBadEmailModalOpen: false,
   toggleAside: () => set((state) => ({ isAsideOpen: !state.isAsideOpen })),
   openAside: () => set(() => ({ isAsideOpen: true })),
-  openModal: () => set(() => ({ isSignInModalOpen: true })),
-  closeModal: () => set(() => ({ isSignInModalOpen: false })),
+  openSignInModal: () => set(() => ({ isSignInModalOpen: true })),
+  closeSignInModal: () => set(() => ({ isSignInModalOpen: false })),
+  openBadEmailModal: () => set(() => ({ isBadEmailModalOpen: true })),
+  closeBadEmailModal: () => set(() => ({ isBadEmailModalOpen: false })),
 });
