@@ -161,7 +161,7 @@ const DetailTest: FC = () => {
         >
           <div className='flex w-full items-start md:hidden'>
             <Link
-              to={`/room/tests/${typeOfTest}`}
+              to={`/room/tests/${typeOfTest}/${params.semester}`}
               className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white 
               hover:bg-[#4285F4] hover:underline 
               lg:bg-[#4285F4]/70'
