@@ -16,6 +16,16 @@ const MockTestView = () => {
   const [loading, setLoading] = useState(false);
   const [mockTest, setMockTest] = useState<MockTest>();
 
+  const formattedDate = (date: number) => {
+    const d = new Date(date);
+    const dateString = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`;
+    const monthString = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`;
+    const hourString = d.getHours() < 10 ? `0${d.getHours()}` : `${d.getHours()}`;
+    const minuteString = d.getMinutes() < 10 ? `0${d.getMinutes()}` : `${d.getMinutes()}`;
+    const secondString = d.getSeconds() < 10 ? `0${d.getSeconds()}` : `${d.getSeconds()}`;
+    return `${dateString}/${monthString}/${d.getFullYear()} ${hourString}:${minuteString}:${secondString}`;
+  };
+
   useEffect(() => {
     setLoading(true);
     MockTestService.getById(id, true)
@@ -113,9 +123,8 @@ const MockTestView = () => {
                     <p className='w-full text-sm lg:text-base 3xl:text-xl'>Bắt đầu đăng ký</p>
                     <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                       <span>
-                        {new Date(
-                          mockTest?.registrationStartedAt || '2000-01-01'
-                        ).toLocaleString() || 'Không có thông tin'}
+                        {formattedDate(mockTest?.registrationStartedAt || 0) ||
+                          'Không có thông tin'}
                       </span>
                     </div>
                   </div>
@@ -123,8 +132,7 @@ const MockTestView = () => {
                     <p className='w-full text-sm lg:text-base 3xl:text-xl'>Kết thúc đăng ký</p>
                     <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                       <span>
-                        {new Date(mockTest?.registrationEndedAt || '2000-01-01').toLocaleString() ||
-                          'Không có thông tin'}
+                        {formattedDate(mockTest?.registrationEndedAt || 0) || 'Không có thông tin'}
                       </span>
                     </div>
                   </div>
@@ -175,10 +183,10 @@ const MockTestView = () => {
                           {slot?.registeredUsers?.length || 0}/{slot?.userLimit}
                         </p>
                         <p className='flex flex-[1.2] text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {new Date(slot?.startedAt).toLocaleString()}
+                          {formattedDate(slot?.startedAt)}
                         </p>
                         <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                          {new Date(slot?.endedAt).toLocaleString()}
+                          {formattedDate(slot?.endedAt)}
                         </p>
                       </Link>
                     ))}

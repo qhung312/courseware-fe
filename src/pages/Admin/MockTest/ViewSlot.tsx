@@ -21,6 +21,16 @@ const ViewSlot = () => {
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
   const [chapterOptionsAll, setChapterOptionsAll] = useState<Option[]>([]);
 
+  const formattedDate = (date: number) => {
+    const d = new Date(date);
+    const dateString = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`;
+    const monthString = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`;
+    const hourString = d.getHours() < 10 ? `0${d.getHours()}` : `${d.getHours()}`;
+    const minuteString = d.getMinutes() < 10 ? `0${d.getMinutes()}` : `${d.getMinutes()}`;
+    const secondString = d.getSeconds() < 10 ? `0${d.getSeconds()}` : `${d.getSeconds()}`;
+    return `${dateString}/${monthString}/${d.getFullYear()} ${hourString}:${minuteString}:${secondString}`;
+  };
+
   useEffect(() => {
     SubjectService.getAll({}, true)
       .then((res) => {
@@ -141,13 +151,13 @@ const ViewSlot = () => {
                     <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Bắt đầu</p>
                       <div className='flex w-full flex-1 items-center rounded-lg border border-[#CCC] bg-[#efefef4d]  p-1 text-xs font-medium text-[#252641] lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                        {new Date(slot?.startedAt || '').toLocaleString() || 'Chưa có thời gian'}
+                        {formattedDate(slot?.startedAt || 0) || 'Chưa có thời gian'}
                       </div>
                     </div>
                     <div className='flex w-full min-w-[200px] flex-1 flex-col gap-y-1'>
                       <p className='flex flex-[2.5] text-base lg:text-lg 3xl:text-xl'>Kết thúc</p>
                       <div className='flex w-full flex-1 items-center rounded-lg border border-[#CCC] bg-[#efefef4d]  p-1 text-xs font-medium text-[#252641] lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                        {new Date(slot?.endedAt || '').toLocaleString() || 'Chưa có thời gian'}
+                        {formattedDate(slot?.endedAt || 0) || 'Chưa có thời gian'}
                       </div>
                     </div>
                   </div>
@@ -194,7 +204,7 @@ const ViewSlot = () => {
                               ?.label || ''}
                           </p>
                           <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                            {new Date(question?.createdAt).toLocaleString()}
+                            {formattedDate(question?.createdAt || 0)}
                           </p>
                         </div>
                       ))}

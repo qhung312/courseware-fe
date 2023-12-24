@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,6 +13,29 @@ import ChapterService from '../../../service/chapter.service';
 import MockTestService from '../../../service/mockTest.service';
 import SubjectService from '../../../service/subject.service';
 import { SlotQuestion, Slots } from '../../../types/mockTest';
+
+interface CustomTimeInputProps {
+  date: Date | null;
+  onChangeCustom: (date: Date | null, time: string, isStartDate: boolean) => void;
+  isStartDate: boolean;
+}
+
+const CustomTimeInput: React.FC<CustomTimeInputProps> = ({ date, onChangeCustom, isStartDate }) => {
+  const value =
+    date instanceof Date
+      ? // Getting time from Date because `value` comes here without seconds
+        date.toLocaleTimeString('it-IT')
+      : '';
+
+  return (
+    <input
+      type='time'
+      step='1'
+      value={value}
+      onChange={(event) => onChangeCustom(date, event.target.value, isStartDate)}
+    />
+  );
+};
 
 const EditSlot = () => {
   const navigate = useNavigate();
@@ -33,13 +57,23 @@ const EditSlot = () => {
   const [loading, setLoading] = useState(false);
   const [canSave, setCanSave] = useState(false);
 
+  const handleChangeTime = (date: Date | null, time: string, isStartDate: boolean) => {
+    const [hh, mm, ss] = time.split(':');
+    const targetDate = date instanceof Date ? date : new Date();
+    targetDate.setHours(Number(hh) || 0, Number(mm) || 0, Number(ss) || 0);
+    if (isStartDate) {
+      setDuration({ ...duration, start: new Date(targetDate || 0).getTime() });
+    } else setDuration({ ...duration, end: new Date(targetDate || 0).getTime() });
+  };
+
   const formattedDate = (date: number) => {
     const d = new Date(date);
     const dateString = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`;
     const monthString = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`;
     const hourString = d.getHours() < 10 ? `0${d.getHours()}` : `${d.getHours()}`;
     const minuteString = d.getMinutes() < 10 ? `0${d.getMinutes()}` : `${d.getMinutes()}`;
-    return `${d.getFullYear()}-${monthString}-${dateString}T${hourString}:${minuteString}`;
+    const secondString = d.getSeconds() < 10 ? `0${d.getSeconds()}` : `${d.getSeconds()}`;
+    return `${dateString}/${monthString}/${d.getFullYear()} ${hourString}:${minuteString}:${secondString}`;
   };
 
   const fetchData = useCallback(() => {
@@ -235,36 +269,46 @@ const EditSlot = () => {
                       <p className='mb-2 w-full text-sm lg:text-base 3xl:text-xl'>
                         Thời gian bắt đầu
                       </p>
-                      <input
-                        type='datetime-local'
-                        id='started-date'
-                        name='started-date'
-                        value={
-                          duration.start === 0 ? '2000-01-01T00:01' : formattedDate(duration.start)
+                      <DatePicker
+                        selected={duration.start === 0 ? new Date() : new Date(duration.start)}
+                        showTimeInput
+                        timeInputLabel='Time:'
+                        onChange={(date) =>
+                          setDuration({ ...duration, start: new Date(date || 0).getTime() })
                         }
-                        onChange={({ target }) => {
-                          setDuration({ ...duration, start: new Date(target.value).getTime() });
-                        }}
                         className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                  lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                        dateFormat={'dd/MM/yyyy HH:mm:ss'}
+                        customTimeInput={
+                          <CustomTimeInput
+                            date={duration.start === 0 ? new Date() : new Date(duration.start)}
+                            onChangeCustom={handleChangeTime}
+                            isStartDate
+                          />
+                        }
                       />
                     </div>
                     <div className='flex flex-1 flex-col'>
                       <p className='mb-2 w-full text-sm lg:text-base 3xl:text-xl'>
                         Thời gian kết thúc
                       </p>
-                      <input
-                        type='datetime-local'
-                        id='ended-date'
-                        name='ended-date'
-                        value={
-                          duration.end === 0 ? '2000-01-01T00:01' : formattedDate(duration.end)
-                        }
-                        onChange={({ target }) =>
-                          setDuration({ ...duration, end: new Date(target.value).getTime() })
+                      <DatePicker
+                        selected={duration.end === 0 ? new Date() : new Date(duration.end)}
+                        showTimeInput
+                        timeInputLabel='Time:'
+                        onChange={(date) =>
+                          setDuration({ ...duration, end: new Date(date || 0).getTime() })
                         }
                         className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                  lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                    lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
+                        dateFormat={'dd/MM/yyyy HH:mm:ss'}
+                        customTimeInput={
+                          <CustomTimeInput
+                            date={duration.end === 0 ? new Date() : new Date(duration.end)}
+                            onChangeCustom={handleChangeTime}
+                            isStartDate={false}
+                          />
+                        }
                       />
                     </div>
                     <div className='flex flex-1 flex-col'>
@@ -326,7 +370,7 @@ const EditSlot = () => {
                               ?.label || ''}
                           </p>
                           <p className='flex flex-[1.5] text-xs font-medium lg:text-sm 3xl:text-base'>
-                            {new Date(question.createdAt).toLocaleString()}
+                            {formattedDate(question?.createdAt)}
                           </p>
                           <div className='flex flex-1 flex-wrap items-center justify-end gap-x-4 gap-y-4'>
                             <button

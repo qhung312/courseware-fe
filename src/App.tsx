@@ -11,6 +11,7 @@ import { SocketEvent } from './types';
 
 import './config/firebase';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const App = () => {
   const setToken = useBoundStore.use.setToken();
