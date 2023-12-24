@@ -4,9 +4,9 @@ import { useQueries } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Footer, Icon, LazyLoadImage, Select } from '../../../../components';
-import BadEmailModal from '../../../../components/Modal/BadEmailModal';
 import { Page } from '../../../../layout';
 import ExamService from '../../../../service/exam.service';
 import useBoundStore from '../../../../store';
@@ -19,7 +19,6 @@ const Main = () => {
   const navigate = useNavigate();
 
   const user = useBoundStore.use.user();
-  const openBadEmailModal = useBoundStore.use.openBadEmailModal();
 
   const isValidEmail = user.email.endsWith('@hcmut.edu.vn');
 
@@ -235,7 +234,9 @@ const Main = () => {
                         if (isValidEmail) {
                           navigate(`/room/tests/midterm/${semester}`);
                         } else {
-                          openBadEmailModal();
+                          toast.error(
+                            'Vui lòng sử dụng email đuôi @hcmut.edu.vn để tham gia thi thử'
+                          );
                         }
                       }}
                       className='flex cursor-pointer'
@@ -316,7 +317,9 @@ const Main = () => {
                         if (isValidEmail) {
                           navigate(`/room/tests/final/${semester}`);
                         } else {
-                          openBadEmailModal();
+                          toast.error(
+                            'Vui lòng sử dụng email đuôi @hcmut.edu.vn để tham gia thi thử'
+                          );
                         }
                       }}
                       className='flex cursor-pointer'
@@ -350,7 +353,6 @@ const Main = () => {
           <Footer />
         </main>
       </Page>
-      <BadEmailModal />
     </>
   );
 };
