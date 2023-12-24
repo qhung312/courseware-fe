@@ -7,12 +7,12 @@ import useBoundStore from '../../store';
 
 const SignInModal: FC = () => {
   const isOpen = useBoundStore.use.isSignInModalOpen();
-  const closeModal = useBoundStore.use.closeModal();
+  const closeSignInModal = useBoundStore.use.closeSignInModal();
   const { pathname } = useLocation();
 
   return (
     <Transition appear show={isOpen && pathname === '/'} as={Fragment}>
-      <Dialog as='div' className='relative z-50' onClose={closeModal}>
+      <Dialog as='div' className='relative z-50' onClose={closeSignInModal}>
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'

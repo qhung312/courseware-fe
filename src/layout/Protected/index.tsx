@@ -13,15 +13,15 @@ type ProtectedRouteProps = {
 const Protected: React.FC<ProtectedRouteProps> = ({ admin = false } = {}) => {
   const isAuthenticated = useBoundStore.use.isAuthenticated();
   const user = useBoundStore.use.user();
-  const openModal = useBoundStore.use.openModal();
+  const openSignInModal = useBoundStore.use.openSignInModal();
 
   const { pathname } = useLocation();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      openModal();
+      openSignInModal();
     }
-  }, [isAuthenticated, openModal]);
+  }, [isAuthenticated, openSignInModal]);
 
   if (!isAuthenticated) {
     return (

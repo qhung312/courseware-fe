@@ -8,7 +8,7 @@ import { axios } from '../../utils/custom-axios';
 const LoginButton: FC = () => {
   const setToken = useBoundStore.use.setToken();
   const getUserProfile = useBoundStore.use.getUserProfile();
-  const closeModal = useBoundStore.use.closeModal();
+  const closeSignInModal = useBoundStore.use.closeSignInModal();
 
   return (
     <GoogleLogin
@@ -18,7 +18,7 @@ const LoginButton: FC = () => {
         });
         setToken(response.data.payload.token);
         getUserProfile();
-        closeModal();
+        closeSignInModal();
       }}
       onError={() => {
         console.log('Login Failed');
