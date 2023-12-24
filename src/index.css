@@ -209,6 +209,12 @@ code {
   --toastify-icon-color-success: #0f9d58;
   --toastify-icon-color-warning: #f4b400;
   --toastify-icon-color-error: #db4437;
+
+  --toastify-font-family: inherit;
+}
+
+.Toastify__toast-body {
+  font-family: 'Baloo Chettan 2';
 }
 
 .markdown > * {

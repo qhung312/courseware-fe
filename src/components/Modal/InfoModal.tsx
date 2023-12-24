@@ -37,12 +37,42 @@ const InfoModal: FC<{
 
   const handleUpdate = async () => {
     try {
-      handleOpen(false);
-      await updateProfile();
+      if (!isDisabled) {
+        handleOpen(false);
+        await updateProfile();
 
-      setTimeout(async () => {
-        handleOpen(true);
-      }, 500);
+        setTimeout(async () => {
+          handleOpen(true);
+        }, 500);
+      } else {
+        let message = '';
+
+        if (userProfile.familyAndMiddleName === '') {
+          message += 'Họ và tên lót, ';
+        }
+        if (userProfile.givenName === '') {
+          message += 'Tên, ';
+        }
+        if (userProfile.studentId === '') {
+          message += 'Mã số sinh viên, ';
+        }
+        if (userProfile.major === '') {
+          message += 'Khoa, ';
+        }
+        if (userProfile.dateOfBirth === 0) {
+          message += 'Ngày sinh, ';
+        }
+        if (userProfile.gender === '') {
+          message += 'Giới tính, ';
+        }
+        if (userProfile.phoneNumber === '') {
+          message += 'Số điện thoại, ';
+        }
+
+        message = message.slice(0, -2);
+
+        toast.error('Vui lòng điền đầy đủ thông tin vào các trường sau: ' + message);
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data.message);
@@ -350,7 +380,7 @@ const InfoModal: FC<{
                         : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
                     }`}
                     onClick={isEnoughInfo ? handleRegister : handleUpdate}
-                    disabled={isLoading || isDisabled}
+                    disabled={isLoading}
                   >
                     <p className='text-base font-semibold text-white'>
                       {isEnoughInfo ? 'Đăng ký' : 'Cập nhật'}
