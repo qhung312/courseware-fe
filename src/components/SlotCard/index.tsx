@@ -244,9 +244,9 @@ const SlotCard: FC<SlotCardProps> = ({
         case SlotStatus.ONGOING:
           return (e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
-            if (examSession === null) {
+            if (isNil(examSession)) {
               setStartSessionModalOpen(true);
-            } else if (!isNil(examSession)) {
+            } else {
               navigate(`/room/tests/session/${examSession._id}`);
             }
           };
@@ -258,7 +258,7 @@ const SlotCard: FC<SlotCardProps> = ({
           return () => {};
       }
     })(),
-    [slotStatus]
+    [slotStatus, examSession]
   );
 
   const { mutateAsync: startSession, isLoading: isStartingSession } = useMutation({
