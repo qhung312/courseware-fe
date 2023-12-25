@@ -47,25 +47,31 @@ const InfoModal: FC<{
       } else {
         let message = '';
 
-        if (userProfile.familyAndMiddleName === '') {
+        if (String(userProfile.familyAndMiddleName) === '') {
           message += 'Họ và tên lót, ';
         }
-        if (userProfile.givenName === '') {
+        if (String(userProfile.givenName) === '') {
           message += 'Tên, ';
         }
-        if (userProfile.studentId === '') {
+        if (
+          String(userProfile.studentId) === '' ||
+          !new RegExp(/^[0-9]{7}$/).test(userProfile.studentId)
+        ) {
           message += 'Mã số sinh viên, ';
         }
-        if (userProfile.major === '') {
+        if (String(userProfile.major) === '') {
           message += 'Khoa, ';
         }
         if (userProfile.dateOfBirth === 0) {
           message += 'Ngày sinh, ';
         }
-        if (userProfile.gender === '') {
+        if (String(userProfile.gender) === '') {
           message += 'Giới tính, ';
         }
-        if (userProfile.phoneNumber === '') {
+        if (
+          String(userProfile.phoneNumber) === '' ||
+          !new RegExp(/^[0-9]{10}$/).test(userProfile.phoneNumber)
+        ) {
           message += 'Số điện thoại, ';
         }
 
@@ -125,6 +131,11 @@ const InfoModal: FC<{
         }
 
         if (key === 'studentId' && !new RegExp(/^[0-9]{7}$/).test(userProfile.studentId)) {
+          return true;
+        } else if (
+          key === 'phoneNumber' &&
+          !new RegExp(/^[0-9]{10}$/).test(userProfile.phoneNumber)
+        ) {
           return true;
         }
 
