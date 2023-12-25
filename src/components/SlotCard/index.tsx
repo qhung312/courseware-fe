@@ -247,7 +247,7 @@ const SlotCard: FC<SlotCardProps> = ({
             if (examSession === null) {
               setStartSessionModalOpen(true);
             } else if (!isNil(examSession)) {
-              navigate(`/room/tests/${examSession._id}`);
+              navigate(`/room/tests/session/${examSession._id}`);
             }
           };
         case SlotStatus.ENDED:
