@@ -8,7 +8,6 @@ import {
   memo,
   ComponentPropsWithoutRef,
   MouseEvent,
-  useCallback,
 } from 'react';
 import Countdown from 'react-countdown';
 import { useNavigate } from 'react-router-dom';
@@ -86,7 +85,7 @@ const SlotButton = memo<SlotButtonProps>(function Button({
       return (
         <button
           {...props}
-          disabled={!isRegistered}
+          disabled={!isRegistered || disabled}
           className='relative flex w-fit justify-center rounded-lg 
           bg-[#4285F4]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#4285F4] disabled:bg-[#B3B3B3]'
         >
@@ -101,7 +100,7 @@ const SlotButton = memo<SlotButtonProps>(function Button({
       return (
         <button
           {...props}
-          disabled={!isRegistered}
+          disabled={!isRegistered || disabled}
           className='relative flex w-fit justify-center rounded-lg 
           bg-[#4285F4]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#4285F4] disabled:bg-[#B3B3B3]'
         >
@@ -158,7 +157,7 @@ const SlotCard: FC<SlotCardProps> = ({
     [registeredUsers, user._id]
   );
 
-  const { data: examSession } = useQuery({
+  const { data: examSession, isFetching } = useQuery({
     queryKey: ['exam-session', examId],
     queryFn: async () => {
       const { data } = await ExamSessionService.getByExamId(examId);
@@ -226,40 +225,37 @@ const SlotCard: FC<SlotCardProps> = ({
     };
   }, [startedAt, endedAt, isRegistered, registrationStartedAt, registrationEndedAt, examSession]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onClick = useCallback(
-    (() => {
-      switch (slotStatus) {
-        case SlotStatus.OPEN:
-          return (e: MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
+  const onClick = () => {
+    switch (slotStatus) {
+      case SlotStatus.OPEN:
+        return (e: MouseEvent<HTMLButtonElement>) => {
+          e.preventDefault();
 
-            setInfoModalOpen(true);
-          };
-        case SlotStatus.REGISTERED:
-          return (e: MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            setUnregisterModalOpen(true);
-          };
-        case SlotStatus.ONGOING:
-          return (e: MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            if (examSession === null) {
-              setStartSessionModalOpen(true);
-            } else if (!isNil(examSession)) {
-              navigate(`/room/tests/${examSession._id}`);
-            }
-          };
-        case SlotStatus.ENDED:
-          return () => {
-            navigate(`/room/tests/review/session/${examSession?._id}`);
-          };
-        default:
-          return () => {};
-      }
-    })(),
-    [slotStatus]
-  );
+          setInfoModalOpen(true);
+        };
+      case SlotStatus.REGISTERED:
+        return (e: MouseEvent<HTMLButtonElement>) => {
+          e.preventDefault();
+          setUnregisterModalOpen(true);
+        };
+      case SlotStatus.ONGOING:
+        return (e: MouseEvent<HTMLButtonElement>) => {
+          console.log('here');
+          e.preventDefault();
+          if (examSession === null) {
+            setStartSessionModalOpen(true);
+          } else if (!isNil(examSession)) {
+            navigate(`/room/tests/session/${examSession._id}`);
+          }
+        };
+      case SlotStatus.ENDED:
+        return () => {
+          navigate(`/room/tests/review/session/${examSession?._id}`);
+        };
+      default:
+        return () => {};
+    }
+  };
 
   const { mutateAsync: startSession, isLoading: isStartingSession } = useMutation({
     mutationKey: ['startSession', examId, slotId],
@@ -366,8 +362,12 @@ const SlotCard: FC<SlotCardProps> = ({
           <SlotButton
             slotStatus={slotStatus}
             isRegistered={isRegistered}
-            onClick={onClick}
-            disabled={disabled || isStartingSession}
+            onClick={onClick()}
+            disabled={
+              (slotStatus !== SlotStatus.ONGOING && slotStatus !== SlotStatus.ENDED && disabled) ||
+              isStartingSession ||
+              isFetching
+            }
             currentSession={examSession}
           />
           {slotStatus === SlotStatus.ONGOING && !isRegistered ? (
