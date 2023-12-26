@@ -14,13 +14,11 @@ const MobileOngoing: React.FC<{
   const pageSize = 5;
   const [page, setPage] = useState(1);
   const [questionChunks, setQuestionChunks] = useState(chunk(exam.questions, 4));
-  const [timeLeft, setTimeLeft] = useState(Date.now() + exam.timeLeft);
 
   const currentSet = Array.from({ length: pageSize }, (_, index) => (page - 1) * pageSize + index);
 
   useEffect(() => {
     setQuestionChunks(chunk(exam.questions, pageSize));
-    setTimeLeft(Date.now() + exam.timeLeft);
   }, [exam]);
 
   const progress = useMemo(() => calculateProgress(exam.questions), [exam]);
@@ -35,8 +33,7 @@ const MobileOngoing: React.FC<{
             <div className='flex flex-row items-center gap-x-1'>
               <Icon.Clock className='h-4 w-auto' fill='#49BBBD' />
               <Countdown
-                date={timeLeft}
-                onTick={(props) => setTimeLeft(Date.now() + props.total)}
+                date={Number(exam.endedAt)}
                 renderer={(props) => {
                   return <p className='text-sm'>{parseDuration(props.total)}</p>;
                 }}
