@@ -124,7 +124,7 @@ type SlotCardProps = {
 
   startedAt: number;
   endedAt: number;
-  disabled?: boolean;
+  disabledRegisterButton?: boolean;
   register: UseMutateAsyncFunction<void, unknown, number, unknown>;
   unregister: UseMutateAsyncFunction<void, unknown, void, unknown>;
 };
@@ -140,7 +140,7 @@ const SlotCard: FC<SlotCardProps> = ({
   registrationEndedAt,
   questionCount,
   userLimit,
-  disabled,
+  disabledRegisterButton,
   register,
   unregister,
 }) => {
@@ -193,16 +193,18 @@ const SlotCard: FC<SlotCardProps> = ({
       intervalId = setInterval(() => {
         setSlotStatus(SlotStatus.OPEN);
       }, registrationStartedAt - now);
-    } else if (now < startedAt) {
+    } else if (now <= registrationEndedAt) {
       if (isRegistered) {
         setSlotStatus(SlotStatus.REGISTERED);
       } else {
         setSlotStatus(SlotStatus.OPEN);
       }
 
-      if (now > registrationEndedAt) {
+      intervalId = setInterval(() => {
         setSlotStatus(SlotStatus.PREPARING);
-      }
+      }, registrationEndedAt - now);
+    } else if (now < startedAt) {
+      setSlotStatus(SlotStatus.PREPARING);
 
       intervalId = setInterval(() => {
         setSlotStatus(SlotStatus.ONGOING);
@@ -240,7 +242,6 @@ const SlotCard: FC<SlotCardProps> = ({
         };
       case SlotStatus.ONGOING:
         return (e: MouseEvent<HTMLButtonElement>) => {
-          console.log('here');
           e.preventDefault();
           if (examSession === null) {
             setStartSessionModalOpen(true);
@@ -364,7 +365,9 @@ const SlotCard: FC<SlotCardProps> = ({
             isRegistered={isRegistered}
             onClick={onClick()}
             disabled={
-              (slotStatus !== SlotStatus.ONGOING && slotStatus !== SlotStatus.ENDED && disabled) ||
+              (slotStatus !== SlotStatus.ONGOING && slotStatus !== SlotStatus.ENDED
+                ? disabledRegisterButton
+                : false) ||
               isStartingSession ||
               isFetching
             }

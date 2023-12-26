@@ -21,7 +21,7 @@ const Desktop: React.FC<{
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState(
-    Date.now() + (quiz ? Number(quiz?.timeLeft) : Number(exam?.timeLeft))
+    quiz ? Date.now() + Number(quiz?.timeLeft) : Number(exam?.endedAt)
   );
   const [starList] = useLocalStorage<number[]>(`${params.sessionId}-starList`, []);
 
@@ -40,7 +40,7 @@ const Desktop: React.FC<{
   };
 
   useEffect(() => {
-    setTimeLeft(Date.now() + (quiz ? Number(quiz?.timeLeft) : Number(exam?.timeLeft)));
+    setTimeLeft(quiz ? Date.now() + Number(quiz?.timeLeft) : Number(exam?.endedAt));
   }, [quiz, exam]);
 
   return (
@@ -99,9 +99,6 @@ const Desktop: React.FC<{
                 </h2>
                 <Countdown
                   date={timeLeft}
-                  onTick={(props) => {
-                    setTimeLeft(Date.now() + props.total);
-                  }}
                   renderer={(props) => (
                     <p className='text-base font-medium text-[#4285F4] lg:text-lg 3xl:text-2xl'>
                       {parseCountdown(props.total)}

@@ -19,7 +19,14 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 console.log('Worker:', pdfjs.GlobalWorkerOptions.workerSrc);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: true,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** (attemptIndex / 2), 15000),
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

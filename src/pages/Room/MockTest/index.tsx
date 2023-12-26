@@ -30,6 +30,7 @@ const MockTest: FC = () => {
     queryFn: async () => {
       const { data } = await ExamSessionService.getById(params.sessionId as string);
       setQuestions(data.payload.questions);
+      setIsEnding(false);
       return data.payload;
     },
     refetchOnWindowFocus: false,

@@ -213,7 +213,7 @@ const DetailTest: FC = () => {
                     questionCount={slot.questionCount || 0}
                     register={register}
                     unregister={unregister}
-                    disabled={disabledRegister || isRegistering || isUnregistering}
+                    disabledRegisterButton={disabledRegister || isRegistering || isUnregistering}
                   />
                 ))
               : null}

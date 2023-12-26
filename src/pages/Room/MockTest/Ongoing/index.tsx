@@ -26,7 +26,8 @@ const Detail: React.FC<{
     const onEndExamSession = () => {
       toast.success('Đã nộp bài!');
       setIsEnding(true);
-      queryClient.invalidateQueries(['exam', params.examId, params.sessionId]);
+      queryClient.invalidateQueries(['exam-session', exam?.fromExam._id]);
+      queryClient.invalidateQueries(['exam-session', params.sessionId]);
     };
 
     socket.on(SocketEvent.END_EXAM_SESSION, onEndExamSession);
@@ -34,7 +35,7 @@ const Detail: React.FC<{
     return () => {
       socket.off(SocketEvent.END_EXAM_SESSION, onEndExamSession);
     };
-  }, [params, navigate, queryClient, pathname, setIsEnding]);
+  }, [params, navigate, queryClient, pathname, setIsEnding, exam]);
 
   return (
     <Page
