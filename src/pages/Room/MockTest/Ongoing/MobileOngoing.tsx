@@ -1,26 +1,30 @@
 import { UseMutationResult } from '@tanstack/react-query';
 import { chunk } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
-import { ExamSession } from '../../../../types';
+import { ConcreteQuestion, ExamSession } from '../../../../types';
 import { calculateProgress, parseDuration } from '../../../../utils/helper';
 
 const MobileOngoing: React.FC<{
   exam: ExamSession;
   handleSubmit: UseMutationResult<void, unknown, void, unknown>;
-}> = ({ exam, handleSubmit }) => {
+  setExam: Dispatch<SetStateAction<ExamSession | undefined>>;
+}> = ({ exam, handleSubmit, setExam }) => {
   const pageSize = 5;
   const [page, setPage] = useState(1);
   const [questionChunks, setQuestionChunks] = useState(chunk(exam.questions, 4));
-  const [timeLeft, setTimeLeft] = useState(Date.now() + exam.timeLeft);
+  const [timeLeft, setTimeLeft] = useState(Date.now() + Number(exam.timeLeft));
 
   const currentSet = Array.from({ length: pageSize }, (_, index) => (page - 1) * pageSize + index);
 
   useEffect(() => {
     setQuestionChunks(chunk(exam.questions, pageSize));
-    setTimeLeft(Date.now() + exam.timeLeft);
+  }, [exam]);
+
+  useEffect(() => {
+    setTimeLeft(Date.now() + Number(exam?.timeLeft));
   }, [exam]);
 
   const progress = useMemo(() => calculateProgress(exam.questions), [exam]);
@@ -36,7 +40,6 @@ const MobileOngoing: React.FC<{
               <Icon.Clock className='h-4 w-auto' fill='#49BBBD' />
               <Countdown
                 date={timeLeft}
-                onTick={(props) => setTimeLeft(Date.now() + props.total)}
                 renderer={(props) => {
                   return <p className='text-sm'>{parseDuration(props.total)}</p>;
                 }}
@@ -61,6 +64,24 @@ const MobileOngoing: React.FC<{
                 key={`mobile-${question.questionId}-${exam._id}`}
                 question={question}
                 status={exam.status}
+                setQuestion={(mutatedQuestion: ConcreteQuestion) => {
+                  setExam((prev) => {
+                    if (!prev) {
+                      return prev;
+                    }
+
+                    const state = {
+                      ...prev,
+                      questions: prev.questions.map((q) => {
+                        if (q.questionId === mutatedQuestion.questionId) {
+                          return mutatedQuestion;
+                        }
+                        return q;
+                      }),
+                    };
+                    return state;
+                  });
+                }}
                 questionNumber={(page - 1) * pageSize + index + 1}
               />
             ))}

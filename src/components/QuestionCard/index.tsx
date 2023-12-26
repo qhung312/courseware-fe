@@ -23,11 +23,12 @@ type InputAnswerProps = {
     numberAnswer: number[];
     setStringAnswer: Dispatch<SetStateAction<string>>;
     setNumberAnswer: Dispatch<SetStateAction<number[]>>;
+    setQuestion?: (question: ConcreteQuestion) => void;
   };
 };
 
 const InputAnswer = memo(function Component({ status, question, helpers }: InputAnswerProps) {
-  const { stringAnswer, numberAnswer, setNumberAnswer } = helpers;
+  const { stringAnswer, numberAnswer, setNumberAnswer, setQuestion } = helpers;
   const params = useParams();
   const queryClient = useQueryClient();
 
@@ -59,6 +60,14 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
 
   const optimizedSetMultipleValueAnswer = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      setQuestion?.({
+        ...question,
+        userAnswerKeys: _.includes(numberAnswer, Number(e.target.value))
+          ? numberAnswer.length === 1
+            ? undefined
+            : _.without(numberAnswer, Number(e.target.value))
+          : _.concat(numberAnswer, Number(e.target.value)),
+      });
       setNumberAnswer((prevState) =>
         _.includes(prevState, Number(e.target.value))
           ? _.without(prevState, Number(e.target.value))
@@ -80,7 +89,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
         500
       )();
     },
-    [setNumberAnswer, numberAnswer, answerMutation, params.sessionId, question.questionId]
+    [setNumberAnswer, numberAnswer, answerMutation, params.sessionId, question, setQuestion]
   );
 
   switch (question.type) {
@@ -96,6 +105,10 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                 <input
                   id={`question-${question.questionId}-answer-${option.key}`}
                   onChange={() => {
+                    setQuestion?.({
+                      ...question,
+                      userAnswerKeys: [option.key],
+                    });
                     setNumberAnswer([option.key]);
                     debounce(
                       () =>
@@ -229,12 +242,14 @@ type Props = {
   showInfo?: boolean;
   showExplanation?: boolean;
   showNote?: boolean;
+  setQuestion?: (question: ConcreteQuestion) => void;
 };
 
 const QuestionCard = ({
   question,
   status,
   questionNumber,
+  setQuestion,
   showInfo = true,
   showExplanation = true,
   showNote = true,
@@ -411,6 +426,7 @@ const QuestionCard = ({
               numberAnswer,
               setStringAnswer,
               setNumberAnswer,
+              setQuestion,
             }}
           />
         </div>

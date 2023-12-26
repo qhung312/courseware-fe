@@ -67,12 +67,7 @@ const DetailTest: FC = () => {
     () => subjects.find((subject) => subject._id === params.subjectId),
     [params.subjectId, subjects]
   );
-  const disabledRegister =
-    exams && exams[0]
-      ? some(exams[0].slots, (slot) =>
-          slot.registeredUsers.find((registeredUser) => registeredUser.userId === user._id)
-        )
-      : undefined;
+
   const registrationStartedAt = exams && exams[0] ? exams[0].registrationStartedAt : 0;
   const registrationEndedAt = exams && exams[0] ? exams[0].registrationEndedAt : 0;
   const registrationStartedDate = useMemo(
@@ -111,6 +106,13 @@ const DetailTest: FC = () => {
         : null,
     [registrationEndedAt]
   );
+
+  const disabledRegister =
+    exams && exams[0]
+      ? some(exams[0].slots, (slot) =>
+          slot.registeredUsers.find((registeredUser) => registeredUser.userId === user._id)
+        )
+      : undefined;
 
   if (!currentSubject) {
     return (
@@ -211,7 +213,7 @@ const DetailTest: FC = () => {
                     questionCount={slot.questionCount || 0}
                     register={register}
                     unregister={unregister}
-                    disabled={disabledRegister || isRegistering || isUnregistering}
+                    disabledRegisterButton={disabledRegister || isRegistering || isUnregistering}
                   />
                 ))
               : null}
