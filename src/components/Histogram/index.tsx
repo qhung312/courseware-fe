@@ -21,7 +21,10 @@ const Histogram: FC<HistogramProps> = ({ scores }) => {
   return (
     <ResponsiveContainer width='100%' height={height * 0.4} className='mt-5'>
       <BarChart
-        data={data.map((value) => ({ range: `${value.x0} - ${value.x1}`, total: value.length }))}
+        data={data.map((value) => ({
+          range: `${value.x1 === 10 ? `${value.x0} - ${value.x1}` : `<${value.x1}`}`,
+          total: value.length,
+        }))}
         margin={{ top: 16, right: width < 400 ? 0 : 20, left: width < 400 ? 0 : 20, bottom: 0 }}
         barCategoryGap={8}
       >

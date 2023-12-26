@@ -1,15 +1,16 @@
 import { UseMutationResult } from '@tanstack/react-query';
 import { chunk, reduce } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 
 import { Icon, Pagination, QuestionBoard, QuestionCard } from '../../../../components';
-import { ExamSession } from '../../../../types';
+import { ConcreteQuestion, ExamSession } from '../../../../types';
 import { parseDuration } from '../../../../utils/helper';
 
 const DesktopOngoing: React.FC<{
   exam: ExamSession;
   handleSubmit: UseMutationResult<void, unknown, void, unknown>;
-}> = ({ exam, handleSubmit }) => {
+  setExam: Dispatch<SetStateAction<ExamSession | undefined>>;
+}> = ({ exam, handleSubmit, setExam }) => {
   const pageSize = 5;
 
   const [page, setPage] = useState(1);
@@ -92,6 +93,24 @@ const DesktopOngoing: React.FC<{
                 question={question}
                 status={exam.status}
                 questionNumber={(page - 1) * pageSize + index + 1}
+                setQuestion={(mutatedQuestion: ConcreteQuestion) => {
+                  setExam((prev) => {
+                    if (!prev) {
+                      return prev;
+                    }
+
+                    const state = {
+                      ...prev,
+                      questions: prev.questions.map((q) => {
+                        if (q.questionId === mutatedQuestion.questionId) {
+                          return mutatedQuestion;
+                        }
+                        return q;
+                      }),
+                    };
+                    return state;
+                  });
+                }}
               />
             ))}
           </div>

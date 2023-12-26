@@ -2,11 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useLocalStorage } from 'usehooks-ts';
 
 import { Loading } from '../../../components';
 import ExamSessionService from '../../../service/examSession.service';
-import { ConcreteQuestion, SessionStatus } from '../../../types';
+import { ExamSession, SessionStatus } from '../../../types';
 
 import Ongoing from './Ongoing';
 import Review from './Review';
@@ -17,23 +16,20 @@ const MockTest: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [, setQuestions] = useLocalStorage<ConcreteQuestion[]>(
-    `exam-session__${params.sessionId}-questions`,
-    []
-  );
-
   const [isEnding, setIsEnding] = useState(false);
+  const [exam, setExam] = useState<ExamSession>();
 
-  const { data: exam, isLoading } = useQuery({
+  const { data: readOnlyExam, isLoading } = useQuery({
     enabled: !!params?.sessionId,
     queryKey: ['exam-session', params.sessionId],
     queryFn: async () => {
       const { data } = await ExamSessionService.getById(params.sessionId as string);
-      setQuestions(data.payload.questions);
       setIsEnding(false);
+      setExam(data.payload);
       return data.payload;
     },
     refetchOnWindowFocus: false,
+    refetchOnMount: true,
     refetchOnReconnect: 'always',
   });
 
@@ -57,14 +53,14 @@ const MockTest: FC = () => {
     }
   }, [exam, navigate, params, pathname]);
 
-  if (isLoading || submit.isLoading || isEnding || !exam) {
+  if (isLoading || submit.isLoading || isEnding || !exam || !readOnlyExam) {
     return <Loading />;
   }
 
-  return exam.status === SessionStatus.ONGOING ? (
-    <Ongoing exam={exam} handleSubmit={submit} setIsEnding={setIsEnding} />
+  return readOnlyExam.status === SessionStatus.ONGOING ? (
+    <Ongoing exam={exam} handleSubmit={submit} setIsEnding={setIsEnding} setExam={setExam} />
   ) : (
-    <Review exam={exam} />
+    <Review exam={readOnlyExam} />
   );
 };
 
