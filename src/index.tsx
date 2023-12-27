@@ -22,8 +22,8 @@ console.log('Worker:', pdfjs.GlobalWorkerOptions.workerSrc);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: true,
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** (attemptIndex / 2), 15000),
+      retry: 5,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     },
   },
 });
