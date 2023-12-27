@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { ReactComponent as Tab } from '../../../../assets/svgs/Tab.svg';
-import { Icon, Loading, SlotCard } from '../../../../components';
+import { Histogram, Icon, Loading, SlotCard } from '../../../../components';
 import { Page, Wrapper } from '../../../../layout';
 import ExamService from '../../../../service/exam.service';
 import useBoundStore from '../../../../store';
@@ -33,6 +33,17 @@ const DetailTest: FC = () => {
 
       return data.payload.result;
     },
+  });
+
+  const { data: summary, isFetching: isFetchingSummary } = useQuery({
+    queryKey: ['summary', exams?.[0]?._id],
+    enabled: !!exams?.[0],
+    queryFn: async () => {
+      const { data } = await ExamService.getSummary(exams?.[0]?._id || '');
+
+      return data.payload;
+    },
+    refetchOnWindowFocus: false,
   });
 
   const { mutateAsync: register, isLoading: isRegistering } = useMutation({
@@ -141,7 +152,7 @@ const DetailTest: FC = () => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isFetchingSummary) {
     return <Loading />;
   }
 
@@ -200,6 +211,7 @@ const DetailTest: FC = () => {
                 : `Mở đăng ký từ ${registrationStartedDate} đến ${registrationEndedDate}`}
             </p>
           </div>
+          {summary && summary.length ? <Histogram scores={summary} title={`Phổ điểm`} /> : null}
 
           <div className='mt-10 grid grid-cols-1 gap-y-6 gap-x-10 2xl:grid-cols-2'>
             {exams && exams[0]
