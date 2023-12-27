@@ -65,5 +65,9 @@ const unregister = (examId: string) => {
   return axios.post<Response>(`${API_URL}exam/${examId}/unregister`);
 };
 
-const ExamService = { getAll, getAllPaginated, getById, register, unregister };
+const getSummary = (examId: string) => {
+  return axios.get<Response<number[]>>(`${API_URL}exam/${examId}/summary`);
+};
+
+const ExamService = { getAll, getAllPaginated, getById, register, unregister, getSummary };
 export default ExamService;
