@@ -89,7 +89,8 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
             onClick={handleDescriptionPress}
           >
             <p className='cursor-text text-justify text-[#666]'>
-              <Linkify>{document.description}</Linkify>
+              {/* <Linkify>{document.description}</Linkify> */}
+              <Linkify>jajaja https://youtube.com jajaja http://facebook.com</Linkify>
             </p>
           </div>
         )}
