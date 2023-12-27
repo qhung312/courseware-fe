@@ -9,6 +9,7 @@ import Histogram from './Histogram';
 import Icon from './Icon';
 import InputNumber from './InputNumber';
 import LazyLoadImage from './LazyLoadImage';
+import Linkify from './Linkify';
 import Loading from './Loading';
 import LoginButton from './LoginButton';
 import Markdown from './Markdown';
@@ -36,6 +37,7 @@ export {
   FinishModal,
   SignInModal,
   LazyLoadImage,
+  Linkify,
   Loading,
   LoginButton,
   Pagination,

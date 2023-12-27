@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Icon } from '..';
+import { Icon, Linkify } from '..';
 import { ExamArchive, ExamType, Material } from '../../types';
 import CopyIcon from '../CopyIcon';
 
@@ -16,6 +16,10 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
   const { pathname } = useLocation();
   const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
   const navigate = useNavigate();
+
+  const handleDescriptionPress = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+  };
 
   return (
     <div
@@ -80,8 +84,14 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
           </Link> */}
         </div>
         {document?.description !== '' && (
-          <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
-            <p className='text-justify text-[#666]'>{document.description}</p>
+          <div
+            className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'
+            onClick={handleDescriptionPress}
+          >
+            <p className='cursor-text text-justify text-[#666]'>
+              {/* <Linkify>{document.description}</Linkify> */}
+              <Linkify>jajaja https://youtube.com jajaja http://facebook.com</Linkify>
+            </p>
           </div>
         )}
         {/* <Link
