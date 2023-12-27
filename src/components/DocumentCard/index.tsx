@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Icon } from '..';
+import { Icon, Linkify } from '..';
 import { ExamArchive, ExamType, Material } from '../../types';
 import CopyIcon from '../CopyIcon';
 
@@ -88,7 +88,9 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
             className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'
             onClick={handleDescriptionPress}
           >
-            <p className='cursor-text text-justify text-[#666]'>{document.description}</p>
+            <p className='cursor-text text-justify text-[#666]'>
+              <Linkify>{document.description}</Linkify>
+            </p>
           </div>
         )}
         {/* <Link
