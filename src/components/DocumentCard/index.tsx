@@ -17,6 +17,10 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
   const isMaterial = (doc: unknown): doc is Material => pathname.split('/').includes('material');
   const navigate = useNavigate();
 
+  const handleDescriptionPress = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+  };
+
   return (
     <div
       onClick={() => navigate(to)}
@@ -80,8 +84,11 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
           </Link> */}
         </div>
         {document?.description !== '' && (
-          <div className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'>
-            <p className='text-justify text-[#666]'>{document.description}</p>
+          <div
+            className='w-full rounded-lg bg-[#9DCCFF]/20 p-2 lg:p-4 3xl:p-6'
+            onClick={handleDescriptionPress}
+          >
+            <p className='cursor-text text-justify text-[#666]'>{document.description}</p>
           </div>
         )}
         {/* <Link
