@@ -35,7 +35,7 @@ const DetailTest: FC = () => {
     },
   });
 
-  const { data: summary, isFetching: isFetchingSummary } = useQuery({
+  const { data: summary } = useQuery({
     queryKey: ['summary', exams?.[0]?._id],
     enabled: !!exams?.[0],
     queryFn: async () => {
@@ -44,6 +44,7 @@ const DetailTest: FC = () => {
       return data.payload;
     },
     refetchOnWindowFocus: false,
+    staleTime: 60000,
   });
 
   const { mutateAsync: register, isLoading: isRegistering } = useMutation({
@@ -152,7 +153,7 @@ const DetailTest: FC = () => {
     );
   }
 
-  if (isLoading || isFetchingSummary) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -211,7 +212,7 @@ const DetailTest: FC = () => {
                 : `Mở đăng ký từ ${registrationStartedDate} đến ${registrationEndedDate}`}
             </p>
           </div>
-          {summary && summary.length ? <Histogram scores={summary} title={`Phổ điểm`} /> : null}
+          <Histogram scores={summary || []} title={`Phổ điểm`} />
 
           <div className='mt-10 grid grid-cols-1 gap-y-6 gap-x-10 2xl:grid-cols-2'>
             {exams && exams[0]
