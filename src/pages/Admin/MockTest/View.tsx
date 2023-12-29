@@ -31,6 +31,7 @@ const MockTestView = () => {
     MockTestService.getById(id, true)
       .then((res) => {
         const result = res.data.payload;
+        console.log(result);
         setMockTest(result);
       })
       .catch((err) => {
@@ -117,26 +118,6 @@ const MockTestView = () => {
                       </span>
                     </div>
                   </div>
-                </div>
-                <div className='flex w-full flex-1 flex-row items-center justify-start gap-x-4'>
-                  <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Bắt đầu đăng ký</p>
-                    <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                      <span>
-                        {formattedDate(mockTest?.registrationStartedAt || 0) ||
-                          'Không có thông tin'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex w-full flex-1 flex-col'>
-                    <p className='w-full text-sm lg:text-base 3xl:text-xl'>Kết thúc đăng ký</p>
-                    <div className='flex h-full w-full flex-1 rounded-lg border border-[#CCC] p-1 text-xs font-medium lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
-                      <span>
-                        {formattedDate(mockTest?.registrationEndedAt || 0) || 'Không có thông tin'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className='flex w-full flex-1 flex-col' />
                 </div>
                 <div className='flex w-full flex-col items-start justify-center'>
                   <label className='mb-2 w-full' htmlFor='exam-description'>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import { Link } from 'react-router-dom';
 // import './index.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,29 +10,6 @@ import MockTestService from '../../../service/mockTest.service';
 import SubjectService from '../../../service/subject.service';
 import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 
-interface CustomTimeInputProps {
-  date: Date | null;
-  onChangeCustom: (date: Date | null, time: string, isStartDate: boolean) => void;
-  isStartDate: boolean;
-}
-
-const CustomTimeInput: React.FC<CustomTimeInputProps> = ({ date, onChangeCustom, isStartDate }) => {
-  const value =
-    date instanceof Date
-      ? // Getting time from Date because `value` comes here without seconds
-        date.toLocaleTimeString('it-IT')
-      : '';
-
-  return (
-    <input
-      type='time'
-      step='1'
-      value={value}
-      onChange={(event) => onChangeCustom(date, event.target.value, isStartDate)}
-    />
-  );
-};
-
 const MockTestCreate = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
@@ -41,18 +17,10 @@ const MockTestCreate = () => {
   const [semester, setSemester] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState<{ start: number; end: number }>({ start: 0, end: 0 });
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
 
-  const submitDisabled =
-    name === '' ||
-    subject === '' ||
-    type === '' ||
-    semester === '' ||
-    duration.end <= duration.start ||
-    duration.start <= Date.now() ||
-    loading;
+  const submitDisabled = name === '' || subject === '' || type === '' || semester === '' || loading;
 
   useEffect(() => {
     SubjectService.getAll({}, true)
@@ -78,8 +46,6 @@ const MockTestCreate = () => {
     const data = {
       name,
       description,
-      registrationStartedAt: duration.start,
-      registrationEndedAt: duration.end,
       subject,
       semester,
       type,
@@ -93,21 +59,11 @@ const MockTestCreate = () => {
         setType('');
         setSemester('');
         setDescription('');
-        setDuration({ start: 0, end: 0 });
       })
       .catch((err) => {
         toast.error(err.response.data.message);
       })
       .finally(() => setLoading(false));
-  };
-
-  const handleChangeTime = (date: Date | null, time: string, isStartDate: boolean) => {
-    const [hh, mm, ss] = time.split(':');
-    const targetDate = date instanceof Date ? date : new Date();
-    targetDate.setHours(Number(hh) || 0, Number(mm) || 0, Number(ss) || 0);
-    if (isStartDate) {
-      setDuration({ ...duration, start: new Date(targetDate || 0).getTime() });
-    } else setDuration({ ...duration, end: new Date(targetDate || 0).getTime() });
   };
 
   return (
@@ -185,67 +141,6 @@ const MockTestCreate = () => {
                 </div>
               </div>
 
-              <div className='flex w-full gap-x-4'>
-                <div className='flex flex-1 flex-col'>
-                  <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                    Bắt đầu đăng ký
-                  </p>
-                  {/* <input
-                    type='datetime-local'
-                    id='started-date'
-                    name='started-date'
-                    value={duration.start === 0 ? '' : formattedDate(duration.start)}
-                    onChange={({ target }) => {
-                      setDuration({ ...duration, start: new Date(target.value).getTime() });
-                    }}
-                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                  lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                  /> */}
-                  <DatePicker
-                    selected={duration.start === 0 ? new Date() : new Date(duration.start)}
-                    showTimeInput
-                    timeInputLabel='Time:'
-                    onChange={(date) =>
-                      setDuration({ ...duration, start: new Date(date || 0).getTime() })
-                    }
-                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                    lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    dateFormat={'dd/MM/yyyy HH:mm:ss'}
-                    customTimeInput={
-                      <CustomTimeInput
-                        date={duration.start === 0 ? new Date() : new Date(duration.start)}
-                        onChangeCustom={handleChangeTime}
-                        isStartDate
-                      />
-                    }
-                  />
-                </div>
-                <div className='flex flex-1 flex-col'>
-                  <p className='mb-2 w-full text-sm font-semibold lg:text-base 3xl:text-xl'>
-                    Kết thúc đăng ký
-                  </p>
-                  <DatePicker
-                    selected={duration.end === 0 ? new Date() : new Date(duration.end)}
-                    showTimeInput
-                    timeInputLabel='Time:'
-                    onChange={(date) =>
-                      setDuration({ ...duration, end: new Date(date || 0).getTime() })
-                    }
-                    className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                    lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                    dateFormat={'dd/MM/yyyy HH:mm:ss'}
-                    customTimeInput={
-                      <CustomTimeInput
-                        date={duration.end === 0 ? new Date() : new Date(duration.end)}
-                        onChangeCustom={handleChangeTime}
-                        isStartDate={false}
-                      />
-                    }
-                  />
-                </div>
-                <div className='flex-1' />
-              </div>
-
               <div className='flex w-full flex-col items-start justify-center'>
                 <label className='mb-2 w-full' htmlFor='exam-description'>
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Chú thích</p>
@@ -286,7 +181,6 @@ const MockTestCreate = () => {
                     setType('');
                     setSemester('');
                     setDescription('');
-                    setDuration({ start: 0, end: 0 });
                   }}
                 >
                   <p className='font-medium text-inherit'>Huỷ</p>

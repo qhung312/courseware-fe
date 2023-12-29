@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import Skeleton from 'react-loading-skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,29 +15,6 @@ import SubjectService from '../../../service/subject.service';
 import { EXAM_TYPE_OPTIONS, SEMESTER_OPTIONS } from '../../../types/examArchive';
 import { MockTest, Slots } from '../../../types/mockTest';
 
-interface CustomTimeInputProps {
-  date: Date | null;
-  onChangeCustom: (date: Date | null, time: string, isStartDate: boolean) => void;
-  isStartDate: boolean;
-}
-
-const CustomTimeInput: React.FC<CustomTimeInputProps> = ({ date, onChangeCustom, isStartDate }) => {
-  const value =
-    date instanceof Date
-      ? // Getting time from Date because `value` comes here without seconds
-        date.toLocaleTimeString('it-IT')
-      : '';
-
-  return (
-    <input
-      type='time'
-      step='1'
-      value={value}
-      onChange={(event) => onChangeCustom(date, event.target.value, isStartDate)}
-    />
-  );
-};
-
 const MockTestEdit = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -51,7 +27,6 @@ const MockTestEdit = () => {
   const [semester, setSemester] = useState('');
   const [description, setDescription] = useState('');
   const [isHidden, setIsHidden] = useState(false);
-  const [duration, setDuration] = useState<{ start: number; end: number }>({ start: 0, end: 0 });
   const [slots, setSlots] = useState<Slots[]>([]);
 
   const [subjectOptions, setSubjectOptions] = useState<Option[]>([]);
@@ -75,15 +50,6 @@ const MockTestEdit = () => {
     }
   };
 
-  const handleChangeTime = (date: Date | null, time: string, isStartDate: boolean) => {
-    const [hh, mm, ss] = time.split(':');
-    const targetDate = date instanceof Date ? date : new Date();
-    targetDate.setHours(Number(hh) || 0, Number(mm) || 0, Number(ss) || 0);
-    if (isStartDate) {
-      setDuration({ ...duration, start: new Date(targetDate || 0).getTime() });
-    } else setDuration({ ...duration, end: new Date(targetDate || 0).getTime() });
-  };
-
   const formattedDate = (date: number) => {
     const d = new Date(date);
     const dateString = d.getDate() < 10 ? `0${d.getDate()}` : `${d.getDate()}`;
@@ -102,9 +68,7 @@ const MockTestEdit = () => {
           type === mockTest.type &&
           semester === mockTest.semester &&
           _.trim(description) === mockTest.description &&
-          isHidden === mockTest.isHidden &&
-          duration.start === mockTest.registrationStartedAt &&
-          duration.end === mockTest.registrationEndedAt
+          isHidden === mockTest.isHidden
       );
     }
   });
@@ -124,8 +88,6 @@ const MockTestEdit = () => {
   }, [id]);
 
   const handleOnSave = useDebounce((): void => {
-    const registrationStartedAt = duration.start;
-    const registrationEndedAt = duration.end;
     const formData = {
       name,
       description,
@@ -133,8 +95,6 @@ const MockTestEdit = () => {
       type,
       semester,
       isHidden,
-      registrationStartedAt,
-      registrationEndedAt,
     };
 
     MockTestService.editGeneralInformation(id, formData, true)
@@ -157,7 +117,6 @@ const MockTestEdit = () => {
       setSemester(mockTest.semester);
       setSubject(mockTest.subject._id);
       setIsHidden(mockTest.isHidden);
-      setDuration({ start: mockTest.registrationStartedAt, end: mockTest.registrationEndedAt });
       setSlots(mockTest.slots);
     }
   }, [mockTest]);
@@ -168,7 +127,7 @@ const MockTestEdit = () => {
 
   useEffect(() => {
     setSave();
-  }, [name, subject, type, semester, description, duration, isHidden, setSave]);
+  }, [name, subject, type, semester, description, isHidden, setSave]);
 
   useEffect(() => {
     SubjectService.getAll({})
@@ -288,52 +247,6 @@ const MockTestEdit = () => {
                       placeholder='Chọn học kì'
                     />
                   </div>
-                </div>
-
-                <div className='flex w-full gap-x-4'>
-                  <div className='flex flex-1 flex-col'>
-                    <p className='mb-2 w-full text-sm lg:text-base 3xl:text-xl'>Bắt đầu đăng ký</p>
-                    <DatePicker
-                      selected={duration.start === 0 ? new Date() : new Date(duration.start)}
-                      showTimeInput
-                      timeInputLabel='Time:'
-                      onChange={(date) =>
-                        setDuration({ ...duration, start: new Date(date || 0).getTime() })
-                      }
-                      className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                    lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      dateFormat={'dd/MM/yyyy HH:mm:ss'}
-                      customTimeInput={
-                        <CustomTimeInput
-                          date={duration.start === 0 ? new Date() : new Date(duration.start)}
-                          onChangeCustom={handleChangeTime}
-                          isStartDate
-                        />
-                      }
-                    />
-                  </div>
-                  <div className='flex flex-1 flex-col'>
-                    <p className='mb-2 w-full text-sm lg:text-base 3xl:text-xl'>Kết thúc đăng ký</p>
-                    <DatePicker
-                      selected={duration.end === 0 ? new Date() : new Date(duration.end)}
-                      showTimeInput
-                      timeInputLabel='Time:'
-                      onChange={(date) =>
-                        setDuration({ ...duration, end: new Date(date || 0).getTime() })
-                      }
-                      className='flex w-full rounded-lg border border-[#CCC] p-1 text-xs font-medium
-                    lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'
-                      dateFormat={'dd/MM/yyyy HH:mm:ss'}
-                      customTimeInput={
-                        <CustomTimeInput
-                          date={duration.end === 0 ? new Date() : new Date(duration.end)}
-                          onChangeCustom={handleChangeTime}
-                          isStartDate={false}
-                        />
-                      }
-                    />
-                  </div>
-                  <div className='flex-1' />
                 </div>
 
                 <div className='flex w-full flex-col items-start justify-center'>
