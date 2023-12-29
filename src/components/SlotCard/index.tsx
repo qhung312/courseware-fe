@@ -342,6 +342,11 @@ const SlotCard: FC<SlotCardProps> = ({
             </div>
           ) : null}
 
+          {isRegistered ? (
+            <div className='block text-[12px] text-[#33B679] md:text-[14px] lg:hidden'>
+              Bạn đã đăng ký ca thi này.
+            </div>
+          ) : null}
           {slotStatus === SlotStatus.ONGOING && !isRegistered ? (
             <div className='block text-[12px] text-[#E57368] md:text-[14px] lg:hidden'>
               Bạn không thể làm bài vì chưa đăng ký ca thi này!
@@ -373,6 +378,11 @@ const SlotCard: FC<SlotCardProps> = ({
             }
             currentSession={examSession}
           />
+          {isRegistered ? (
+            <div className='hidden text-[14px] text-[#33B679] lg:block'>
+              Bạn đã đăng ký ca thi này.
+            </div>
+          ) : null}
           {slotStatus === SlotStatus.ONGOING && !isRegistered ? (
             <div className='hidden text-[14px] text-[#E57368] lg:block'>
               Bạn không thể làm bài vì chưa đăng ký ca thi này!
