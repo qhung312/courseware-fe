@@ -47,8 +47,8 @@ const Desktop: React.FC<{
     <>
       <div
         id='question-sidebar'
-        className='with-nav-height fixed right-0 bottom-0 z-10 block w-[256px] space-y-4 bg-[#9DCCFF]/30
-      p-4 transition-all duration-500 lg:w-[360px] xl:w-[430px] 2xl:w-[520px] 3xl:w-[600px]'
+        className='with-nav-height sticky right-0 top-0 block w-[256px] space-y-4 bg-[#9DCCFF]/30
+        p-4 transition-all duration-500 lg:w-[360px] xl:w-[430px] 2xl:w-[520px] 3xl:w-[600px]'
       >
         <div className='flex flex-col items-start justify-center space-y-4 lg:space-y-7 3xl:space-y-9'>
           <div
@@ -99,9 +99,6 @@ const Desktop: React.FC<{
                 </h2>
                 <Countdown
                   date={timeLeft}
-                  onTick={(props) => {
-                    setTimeLeft(Date.now() + props.total);
-                  }}
                   renderer={(props) => (
                     <p className='text-base font-medium text-[#4285F4] lg:text-lg 3xl:text-2xl'>
                       {parseCountdown(props.total)}
