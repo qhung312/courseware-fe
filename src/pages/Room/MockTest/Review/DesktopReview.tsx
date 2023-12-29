@@ -25,8 +25,7 @@ const DesktopReview: React.FC<{
   return (
     <main
       id='exam-content'
-      className='with-nav-height relative hidden w-full overflow-y-auto overflow-x-hidden pr-[256px]
-      md:block lg:pr-[360px] xl:pr-[430px] 2xl:pr-[520px] 3xl:pr-[600px]'
+      className='with-nav-height relative hidden w-full overflow-y-auto overflow-x-hidden md:flex'
     >
       <div className='flex min-h-full w-full flex-col items-start justify-start bg-white p-5 lg:p-8 3xl:p-10'>
         <div className='flex w-full flex-col'>
