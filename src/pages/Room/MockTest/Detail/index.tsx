@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { isNil, some } from 'lodash';
+import { some } from 'lodash';
 import { FC, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -78,45 +78,6 @@ const DetailTest: FC = () => {
   const currentSubject = useMemo(
     () => subjects.find((subject) => subject._id === params.subjectId),
     [params.subjectId, subjects]
-  );
-
-  const registrationStartedAt = exams && exams[0] ? exams[0].registrationStartedAt : 0;
-  const registrationEndedAt = exams && exams[0] ? exams[0].registrationEndedAt : 0;
-  const registrationStartedDate = useMemo(
-    () =>
-      registrationStartedAt
-        ? new Date(registrationStartedAt)
-            .toLocaleString('vi-VN', {
-              hour: '2-digit',
-              minute: '2-digit',
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric',
-
-              hourCycle: 'h23',
-              hour12: false,
-            })
-            .replace(' ', ', ')
-        : null,
-    [registrationStartedAt]
-  );
-  const registrationEndedDate = useMemo(
-    () =>
-      registrationEndedAt
-        ? new Date(registrationEndedAt)
-            .toLocaleString('vi-VN', {
-              hour: '2-digit',
-              minute: '2-digit',
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric',
-
-              hourCycle: 'h23',
-              hour12: false,
-            })
-            .replace(' ', ', ')
-        : null,
-    [registrationEndedAt]
   );
 
   const disabledRegister =
@@ -199,19 +160,6 @@ const DetailTest: FC = () => {
             <h2 className='text-[20px] md:hidden'>Môn học: {currentSubject.name}</h2>
           </div>
 
-          <div
-            className='mt-5 flex w-full flex-row items-center gap-x-2 rounded-lg border border-[#4285F4] px-4 py-3
-            md:w-fit
-            xl:gap-x-3
-            3xl:gap-x-4'
-          >
-            <Icon.CalendarIcon className='h-6 w-6 fill-[#252641]' />
-            <p className='text-[16px] lg:text-[18px] 3xl:text-[20px]'>
-              {isNil(registrationStartedDate) || isNil(registrationEndedDate)
-                ? 'Chưa mở đăng ký'
-                : `Mở đăng ký từ ${registrationStartedDate} đến ${registrationEndedDate}`}
-            </p>
-          </div>
           <Histogram scores={summary || []} title={`Phổ điểm`} />
 
           <div className='mt-10 grid grid-cols-1 gap-y-6 gap-x-10 2xl:grid-cols-2'>
@@ -220,8 +168,6 @@ const DetailTest: FC = () => {
                   <SlotCard
                     key={slot.slotId}
                     {...slot}
-                    registrationStartedAt={exams[0].registrationStartedAt}
-                    registrationEndedAt={exams[0].registrationEndedAt}
                     examId={exams[0]._id}
                     questionCount={slot.questionCount || 0}
                     register={register}
