@@ -13,9 +13,6 @@ export type Exam = {
   semester: Semester;
   type: ExamType;
 
-  registrationStartedAt: number;
-  registrationEndedAt: number;
-
   slots: {
     slotId: number;
 

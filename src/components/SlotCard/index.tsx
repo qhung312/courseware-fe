@@ -119,8 +119,6 @@ type SlotCardProps = {
   registeredUsers: Student[];
   userLimit: number;
   questionCount: number;
-  registrationStartedAt: number;
-  registrationEndedAt: number;
 
   startedAt: number;
   endedAt: number;
@@ -136,8 +134,6 @@ const SlotCard: FC<SlotCardProps> = ({
   startedAt,
   endedAt,
   registeredUsers,
-  registrationStartedAt,
-  registrationEndedAt,
   questionCount,
   userLimit,
   disabledRegisterButton,
@@ -184,48 +180,35 @@ const SlotCard: FC<SlotCardProps> = ({
   );
 
   useEffect(() => {
-    let intervalId: NodeJS.Timer;
-    const now = Date.now();
+    let timeoutId: NodeJS.Timer;
 
-    if (now < registrationStartedAt) {
-      setSlotStatus(SlotStatus.PREPARING);
-
-      intervalId = setInterval(() => {
-        setSlotStatus(SlotStatus.OPEN);
-      }, registrationStartedAt - now);
-    } else if (now <= registrationEndedAt) {
+    if (Date.now() < startedAt) {
       if (isRegistered) {
         setSlotStatus(SlotStatus.REGISTERED);
       } else {
         setSlotStatus(SlotStatus.OPEN);
       }
 
-      intervalId = setInterval(() => {
-        setSlotStatus(SlotStatus.PREPARING);
-      }, registrationEndedAt - now);
-    } else if (now < startedAt) {
-      setSlotStatus(SlotStatus.PREPARING);
-
-      intervalId = setInterval(() => {
+      timeoutId = setTimeout(() => {
         setSlotStatus(SlotStatus.ONGOING);
-      }, startedAt - now);
+      }, startedAt - Date.now());
     } else if (
       (!isNil(examSession) && examSession.status === SessionStatus.ENDED) ||
-      now > endedAt
+      Date.now() > endedAt
     ) {
       setSlotStatus(SlotStatus.ENDED);
-    } else if (now >= startedAt) {
+    } else if (Date.now() >= startedAt) {
       setSlotStatus(SlotStatus.ONGOING);
 
-      intervalId = setInterval(() => {
+      timeoutId = setTimeout(() => {
         setSlotStatus(SlotStatus.ENDED);
-      }, endedAt - now);
+      }, endedAt - Date.now());
     }
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(timeoutId);
     };
-  }, [startedAt, endedAt, isRegistered, registrationStartedAt, registrationEndedAt, examSession]);
+  }, [startedAt, endedAt, isRegistered, examSession]);
 
   const onClick = () => {
     switch (slotStatus) {
