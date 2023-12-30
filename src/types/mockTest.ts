@@ -53,8 +53,6 @@ export type MockTest = {
   subject: Subject;
   semester: Semester;
   type: ExamType;
-  registrationStartedAt: number;
-  registrationEndedAt: number;
   isHidden: boolean;
   description: string;
   slots: Slots[];

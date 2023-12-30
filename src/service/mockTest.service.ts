@@ -7,8 +7,6 @@ import type { Response } from '../types/response';
 type CreateMockTestArgument = {
   name: string;
   description: string;
-  registrationStartedAt: number;
-  registrationEndedAt: number;
   subject: string;
   semester: string;
   type: string;
@@ -38,8 +36,6 @@ type EditMockTestArgument = {
   type?: string;
   description?: string;
   isHidden?: boolean;
-  registrationStartedAt?: number;
-  registrationEndedAt?: number;
 };
 
 type GetAllMockTestReturnType = {
