@@ -100,7 +100,7 @@ const SlotButton = memo<SlotButtonProps>(function Button({
       return (
         <button
           {...props}
-          disabled={!!currentSession || !isRegistered || disabled}
+          disabled={!currentSession || !isRegistered || disabled}
           className='relative flex w-fit justify-center rounded-lg 
           bg-[#4285F4]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#4285F4] disabled:bg-[#B3B3B3]'
         >
