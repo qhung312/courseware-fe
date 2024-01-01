@@ -77,7 +77,7 @@ const MaterialDetailPage: React.FC = () => {
       <Wrapper className={`with-nav-height relative flex w-full flex-col overflow-auto`}>
         <button
           onClick={openAside}
-          className={`absolute left-4 top-2 rounded-full bg-[#4285F4] p-[6px] hover:bg-[#2571eb] md:left-10 md:top-6 lg:top-8 2xl:top-10 ${
+          className={`absolute left-4 top-2 rounded-full bg-[#030391] p-[6px] hover:bg-[#2571eb] md:left-10 md:top-6 lg:top-8 2xl:top-10 ${
             !isAsideOpen ? 'hidden md:block' : 'hidden'
           }`}
         >
@@ -91,7 +91,7 @@ const MaterialDetailPage: React.FC = () => {
               : 'md:px-32 lg:px-40 xl:px-44 3xl:px-48'
           }`}
         >
-          <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
+          <h1 className='text-2xl font-bold text-[#030391] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
             {material?.name}
           </h1>
           <div className='flex w-full justify-start'>
@@ -100,7 +100,7 @@ const MaterialDetailPage: React.FC = () => {
               onClick={() => {
                 navigate(-1);
               }}
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white hover:bg-[#2571eb] md:p-1 lg:p-2 2xl:p-3'
+              className='flex items-center space-x-2 rounded-lg bg-[#030391] px-2 py-1 text-white hover:bg-[#2571eb] md:p-1 lg:p-2 2xl:p-3'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
               <p className='whitespace-nowrap text-[16px] font-semibold text-inherit 2xl:text-[20px]'>

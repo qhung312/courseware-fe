@@ -120,7 +120,7 @@ const ChapterListPage = () => {
         onDelete={() => onDeleteChapter()}
       />
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Danh sách chương
           </p>
@@ -188,19 +188,19 @@ const ChapterListPage = () => {
                     <table className='flex w-full min-w-[720px] table-fixed flex-col gap-y-3 overflow-auto'>
                       <thead>
                         <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-4 lg:px-6 3xl:px-8'>
-                          <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[3] items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Tên
                           </th>
-                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Môn
                           </th>
-                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[2.5] items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Thời gian tạo
                           </th>
-                          <th className='flex flex-[2.5] items-center justify-start text-left text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[2.5] items-center justify-start text-left text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Thời gian cập nhật
                           </th>
-                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             {''}
                           </th>
                         </tr>
@@ -239,7 +239,7 @@ const ChapterListPage = () => {
                                     e.stopPropagation();
                                     navigate(`/admin/chapter/edit/${chapter._id}`);
                                   }}
-                                  className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                  className='flex items-center justify-center rounded-full bg-[#030391]/90 p-2 hover:bg-[#030391]'
                                 >
                                   <Icon.Edit
                                     fill='white'

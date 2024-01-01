@@ -147,7 +147,7 @@ const Main: React.FC = () => {
         <Wrapper className='flex flex-1 flex-col'>
           <div className='flex flex-col px-5 py-4 md:px-8 md:py-6 lg:px-10 lg:py-8 xl:px-12 2xl:px-14 2xl:py-10'>
             <div className='flex w-full justify-start'>
-              <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
+              <h1 className='text-2xl font-bold text-[#030391] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
                 Bài tập rèn luyện
               </h1>
             </div>
@@ -172,7 +172,7 @@ const Main: React.FC = () => {
           <div className='flex w-full items-start md:hidden'>
             <Link
               to='/room/exercises'
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white hover:bg-[#4285F4] hover:underline lg:bg-[#4285F4]/70'
+              className='flex items-center space-x-2 rounded-lg bg-[#030391] px-2 py-1 text-white hover:bg-[#030391] hover:underline lg:bg-[#030391]/70'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
               <p className='whitespace-nowrap text-[16px] font-semibold text-inherit 2xl:text-[20px]'>
@@ -182,7 +182,7 @@ const Main: React.FC = () => {
           </div>
           {/* Banner */}
           <div className='mt-4 flex w-full flex-col items-start justify-start md:mt-0'>
-            <h1 className='text-2xl font-bold text-[#4285F4] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
+            <h1 className='text-2xl font-bold text-[#030391] md:text-[#2F327D] lg:text-2xl 2xl:text-3xl'>
               Bài tập rèn luyện
             </h1>
             <h2 className='block text-xl font-normal text-[#252641] md:hidden'>
@@ -191,10 +191,10 @@ const Main: React.FC = () => {
           </div>
           <div className='mt-4 flex w-full flex-col items-start justify-center gap-y-5 md:mt-5 lg:mt-6 xl:mt-7 2xl:mt-9'>
             <div
-              className={`relative flex w-full flex-col rounded-lg border-[1px] border-[#4285F4]/30 transition-all duration-300 ease-out md:w-fit md:border-[#4285F4] ${
+              className={`relative flex w-full flex-col rounded-lg border-[1px] border-[#030391]/30 transition-all duration-300 ease-out md:w-fit md:border-[#030391] ${
                 isOpenChapter
-                  ? 'bg-transparent text-[#4285F4] md:rounded-b-none md:border-b-0 md:bg-[#4285F4] md:text-white'
-                  : 'border-[#4285F4]/30 bg-transparent text-[#252641]'
+                  ? 'bg-transparent text-[#030391] md:rounded-b-none md:border-b-0 md:bg-[#030391] md:text-white'
+                  : 'border-[#030391]/30 bg-transparent text-[#252641]'
               }' `}
             >
               <button
@@ -204,14 +204,14 @@ const Main: React.FC = () => {
                 <div className='flex flex-row items-center justify-center gap-x-5 text-inherit md:gap-x-3 xl:gap-x-4'>
                   {width > 768 || isOpenChapter ? (
                     <Icon.OriginIcon
-                      className={`fill-[#4285F4]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
-                        isOpenChapter ? 'fill-[#4285F4] md:fill-white' : 'fill-[#252641]'
+                      className={`fill-[#030391]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
+                        isOpenChapter ? 'fill-[#030391] md:fill-white' : 'fill-[#252641]'
                       }`}
                     />
                   ) : (
                     <Icon.FilterIcon
-                      className={`fill-[#4285F4]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
-                        isOpenChapter ? 'fill-[#4285F4] md:fill-white' : 'fill-[#252641]'
+                      className={`fill-[#030391]/87 md:fill-[#252641]/87 z-[1] aspect-square w-5 md:w-4 2xl:w-5 ${
+                        isOpenChapter ? 'fill-[#030391] md:fill-white' : 'fill-[#252641]'
                       }`}
                     />
                   )}
@@ -226,16 +226,16 @@ const Main: React.FC = () => {
                 </div>
                 <Icon.ChevronUp
                   className={`aspect-[1/2] h-4 transition-all duration-300 ${
-                    isOpenChapter ? 'fill-[#4285F4] md:fill-white' : 'rotate-180 fill-[#252641]'
+                    isOpenChapter ? 'fill-[#030391] md:fill-white' : 'rotate-180 fill-[#252641]'
                   }`}
                 />
               </button>
               <div className={`h-fit w-full px-4 ${isOpenChapter ? 'block md:hidden' : 'hidden'}`}>
-                <div className='h-[1px] w-full bg-[#4285F4]/30' />
+                <div className='h-[1px] w-full bg-[#030391]/30' />
               </div>
               <div
                 ref={chapterFilterRef}
-                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#4285F4] bg-white text-[#252641] shadow-lg transition-all duration-700 ease-out 
+                className={`relative z-[11] w-full flex-col items-start gap-y-1 rounded-b-lg border-0 border-[#030391] bg-white text-[#252641] shadow-lg transition-all duration-700 ease-out 
                   md:absolute md:top-[100%] md:left-[-1px] md:w-[calc(100%+2px)] md:border-x-[1px] md:border-b-[1px] ${
                     isOpenChapter && chapterOption.length > 0 ? 'flex' : 'hidden'
                   }`}
@@ -321,27 +321,27 @@ const Main: React.FC = () => {
                       <div className='flex flex-row items-center justify-between'>
                         <div className='flex h-fit w-full flex-1 flex-row flex-wrap items-center justify-start gap-x-2 gap-y-2 md:w-fit md:flex-none md:justify-start md:gap-x-0'>
                           <div className='flex w-fit flex-row items-center gap-x-2 md:flex-1'>
-                            <Icon.Exercise className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
+                            <Icon.Exercise className='h-4 w-auto fill-[#030391] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {quiz.chapter.name}
                             </p>
                           </div>
                           <div className='ml-0 flex w-fit flex-row items-center gap-x-2 md:ml-8 md:flex-1'>
-                            <Icon.Clock className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
+                            <Icon.Clock className='h-4 w-auto fill-[#030391] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {parseDuration(quiz.duration)}
                             </p>
                           </div>
                           <span className='mx-1 hidden h-6 w-0 border-l md:ml-4 md:block' />
                           <div className='flex w-fit flex-row items-center gap-x-2 md:ml-4 md:flex-1'>
-                            <Icon.List className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
+                            <Icon.List className='h-4 w-auto fill-[#030391] lg:h-5 3xl:h-6' />
                             <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                               {`${quiz.sampleSize} câu`}
                             </p>
                           </div>
                         </div>
                         <button
-                          className='hidden rounded-lg bg-[#4285F4] px-7 py-2 md:flex'
+                          className='hidden rounded-lg bg-[#030391] px-7 py-2 md:flex'
                           disabled={sessionMutation.isLoading}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -379,7 +379,7 @@ const Main: React.FC = () => {
                       )}
                       <div className='flex w-full flex-row items-center justify-start md:hidden'>
                         <button
-                          className='flex w-fit rounded-lg bg-[#4285F4] px-7 py-2'
+                          className='flex w-fit rounded-lg bg-[#030391] px-7 py-2'
                           disabled={sessionMutation.isLoading}
                           onClick={(e) => {
                             e.stopPropagation();

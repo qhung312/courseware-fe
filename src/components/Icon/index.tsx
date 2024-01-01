@@ -47,10 +47,9 @@ import { ReactComponent as Library } from '../../assets/svgs/LibraryIcon.svg';
 import { ReactComponent as List } from '../../assets/svgs/ListIcon.svg';
 import { ReactComponent as LiveHelpIcon } from '../../assets/svgs/LiveHelpIcon.svg';
 import { ReactComponent as LocationIcon } from '../../assets/svgs/LocationIcon.svg';
-import { ReactComponent as LogoCTCT } from '../../assets/svgs/LogoCTCT.svg';
+import { ReactComponent as LogoBK } from '../../assets/svgs/LogoBK.svg';
 import { ReactComponent as LogoDiscord } from '../../assets/svgs/LogoDiscord.svg';
 import { ReactComponent as LogoFacebook } from '../../assets/svgs/LogoFacebook.svg';
-import { ReactComponent as LogoGDSC } from '../../assets/svgs/LogoGDSC.svg';
 import { ReactComponent as LogoGmail } from '../../assets/svgs/LogoGmail.svg';
 import { ReactComponent as LogoLinkedin } from '../../assets/svgs/LogoLinkedin.svg';
 import { ReactComponent as Logout } from '../../assets/svgs/LogoutIcon.svg';
@@ -122,8 +121,7 @@ export default {
   FilterIcon,
   FiveWingStarIcon,
   LocationIcon,
-  LogoCTCT,
-  LogoGDSC,
+  LogoBK,
   LogoGoogle,
   LogoFessior,
   Exercise,

@@ -87,7 +87,7 @@ const SlotButton = memo<SlotButtonProps>(function Button({
           {...props}
           disabled={!isRegistered || disabled}
           className='relative flex w-fit justify-center rounded-lg 
-          bg-[#4285F4]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#4285F4] disabled:bg-[#B3B3B3]'
+          bg-[#030391]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#030391] disabled:bg-[#B3B3B3]'
         >
           <p className='opacity-0'>Tiếp tục làm bài</p>
           <p className='absolute flex-1 text-white'>
@@ -102,7 +102,7 @@ const SlotButton = memo<SlotButtonProps>(function Button({
           {...props}
           disabled={!currentSession || !isRegistered || disabled}
           className='relative flex w-fit justify-center rounded-lg 
-          bg-[#4285F4]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#4285F4] disabled:bg-[#B3B3B3]'
+          bg-[#030391]/80 py-2 px-3 duration-200 ease-linear hover:bg-[#030391] disabled:bg-[#B3B3B3]'
         >
           <p className='opacity-0'>Tiếp tục làm bài</p>
           <p className='absolute flex-1 text-white'>Xem lại</p>
@@ -262,14 +262,14 @@ const SlotCard: FC<SlotCardProps> = ({
           <div className='space-y-1'>
             <h3 className='text-[18px] font-semibold'>{name}</h3>
             <p className='whitespace-nowrap text-[14px] font-medium'>
-              <span className='text-[#4285F4]'>Trạng thái:</span> {slotStatus}
+              <span className='text-[#030391]'>Trạng thái:</span> {slotStatus}
             </p>
           </div>
 
           {slotStatus === 'Đang diễn ra' ? (
             <>
-              <div className='flex flex-row gap-x-1 rounded-full border border-[#4285F4]/30 px-3 py-2 md:hidden'>
-                <Icon.Clock className='h-5 w-auto' fill='#4285F4' />
+              <div className='flex flex-row gap-x-1 rounded-full border border-[#030391]/30 px-3 py-2 md:hidden'>
+                <Icon.Clock className='h-5 w-auto' fill='#030391' />
                 <Countdown
                   date={endedAt}
                   renderer={(props) => {
@@ -278,7 +278,7 @@ const SlotCard: FC<SlotCardProps> = ({
                 />
               </div>
               <div
-                className='hidden flex-row rounded-lg border border-[#4285F4]/30 px-3 py-2 
+                className='hidden flex-row rounded-lg border border-[#030391]/30 px-3 py-2 
                 md:flex md:gap-x-5 
                 lg:gap-x-6 lg:px-4 
                 xl:gap-x-7 xl:px-5 
@@ -289,7 +289,7 @@ const SlotCard: FC<SlotCardProps> = ({
                 <Countdown
                   date={endedAt}
                   renderer={(props) => {
-                    return <p className='text-[#4285F4]'>{parseCountdown(props.total)}</p>;
+                    return <p className='text-[#030391]'>{parseCountdown(props.total)}</p>;
                   }}
                 />
               </div>

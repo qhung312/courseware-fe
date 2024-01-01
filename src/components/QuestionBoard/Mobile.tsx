@@ -84,8 +84,8 @@ const Mobile: React.FC<{
                         [question.userAnswerKeys, question.userAnswerField],
                         (v) => !_.isEmpty(v)
                       )
-                    ? 'bg-[#4285F4]'
-                    : 'border border-[#4285F4]/50 bg-transparent'
+                    ? 'bg-[#030391]'
+                    : 'border border-[#030391]/50 bg-transparent'
                 } ${
                   currentSet.includes((page - 1) * 40 + index)
                     ? 'border-[3px] border-[#FBCB43]'

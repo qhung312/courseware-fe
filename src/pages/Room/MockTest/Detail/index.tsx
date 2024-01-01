@@ -98,7 +98,7 @@ const DetailTest: FC = () => {
         <Wrapper className='flex flex-1 flex-col'>
           <main className='flex flex-col px-5 py-4 md:px-8 md:py-6 lg:px-10 lg:py-8 xl:px-12 2xl:px-14 2xl:py-10'>
             <div className='flex w-full justify-start'>
-              <h1 className='text-[24px] font-bold leading-normal text-[#4285F4] md:text-[#2F327D] 2xl:text-[28px] 3xl:text-[32px]'>
+              <h1 className='text-[24px] font-bold leading-normal text-[#030391] md:text-[#2F327D] 2xl:text-[28px] 3xl:text-[32px]'>
                 Thi thử {testName}
               </h1>
             </div>
@@ -137,9 +137,9 @@ const DetailTest: FC = () => {
           <div className='flex w-full items-start md:hidden'>
             <Link
               to={`/room/tests/${typeOfTest}/${params.semester}`}
-              className='flex items-center space-x-2 rounded-lg bg-[#4285F4] px-2 py-1 text-white 
-              hover:bg-[#4285F4] hover:underline 
-              lg:bg-[#4285F4]/70'
+              className='flex items-center space-x-2 rounded-lg bg-[#030391] px-2 py-1 text-white 
+              hover:bg-[#030391] hover:underline 
+              lg:bg-[#030391]/70'
             >
               <Icon.ChevronLeft className='aspect-square w-2 fill-white md:w-3' />
               <p className='whitespace-nowrap text-[16px] font-semibold text-inherit 2xl:text-[20px]'>
@@ -149,7 +149,7 @@ const DetailTest: FC = () => {
           </div>
           <div className='mt-6 flex flex-col gap-y-1'>
             <h1
-              className='text-[24px] font-bold text-[#4285F4] 
+              className='text-[24px] font-bold text-[#030391] 
             md:text-[#2F327D] 
               2xl:text-[28px] 
               3xl:text-[32px]'

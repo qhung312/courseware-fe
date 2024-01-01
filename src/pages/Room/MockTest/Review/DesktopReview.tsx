@@ -53,7 +53,7 @@ const DesktopReview: React.FC<{
             <div className='w-fit rounded-lg border-2 border-[#49BBDD]/30 p-3 lg:p-4 3xl:p-5'>
               <p className='text-sm font-medium lg:text-base 3xl:text-xl'>
                 Trang hiện tại:{' '}
-                <span className='text-[#4285F4]'>
+                <span className='text-[#030391]'>
                   {page}/{questionChunks.length}
                 </span>
               </p>
@@ -61,7 +61,7 @@ const DesktopReview: React.FC<{
             <div className='w-fit rounded-lg border-2 border-[#49BBDD]/30 p-3 lg:p-4 3xl:p-5'>
               <p className='text-sm font-medium lg:text-base 3xl:text-xl'>
                 Điểm số:{' '}
-                <span className='text-[#4285F4]'>{(exam.standardizedScore ?? 0).toFixed(2)}</span>
+                <span className='text-[#030391]'>{(exam.standardizedScore ?? 0).toFixed(2)}</span>
               </p>
             </div>
           </div>

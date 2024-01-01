@@ -59,7 +59,7 @@ const ViewQuestionPage = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Xem thông tin câu hỏi
           </p>
@@ -127,7 +127,7 @@ const ViewQuestionPage = () => {
                   <div className='flex flex-row-reverse gap-x-2 md:gap-x-4 2xl:gap-x-6'>
                     <button
                       className={`items-center rounded-lg px-6 py-1 transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                        preview ? 'bg-[#4285F4]' : 'bg-[#4285F4]/40 hover:bg-[#4285F4]/80'
+                        preview ? 'bg-[#030391]' : 'bg-[#030391]/40 hover:bg-[#030391]/80'
                       }`}
                       onClick={previewQuestion}
                     >
@@ -135,7 +135,7 @@ const ViewQuestionPage = () => {
                     </button>
                     <button
                       className={`items-center rounded-lg px-6 py-1 transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                        !preview ? 'bg-[#4285F4]' : 'bg-[#4285F4]/40 hover:bg-[#4285F4]/80'
+                        !preview ? 'bg-[#030391]' : 'bg-[#030391]/40 hover:bg-[#030391]/80'
                       }`}
                       onClick={() => setPreview(null)}
                       disabled={preview === null}
@@ -145,7 +145,7 @@ const ViewQuestionPage = () => {
                   </div>
                   <Link
                     to={`/admin/questions/edit/${id}`}
-                    className='items-center rounded-lg bg-[#4285F4]/80 px-6 py-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
+                    className='items-center rounded-lg bg-[#030391]/80 px-6 py-1 transition-all duration-200 hover:bg-[#030391] lg:px-7 lg:py-2 3xl:px-8 3xl:py-3'
                   >
                     <p className='text-white'>Chỉnh sửa</p>
                   </Link>

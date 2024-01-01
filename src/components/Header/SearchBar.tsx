@@ -31,7 +31,7 @@ const SearchBar = ({ options, onChange, ...props }: Props<Option, false, GroupBa
       styles={{
         control: (baseStyle, { isFocused }) => ({
           ...baseStyle,
-          outline: isFocused ? '2px auto #4285F4' : 'unset',
+          outline: isFocused ? '2px auto #030391' : 'unset',
           boxSizing: 'content-box',
         }),
         dropdownIndicator: (baseStyle) => ({

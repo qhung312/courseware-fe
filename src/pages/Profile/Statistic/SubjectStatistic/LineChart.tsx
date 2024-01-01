@@ -24,7 +24,7 @@ const RenderLineChart: React.FC<RenderLineChartProps> = ({ data }) => {
         <YAxis type='number' domain={[0, 10]} />
         <Tooltip />
         <Legend />
-        <Line type='monotone' dataKey='Điểm' stroke='#4285F4' activeDot={{ r: 8 }} />
+        <Line type='monotone' dataKey='Điểm' stroke='#030391' activeDot={{ r: 8 }} />
         {/* <Line type='monotone' dataKey='uv' stroke='#82ca9d' /> */}
       </LineChart>
     </ResponsiveContainer>

@@ -72,7 +72,7 @@ const DesktopOngoing: React.FC<{
             <div className='w-fit rounded-lg border-2 border-[#49BBDD]/30 p-3 lg:p-4 3xl:p-5'>
               <p className='text-sm font-medium lg:text-base 3xl:text-xl'>
                 Trang hiện tại:{' '}
-                <span className='text-[#4285F4]'>
+                <span className='text-[#030391]'>
                   {page}/{questionChunks.length}
                 </span>
               </p>
@@ -80,7 +80,7 @@ const DesktopOngoing: React.FC<{
             <div className='w-fit rounded-lg border-2 border-[#49BBDD]/30 p-3 lg:p-4 3xl:p-5'>
               <p className='text-sm font-medium lg:text-base 3xl:text-xl'>
                 Tiến độ:{' '}
-                <span className='text-[#4285F4]'>{`${calculateProgress.percentage}% (${calculateProgress.current}/${calculateProgress.total})`}</span>
+                <span className='text-[#030391]'>{`${calculateProgress.percentage}% (${calculateProgress.current}/${calculateProgress.total})`}</span>
               </p>
             </div>
           </div>

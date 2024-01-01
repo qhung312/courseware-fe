@@ -36,7 +36,7 @@ const CreateSubjectPage = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Tạo môn mới
           </p>
@@ -82,7 +82,7 @@ const CreateSubjectPage = () => {
               <div className='my-5 flex flex-row-reverse gap-x-8'>
                 <button
                   className={`flex items-center rounded-lg transition-all duration-200 ${
-                    createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                    createDisabled ? 'bg-gray-400/80' : 'bg-[#030391]/80 hover:bg-[#030391]'
                   } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
                   onClick={onCreateSubject}
                   disabled={createDisabled}

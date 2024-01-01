@@ -62,17 +62,17 @@ const Statistic = () => {
               onClick={throttledExerciseGradeClick}
             >
               <div className='flex flex-row items-center justify-start gap-x-[16px]'>
-                <Icon.EducationHat fill='#4285F4' />
+                <Icon.EducationHat fill='#030391' />
                 <p
                   className={`text-xl font-medium ${
-                    isExerciseGradeOpen ? 'text-[#4285f4]' : 'text-[#252641]'
+                    isExerciseGradeOpen ? 'text-[#030391]' : 'text-[#252641]'
                   }`}
                 >
                   Điểm trung bình bài tập
                 </p>
               </div>
               {isExerciseGradeOpen ? (
-                <Icon.ChevronUp fill='#4285f4' fillOpacity={0.87} width={'20px'} />
+                <Icon.ChevronUp fill='#030391' fillOpacity={0.87} width={'20px'} />
               ) : (
                 <Icon.ChevronDown fill='#252641' fillOpacity={0.87} width={'20px'} />
               )}
@@ -112,7 +112,7 @@ const Statistic = () => {
                     />
                     <Link
                       to={'/profile/statistic/exercise/' + subject._id}
-                      className='h-fit w-[160px] rounded-[12px] bg-[#4285F4] py-2 px-2 text-center font-bold text-white hover:bg-[#4285F4]/[.8]'
+                      className='h-fit w-[160px] rounded-[12px] bg-[#030391] py-2 px-2 text-center font-bold text-white hover:bg-[#030391]/[.8]'
                     >
                       {subject.name}
                     </Link>
@@ -128,17 +128,17 @@ const Statistic = () => {
               onClick={throttledTestGradeClick}
             >
               <div className='flex flex-row items-center justify-start gap-x-[16px]'>
-                <Icon.DescriptionIcon fill='#4285f4' />
+                <Icon.DescriptionIcon fill='#030391' />
                 <p
                   className={`text-xl font-medium ${
-                    isTestGradeOpen ? 'text-[#4285f4]' : 'text-[#252641]'
+                    isTestGradeOpen ? 'text-[#030391]' : 'text-[#252641]'
                   }`}
                 >
                   Điểm trung bình thi thử
                 </p>
               </div>
               {isTestGradeOpen ? (
-                <Icon.ChevronUp fill='#4285f4' fillOpacity={0.87} width={'20px'} />
+                <Icon.ChevronUp fill='#030391' fillOpacity={0.87} width={'20px'} />
               ) : (
                 <Icon.ChevronDown fill='#252641' fillOpacity={0.87} width={'20px'} />
               )}
@@ -178,7 +178,7 @@ const Statistic = () => {
                     />
                     <Link
                       to={'/profile/statistic/mock-test/' + subject._id}
-                      className='h-fit w-[160px] rounded-[12px] bg-[#4285f4] py-2 px-2 text-center font-bold text-white hover:bg-[#4285f4]/[.8]'
+                      className='h-fit w-[160px] rounded-[12px] bg-[#030391] py-2 px-2 text-center font-bold text-white hover:bg-[#030391]/[.8]'
                     >
                       {subject.name}
                     </Link>
@@ -188,7 +188,7 @@ const Statistic = () => {
             )}
           </div>
           <div className='relative w-[49%] p-5'>
-            <div className='absolute top-0 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#4285F4] md:block' />
+            <div className='absolute top-0 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#030391] md:block' />
             <div className='show-scrollbar relative z-10 hidden h-fit rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
               <h1 className='mb-6 text-center text-2xl font-semibold md:text-lg 2xl:text-xl'>
                 Điểm trung bình bài tập
@@ -227,7 +227,7 @@ const Statistic = () => {
                       />
                       <Link
                         to={'/profile/statistic/exercise/' + subject._id}
-                        className='h-fit w-[160px] rounded-[12px] bg-[#4285F4] py-2 px-2 text-center font-bold text-white hover:bg-[#4285F4]/[.8]'
+                        className='h-fit w-[160px] rounded-[12px] bg-[#030391] py-2 px-2 text-center font-bold text-white hover:bg-[#030391]/[.8]'
                       >
                         {subject.name}
                       </Link>
@@ -238,7 +238,7 @@ const Statistic = () => {
             </div>
           </div>
           <div className='relative w-[49%] p-5'>
-            <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#4285F4] md:block' />
+            <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#030391] md:block' />
             <div className='show-scrollbar relative z-10 hidden h-fit rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
               <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-lg 2xl:text-xl'>
                 Điểm trung bình thi thử
@@ -277,7 +277,7 @@ const Statistic = () => {
                       />
                       <Link
                         to={'/profile/statistic/mock-test/' + subject._id}
-                        className='h-fit w-[160px] rounded-[12px] bg-[#4285f4] py-2 px-2 text-center font-bold text-white hover:bg-[#4285f4]/[.8]'
+                        className='h-fit w-[160px] rounded-[12px] bg-[#030391] py-2 px-2 text-center font-bold text-white hover:bg-[#030391]/[.8]'
                       >
                         {subject.name}
                       </Link>

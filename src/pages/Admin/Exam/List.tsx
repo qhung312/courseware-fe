@@ -129,7 +129,7 @@ const ExamList = () => {
         onDelete={() => onDeleteExamArchive()}
       />
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Danh sách đề thi
           </p>
@@ -238,19 +238,19 @@ const ExamList = () => {
                     <table className='flex w-full min-w-[900px] table-fixed flex-col gap-y-3 overflow-auto'>
                       <thead>
                         <tr className='flex w-full flex-1 items-center justify-start gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Tên đề thi
                           </th>
-                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-[1.5] items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Môn
                           </th>
-                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Học kì
                           </th>
-                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             Kì thi
                           </th>
-                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                          <th className='flex flex-1 items-center justify-start text-base font-semibold text-[#030391] lg:text-lg 3xl:text-xl'>
                             {''}
                           </th>
                         </tr>
@@ -287,7 +287,7 @@ const ExamList = () => {
                                     e.stopPropagation();
                                     navigate(`/admin/exam-archive/edit/${exam._id}`);
                                   }}
-                                  className='flex items-center justify-center rounded-full bg-[#4285F4]/90 p-2 hover:bg-[#4285F4]'
+                                  className='flex items-center justify-center rounded-full bg-[#030391]/90 p-2 hover:bg-[#030391]'
                                 >
                                   <Icon.Edit
                                     fill='white'

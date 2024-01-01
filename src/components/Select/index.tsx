@@ -57,7 +57,7 @@ const CustomSelect = ({
       styles={{
         control: (baseStyle, { isFocused }) => ({
           ...baseStyle,
-          outline: isFocused ? '2px auto #4285F4' : 'unset',
+          outline: isFocused ? '2px auto #030391' : 'unset',
           boxSizing: 'content-box',
         }),
         indicatorsContainer: (baseStyle, { isDisabled }) => ({

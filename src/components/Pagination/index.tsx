@@ -37,7 +37,7 @@ const Pagination = ({ totalCount, pageSize = 10, currentPage, onPageChange }: Pr
           <li key={`pagination-${pageNumber}`} className='flex h-fit w-fit items-center'>
             <button
               className={`aspect-square rounded-full p-2 3xl:p-4 ${
-                pageNumber === currentPage ? 'bg-[#4285F4]/90' : 'hover:bg-black/20'
+                pageNumber === currentPage ? 'bg-[#030391]/90' : 'hover:bg-black/20'
               }`}
               onClick={() => onPageChange(pageNumber as number)}
             >

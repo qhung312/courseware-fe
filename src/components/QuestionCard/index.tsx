@@ -125,7 +125,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   disabled={status !== SessionStatus.ONGOING}
                   className={`question checkbox ${
                     status === SessionStatus.ONGOING
-                      ? 'checked:bg-[#4285F4]'
+                      ? 'checked:bg-[#030391]'
                       : question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
                       : question.userAnswerKeys?.includes(option.key)
@@ -175,7 +175,7 @@ const InputAnswer = memo(function Component({ status, question, helpers }: Input
                   id={`question-${question.questionId}-answer-${option.key}`}
                   className={`question checkbox ${
                     status === SessionStatus.ONGOING
-                      ? 'checked:bg-[#4285F4]'
+                      ? 'checked:bg-[#030391]'
                       : question.answerKeys?.includes(option.key)
                       ? 'checked:bg-[#49CCCF]'
                       : question.userAnswerKeys?.includes(option.key)

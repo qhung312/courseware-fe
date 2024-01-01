@@ -54,11 +54,11 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
       >
         <div className='flex flex-row items-center justify-start gap-x-[16px]'>
           <IconProp
-            fill={pathname.includes(`/admin/${pathLink}`) || isHover ? '#4285F4' : '#5B5B5B'}
+            fill={pathname.includes(`/admin/${pathLink}`) || isHover ? '#030391' : '#5B5B5B'}
           />
           <p
             style={{
-              color: pathname.includes(`/admin/${pathLink}`) || isHover ? '#4285F4' : '#5B5B5B',
+              color: pathname.includes(`/admin/${pathLink}`) || isHover ? '#030391' : '#5B5B5B',
             }}
           >
             {`Quản lý ${titleName}`}
@@ -70,7 +70,7 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
             pathname.includes(`/admin/${pathLink}`) ||
             pathname.includes(`/admin/${pathLink}/create`) ||
             isHover
-              ? '#4285F4'
+              ? '#030391'
               : '#5B5B5B'
           }
           width={'20px'}
@@ -88,7 +88,7 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
           to={`/admin/${pathLink}/manage`}
           className='flex w-full flex-row items-center justify-start gap-x-[16px] rounded-[12px] bg-transparent px-[20px] py-[16px]'
           style={(a) => ({
-            color: a.isActive || a.isPending || isHoverListButton ? '#4285F4' : '#5B5B5B',
+            color: a.isActive || a.isPending || isHoverListButton ? '#030391' : '#5B5B5B',
             backgroundColor:
               a.isActive || a.isPending || isHoverListButton ? '#f1f6fe' : 'transparent',
           })}
@@ -101,7 +101,7 @@ const AdminAsideLink: React.FC<AdminAsideLinkProps> = ({
           to={`/admin/${pathLink}/create`}
           className='flex w-full flex-row items-center justify-start gap-x-[16px] rounded-[12px] bg-transparent px-[20px] py-[16px]'
           style={(a) => ({
-            color: a.isActive || a.isPending || isHoverCreateButton ? '#4285F4' : '#5B5B5B',
+            color: a.isActive || a.isPending || isHoverCreateButton ? '#030391' : '#5B5B5B',
             backgroundColor:
               a.isActive || a.isPending || isHoverCreateButton ? '#f1f6fe' : 'transparent',
           })}

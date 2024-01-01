@@ -153,28 +153,28 @@ const MockTestStatistic = () => {
         <div className='relative bg-white px-5 pt-4 pb-[64px] md:flex md:flex-col md:pt-10 lg:px-[60px]'>
           <Link
             to='/profile/statistic'
-            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-lg bg-[#4285f4]/[.8] px-2 py-1 text-white hover:bg-[#4285f4] lg:py-1 2xl:text-[20px]'
+            className='text-semibold mb-3 flex h-fit w-fit gap-x-2 rounded-lg bg-[#030391]/[.8] px-2 py-1 text-white hover:bg-[#030391] lg:py-1 2xl:text-[20px]'
           >
             <Icon.ChevronLeft fill='white' className='w-2 3xl:w-3' />
             Quay lại
           </Link>
           <h1 className='mb-3 text-2xl font-semibold text-[#2252641] md:text-center lg:text-[28px] 3xl:text-[36px]'>
-            Thống kê môn <span className='md:text-[#4285f4]'>{subjectName || 'học'}</span>
+            Thống kê môn <span className='md:text-[#030391]'>{subjectName || 'học'}</span>
           </h1>
           <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:border-0'>
             <div className='flex flex-row items-center justify-start gap-x-2'>
-              <Icon.EqualizerIcon fill='#4285F4' className='lg:h-7 lg:w-7 3xl:h-9 3xl:w-9' />
-              <p className='text-xl font-medium text-[#4285F4] lg:text-2xl 3xl:text-[32px]'>
+              <Icon.EqualizerIcon fill='#030391' className='lg:h-7 lg:w-7 3xl:h-9 3xl:w-9' />
+              <p className='text-xl font-medium text-[#030391] lg:text-2xl 3xl:text-[32px]'>
                 Thống kê điểm số
               </p>
             </div>
             <div className='mt-4 h-[1px] w-full bg-[#D9D9D9] md:hidden' />
             <div className='mt-9 flex flex-1 flex-row items-center justify-center gap-x-4'>
               <button
-                className='group rounded-full p-2 hover:bg-[#4285F4]/[.8]'
+                className='group rounded-full p-2 hover:bg-[#030391]/[.8]'
                 onClick={() => getEpochTimestampsForQuery(queryPeriod.weekAgoEpochTimestamp, false)}
               >
-                <Icon.Chevron fill='#4285f4' className='-rotate-90 group-hover:fill-white' />
+                <Icon.Chevron fill='#030391' className='-rotate-90 group-hover:fill-white' />
               </button>
               <p>
                 Từ {epochToDateString(queryPeriod.weekAgoEpochTimestamp, false)} đến{' '}
@@ -184,14 +184,14 @@ const MockTestStatistic = () => {
                 className={`rounded-full p-2 ${
                   haveSameDate(queryPeriod.currentEpochTimestamp)
                     ? ''
-                    : 'group hover:bg-[#4285F4]/[.8]'
+                    : 'group hover:bg-[#030391]/[.8]'
                 }`}
                 disabled={haveSameDate(queryPeriod.currentEpochTimestamp)}
                 onClick={() => getEpochTimestampsForQuery(queryPeriod.currentEpochTimestamp, true)}
               >
                 <Icon.Chevron
                   fill={`${
-                    haveSameDate(queryPeriod.currentEpochTimestamp) ? '#5b5b5b' : '#4285f4'
+                    haveSameDate(queryPeriod.currentEpochTimestamp) ? '#5b5b5b' : '#030391'
                   }`}
                   className='rotate-90 group-hover:fill-white'
                 />
@@ -221,8 +221,8 @@ const MockTestStatistic = () => {
           </div>
           <div className='show-scrollbar mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white px-[20px] py-[16px] md:max-h-[50vh] md:overflow-y-scroll md:border-0 md:shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)]'>
             <div className='flex flex-row items-center justify-start gap-x-2'>
-              <Icon.ClipboardIcon className='fill-[#49BBBD] md:fill-[#4285F4] lg:h-7 lg:w-7 3xl:h-9 3xl:w-9' />
-              <p className='text-xl font-medium text-[#49BBBD] md:text-[#4285F4] lg:text-2xl 3xl:text-[32px]'>
+              <Icon.ClipboardIcon className='fill-[#49BBBD] md:fill-[#030391] lg:h-7 lg:w-7 3xl:h-9 3xl:w-9' />
+              <p className='text-xl font-medium text-[#49BBBD] md:text-[#030391] lg:text-2xl 3xl:text-[32px]'>
                 Lịch sử làm bài
               </p>
             </div>
@@ -232,15 +232,15 @@ const MockTestStatistic = () => {
             </p>
             <div className='mt-6 flex items-center md:w-[80%]'>
               <div className='flex items-center gap-x-2 md:flex-[6]'>
-                <div className='h-4 w-4 rounded-full bg-[#49BBBD] md:bg-[#4285F4] 3xl:h-5 3xl:w-5' />
-                <p className='font-medium text-[#49BBBD] md:text-[18px] md:text-[#4285F4] lg:text-xl 3xl:text-[28px]'>
+                <div className='h-4 w-4 rounded-full bg-[#49BBBD] md:bg-[#030391] 3xl:h-5 3xl:w-5' />
+                <p className='font-medium text-[#49BBBD] md:text-[18px] md:text-[#030391] lg:text-xl 3xl:text-[28px]'>
                   Danh sách các đợt thi thử
                 </p>
               </div>
-              <p className='hidden md:block md:flex-[3] md:text-[18px] md:text-[#4285F4] lg:text-xl 3xl:text-[28px]'>
+              <p className='hidden md:block md:flex-[3] md:text-[18px] md:text-[#030391] lg:text-xl 3xl:text-[28px]'>
                 Ngày hoàn thành
               </p>
-              <p className='hidden md:block md:flex-[1] md:text-[18px] md:text-[#4285F4] lg:text-xl 3xl:text-[28px]'>
+              <p className='hidden md:block md:flex-[1] md:text-[18px] md:text-[#030391] lg:text-xl 3xl:text-[28px]'>
                 Điểm
               </p>
             </div>
@@ -251,7 +251,7 @@ const MockTestStatistic = () => {
                     <p className='font-medium text-[#252641]'>{test?.fromExam?.name || 'Quiz'}</p>
                     <Link
                       to={`/room/tests/review/session/${test?._id}`}
-                      className='font-semibold text-[#252641] underline hover:text-[#4285f4]'
+                      className='font-semibold text-[#252641] underline hover:text-[#030391]'
                     >
                       Xem lại
                     </Link>
@@ -291,7 +291,7 @@ const MockTestStatistic = () => {
                     </div>
                     <Link
                       to={`/room/tests/review/session/${test?._id}`}
-                      className='font-semibold text-[#252641] underline hover:text-[#4285f4] lg:text-[18px] 3xl:text-2xl'
+                      className='font-semibold text-[#252641] underline hover:text-[#030391] lg:text-[18px] 3xl:text-2xl'
                     >
                       Xem lại
                     </Link>

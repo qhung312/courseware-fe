@@ -208,7 +208,7 @@ const EditSlot = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Chỉnh sửa ca thi thử
           </p>
@@ -338,16 +338,16 @@ const EditSlot = () => {
                     </div>
                     <div>
                       <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                        <p className='flex flex-[2.5] text-base text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2.5] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Tên
                         </p>
-                        <p className='flex flex-[2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Môn
                         </p>
-                        <p className='flex flex-[1.2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.2] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Chương
                         </p>
-                        <p className='flex flex-[1.5] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.5] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Thời gian tạo
                         </p>
                         <div className='flex flex-1' />
@@ -398,7 +398,7 @@ const EditSlot = () => {
                       <button
                         className={`flex items-center rounded-lg px-6 py-1
                       transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                        canSave ? 'bg-[#4285F4]/80 hover:bg-[#4285F4]' : 'bg-gray-400/80'
+                        canSave ? 'bg-[#030391]/80 hover:bg-[#030391]' : 'bg-gray-400/80'
                       }`}
                         disabled={!canSave}
                         onClick={(e) => {

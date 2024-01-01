@@ -100,7 +100,7 @@ const Desktop: React.FC<{
                 <Countdown
                   date={timeLeft}
                   renderer={(props) => (
-                    <p className='text-base font-medium text-[#4285F4] lg:text-lg 3xl:text-2xl'>
+                    <p className='text-base font-medium text-[#030391] lg:text-lg 3xl:text-2xl'>
                       {parseCountdown(props.total)}
                     </p>
                   )}
@@ -111,7 +111,7 @@ const Desktop: React.FC<{
 
           <div
             className='flex w-full flex-col items-start justify-between space-y-4 rounded-lg 
-          border border-[#4285F4] bg-white p-4 3xl:p-5'
+          border border-[#030391] bg-white p-4 3xl:p-5'
           >
             <h2 className='text-base font-medium lg:text-lg 3xl:text-2xl'>Danh sách câu hỏi</h2>
             <div className='flex w-full flex-1 flex-wrap items-center justify-start gap-x-2 gap-y-2'>
@@ -139,8 +139,8 @@ const Desktop: React.FC<{
                           [question.userAnswerKeys, question.userAnswerField],
                           (v) => !_.isEmpty(v)
                         )
-                      ? 'bg-[#4285F4]'
-                      : 'border border-[#4285F4]/50 bg-transparent'
+                      ? 'bg-[#030391]'
+                      : 'border border-[#030391]/50 bg-transparent'
                   } ${
                     currentSet.includes((page - 1) * 40 + index)
                       ? 'border-[3px] border-[#FBCB43]'

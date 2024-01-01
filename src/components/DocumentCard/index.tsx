@@ -34,7 +34,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
         <CopyIcon copyContent={copyContent} />
         {/* <div>
           <button
-            className='share-anchor flex aspect-square items-center justify-center rounded-full bg-[#4285F4] p-1'
+            className='share-anchor flex aspect-square items-center justify-center rounded-full bg-[#030391] p-1'
             data-tooltip-content='Share'
           >
             <Icon.Share className='h-4 w-4 fill-white' />
@@ -51,14 +51,14 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
             <div className='flex flex-1 flex-row items-center gap-x-3'>
               {isMaterial(document) ? (
                 <>
-                  <Icon.Document className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
+                  <Icon.Document className='h-4 w-auto fill-[#030391] lg:h-5 3xl:h-6' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.chapter ? document.chapter.name : 'Chương không xác định'}
                   </p>
                 </>
               ) : (
                 <>
-                  <Icon.Test className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
+                  <Icon.Test className='h-4 w-auto fill-[#030391] lg:h-5 3xl:h-6' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.semester
                       ? `Học kì ${document.semester.slice(-3)}`
@@ -71,7 +71,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
               <>
                 <span className='mx-1 block h-6 w-0 border-l-2' />
                 <div className='flex flex-1 flex-row items-center gap-x-3'>
-                  <Icon.List className='h-4 w-auto fill-[#4285F4] lg:h-5 3xl:h-6' />
+                  <Icon.List className='h-4 w-auto fill-[#030391] lg:h-5 3xl:h-6' />
                   <p className='whitespace-nowrap text-xs text-[#666] lg:text-sm 3xl:text-base'>
                     {document.type === ExamType.MIDTERM_EXAM ? 'Giữa kì' : 'Cuối kì'}
                   </p>
@@ -79,7 +79,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
               </>
             )}
           </div>
-          {/* <Link to={to} className='flex rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4]'>
+          {/* <Link to={to} className='flex rounded-lg bg-[#030391]/80 px-7 py-2 hover:bg-[#030391]'>
             <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
           </Link> */}
         </div>
@@ -95,7 +95,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, title, to, copyCo
         )}
         {/* <Link
           to={to}
-          className='flex w-fit rounded-lg bg-[#4285F4]/80 px-7 py-2 hover:bg-[#4285F4] md:hidden'
+          className='flex w-fit rounded-lg bg-[#030391]/80 px-7 py-2 hover:bg-[#030391] md:hidden'
         >
           <p className='text-xs text-white lg:text-sm 3xl:text-base'>Xem chi tiết</p>
         </Link> */}

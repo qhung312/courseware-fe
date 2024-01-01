@@ -35,7 +35,7 @@ const MobileOngoing: React.FC<{
         <div className='flex w-full flex-col'>
           <h1 className='text-2xl font-bold'>{exam.fromExam.name}</h1>
           <h3 className='text-xl'>Môn: {exam.fromExam.subject.name}</h3>
-          <div className='mt-2 flex w-fit flex-row gap-x-2 rounded-lg border border-[#4285F4]/30 bg-white p-2'>
+          <div className='mt-2 flex w-fit flex-row gap-x-2 rounded-lg border border-[#030391]/30 bg-white p-2'>
             <div className='flex flex-row items-center gap-x-1'>
               <Icon.Clock className='h-4 w-auto' fill='#49BBBD' />
               <Countdown
@@ -52,7 +52,7 @@ const MobileOngoing: React.FC<{
             </div>
           </div>
 
-          <div className='mt-7 w-fit rounded-lg bg-[#4285F4] p-3'>
+          <div className='mt-7 w-fit rounded-lg bg-[#030391] p-3'>
             <p className='text-sm text-white'>
               Trang: {page}/{questionChunks.length}
             </p>

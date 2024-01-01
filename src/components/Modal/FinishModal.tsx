@@ -60,8 +60,8 @@ const FinishModal: FC<{
                   </button>
                   <button
                     type='button'
-                    className='inline-flex justify-center rounded-md border border-transparent bg-[#4285F4]/80 
-                    px-4 py-2  hover:bg-[#4285F4] focus:outline-none disabled:bg-[#4285F4] disabled:opacity-75'
+                    className='inline-flex justify-center rounded-md border border-transparent bg-[#030391]/80 
+                    px-4 py-2  hover:bg-[#030391] focus:outline-none disabled:bg-[#030391] disabled:opacity-75'
                     onClick={accept}
                     disabled={isLoading}
                   >

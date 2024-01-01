@@ -181,7 +181,7 @@ const CreateQuestionPage = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Tạo câu hỏi mới
           </p>
@@ -227,7 +227,7 @@ const CreateQuestionPage = () => {
                 <div className='flex flex-row-reverse gap-x-2 md:gap-x-4 2xl:gap-x-6'>
                   <button
                     className={`items-center rounded-lg px-6 py-1 transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                      preview ? 'bg-[#4285F4]' : 'bg-[#4285F4]/40 hover:bg-[#4285F4]/80'
+                      preview ? 'bg-[#030391]' : 'bg-[#030391]/40 hover:bg-[#030391]/80'
                     }`}
                     onClick={previewQuestion}
                   >
@@ -235,7 +235,7 @@ const CreateQuestionPage = () => {
                   </button>
                   <button
                     className={`items-center rounded-lg px-6 py-1 transition-all duration-200 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3 ${
-                      !preview ? 'bg-[#4285F4]' : 'bg-[#4285F4]/40 hover:bg-[#4285F4]/80'
+                      !preview ? 'bg-[#030391]' : 'bg-[#030391]/40 hover:bg-[#030391]/80'
                     }`}
                     onClick={() => setPreview(null)}
                     disabled={preview === null}
@@ -245,7 +245,7 @@ const CreateQuestionPage = () => {
                 </div>
                 <button
                   className={`items-center rounded-lg transition-all duration-200 ${
-                    createDisabled ? 'bg-gray-400/80' : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                    createDisabled ? 'bg-gray-400/80' : 'bg-[#030391]/80 hover:bg-[#030391]'
                   } px-6 py-1 lg:px-7 lg:py-2 3xl:px-8 3xl:py-3`}
                   disabled={createDisabled}
                   onClick={createQuestion}
@@ -333,7 +333,7 @@ const CreateQuestionPage = () => {
                     <div className='flex flex-row items-center gap-x-8'>
                       <p className='flex text-base lg:text-lg 3xl:text-xl'>Lựa chọn</p>
                       <button
-                        className='h-9 w-36 rounded-lg bg-[#4285F4]/80 px-4 hover:bg-[#4285F4]'
+                        className='h-9 w-36 rounded-lg bg-[#030391]/80 px-4 hover:bg-[#030391]'
                         onClick={onAddOption}
                       >
                         <p className='text-white'>Thêm lựa chọn</p>

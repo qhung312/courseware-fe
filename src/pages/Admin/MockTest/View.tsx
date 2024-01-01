@@ -45,7 +45,7 @@ const MockTestView = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Xem thông tin đợt thi thử
           </p>
@@ -137,16 +137,16 @@ const MockTestView = () => {
                   <p className='w-full text-sm font-semibold lg:text-base 3xl:text-xl'>Ca thi</p>
                   <div>
                     <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                      <p className='flex flex-[2.5] text-base text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                      <p className='flex flex-[2.5] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                         Tên
                       </p>
-                      <p className='flex flex-[2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                      <p className='flex flex-[2] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                         Số lượng đăng ký
                       </p>
-                      <p className='flex flex-[1.2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                      <p className='flex flex-[1.2] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                         Bắt đầu
                       </p>
-                      <p className='flex flex-[1.5] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                      <p className='flex flex-[1.5] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                         Kết thúc
                       </p>
                     </div>
@@ -189,7 +189,7 @@ const MockTestView = () => {
                 <button
                   type='button'
                   onClick={() => navigate(`/admin/mock-test/edit/${params.id}`)}
-                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                  className='w-fit cursor-pointer rounded-lg bg-[#030391]/80 px-1 transition-all duration-200 hover:bg-[#030391] lg:px-3 3xl:px-5'
                 >
                   <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                     Chỉnh sửa

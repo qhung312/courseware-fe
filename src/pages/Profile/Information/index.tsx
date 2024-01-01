@@ -65,7 +65,7 @@ const UserInformation = () => {
               </h1>
             )}
             {isEditMode ? (
-              <p className='mb-8 mt-2 text-xl font-semibold text-[#4285f4]/70 3xl:text-2xl'>
+              <p className='mb-8 mt-2 text-xl font-semibold text-[#030391]/70 3xl:text-2xl'>
                 Cập nhật thông tin
               </p>
             ) : (
@@ -97,7 +97,7 @@ const UserInformation = () => {
                   }
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -119,7 +119,7 @@ const UserInformation = () => {
                   onChange={(e) => setUserProfile({ ...userProfile, givenName: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -141,7 +141,7 @@ const UserInformation = () => {
                   onChange={(e) => setUserProfile({ ...userProfile, studentId: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -163,7 +163,7 @@ const UserInformation = () => {
                   onChange={(e) => setUserProfile({ ...userProfile, major: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -190,7 +190,7 @@ const UserInformation = () => {
                   }
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -209,7 +209,7 @@ const UserInformation = () => {
                   value={userProfile?.gender}
                   className={`black-placeholder mt-2 w-[60%] rounded-[10px] md:w-[28%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                   onChange={(e) => {
@@ -240,7 +240,7 @@ const UserInformation = () => {
                   onChange={(e) => setUserProfile({ ...userProfile, email: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -262,7 +262,7 @@ const UserInformation = () => {
                   onChange={(e) => setUserProfile({ ...userProfile, phoneNumber: e.target.value })}
                   className={`black-placeholder mt-2 w-full rounded-[10px] md:w-[70%] ${
                     isEditMode
-                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#4285f4]'
+                      ? 'border-[1px] border-[#D9D9D9] hover:border-[#030391]'
                       : 'text-[#696984] disabled:bg-[#E9E9E9]'
                   } px-4 py-3 text-xl`}
                 />
@@ -272,7 +272,7 @@ const UserInformation = () => {
               <div className='flex gap-x-2'>
                 <button
                   onClick={updateProfile}
-                  className='mt-8 w-fit rounded-[12px] bg-[#4285f4] py-2 px-4 text-xl font-semibold text-white hover:bg-[#4285f4]/[.7]'
+                  className='mt-8 w-fit rounded-[12px] bg-[#030391] py-2 px-4 text-xl font-semibold text-white hover:bg-[#030391]/[.7]'
                 >
                   Cập nhật
                 </button>

@@ -388,7 +388,7 @@ const InfoModal: FC<{
                     px-4 py-2 focus:outline-none disabled:bg-[#B3B3B3] ${
                       isEnoughInfo
                         ? 'bg-[#0F9D58]/80 hover:bg-[#0F9D58]'
-                        : 'bg-[#4285F4]/80 hover:bg-[#4285F4]'
+                        : 'bg-[#030391]/80 hover:bg-[#030391]'
                     }`}
                     onClick={isEnoughInfo ? handleRegister : handleUpdate}
                     disabled={isLoading}

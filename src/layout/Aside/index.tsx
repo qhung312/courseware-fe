@@ -52,7 +52,7 @@ const Aside: React.FC<AsideProps> = ({
             {/* Title */}
             {title && width < 768 && (
               <span>
-                <h1 className='block text-2xl font-bold text-[#4285F4] transition duration-300 md:hidden'>
+                <h1 className='block text-2xl font-bold text-[#030391] transition duration-300 md:hidden'>
                   {title}
                 </h1>
                 {/* <p className='block text-[#252641] transition duration-300 md:hidden'> */}
@@ -72,7 +72,7 @@ const Aside: React.FC<AsideProps> = ({
               </h2>
               <button
                 onClick={toggleAside}
-                className={`aspect-square rounded-full bg-[#4285F4] p-2 hover:bg-[#2571eb] ${
+                className={`aspect-square rounded-full bg-[#030391] p-2 hover:bg-[#2571eb] ${
                   isDisplayToggleAside ? 'flex' : 'hidden'
                 }`}
               >

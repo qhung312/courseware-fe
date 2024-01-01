@@ -122,7 +122,7 @@ const ActivityHistory = () => {
               onClick={throttledLibraryClick}
             >
               <div className='flex flex-row items-center justify-start gap-x-[16px]'>
-                <Icon.FilterIcon fill={isFilterOpen ? '#49BBBD' : '#4285f4'} />
+                <Icon.FilterIcon fill={isFilterOpen ? '#49BBBD' : '#030391'} />
                 <p
                   className={`text-xl font-medium ${
                     isFilterOpen ? 'text-[#49BBBD]' : 'text-[#252641]'
@@ -284,7 +284,7 @@ const ActivityHistory = () => {
               Nhật ký hoạt động
             </h1>
             <div className='mt-2 flex items-center'>
-              <div className='mr-2 flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#4285f4]'>
+              <div className='mr-2 flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#030391]'>
                 <Icon.FilterIcon fill='#FFFFFF' className='h-4 w-4' />
               </div>
               <p className='font-semibold text-[#5B5B5B] 2xl:text-[18px]'>Bộ lọc</p>

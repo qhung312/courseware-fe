@@ -60,7 +60,7 @@ const ExamView = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Xem thông tin đề thi
           </p>
@@ -176,7 +176,7 @@ const ExamView = () => {
                 <button
                   type='button'
                   onClick={() => navigate(`/admin/exam-archive/edit/${params.id}`)}
-                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                  className='w-fit cursor-pointer rounded-lg bg-[#030391]/80 px-1 transition-all duration-200 hover:bg-[#030391] lg:px-3 3xl:px-5'
                 >
                   <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                     Chỉnh sửa
@@ -185,7 +185,7 @@ const ExamView = () => {
                 <button
                   type='button'
                   onClick={() => handleOnDownload()}
-                  className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                  className='w-fit cursor-pointer rounded-lg bg-[#030391]/80 px-1 hover:bg-[#030391] lg:px-3 3xl:px-5'
                 >
                   <p className='p-1 text-xs font-medium text-white lg:p-2 lg:text-sm 3xl:p-3 3xl:text-base'>
                     Tải về

@@ -83,7 +83,7 @@ const ViewSlot = () => {
   return (
     <Page>
       <Wrapper className='flex flex-1 flex-col'>
-        <div className='w-full bg-[#4285F4]/90 py-4'>
+        <div className='w-full bg-[#030391]/90 py-4'>
           <p className='text-center text-sm font-bold text-white md:text-2xl 3xl:text-4xl'>
             Xem ca thi thử
           </p>
@@ -173,16 +173,16 @@ const ViewSlot = () => {
                     </div>
                     <div>
                       <div className='mb-5 flex flex-1 flex-shrink-0 flex-row gap-x-4 px-6 lg:px-8 3xl:px-10'>
-                        <p className='flex flex-[2.5] text-base text-[#4285f4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2.5] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Tên
                         </p>
-                        <p className='flex flex-[2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[2] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Môn
                         </p>
-                        <p className='flex flex-[1.2] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.2] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Chương
                         </p>
-                        <p className='flex flex-[1.5] text-base text-[#4285F4] lg:text-lg 3xl:text-xl'>
+                        <p className='flex flex-[1.5] text-base text-[#030391] lg:text-lg 3xl:text-xl'>
                           Thời gian tạo
                         </p>
                       </div>
@@ -214,7 +214,7 @@ const ViewSlot = () => {
                     <div className='flex items-center justify-center'>
                       <Link
                         to={`/admin/mock-test/slot/edit/${id}/${slotId}`}
-                        className='w-fit cursor-pointer rounded-lg bg-[#4285F4]/80 px-1 transition-all duration-200 hover:bg-[#4285F4] lg:px-3 3xl:px-5'
+                        className='w-fit cursor-pointer rounded-lg bg-[#030391]/80 px-1 transition-all duration-200 hover:bg-[#030391] lg:px-3 3xl:px-5'
                       >
                         <p className='whitespace-nowrap p-1 text-xs font-medium text-white lg:p-3 lg:text-sm 3xl:p-5 3xl:text-base'>
                           Chỉnh sửa

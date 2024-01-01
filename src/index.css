@@ -127,7 +127,7 @@ iframe::-webkit-media-controls-timeline {
 
 input:focus,
 textarea:focus {
-  outline: 2px solid #4285f4;
+  outline: 2px solid #030391;
 }
 
 code {
@@ -200,12 +200,12 @@ code {
 }
 
 * {
-  --toastify-color-info: #4285f4;
+  --toastify-color-info: #030391;
   --toastify-color-success: #0f9d58;
   --toastify-color-warning: #f4b400;
   --toastify-color-error: #db4437;
 
-  --toastify-icon-color-info: #4285f4;
+  --toastify-icon-color-info: #030391;
   --toastify-icon-color-success: #0f9d58;
   --toastify-icon-color-warning: #f4b400;
   --toastify-icon-color-error: #db4437;

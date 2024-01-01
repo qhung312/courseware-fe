@@ -36,7 +36,7 @@ const Histogram: FC<HistogramProps> = ({ scores, title }) => {
           <Legend height={24} />
           <Bar
             dataKey='total'
-            fill='#4285F4'
+            fill='#030391'
             name='Số thí sinh'
             label={{ position: 'top', fill: '#252641' }}
           />
