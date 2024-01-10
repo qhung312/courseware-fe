@@ -15,6 +15,7 @@ import { ReactComponent as Chevron } from '../../assets/svgs/ChevronIcon.svg';
 import { ReactComponent as ChevronLeft } from '../../assets/svgs/ChevronLeftIcon.svg';
 import { ReactComponent as ChevronRight } from '../../assets/svgs/ChevronRightIcon.svg';
 import { ReactComponent as ChevronUp } from '../../assets/svgs/ChevronUpIcon.svg';
+import { ReactComponent as ClassIcon } from '../../assets/svgs/Class.svg';
 import { ReactComponent as ClipboardIcon } from '../../assets/svgs/ClipboardIcon.svg';
 import { ReactComponent as Clock } from '../../assets/svgs/ClockIcon.svg';
 import { ReactComponent as CloseIcon } from '../../assets/svgs/CloseIcon.svg';
@@ -67,6 +68,7 @@ import { ReactComponent as Profile } from '../../assets/svgs/ProfileIcon.svg';
 import { ReactComponent as Quiz } from '../../assets/svgs/QuizIcon.svg';
 import { ReactComponent as Result } from '../../assets/svgs/ResultIcon.svg';
 import { ReactComponent as Room } from '../../assets/svgs/RoomIcon.svg';
+import { ReactComponent as School } from '../../assets/svgs/School.svg';
 import { ReactComponent as Search } from '../../assets/svgs/SearchIcon.svg';
 import { ReactComponent as Share } from '../../assets/svgs/ShareIcon.svg';
 import { ReactComponent as StarDim } from '../../assets/svgs/StarDimIcon.svg';
@@ -77,6 +79,7 @@ import { ReactComponent as Upload } from '../../assets/svgs/UploadIcon.svg';
 import { ReactComponent as UpRightArrowIcon } from '../../assets/svgs/UpRightArrowIcon.svg';
 import { ReactComponent as UserAnswer } from '../../assets/svgs/UserAnswerIcon.svg';
 import { ReactComponent as ViewIcon } from '../../assets/svgs/ViewIcon.svg';
+import { ReactComponent as WhatshotIcon } from '../../assets/svgs/Whatshot.svg';
 import { ReactComponent as XMark } from '../../assets/svgs/XMarkIcon.svg';
 import { ReactComponent as YoutubeIcon } from '../../assets/svgs/YoutubeIcon.svg';
 import { ReactComponent as ZoomInIcon } from '../../assets/svgs/ZoomInIcon.svg';
@@ -98,6 +101,7 @@ export default {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ClassIcon,
   Clock,
   CloseIcon,
   ContentPaste,
@@ -145,6 +149,7 @@ export default {
   UserAnswer,
   Result,
   Room,
+  School,
   Search,
   Share,
   StarLit,
@@ -156,6 +161,7 @@ export default {
   Profile,
   Upload,
   ViewIcon,
+  WhatshotIcon,
   XMark,
   LogoGmail,
   LogoFacebook,
