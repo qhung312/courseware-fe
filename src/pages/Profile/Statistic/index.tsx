@@ -14,17 +14,17 @@ import UserService, { GetAllSubjectStatisticReturnType } from '../../../service/
 
 const Statistic = () => {
   const [isExerciseGradeOpen, setIsExerciseGradeOpen] = useState(false);
-  const [isTestGradeOpen, setIsTestGradeOpen] = useState(false);
+  // const [isTestGradeOpen, setIsTestGradeOpen] = useState(false);
   const [subjectGrade, setSubjectGrade] = useState<GetAllSubjectStatisticReturnType[]>([]);
-  const [mockTestGrade, setMockTestGrade] = useState<GetAllSubjectStatisticReturnType[]>([]);
+  // const [mockTestGrade, setMockTestGrade] = useState<GetAllSubjectStatisticReturnType[]>([]);
 
   const onExerciseGradeStatisticOpen = () => {
     setIsExerciseGradeOpen(!isExerciseGradeOpen);
   };
 
-  const onTestGradeStatisticOpen = () => {
-    setIsTestGradeOpen(!isTestGradeOpen);
-  };
+  // const onTestGradeStatisticOpen = () => {
+  //   setIsTestGradeOpen(!isTestGradeOpen);
+  // };
 
   useEffect(() => {
     UserService.getAllSubjectStatistic()
@@ -34,17 +34,18 @@ const Statistic = () => {
       .catch(() => {
         toast.error('Lỗi khi lấy dữ liệu thống kê điểm số');
       });
-    UserService.getAllMockTestStatistic()
-      .then((res) => {
-        setMockTestGrade(res.data.payload || []);
-      })
-      .catch(() => {
-        toast.error('Lỗi khi lấy dữ liệu thống kê điểm số');
-      });
+    // UserService.getAllMockTestStatistic()
+    //   .then((res) => {
+    //     setMockTestGrade(res.data.payload || []);
+    //   })
+    //   .catch(() => {
+    //     toast.error('Lỗi khi lấy dữ liệu thống kê điểm số');
+    //   });
   }, []);
 
   const throttledExerciseGradeClick = useThrottle(onExerciseGradeStatisticOpen);
-  const throttledTestGradeClick = useThrottle(onTestGradeStatisticOpen);
+  // const throttledTestGradeClick = useThrottle(onTestGradeStatisticOpen);
+  console.log(isExerciseGradeOpen);
 
   return (
     <Page title='Thông tin người dùng - Thống kê điểm số'>
@@ -121,7 +122,7 @@ const Statistic = () => {
               </nav>
             )}
           </div>
-          <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white md:hidden'>
+          {/* <div className='mb-6 flex h-[fit-content] w-full flex-col rounded-[20px] border-[1px] border-[#49BBBD]/[.3] bg-white md:hidden'>
             <button
               className='z-20 flex w-full flex-row
               items-center justify-between rounded-[20px] bg-white px-[20px] py-[16px]'
@@ -186,9 +187,10 @@ const Statistic = () => {
                 ))}
               </nav>
             )}
-          </div>
+          </div> */}
           <div className='relative w-[49%] p-5'>
             <div className='absolute top-0 left-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#030391] md:block' />
+            <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#030391] md:block' />
             <div className='show-scrollbar relative z-10 hidden h-fit rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
               <h1 className='mb-6 text-center text-2xl font-semibold md:text-lg 2xl:text-xl'>
                 Điểm trung bình bài tập
@@ -237,7 +239,7 @@ const Statistic = () => {
               )}
             </div>
           </div>
-          <div className='relative w-[49%] p-5'>
+          {/* <div className='relative w-[49%] p-5'>
             <div className='absolute bottom-0 right-0 z-0 hidden h-[140px] w-[140px] rounded-[20px] bg-[#030391] md:block' />
             <div className='show-scrollbar relative z-10 hidden h-fit rounded-[20px] bg-white p-4 pb-8 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] md:block md:max-h-[80vh] md:overflow-y-scroll'>
               <h1 className='mb-6 text-center text-2xl font-semibold text-[#2252641] md:text-lg 2xl:text-xl'>
@@ -286,7 +288,7 @@ const Statistic = () => {
                 </nav>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
         <Footer />
       </main>

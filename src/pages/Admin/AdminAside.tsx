@@ -146,13 +146,13 @@ const AdminAside: FC = () => {
           handleClick={handleClick}
           IconProp={Icon.Test}
         />
-        <AdminAsideLink
+        {/* <AdminAsideLink
           path='mockTest'
           titleName='thi thử'
           isOpen={menuState.mockTest}
           handleClick={handleClick}
           IconProp={Icon.MockTestIcon}
-        />
+        /> */}
       </div>
     </Aside>
   );

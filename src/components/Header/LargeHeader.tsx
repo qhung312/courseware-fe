@@ -223,6 +223,21 @@ const LargeHeader = () => {
                 boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
               }}
             >
+              <NavLink
+                to='/profile'
+                end
+                className='flex w-full items-center justify-center bg-inherit px-[16px] py-[8px] text-[#5B5B5B] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
+                onClick={throttledLibraryClick}
+              >
+                <p
+                  className='whitespace-nowrap bg-inherit px-2 
+                py-1 text-[14px] font-normal 3xl:px-3
+                3xl:py-2 3xl:text-[18px]
+                '
+                >
+                  Thông tin của tôi
+                </p>
+              </NavLink>
               <button
                 className='bg-inherit px-[16px] py-[8px] hover:bg-[#F1F1F1] 3xl:px-[32px] 3xl:py-[12px]'
                 onClick={onLogout}
