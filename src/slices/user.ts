@@ -42,6 +42,7 @@ export const UserSlice: StateCreator<
   getUserProfile: async () => {
     try {
       const { data } = await UserService.getUserProfile();
+      console.log('user', data.payload);
       set((state) => ({
         user: {
           ...state.user,

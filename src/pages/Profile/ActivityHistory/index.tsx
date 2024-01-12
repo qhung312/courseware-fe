@@ -244,7 +244,7 @@ const ActivityHistory = () => {
                   {totalActivity.viewPreviousExam} hoạt động
                 </p>
               </button>
-              <button
+              {/* <button
                 className='flex w-full flex-row items-center justify-between
                 border-t-[1px] border-[#D9D9D9] py-3'
                 onClick={() => {
@@ -276,7 +276,7 @@ const ActivityHistory = () => {
                 >
                   {totalActivity.viewExamSession} hoạt động
                 </p>
-              </button>
+              </button> */}
             </nav>
           </div>
           <div className='hidden h-fit w-[29%] rounded-[20px] bg-white p-4 shadow-[0px_19px_47px_0px_rgba(47,50,125,0.1)] lg:block'>
@@ -336,7 +336,7 @@ const ActivityHistory = () => {
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Đề thi</h3>
               <p className='2xl:text-base'>{totalActivity.viewPreviousExam} hoạt động</p>
             </button>
-            <button
+            {/* <button
               className={`mt-3 flex w-full items-end justify-between rounded-[20px] border-[1px] border-[#49BBBD]/[0.3] px-3 py-3 hover:bg-[#9DCCFF]/[.3] 2xl:px-4 ${
                 filterOption === 4 && 'bg-[#9DCCFF]/[.3]'
               }`}
@@ -348,7 +348,7 @@ const ActivityHistory = () => {
             >
               <h3 className='font-medium text-[#252641] 2xl:text-[18px]'>Thi thử</h3>
               <p className='2xl:text-base'>{totalActivity.viewExamSession} hoạt động</p>
-            </button>
+            </button> */}
           </div>
           {loading && (
             <>

@@ -258,20 +258,6 @@ const MediumHeader = () => {
                     </>
                   )}
                 </NavLink>
-
-                <button
-                  className='z-20 flex w-full flex-row
-                  items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
-                  onClick={debouncedLogout}
-                >
-                  <div
-                    className='flex flex-row items-center justify-start gap-x-[16px]
-                    transition-opacity duration-[800ms] ease-in-out'
-                  >
-                    <Icon.Logout fill={'#696969'} />
-                    <p style={{ color: '#696969' }}>Đăng xuất</p>
-                  </div>
-                </button>
               </>
             )}
             {!isAuthenticated && <LoginButton />}
@@ -296,6 +282,45 @@ const MediumHeader = () => {
                 )}
               </NavLink>
             ) : null}
+            {isAuthenticated && (
+              <>
+                <NavLink
+                  to='/profile'
+                  className='flex w-full flex-row items-center justify-start
+                gap-x-[16px] rounded-[12px] px-[20px] py-[16px]'
+                  style={({ isActive, isPending }) => ({
+                    backgroundColor:
+                      isActive || isPending ? 'rgba(118, 167, 243, 0.1)' : 'transparent',
+                  })}
+                  onClick={() => setTimeout(throttledOnClick, 1000)}
+                >
+                  {({ isActive, isPending }) => (
+                    <>
+                      <Icon.Profile
+                        fill={isActive || isPending ? '#4285F4' : '#696969'}
+                        className='aspect-square w-6'
+                      />
+                      <p style={{ color: isActive || isPending ? '#4285F4' : '#696969' }}>
+                        Thông tin của tôi
+                      </p>
+                    </>
+                  )}
+                </NavLink>
+                <button
+                  className='z-20 flex w-full flex-row
+              items-center justify-between rounded-[12px] bg-white px-[20px] py-[16px]'
+                  onClick={debouncedLogout}
+                >
+                  <div
+                    className='flex flex-row items-center justify-start gap-x-[16px]
+              transition-opacity duration-[800ms] ease-in-out'
+                  >
+                    <Icon.Logout fill={'#696969'} />
+                    <p style={{ color: '#696969' }}>Đăng xuất</p>
+                  </div>
+                </button>
+              </>
+            )}
           </nav>
         </div>
       </div>
