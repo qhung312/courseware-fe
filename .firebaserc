@@ -1,7 +1,7 @@
 {
   "projects": {
-    "dev": "ctct-web-dev",
-    "default": "ctct-production"
+    "dev": "hcmut-courseware",
+    "default": "hcmut-courseware"
   },
   "targets": {},
   "etags": {}
