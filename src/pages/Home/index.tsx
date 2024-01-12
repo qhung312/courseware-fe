@@ -4,7 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './index.css';
 
 import { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { Autoplay, Pagination } from 'swiper';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -66,27 +66,36 @@ const HomePage = () => {
                     khảo và bài tập từ nhiều lĩnh vực khác nhau.
                   </p>
                 </div>
-                <div className='hidden flex-col space-y-6 md:flex'>
+                <div className='mt-10 hidden flex-col space-y-6 md:flex'>
                   <div className='flex w-fit space-x-6'>
-                    <div className='flex items-center space-x-4 rounded-[20px] py-[14px] px-5 shadow-md'>
+                    <Link
+                      to='/library/material'
+                      className='flex items-center space-x-4 rounded-[20px] py-[14px] px-5 shadow-md'
+                    >
                       <Icon.School fill='#1488D8' />
                       <p className='font-medium text-[#1488D8] lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'>
                         Thư viện tài liệu
                       </p>
-                    </div>
-                    <div className='flex items-center space-x-4 rounded-[20px] py-[14px] px-5 shadow-md'>
+                    </Link>
+                    <Link
+                      to='/library/exam-archive'
+                      className='flex items-center space-x-4 rounded-[20px] py-[14px] px-5 shadow-md'
+                    >
                       <Icon.ClassIcon fill='#1488D8' className='h-8 w-8' />
                       <p className='font-medium text-[#1488D8] lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'>
                         Thư viện đề thi
                       </p>
-                    </div>
+                    </Link>
                   </div>
-                  <div className='mr-6 flex w-fit items-center space-x-4 rounded-[20px] py-[14px] px-5 shadow-md'>
+                  <Link
+                    to='/room/exercises'
+                    className='mr-6 flex w-fit items-center space-x-4 rounded-[20px] py-[14px] px-5 shadow-md'
+                  >
                     <Icon.WhatshotIcon fill='#1488D8' className='h-8 w-8' />
                     <p className='font-medium text-[#1488D8] lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'>
                       Bài tập rèn luyện các môn học
                     </p>
-                  </div>
+                  </Link>
                 </div>
               </div>
               <div id='homepage-carousel' className='relative h-full w-full lg:w-[40%] xl:w-1/2'>
@@ -148,25 +157,34 @@ const HomePage = () => {
                 </div>
                 <div className='mt-3 flex flex-col space-y-2'>
                   <div className='flex w-fit space-x-2'>
-                    <div className='flex items-center space-x-4 rounded-[20px] py-1 px-3 shadow-md'>
+                    <Link
+                      to='/library/material'
+                      className='flex items-center space-x-4 rounded-[20px] py-1 px-3 shadow-md'
+                    >
                       <Icon.School fill='#1488D8' />
                       <p className='font-medium text-[#1488D8] lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'>
                         Thư viện tài liệu
                       </p>
-                    </div>
-                    <div className='flex items-center space-x-4 rounded-[20px] py-1 px-3 shadow-md'>
+                    </Link>
+                    <Link
+                      to='/library/exam-archive'
+                      className='flex items-center space-x-4 rounded-[20px] py-1 px-3 shadow-md'
+                    >
                       <Icon.ClassIcon fill='#1488D8' className='h-8 w-8' />
                       <p className='font-medium text-[#1488D8] lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'>
                         Thư viện đề thi
                       </p>
-                    </div>
+                    </Link>
                   </div>
-                  <div className='mr-6 flex w-fit items-center space-x-4 rounded-[20px] py-2 px-3 shadow-md'>
+                  <Link
+                    to='/room/exercises'
+                    className='mr-6 flex w-fit items-center space-x-4 rounded-[20px] py-2 px-3 shadow-md'
+                  >
                     <Icon.WhatshotIcon fill='#1488D8' className='h-8 w-8' />
                     <p className='font-medium text-[#1488D8] lg:text-xl lg:leading-loose 3xl:text-2xl 3xl:leading-loose'>
                       Bài tập rèn luyện các môn học
                     </p>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </section>
@@ -176,7 +194,7 @@ const HomePage = () => {
                   <h2 className='text-start text-[24px] font-semibold text-[#000000] lg:text-[28px] xl:text-[32px] 2xl:text-[36px]'>
                     Thư viện tài liệu và đề thi
                   </h2>
-                  <p className='text-start leading-7 text-[#696984] md:leading-7 lg:leading-9 2xl:leading-10'>
+                  <p className='text-start leading-7 text-[#696984] md:leading-7 lg:text-[18px] lg:leading-9 2xl:leading-10'>
                     Kho lưu trữ đa dạng về tài liệu học tập, bao gồm sách, bài giảng, bài viết, và
                     nhiều loại tài liệu tham khảo khác từ nhiều lĩnh vực khác nhau. Qua đó giúp sinh
                     viên dễ dàng tìm kiếm và nghiên cứu những nguồn thông tin liên quan đến chương
@@ -204,7 +222,7 @@ const HomePage = () => {
                   />
                 </div>
                 <div className='flex items-center justify-center md:max-w-[46%]'>
-                  <p className='text-start leading-7 text-[#696984] md:leading-7 lg:leading-9 2xl:leading-10'>
+                  <p className='text-start leading-7 text-[#696984] md:leading-7 lg:text-[18px] lg:leading-9 2xl:leading-10'>
                     Mang đến cho các bạn sinh viên một bộ sưu tập đề thi và bài tập mẫu từ các học
                     kỳ trước đây. Các bạn sẽ có cơ hội được ôn tập và làm quen với định dạng và nội
                     dung kiểm tra, giúp họ tự tin hơn khi đối diện với các kỳ thi thực tế.
